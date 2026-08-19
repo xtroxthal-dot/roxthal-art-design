@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoXThal Art Design</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b0b0d;
+  color: white;
+}
+
+header {
+  background: #111116;
+  padding: 22px 18px;
+  text-align: center;
+  border-bottom: 1px solid #333;
+}
+
+.logo {
+  font-size: 30px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.logo span {
+  color: #b66cff;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+nav button {
+  background: #1b1b22;
+  color: white;
+  border: 1px solid #444;
+  padding: 10px 15px;
+  border-radius: 20px;
+}
+
+.hero {
+  padding: 55px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #111116, #21152d);
+}
+
+.hero h1 {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  color: #ccc;
+  font-size: 18px;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 14px 22px;
+  background: #9b4dff;
+  color: white;
+  border: 0;
+  border-radius: 30px;
+  font-weight: bold;
+}
+
+section {
+  padding: 35px 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+h2 {
+  font-size: 28px;
+  text-align: center;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  background: #15151b;
+  border: 1px solid #333;
+  border-radius: 18px;
+  padding: 22px;
+}
+
+.card h3 {
+  color: #c17cff;
+}
+
+form {
+  background: #15151b;
+  padding: 22px;
+  border-radius: 18px;
+  border: 1px solid #333;
+}
+
+input, select, textarea {
+  width: 100%;
+  margin: 8px 0 15px;
+  padding: 13px;
+  border-radius: 10px;
+  border: 1px solid #444;
+  background: #0d0d11;
+  color: white;
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  background: #111116;
+  color: #aaa;
+}
+
+.whatsapp {
+  color: #fff;
+  text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">RoXThal <span>Art Design</span></div>
+
+  <nav>
+    <button onclick="ir('inicio')">Inicio</button>
+    <button onclick="ir('tatuajes')">Tatuajes</button>
+    <button onclick="ir('cursos')">Cursos</button>
+    <button onclick="ir('promos')">Promociones</button>
+    <button onclick="ir('turno')">Reservar turno</button>
+  </nav>
+</header>
+
+<div id="inicio" class="hero">
+  <h1>RoXThal Art Design</h1>
+  <p>Arte, tatuajes, dibujo y formación artística.</p>
+
+  <button class="btn" onclick="ir('turno')">
+    RESERVAR TURNO
+  </button>
+</div>
+
+<section id="tatuajes">
+  <h2>🎨 Tatuajes</h2>
+
+  <div class="cards">
+    <div class="card">
+      <h3>Diseños personalizados</h3>
+      <p>Creamos diseños únicos adaptados a cada cliente.</p>
+    </div>
+
+    <div class="card">
+      <h3>Black & Grey</h3>
+      <p>Trabajos de sombreado, realismo y composición.</p>
+    </div>
+
+    <div class="card">
+      <h3>Color</h3>
+      <p>Diseños llenos de color y personalidad.</p>
+    </div>
+  </div>
+</section>
+
+<section id="cursos">
+  <h2>📚 Cursos</h2>
+
+  <div class="cards">
+    <div class="card">
+      <h3>Iniciación al tatuaje</h3>
+      <p>Aprendé las bases del mundo del tatuaje.</p>
+    </div>
+
+    <div class="card">
+      <h3>Dibujo</h3>
+      <p>Aprendé técnicas de dibujo y construcción.</p>
+    </div>
+
+    <div class="card">
+      <h3>Pintura</h3>
+      <p>Clases para desarrollar tu creatividad artística.</p>
+    </div>
+  </div>
+</section>
+
+<section id="promos">
+  <h2>🔥 Promociones</h2>
+
+  <div class="card">
+    <h3>Oferta especial</h3>
+    <p>Consultá nuestras promociones y disponibilidad.</p>
+    <p><strong>Instagram:</strong> @roxthalartdesign</p>
+  </div>
+</section>
+
+<section id="turno">
+  <h2>📅 Reservar turno</h2>
+
+  <form onsubmit="reservar(event)">
+    <label>Nombre</label>
+    <input id="nombre" required>
+
+    <label>Teléfono</label>
+    <input id="telefono" required>
+
+    <label>Servicio</label>
+    <select id="servicio">
+      <option>Tatuaje</option>
+      <option>Curso de tatuaje</option>
+      <option>Clase de dibujo</option>
+      <option>Clase de pintura</option>
+    </select>
+
+    <label>Fecha preferida</label>
+    <input id="fecha" type="date" required>
+
+    <label>Mensaje</label>
+    <textarea id="mensaje" rows="4"></textarea>
+
+    <button class="btn" type="submit">
+      SOLICITAR TURNO
+    </button>
+  </form>
+</section>
+
+<footer>
+  <p>RoXThal Art Design</p>
+  <p>San Antonio de Padua</p>
+
+  <p>
+    Instagram: @roxthalartdesign
+  </p>
+
+  <p>
+    <a class="whatsapp"
+       href="https://wa.me/541169633376"
+       target="_blank">
+       WhatsApp: 11 6963-3376
+    </a>
+  </p>
+</footer>
+
+<script>
+
+function ir(id) {
+  document.getElementById(id).scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
+function reservar(event) {
+
+  event.preventDefault();
+
+  const nombre =
+    document.getElementById("nombre").value;
+
+  const telefono =
+    document.getElementById("telefono").value;
+
+  const servicio =
+    document.getElementById("servicio").value;
+
+  const fecha =
+    document.getElementById("fecha").value;
+
+  const mensaje =
+    document.getElementById("mensaje").value;
+
+  const texto =
+    "Hola RoXThal Art Design.%0A%0A" +
+    "Quiero solicitar un turno.%0A" +
+    "Nombre: " + nombre + "%0A" +
+    "Teléfono: " + telefono + "%0A" +
+    "Servicio: " + servicio + "%0A" +
+    "Fecha: " + fecha + "%0A" +
+    "Mensaje: " + mensaje;
+
+  window.open(
+    "https://wa.me/541169633376?text=" + texto,
+    "_blank"
+  );
+}
+
+</script>
+
+</body>
+</html>
