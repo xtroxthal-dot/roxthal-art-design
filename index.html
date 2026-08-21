@@ -3,110 +3,285 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>RoXThal Art Design</title>
-  <meta name="description" content="RoXThal Art Design - Tatuajes, fileteado porteño, dibujo, pintura y diseño.">
+
+  <meta name="description"
+        content="RoXThal Art Design - Tatuajes, fileteado porteño, dibujo, pintura y diseño.">
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:Arial,sans-serif;
-      background:#101014;
-      color:#fff;
-      line-height:1.5
+    * {
+      box-sizing: border-box;
     }
-    header{
-      position:sticky;
-      top:0;
-      z-index:10;
-      background:#0b0b0d;
-      border-bottom:1px solid #333;
-      padding:15px
+
+    html {
+      scroll-behavior: smooth;
     }
-    .nav{
-      max-width:1100px;
-      margin:auto;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:15px
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0d0d0f;
+      color: #ffffff;
+      line-height: 1.5;
     }
-    .logo{font-size:22px;font-weight:bold}
-    .logo span{color:#f2c94c}
-    nav{display:flex;gap:8px;flex-wrap:wrap}
-    nav a,button{
-      background:#1d1d23;
-      color:#fff;
-      border:1px solid #444;
-      border-radius:9px;
-      padding:10px 13px;
-      text-decoration:none;
-      cursor:pointer
+
+    a {
+      color: inherit;
     }
-    nav a:hover,button:hover{border-color:#f2c94c}
-    .hero{
-      text-align:center;
-      padding:100px 20px;
-      background:radial-gradient(circle at top,#34343d,#101014 60%)
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,12,.97);
+      border-bottom: 1px solid #333;
     }
-    .hero h1{font-size:clamp(40px,9vw,85px);margin:0}
-    .hero h1 span{color:#f2c94c}
-    .hero p{max-width:700px;margin:25px auto;color:#ccc;font-size:18px}
-    .btn{
-      display:inline-block;
-      background:#f2c94c;
-      color:#111;
-      padding:13px 18px;
-      border-radius:10px;
-      text-decoration:none;
-      font-weight:bold;
-      margin:5px
+
+    .nav {
+      max-width: 1100px;
+      margin: auto;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
     }
-    main{max-width:1100px;margin:auto;padding:20px}
-    section{padding:60px 0;border-bottom:1px solid #29292f}
-    h2{font-size:32px}
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:18px
+
+    .logo {
+      font-size: 22px;
+      font-weight: 900;
+      white-space: nowrap;
     }
-    .card{
-      background:#19191f;
-      border:1px solid #333;
-      border-radius:15px;
-      padding:22px
+
+    .logo span {
+      color: #f2c94c;
     }
-    .card h3{margin-top:0;color:#f2c94c}
-    .muted{color:#bbb}
-    form{max-width:650px;display:grid;gap:12px}
-    input,textarea,select{
-      width:100%;
-      padding:13px;
-      background:#0d0d10;
-      color:#fff;
-      border:1px solid #444;
-      border-radius:9px
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 7px;
     }
-    textarea{min-height:120px}
-    #admin{display:none}
-    #dashboard{display:none}
-    .status{
-      padding:12px;
-      margin:12px 0;
-      border-radius:9px;
-      background:#24242b
+
+    nav a {
+      display: inline-block;
+      padding: 9px 11px;
+      border: 1px solid #3b3b42;
+      border-radius: 9px;
+      background: #19191f;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
     }
-    table{width:100%;border-collapse:collapse}
-    th,td{border:1px solid #444;padding:8px;text-align:left}
-    th{background:#27272d}
-    .table-wrap{overflow:auto}
-    footer{text-align:center;color:#aaa;padding:35px 15px}
-    @media(max-width:700px){
-      .nav{flex-direction:column}
-      nav{justify-content:center}
+
+    nav a:hover {
+      border-color: #f2c94c;
+      color: #f2c94c;
+    }
+
+    .hero {
+      min-height: 72vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 70px 18px;
+      background:
+        radial-gradient(circle at top, #34343d 0%, #15151a 42%, #0d0d0f 75%);
+    }
+
+    .hero-content {
+      max-width: 900px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(42px, 9vw, 90px);
+      line-height: 1;
+    }
+
+    .hero h1 span {
+      color: #f2c94c;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 25px auto;
+      color: #ccc;
+      font-size: 18px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 13px 18px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 900;
+      border: 1px solid #444;
+      background: #1b1b21;
+    }
+
+    .btn.primary {
+      background: #f2c94c;
+      color: #111;
+      border-color: #f2c94c;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 10px 18px 70px;
+    }
+
+    section {
+      padding: 60px 0;
+      border-bottom: 1px solid #29292f;
+    }
+
+    h2 {
+      font-size: 32px;
+      margin-top: 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: #19191f;
+      border: 1px solid #333;
+      border-radius: 15px;
+      padding: 22px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #f2c94c;
+    }
+
+    .muted {
+      color: #bbb;
+    }
+
+    form {
+      max-width: 650px;
+      display: grid;
+      gap: 12px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 13px;
+      border-radius: 9px;
+      border: 1px solid #444;
+      background: #0d0d10;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    button {
+      padding: 13px 16px;
+      border-radius: 9px;
+      border: 1px solid #444;
+      background: #f2c94c;
+      color: #111;
+      font-weight: 900;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    button:hover {
+      opacity: .9;
+    }
+
+    #admin {
+      display: block;
+    }
+
+    #dashboard {
+      display: none;
+    }
+
+    .status {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 9px;
+      background: #222229;
+      color: #ddd;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 600px;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 9px;
+      border: 1px solid #444;
+      text-align: left;
+    }
+
+    th {
+      background: #28282f;
+      color: #f2c94c;
+    }
+
+    footer {
+      padding: 35px 18px;
+      text-align: center;
+      color: #aaa;
+    }
+
+    @media (max-width: 750px) {
+
+      .nav {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .logo {
+        text-align: center;
+      }
+
+      nav {
+        display: flex !important;
+        width: 100%;
+      }
+
+      nav a {
+        flex: 1 1 auto;
+        text-align: center;
+      }
+
+      .hero {
+        min-height: 65vh;
+      }
     }
   </style>
 </head>
@@ -114,42 +289,70 @@
 <body>
 
 <header>
+
   <div class="nav">
-    <div class="logo">RoXThal <span>Art Design</span></div>
+
+    <div class="logo">
+      RoXThal <span>Art Design</span>
+    </div>
+
     <nav>
       <a href="#inicio">Inicio</a>
       <a href="#servicios">Servicios</a>
       <a href="#cursos">Cursos</a>
       <a href="#reservas">Reservas</a>
       <a href="#contacto">Contacto</a>
-      <a href="#admin">Admin</a>
+      <a href="#admin">ADMIN</a>
     </nav>
+
   </div>
+
 </header>
 
+
 <section class="hero" id="inicio">
-  <h1>RoXThal <span>Art Design</span></h1>
-  <p>
-    Tatuajes, arte, dibujo, pintura, diseño y
-    todo tipo de fileteados al más puro estilo fileteado porteño.
-  </p>
 
-  <a class="btn"
-     href="https://wa.me/5491169633376?text=Hola%20RoXThal%20Art%20Design%2C%20quiero%20hacer%20una%20consulta."
-     target="_blank">
-    WhatsApp
-  </a>
+  <div class="hero-content">
 
-  <a class="btn"
-     href="https://instagram.com/roxthalartdesign"
-     target="_blank">
-    Instagram
-  </a>
+    <h1>
+      RoXThal <span>Art Design</span>
+    </h1>
+
+    <p>
+      Tatuajes, arte, dibujo, pintura, diseño y
+      todo tipo de fileteados al más puro estilo
+      fileteado porteño.
+    </p>
+
+    <div class="buttons">
+
+      <a
+        class="btn primary"
+        href="https://wa.me/5491169633376?text=Hola%20RoXThal%20Art%20Design%2C%20quiero%20hacer%20una%20consulta."
+        target="_blank"
+        rel="noopener">
+        WhatsApp
+      </a>
+
+      <a
+        class="btn"
+        href="https://instagram.com/roxthalartdesign"
+        target="_blank"
+        rel="noopener">
+        Instagram
+      </a>
+
+    </div>
+
+  </div>
+
 </section>
+
 
 <main>
 
 <section id="servicios">
+
   <h2>Servicios</h2>
 
   <div class="grid">
@@ -157,14 +360,16 @@
     <div class="card">
       <h3>Tatuajes</h3>
       <p class="muted">
-        Diseños personalizados y trabajos de tatuaje adaptados a cada proyecto.
+        Diseños personalizados y trabajos de tatuaje
+        adaptados a cada proyecto.
       </p>
     </div>
 
     <div class="card">
       <h3>Fileteado porteño</h3>
       <p class="muted">
-        Realizamos todo tipo de fileteados al más puro estilo fileteado porteño.
+        Realizamos todo tipo de fileteados al más puro
+        estilo fileteado porteño.
       </p>
     </div>
 
@@ -183,9 +388,12 @@
     </div>
 
   </div>
+
 </section>
 
+
 <section id="cursos">
+
   <h2>Cursos</h2>
 
   <div class="grid">
@@ -205,64 +413,115 @@
     </div>
 
   </div>
+
 </section>
 
+
 <section id="reservas">
+
   <h2>Reserva / Consulta</h2>
+
+  <p class="muted">
+    Completa el formulario y envía tu consulta directamente por WhatsApp.
+  </p>
 
   <form id="bookingForm">
 
-    <input id="nombre" required placeholder="Nombre">
+    <input
+      id="nombre"
+      type="text"
+      placeholder="Nombre"
+      required>
 
-    <input id="telefono" placeholder="Teléfono">
+    <input
+      id="telefono"
+      type="tel"
+      placeholder="Teléfono">
 
     <select id="servicio" required>
-      <option value="">Selecciona un servicio</option>
+
+      <option value="">
+        Selecciona un servicio
+      </option>
+
       <option>Tatuaje</option>
       <option>Fileteado porteño</option>
       <option>Dibujo y pintura</option>
       <option>Curso</option>
       <option>Diseño</option>
+
     </select>
 
-    <textarea id="consulta" placeholder="Cuéntanos qué necesitas"></textarea>
+    <textarea
+      id="consulta"
+      placeholder="Cuéntanos qué necesitas"></textarea>
 
-    <button type="submit">Enviar por WhatsApp</button>
+    <button type="submit">
+      Enviar por WhatsApp
+    </button>
 
   </form>
+
 </section>
 
+
 <section id="contacto">
+
   <h2>Contacto</h2>
 
   <div class="card">
-    <p><strong>Ubicación:</strong> San Antonio de Padua</p>
-    <p><strong>WhatsApp:</strong> +54 9 11 6963-3376</p>
-    <p><strong>Instagram:</strong> @roxthalartdesign</p>
+
+    <p>
+      <strong>Ubicación:</strong>
+      San Antonio de Padua
+    </p>
+
+    <p>
+      <strong>WhatsApp:</strong>
+      +54 9 11 6963-3376
+    </p>
+
+    <p>
+      <strong>Instagram:</strong>
+      @roxthalartdesign
+    </p>
+
   </div>
+
 </section>
+
 
 <section id="admin">
 
-  <h2>Panel de administración</h2>
+  <h2>Administración</h2>
 
   <div id="loginBox" class="card">
+
+    <h3>Acceso administrador</h3>
+
+    <p class="muted">
+      Inicia sesión para acceder a los datos de RoXThal Art Design.
+    </p>
 
     <form id="loginForm">
 
       <input
         id="email"
         type="email"
-        placeholder="Correo de administrador"
+        placeholder="Correo electrónico"
+        autocomplete="username"
         required>
 
       <input
         id="password"
         type="password"
         placeholder="Contraseña"
+        autocomplete="current-password"
         required>
 
-      <button type="submit">Entrar</button>
+      <button type="submit">
+        Entrar
+      </button>
 
     </form>
 
@@ -270,14 +529,26 @@
 
   </div>
 
+
   <div id="dashboard">
 
     <div class="card">
-      <h3>Administrador</h3>
-      <p id="adminEmail"></p>
 
-      <button id="actualizar">Actualizar datos</button>
-      <button id="cerrarSesion">Cerrar sesión</button>
+      <h3>Panel de administrador</h3>
+
+      <p>
+        Usuario:
+        <strong id="adminEmail"></strong>
+      </p>
+
+      <button id="actualizar">
+        Actualizar datos
+      </button>
+
+      <button id="cerrarSesion">
+        Cerrar sesión
+      </button>
+
     </div>
 
     <div id="datos"></div>
@@ -288,261 +559,348 @@
 
 </main>
 
+
 <footer>
-  © 2026 RoXThal Art Design
+
+  RoXThal Art Design © 2026
+
 </footer>
+
 
 <script>
 
 const SUPABASE_URL =
-"https://lvvhpuedktdmfehvhcwk.supabase.co";
+  "https://lvvhpuedktdmfehvhcwk.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp";
+  "sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp";
 
 const ADMIN_EMAIL =
-"xtroxthal@gmail.com";
+  "xtroxthal@gmail.com";
 
 const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
-
-/* WHATSAPP */
-
-document.getElementById("bookingForm").addEventListener("submit",function(e){
-
-  e.preventDefault();
-
-  const nombre =
-  document.getElementById("nombre").value;
-
-  const telefono =
-  document.getElementById("telefono").value;
-
-  const servicio =
-  document.getElementById("servicio").value;
-
-  const consulta =
-  document.getElementById("consulta").value;
-
-  const mensaje =
-  "Hola RoXThal Art Design.%0A%0A" +
-  "Nombre: " + encodeURIComponent(nombre) +
-  "%0ATeléfono: " + encodeURIComponent(telefono) +
-  "%0AServicio: " + encodeURIComponent(servicio) +
-  "%0AConsulta: " + encodeURIComponent(consulta);
-
-  window.open(
-    "https://wa.me/5491169633376?text=" + mensaje,
-    "_blank"
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
   );
 
-});
 
+/* =========================
+   WHATSAPP
+========================= */
 
-/* LOGIN */
+document
+  .getElementById("bookingForm")
+  .addEventListener("submit", function(event) {
 
-document.getElementById("loginForm").addEventListener("submit",async function(e){
+    event.preventDefault();
 
-  e.preventDefault();
+    const nombre =
+      document.getElementById("nombre").value.trim();
 
-  const email =
-  document.getElementById("email").value.trim();
+    const telefono =
+      document.getElementById("telefono").value.trim();
 
-  const password =
-  document.getElementById("password").value;
+    const servicio =
+      document.getElementById("servicio").value;
 
-  const status =
-  document.getElementById("loginStatus");
+    const consulta =
+      document.getElementById("consulta").value.trim();
 
-  if(email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()){
+    const texto =
+      "Hola RoXThal Art Design.%0A%0A" +
+      "Nombre: " + encodeURIComponent(nombre) +
+      "%0ATeléfono: " + encodeURIComponent(telefono) +
+      "%0AServicio: " + encodeURIComponent(servicio) +
+      "%0AConsulta: " + encodeURIComponent(consulta);
 
-    status.innerHTML =
-    "Este acceso es solamente para el administrador.";
+    window.open(
+      "https://wa.me/5491169633376?text=" + texto,
+      "_blank"
+    );
 
-    return;
-  }
-
-  status.innerHTML =
-  "Iniciando sesión...";
-
-  const {data,error} =
-  await supabaseClient.auth.signInWithPassword({
-    email,
-    password
   });
 
-  if(error){
 
-    status.innerHTML =
-    "Error: " + error.message;
+/* =========================
+   LOGIN
+========================= */
 
-    return;
-  }
+document
+  .getElementById("loginForm")
+  .addEventListener("submit", async function(event) {
 
-  status.innerHTML =
-  "Sesión iniciada correctamente.";
+    event.preventDefault();
 
-  mostrarPanel(data.user);
+    const email =
+      document.getElementById("email").value.trim();
 
-});
+    const password =
+      document.getElementById("password").value;
+
+    const status =
+      document.getElementById("loginStatus");
+
+    status.className = "status";
+    status.textContent = "Comprobando acceso...";
 
 
-/* PANEL */
+    if (
+      email.toLowerCase() !==
+      ADMIN_EMAIL.toLowerCase()
+    ) {
 
-async function mostrarPanel(user){
+      status.textContent =
+        "Este acceso está reservado al administrador.";
 
-  document.getElementById("loginBox").style.display="none";
+      return;
+    }
 
-  document.getElementById("dashboard").style.display="block";
+
+    const { data, error } =
+      await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+
+
+    if (error) {
+
+      status.textContent =
+        "No se pudo iniciar sesión: " +
+        error.message;
+
+      return;
+    }
+
+
+    status.textContent =
+      "Acceso correcto.";
+
+    mostrarPanel(data.user);
+
+  });
+
+
+/* =========================
+   MOSTRAR PANEL
+========================= */
+
+function mostrarPanel(user) {
+
+  document.getElementById("loginBox").style.display =
+    "none";
+
+  document.getElementById("dashboard").style.display =
+    "block";
 
   document.getElementById("adminEmail").textContent =
-  user.email;
+    user.email;
 
   cargarDatos();
 
 }
 
 
-/* DATOS */
+/* =========================
+   CARGAR DATOS
+========================= */
 
-async function cargarDatos(){
+async function cargarDatos() {
 
   const contenedor =
-  document.getElementById("datos");
+    document.getElementById("datos");
 
   contenedor.innerHTML =
-  "<p>Cargando datos...</p>";
+    "<div class='card'>Cargando datos...</div>";
 
-  const tablas =
-  ["Alumnos","Booking","Cursos","Pagos"];
 
-  contenedor.innerHTML="";
+  const tablas = [
+    {
+      nombre: "Alumnos",
+      tabla: "alumnos"
+    },
+    {
+      nombre: "Booking",
+      tabla: "booking"
+    },
+    {
+      nombre: "Cursos",
+      tabla: "cursos"
+    },
+    {
+      nombre: "Pagos",
+      tabla: "pagos"
+    }
+  ];
 
-  for(const tabla of tablas){
 
-    const {data,error} =
-    await supabaseClient
-    .from(tabla)
-    .select("*")
-    .limit(100);
+  contenedor.innerHTML = "";
+
+
+  for (const elemento of tablas) {
 
     const bloque =
-    document.createElement("div");
+      document.createElement("div");
 
-    bloque.className="card";
+    bloque.className = "card";
 
     const titulo =
-    document.createElement("h3");
+      document.createElement("h3");
 
-    titulo.textContent=tabla;
+    titulo.textContent =
+      elemento.nombre;
 
     bloque.appendChild(titulo);
 
-    if(error){
 
-      const p =
-      document.createElement("p");
+    const resultado =
+      await supabaseClient
+        .from(elemento.tabla)
+        .select("*")
+        .limit(100);
 
-      p.className="muted";
 
-      p.textContent =
-      "No se pudieron cargar los datos.";
+    if (resultado.error) {
 
-      bloque.appendChild(p);
+      const mensaje =
+        document.createElement("p");
+
+      mensaje.className =
+        "muted";
+
+      mensaje.textContent =
+        "No se pueden mostrar los datos de esta tabla con los permisos actuales.";
+
+      bloque.appendChild(mensaje);
+
+      contenedor.appendChild(bloque);
+
+      continue;
+    }
+
+
+    const datos =
+      resultado.data;
+
+
+    if (!datos || datos.length === 0) {
+
+      const mensaje =
+        document.createElement("p");
+
+      mensaje.className =
+        "muted";
+
+      mensaje.textContent =
+        "No hay registros todavía.";
+
+      bloque.appendChild(mensaje);
 
       contenedor.appendChild(bloque);
 
       continue;
     }
 
-    if(!data || data.length===0){
-
-      const p =
-      document.createElement("p");
-
-      p.className="muted";
-
-      p.textContent="Sin registros.";
-
-      bloque.appendChild(p);
-
-      contenedor.appendChild(bloque);
-
-      continue;
-    }
 
     const columnas =
-    Object.keys(data[0]);
+      Object.keys(datos[0]);
 
-    const wrap =
-    document.createElement("div");
 
-    wrap.className="table-wrap";
+    const envoltorio =
+      document.createElement("div");
 
-    const table =
-    document.createElement("table");
+    envoltorio.className =
+      "table-wrap";
 
-    const thead =
-    document.createElement("thead");
 
-    const tr =
-    document.createElement("tr");
+    const tabla =
+      document.createElement("table");
 
-    columnas.forEach(col=>{
+
+    const encabezado =
+      document.createElement("thead");
+
+
+    const filaEncabezado =
+      document.createElement("tr");
+
+
+    columnas.forEach(function(columna) {
 
       const th =
-      document.createElement("th");
+        document.createElement("th");
 
-      th.textContent=col;
+      th.textContent =
+        columna;
 
-      tr.appendChild(th);
+      filaEncabezado.appendChild(th);
 
     });
 
-    thead.appendChild(tr);
 
-    table.appendChild(thead);
+    encabezado.appendChild(
+      filaEncabezado
+    );
 
-    const tbody =
-    document.createElement("tbody");
+    tabla.appendChild(
+      encabezado
+    );
 
-    data.forEach(fila=>{
+
+    const cuerpo =
+      document.createElement("tbody");
+
+
+    datos.forEach(function(fila) {
 
       const tr =
-      document.createElement("tr");
+        document.createElement("tr");
 
-      columnas.forEach(col=>{
+
+      columnas.forEach(function(columna) {
 
         const td =
-        document.createElement("td");
+          document.createElement("td");
 
         const valor =
-        fila[col];
+          fila[columna];
 
-        td.textContent =
-        valor === null
-        ? ""
-        : typeof valor === "object"
-        ? JSON.stringify(valor)
-        : valor;
+
+        if (valor === null) {
+
+          td.textContent = "";
+
+        } else if (
+          typeof valor === "object"
+        ) {
+
+          td.textContent =
+            JSON.stringify(valor);
+
+        } else {
+
+          td.textContent =
+            String(valor);
+
+        }
+
 
         tr.appendChild(td);
 
       });
 
-      tbody.appendChild(tr);
+
+      cuerpo.appendChild(tr);
 
     });
 
-    table.appendChild(tbody);
 
-    wrap.appendChild(table);
+    tabla.appendChild(cuerpo);
 
-    bloque.appendChild(wrap);
+    envoltorio.appendChild(tabla);
+
+    bloque.appendChild(envoltorio);
 
     contenedor.appendChild(bloque);
 
@@ -551,42 +909,65 @@ async function cargarDatos(){
 }
 
 
-/* ACTUALIZAR */
+/* =========================
+   ACTUALIZAR
+========================= */
 
-document.getElementById("actualizar")
-.addEventListener("click",cargarDatos);
-
-
-/* CERRAR SESIÓN */
-
-document.getElementById("cerrarSesion")
-.addEventListener("click",async function(){
-
-  await supabaseClient.auth.signOut();
-
-  document.getElementById("dashboard").style.display="none";
-
-  document.getElementById("loginBox").style.display="block";
-
-  document.getElementById("loginForm").reset();
-
-});
+document
+  .getElementById("actualizar")
+  .addEventListener(
+    "click",
+    cargarDatos
+  );
 
 
-/* SESIÓN EXISTENTE */
+/* =========================
+   CERRAR SESIÓN
+========================= */
 
-async function comprobarSesion(){
+document
+  .getElementById("cerrarSesion")
+  .addEventListener(
+    "click",
+    async function() {
 
-  const {data} =
-  await supabaseClient.auth.getSession();
+      await supabaseClient.auth.signOut();
+
+      document.getElementById(
+        "dashboard"
+      ).style.display = "none";
+
+      document.getElementById(
+        "loginBox"
+      ).style.display = "block";
+
+      document.getElementById(
+        "loginForm"
+      ).reset();
+
+    }
+  );
+
+
+/* =========================
+   COMPROBAR SESIÓN
+========================= */
+
+async function comprobarSesion() {
+
+  const { data } =
+    await supabaseClient.auth.getSession();
 
   const user =
-  data.session?.user;
+    data.session?.user;
 
-  if(
+
+  if (
     user &&
-    user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase()
-  ){
+    user.email &&
+    user.email.toLowerCase() ===
+    ADMIN_EMAIL.toLowerCase()
+  ) {
 
     mostrarPanel(user);
 
@@ -594,7 +975,34 @@ async function comprobarSesion(){
 
 }
 
+
 comprobarSesion();
+
+
+/* =========================
+   CAMBIOS DE SESIÓN
+========================= */
+
+supabaseClient.auth.onAuthStateChange(
+  function(event, session) {
+
+    if (
+      event === "SIGNED_OUT" ||
+      !session
+    ) {
+
+      document.getElementById(
+        "dashboard"
+      ).style.display = "none";
+
+      document.getElementById(
+        "loginBox"
+      ).style.display = "block";
+
+    }
+
+  }
+);
 
 </script>
 
