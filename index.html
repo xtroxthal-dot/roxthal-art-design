@@ -3,61 +3,324 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>RoXThal Art Design</title>
-<meta name="description" content="RoXThal Art Design - Arte, tatuajes, fileteado porteño, dibujo, pintura y cursos">
+
+<meta name="description"
+content="RoXThal Art Design - Arte, tatuajes, fileteado porteño, dibujo, pintura y cursos">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#111;color:#fff;line-height:1.5}
-header{background:#000;padding:22px;text-align:center;border-bottom:2px solid #d4af37}
-header h1{color:#d4af37;font-size:32px}
-header p{color:#ccc}
-nav{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;padding:12px;background:#181818}
-button{cursor:pointer}
-nav button,.admin-menu button{background:#252525;color:#fff;border:1px solid #555;padding:10px 15px;border-radius:8px}
-nav button:hover,.admin-menu button.active{background:#d4af37;color:#000}
-section{max-width:1150px;margin:auto;padding:35px 20px}
-.hero{text-align:center;max-width:none;padding:80px 20px;background:linear-gradient(135deg,#111,#222)}
-.hero h2{font-size:42px;color:#d4af37;margin-bottom:15px}
-.hero p{font-size:18px;color:#ddd}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:22px}
-.card,.admin-panel,.login-box{background:#1b1b1b;border:1px solid #3d3d3d;border-radius:12px;padding:22px}
-.card h3{color:#d4af37;margin-bottom:8px}
-.login-box{max-width:430px;margin:auto}
-input,select,textarea{width:100%;background:#101010;color:#fff;border:1px solid #555;border-radius:7px;padding:11px;margin:6px 0 13px}
-textarea{min-height:90px}
-.primary{background:#d4af37;color:#000;border:0;padding:11px 17px;border-radius:7px;font-weight:bold}
-.danger{background:#a52b2b;color:#fff;border:0;padding:9px 13px;border-radius:7px}
-.secondary{background:#333;color:#fff;border:1px solid #666;padding:8px 11px;border-radius:6px}
-.message{padding:10px;margin-top:12px;border-radius:7px;display:none}
-.message.show{display:block}
-.message.error{background:#602020}
-.message.success{background:#175126}
-.admin-panel{max-width:none;margin-top:25px}
-.admin-menu{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}
-.admin-section{display:none}
-.admin-section.active{display:block}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:20px 0}
-.stat{background:#252525;border-radius:10px;padding:18px;text-align:center}
-.stat strong{display:block;color:#d4af37;font-size:30px}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}
-.toolbar input{margin:0;flex:1;min-width:220px}
-.table-wrap{overflow-x:auto;margin-top:15px}
-table{width:100%;border-collapse:collapse;min-width:900px}
-th,td{border:1px solid #444;padding:9px;text-align:left}
-th{background:#292929;color:#d4af37}
-td{background:#151515}
-.actions{display:flex;gap:5px;flex-wrap:wrap}
-.badge{display:inline-block;padding:4px 8px;border-radius:10px;font-size:12px;background:#333}
-.badge.ok{background:#175126}
-.badge.off{background:#602020}
-footer{text-align:center;background:#000;color:#aaa;padding:25px;margin-top:30px}
-a{color:#d4af37}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:10;padding:20px;overflow:auto}
-.modal-box{max-width:650px;margin:50px auto;background:#1b1b1b;border:1px solid #555;border-radius:12px;padding:25px}
-@media(max-width:600px){.hero h2{font-size:30px}section{padding:25px 14px}}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#111;
+  color:#fff;
+  line-height:1.5;
+}
+
+header{
+  background:#000;
+  padding:22px;
+  text-align:center;
+  border-bottom:2px solid #d4af37;
+}
+
+header h1{
+  color:#d4af37;
+  font-size:32px;
+}
+
+header p{
+  color:#ccc;
+}
+
+nav{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:8px;
+  padding:12px;
+  background:#181818;
+}
+
+button{
+  cursor:pointer;
+}
+
+nav button,
+.admin-menu button{
+  background:#252525;
+  color:#fff;
+  border:1px solid #555;
+  padding:10px 15px;
+  border-radius:8px;
+}
+
+nav button:hover,
+.admin-menu button.active{
+  background:#d4af37;
+  color:#000;
+}
+
+section{
+  max-width:1150px;
+  margin:auto;
+  padding:35px 20px;
+}
+
+.hero{
+  text-align:center;
+  max-width:none;
+  padding:80px 20px;
+  background:linear-gradient(135deg,#111,#222);
+}
+
+.hero h2{
+  font-size:42px;
+  color:#d4af37;
+  margin-bottom:15px;
+}
+
+.hero p{
+  font-size:18px;
+  color:#ddd;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
+  margin-top:22px;
+}
+
+.card,
+.admin-panel,
+.login-box{
+  background:#1b1b1b;
+  border:1px solid #3d3d3d;
+  border-radius:12px;
+  padding:22px;
+}
+
+.card h3{
+  color:#d4af37;
+  margin-bottom:8px;
+}
+
+.login-box{
+  max-width:430px;
+  margin:auto;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  background:#101010;
+  color:#fff;
+  border:1px solid #555;
+  border-radius:7px;
+  padding:11px;
+  margin:6px 0 13px;
+}
+
+textarea{
+  min-height:90px;
+}
+
+.primary{
+  background:#d4af37;
+  color:#000;
+  border:0;
+  padding:11px 17px;
+  border-radius:7px;
+  font-weight:bold;
+}
+
+.danger{
+  background:#a52b2b;
+  color:#fff;
+  border:0;
+  padding:9px 13px;
+  border-radius:7px;
+}
+
+.secondary{
+  background:#333;
+  color:#fff;
+  border:1px solid #666;
+  padding:8px 11px;
+  border-radius:6px;
+}
+
+.message{
+  padding:10px;
+  margin-top:12px;
+  border-radius:7px;
+  display:none;
+}
+
+.message.show{
+  display:block;
+}
+
+.message.error{
+  background:#602020;
+}
+
+.message.success{
+  background:#175126;
+}
+
+.admin-panel{
+  max-width:none;
+  margin-top:25px;
+}
+
+.admin-menu{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:20px 0;
+}
+
+.admin-section{
+  display:none;
+}
+
+.admin-section.active{
+  display:block;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;
+  margin:20px 0;
+}
+
+.stat{
+  background:#252525;
+  border-radius:10px;
+  padding:18px;
+  text-align:center;
+}
+
+.stat strong{
+  display:block;
+  color:#d4af37;
+  font-size:30px;
+}
+
+.toolbar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:15px 0;
+}
+
+.toolbar input{
+  margin:0;
+  flex:1;
+  min-width:220px;
+}
+
+.table-wrap{
+  overflow-x:auto;
+  margin-top:15px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:850px;
+}
+
+th,
+td{
+  border:1px solid #444;
+  padding:9px;
+  text-align:left;
+}
+
+th{
+  background:#292929;
+  color:#d4af37;
+}
+
+td{
+  background:#151515;
+}
+
+.actions{
+  display:flex;
+  gap:5px;
+  flex-wrap:wrap;
+}
+
+.badge{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:10px;
+  font-size:12px;
+  background:#333;
+}
+
+.badge.ok{
+  background:#175126;
+}
+
+.badge.off{
+  background:#602020;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  z-index:10;
+  padding:20px;
+  overflow:auto;
+}
+
+.modal-box{
+  max-width:650px;
+  margin:50px auto;
+  background:#1b1b1b;
+  border:1px solid #555;
+  border-radius:12px;
+  padding:25px;
+}
+
+footer{
+  text-align:center;
+  background:#000;
+  color:#aaa;
+  padding:25px;
+  margin-top:30px;
+}
+
+a{
+  color:#d4af37;
+}
+
+@media(max-width:600px){
+  .hero h2{
+    font-size:30px;
+  }
+
+  section{
+    padding:25px 14px;
+  }
+}
 </style>
 </head>
 
@@ -78,515 +341,2105 @@ a{color:#d4af37}
 
 <section id="inicio" class="hero">
 <h2>RoXThal Art Design</h2>
-<p>Arte, tatuajes, dibujo, pintura y fileteado porteño al más puro estilo argentino.</p>
+<p>
+Arte, tatuajes, dibujo, pintura y fileteado porteño
+al más puro estilo argentino.
+</p>
 </section>
 
 <section id="servicios">
+
 <h2>Servicios</h2>
+
 <div class="cards">
-<div class="card"><h3>Tatuajes</h3><p>Diseños personalizados y trabajos artísticos.</p></div>
-<div class="card"><h3>Fileteado Porteño</h3><p>Trabajos de fileteado al estilo tradicional argentino.</p></div>
-<div class="card"><h3>Dibujo</h3><p>Clases y desarrollo de técnicas de dibujo.</p></div>
-<div class="card"><h3>Pintura</h3><p>Clases de pintura y desarrollo artístico.</p></div>
+
+<div class="card">
+<h3>Tatuajes</h3>
+<p>Diseños personalizados y trabajos artísticos.</p>
+</div>
+
+<div class="card">
+<h3>Fileteado Porteño</h3>
+<p>Trabajos de fileteado al estilo tradicional argentino.</p>
+</div>
+
+<div class="card">
+<h3>Dibujo</h3>
+<p>Clases y desarrollo de técnicas de dibujo.</p>
+</div>
+
+<div class="card">
+<h3>Pintura</h3>
+<p>Clases de pintura y desarrollo artístico.</p>
+</div>
+
 </div>
 </section>
 
 <section id="cursosPublicos">
+
 <h2>Cursos</h2>
-<div id="publicCourses" class="cards"></div>
+
+<div id="publicCourses" class="cards">
+<div class="card">
+<h3>Cargando cursos...</h3>
+</div>
+</div>
+
 </section>
 
 <section id="contacto">
+
 <h2>Contacto</h2>
+
 <div class="card">
-<p><strong>WhatsApp:</strong>
-<a href="https://wa.me/5491169633376" target="_blank">+54 9 11 6963-3376</a></p>
-<p><strong>Instagram:</strong>
-<a href="https://instagram.com/roxthalartdesign" target="_blank">@roxthalartdesign</a></p>
-<p><strong>Ubicación:</strong> San Antonio de Padua</p>
+
+<p>
+<strong>WhatsApp:</strong>
+<a href="https://wa.me/5491169633376" target="_blank">
++54 9 11 6963-3376
+</a>
+</p>
+
+<p>
+<strong>Instagram:</strong>
+<a href="https://instagram.com/roxthalartdesign" target="_blank">
+@roxthalartdesign
+</a>
+</p>
+
+<p>
+<strong>Ubicación:</strong>
+San Antonio de Padua
+</p>
+
 </div>
+
 </section>
 
 <section id="admin">
 
 <div id="loginBox" class="login-box">
+
 <h2>Administrador</h2>
-<p style="color:#aaa;margin:8px 0 18px">Acceso exclusivo del administrador.</p>
+
+<p style="color:#aaa;margin:8px 0 18px">
+Acceso exclusivo del administrador.
+</p>
 
 <label>Email</label>
-<input id="loginEmail" type="email" placeholder="Correo">
+
+<input
+id="loginEmail"
+type="email"
+placeholder="Correo"
+>
 
 <label>Contraseña</label>
-<input id="loginPassword" type="password" placeholder="Contraseña">
 
-<button class="primary" onclick="login()">Iniciar sesión</button>
+<input
+id="loginPassword"
+type="password"
+placeholder="Contraseña"
+>
+
+<button class="primary" onclick="login()">
+Iniciar sesión
+</button>
+
 <div id="loginMsg" class="message"></div>
+
 </div>
 
-<div id="dashboard" class="admin-panel" style="display:none">
 
-<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+<div
+id="dashboard"
+class="admin-panel"
+style="display:none"
+>
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+flex-wrap:wrap
+">
+
 <div>
+
 <h2>Panel de Administración</h2>
-<p id="adminEmail" style="color:#aaa"></p>
+
+<p
+id="adminEmail"
+style="color:#aaa"
+></p>
+
 </div>
-<button class="danger" onclick="logout()">Cerrar sesión</button>
+
+<button
+class="danger"
+onclick="logout()"
+>
+Cerrar sesión
+</button>
+
 </div>
+
 
 <div class="stats">
-<div class="stat"><strong id="sAlumnos">0</strong>Alumnos</div>
-<div class="stat"><strong id="sBookings">0</strong>Bookings</div>
-<div class="stat"><strong id="sCursos">0</strong>Cursos</div>
-<div class="stat"><strong id="sPagos">0</strong>Pagos</div>
+
+<div class="stat">
+<strong id="sAlumnos">0</strong>
+Alumnos
 </div>
+
+<div class="stat">
+<strong id="sBookings">0</strong>
+Bookings
+</div>
+
+<div class="stat">
+<strong id="sCursos">0</strong>
+Cursos
+</div>
+
+<div class="stat">
+<strong id="sPagos">0</strong>
+Pagos
+</div>
+
+</div>
+
 
 <div class="admin-menu">
-<button class="active" onclick="panel('alumnos',this)">Alumnos</button>
-<button onclick="panel('bookings',this)">Bookings</button>
-<button onclick="panel('cursos',this)">Cursos</button>
-<button onclick="panel('pagos',this)">Pagos</button>
+
+<button
+class="active"
+onclick="panel('alumnos',this)"
+>
+Alumnos
+</button>
+
+<button
+onclick="panel('bookings',this)"
+>
+Bookings
+</button>
+
+<button
+onclick="panel('cursos',this)"
+>
+Cursos
+</button>
+
+<button
+onclick="panel('pagos',this)"
+>
+Pagos
+</button>
+
 </div>
 
+
 <!-- ALUMNOS -->
-<div id="alumnos" class="admin-section active">
+
+<div
+id="alumnos"
+class="admin-section active"
+>
+
 <h3>Alumnos</h3>
 
 <div class="toolbar">
-<input id="buscarAlumno" placeholder="🔎 Buscar por nombre, apellido, WhatsApp o email..." oninput="renderAlumnos()">
-<button class="primary" onclick="openAlumno()">+ Nuevo alumno</button>
+
+<input
+id="buscarAlumno"
+placeholder="🔎 Buscar alumno..."
+oninput="renderAlumnos()"
+>
+
+<button
+class="primary"
+onclick="openAlumno()"
+>
++ Nuevo alumno
+</button>
+
 </div>
 
+
 <div class="table-wrap">
+
 <table>
+
 <thead>
+
 <tr>
-<th>Nombre</th><th>Apellido</th><th>WhatsApp</th><th>Email</th>
-<th>Curso</th><th>Horario</th><th>Importe</th><th>Estado</th><th>Acciones</th>
+<th>Nombre</th>
+<th>Apellido</th>
+<th>WhatsApp</th>
+<th>Email</th>
+<th>Curso</th>
+<th>Horario</th>
+<th>Importe</th>
+<th>Estado</th>
+<th>Acciones</th>
 </tr>
+
 </thead>
+
 <tbody id="alumnosTable"></tbody>
+
 </table>
+
 </div>
+
 </div>
+
 
 <!-- BOOKINGS -->
-<div id="bookings" class="admin-section">
+
+<div
+id="bookings"
+class="admin-section"
+>
+
 <h3>Bookings / Reservas</h3>
+
 <div class="toolbar">
-<input id="buscarBooking" placeholder="🔎 Buscar reserva..." oninput="renderBookings()">
-<button class="primary" onclick="openBooking()">+ Nueva reserva</button>
+
+<input
+id="buscarBooking"
+placeholder="🔎 Buscar reserva..."
+oninput="renderBookings()"
+>
+
+<button
+class="primary"
+onclick="openBooking()"
+>
++ Nueva reserva
+</button>
+
 </div>
+
+
 <div class="table-wrap">
+
 <table>
-<thead><tr><th>Nombre</th><th>WhatsApp</th><th>Curso</th><th>Fecha</th><th>Horario</th><th>Estado</th><th>Acciones</th></tr></thead>
+
+<thead>
+
+<tr>
+<th>Cliente</th>
+<th>Teléfono</th>
+<th>Servicio</th>
+<th>Fecha</th>
+<th>Hora</th>
+<th>Estado</th>
+<th>Detalles</th>
+<th>Acciones</th>
+</tr>
+
+</thead>
+
 <tbody id="bookingsTable"></tbody>
+
 </table>
+
 </div>
+
 </div>
+
 
 <!-- CURSOS -->
-<div id="cursos" class="admin-section">
+
+<div
+id="cursos"
+class="admin-section"
+>
+
 <h3>Cursos</h3>
+
 <div class="toolbar">
-<input id="buscarCurso" placeholder="🔎 Buscar curso..." oninput="renderCursos()">
-<button class="primary" onclick="openCurso()">+ Nuevo curso</button>
+
+<input
+id="buscarCurso"
+placeholder="🔎 Buscar curso..."
+oninput="renderCursos()"
+>
+
+<button
+class="primary"
+onclick="openCurso()"
+>
++ Nuevo curso
+</button>
+
 </div>
+
+
 <div class="table-wrap">
+
 <table>
-<thead><tr><th>Nombre</th><th>Descripción</th><th>Precio</th><th>Horario</th><th>Estado</th><th>Acciones</th></tr></thead>
+
+<thead>
+
+<tr>
+<th>Nombre</th>
+<th>Descripción</th>
+<th>Precio</th>
+<th>Estado</th>
+<th>Acciones</th>
+</tr>
+
+</thead>
+
 <tbody id="cursosTable"></tbody>
+
 </table>
+
 </div>
+
 </div>
+
 
 <!-- PAGOS -->
-<div id="pagos" class="admin-section">
+
+<div
+id="pagos"
+class="admin-section"
+>
+
 <h3>Pagos</h3>
+
 <div class="toolbar">
-<input id="buscarPago" placeholder="🔎 Buscar pago..." oninput="renderPagos()">
-<button class="primary" onclick="openPago()">+ Nuevo pago</button>
+
+<input
+id="buscarPago"
+placeholder="🔎 Buscar pago..."
+oninput="renderPagos()"
+>
+
+<button
+class="primary"
+onclick="openPago()"
+>
++ Nuevo pago
+</button>
+
 </div>
+
+
 <div class="table-wrap">
+
 <table>
-<thead><tr><th>Alumno</th><th>Importe</th><th>Fecha</th><th>Método</th><th>Concepto</th><th>Acciones</th></tr></thead>
+
+<thead>
+
+<tr>
+<th>Alumno</th>
+<th>Importe</th>
+<th>Fecha</th>
+<th>Método</th>
+<th>Concepto</th>
+<th>Acciones</th>
+</tr>
+
+</thead>
+
 <tbody id="pagosTable"></tbody>
+
 </table>
-</div>
+
 </div>
 
 </div>
+
+</div>
+
 </section>
 
-<footer>© 2026 RoXThal Art Design</footer>
 
-<!-- MODAL -->
-<div id="modal" class="modal">
+<footer>
+© 2026 RoXThal Art Design
+</footer>
+
+
+<div
+id="modal"
+class="modal"
+>
+
 <div class="modal-box">
-<div style="display:flex;justify-content:space-between;align-items:center">
-<h2 id="modalTitle">Formulario</h2>
-<button class="secondary" onclick="closeModal()">✕</button>
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center
+">
+
+<h2 id="modalTitle">
+Formulario
+</h2>
+
+<button
+class="secondary"
+onclick="closeModal()"
+>
+✕
+</button>
+
 </div>
+
 <div id="modalContent"></div>
+
 </div>
+
 </div>
+
 
 <script>
-const SUPABASE_URL="https://lvvhpuedktdmfehvhcwk.supabase.co";
-const SUPABASE_KEY="sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp";
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+/* =========================
+SUPABASE
+========================= */
+
+const SUPABASE_URL =
+"https://lvvhpuedktdmfehvhcwk.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp";
+
+const db =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+
+/* =========================
+DATOS
+========================= */
 
 let alumnos=[];
 let bookings=[];
 let cursos=[];
 let pagos=[];
 
+
+/* =========================
+NAVEGACIÓN
+========================= */
+
 function go(id){
-document.getElementById(id)?.scrollIntoView({behavior:"smooth"});
+
+document
+.getElementById(id)
+?.scrollIntoView({
+behavior:"smooth"
+});
+
 }
 
-function esc(v){
-const d=document.createElement("div");
-d.textContent=v??"";
-return d.innerHTML;
+
+/* =========================
+ESCAPE HTML
+========================= */
+
+function esc(value){
+
+const div=
+document.createElement("div");
+
+div.textContent=
+value ?? "";
+
+return div.innerHTML;
+
 }
 
-function msg(text,type="error"){
-const e=document.getElementById("loginMsg");
-e.textContent=text;
-e.className="message show "+type;
-}
+
+/* =========================
+LOGIN
+========================= */
 
 async function login(){
-const email=document.getElementById("loginEmail").value.trim();
-const password=document.getElementById("loginPassword").value;
-if(!email||!password){msg("Completa email y contraseña.");return;}
 
-const {data,error}=await db.auth.signInWithPassword({email,password});
+const email=
+document
+.getElementById("loginEmail")
+.value
+.trim();
 
-if(error){msg(error.message);return;}
+const password=
+document
+.getElementById("loginPassword")
+.value;
 
-document.getElementById("loginBox").style.display="none";
-document.getElementById("dashboard").style.display="block";
-document.getElementById("adminEmail").textContent=data.user.email;
-await loadAll();
+if(!email || !password){
+
+showLoginMessage(
+"Completa email y contraseña.",
+"error"
+);
+
+return;
+
 }
+
+const {
+data,
+error
+}=
+await db.auth.signInWithPassword({
+email,
+password
+});
+
+if(error){
+
+showLoginMessage(
+error.message,
+"error"
+);
+
+return;
+
+}
+
+document
+.getElementById("loginBox")
+.style.display="none";
+
+document
+.getElementById("dashboard")
+.style.display="block";
+
+document
+.getElementById("adminEmail")
+.textContent=
+data.user.email;
+
+await loadAll();
+
+}
+
+
+/* =========================
+LOGOUT
+========================= */
 
 async function logout(){
+
 await db.auth.signOut();
-document.getElementById("dashboard").style.display="none";
-document.getElementById("loginBox").style.display="block";
+
+document
+.getElementById("dashboard")
+.style.display="none";
+
+document
+.getElementById("loginBox")
+.style.display="block";
+
 }
 
-function panel(id,btn){
-document.querySelectorAll(".admin-section").forEach(x=>x.classList.remove("active"));
-document.querySelectorAll(".admin-menu button").forEach(x=>x.classList.remove("active"));
-document.getElementById(id).classList.add("active");
-btn.classList.add("active");
+
+/* =========================
+MENSAJE LOGIN
+========================= */
+
+function showLoginMessage(text,type){
+
+const box=
+document.getElementById("loginMsg");
+
+box.textContent=text;
+
+box.className=
+"message show "+type;
+
 }
+
+
+/* =========================
+PANEL
+========================= */
+
+function panel(id,button){
+
+document
+.querySelectorAll(".admin-section")
+.forEach(x=>
+x.classList.remove("active")
+);
+
+document
+.querySelectorAll(".admin-menu button")
+.forEach(x=>
+x.classList.remove("active")
+);
+
+document
+.getElementById(id)
+.classList.add("active");
+
+button.classList.add("active");
+
+}
+
+
+/* =========================
+CARGAR TODO
+========================= */
 
 async function loadAll(){
-await Promise.all([loadAlumnos(),loadBookings(),loadCursos(),loadPagos()]);
+
+await loadAlumnos();
+
+await loadBookings();
+
+await loadCursos();
+
+await loadPagos();
+
 }
+
+
+/* =========================
+ALUMNOS
+========================= */
 
 async function loadAlumnos(){
-const {data,error}=await db.from("alumnos").select("*").order("created_at",{ascending:false});
-if(error){console.error(error);return;}
-alumnos=data||[];
-document.getElementById("sAlumnos").textContent=alumnos.length;
-renderAlumnos();
+
+const {
+data,
+error
+}=
+await db
+.from("alumnos")
+.select("*")
+.order("created_at",{ascending:false});
+
+if(error){
+
+console.error(error);
+
+return;
+
 }
+
+alumnos=data || [];
+
+document
+.getElementById("sAlumnos")
+.textContent=
+alumnos.length;
+
+renderAlumnos();
+
+}
+
 
 function renderAlumnos(){
-const q=(document.getElementById("buscarAlumno")?.value||"").toLowerCase();
-const rows=alumnos.filter(a=>
-[a.nombre,a.apellido,a.whatsapp,a.email,a.curso].join(" ").toLowerCase().includes(q)
+
+const q=
+(
+document
+.getElementById("buscarAlumno")
+?.value || ""
+)
+.toLowerCase();
+
+const rows=
+alumnos.filter(a=>
+[
+a.nombre,
+a.apellido,
+a.whatsapp,
+a.email,
+a.curso
+]
+.join(" ")
+.toLowerCase()
+.includes(q)
 );
-document.getElementById("alumnosTable").innerHTML=rows.map(a=>`
+
+document
+.getElementById("alumnosTable")
+.innerHTML=
+rows.map(a=>`
+
 <tr>
+
 <td>${esc(a.nombre)}</td>
+
 <td>${esc(a.apellido)}</td>
+
 <td>${esc(a.whatsapp)}</td>
+
 <td>${esc(a.email)}</td>
+
 <td>${esc(a.curso)}</td>
+
 <td>${esc(a.horario)}</td>
-<td>$${Number(a.importe||0).toFixed(2)}</td>
-<td><span class="badge ${a.activo?"ok":"off"}">${a.activo?"Activo":"Inactivo"}</span></td>
-<td class="actions">
-<button class="secondary" onclick="openAlumno('${a.id}')">Editar</button>
-<button class="secondary" onclick="toggleAlumno('${a.id}',${a.activo})">${a.activo?"Desactivar":"Activar"}</button>
-${a.whatsapp?`<a class="secondary" href="https://wa.me/${a.whatsapp.replace(/\D/g,"")}" target="_blank">WhatsApp</a>`:""}
-<button class="danger" onclick="deleteAlumno('${a.id}')">Eliminar</button>
+
+<td>
+$${Number(a.importe||0).toFixed(2)}
 </td>
-</tr>`).join("");
+
+<td>
+
+<span class="badge ${a.activo?"ok":"off"}">
+
+${a.activo?"Activo":"Inactivo"}
+
+</span>
+
+</td>
+
+<td class="actions">
+
+<button
+class="secondary"
+onclick="openAlumno('${a.id}')"
+>
+Editar
+</button>
+
+<button
+class="secondary"
+onclick="toggleAlumno('${a.id}',${a.activo})"
+>
+${a.activo?"Desactivar":"Activar"}
+</button>
+
+${
+a.whatsapp
+?
+`<a
+class="secondary"
+href="https://wa.me/${a.whatsapp.replace(/\D/g,"")}"
+target="_blank"
+>WhatsApp</a>`
+:""
 }
+
+<button
+class="danger"
+onclick="deleteAlumno('${a.id}')"
+>
+Eliminar
+</button>
+
+</td>
+
+</tr>
+
+`).join("");
+
+}
+
+
+/* =========================
+FORMULARIO ALUMNO
+========================= */
 
 function openAlumno(id=null){
-const a=alumnos.find(x=>x.id===id)||{};
-document.getElementById("modalTitle").textContent=id?"Editar alumno":"Nuevo alumno";
-document.getElementById("modalContent").innerHTML=`
-<form onsubmit="saveAlumno(event,'${id||""}')">
-<input id="fNombre" placeholder="Nombre" value="${esc(a.nombre)}" required>
-<input id="fApellido" placeholder="Apellido" value="${esc(a.apellido)}">
-<input id="fWhatsapp" placeholder="WhatsApp" value="${esc(a.whatsapp)}">
-<input id="fEmail" type="email" placeholder="Email" value="${esc(a.email)}">
-<input id="fCurso" placeholder="Curso" value="${esc(a.curso)}">
-<input id="fHorario" placeholder="Horario" value="${esc(a.horario)}">
-<input id="fFecha" type="date" value="${a.fecha_inscripcion||""}">
-<input id="fImporte" type="number" step="0.01" placeholder="Importe" value="${a.importe||0}">
-<textarea id="fObs" placeholder="Observaciones">${esc(a.observaciones)}</textarea>
-<button class="primary" type="submit">Guardar alumno</button>
-</form>`;
+
+const a=
+alumnos.find(x=>x.id===id) || {};
+
+document
+.getElementById("modalTitle")
+.textContent=
+id
+?
+"Editar alumno"
+:
+"Nuevo alumno";
+
+document
+.getElementById("modalContent")
+.innerHTML=`
+
+<form
+onsubmit="saveAlumno(event,'${id||""}')"
+>
+
+<input
+id="fNombre"
+placeholder="Nombre"
+value="${esc(a.nombre)}"
+required
+>
+
+<input
+id="fApellido"
+placeholder="Apellido"
+value="${esc(a.apellido)}"
+>
+
+<input
+id="fWhatsapp"
+placeholder="WhatsApp"
+value="${esc(a.whatsapp)}"
+>
+
+<input
+id="fEmail"
+type="email"
+placeholder="Email"
+value="${esc(a.email)}"
+>
+
+<input
+id="fCurso"
+placeholder="Curso"
+value="${esc(a.curso)}"
+>
+
+<input
+id="fHorario"
+placeholder="Horario"
+value="${esc(a.horario)}"
+>
+
+<input
+id="fFecha"
+type="date"
+value="${a.fecha_inscripcion||""}"
+>
+
+<input
+id="fImporte"
+type="number"
+step="0.01"
+placeholder="Importe"
+value="${a.importe||0}"
+>
+
+<textarea
+id="fObs"
+placeholder="Observaciones"
+>${esc(a.observaciones)}</textarea>
+
+<button
+class="primary"
+type="submit"
+>
+Guardar alumno
+</button>
+
+</form>
+`;
+
 openModal();
+
 }
 
-async function saveAlumno(e,id){
-e.preventDefault();
+
+/* =========================
+GUARDAR ALUMNO
+========================= */
+
+async function saveAlumno(event,id){
+
+event.preventDefault();
+
 const obj={
-nombre:fNombre.value,
-apellido:fApellido.value,
-whatsapp:fWhatsapp.value,
-email:fEmail.value,
-curso:fCurso.value,
-horario:fHorario.value,
-fecha_inscripcion:fFecha.value||new Date().toISOString().split("T")[0],
-importe:Number(fImporte.value||0),
-observaciones:fObs.value
+
+nombre:
+document.getElementById("fNombre").value,
+
+apellido:
+document.getElementById("fApellido").value,
+
+whatsapp:
+document.getElementById("fWhatsapp").value,
+
+email:
+document.getElementById("fEmail").value,
+
+curso:
+document.getElementById("fCurso").value,
+
+horario:
+document.getElementById("fHorario").value,
+
+fecha_inscripcion:
+document.getElementById("fFecha").value
+||
+new Date()
+.toISOString()
+.split("T")[0],
+
+importe:
+Number(
+document.getElementById("fImporte").value || 0
+),
+
+observaciones:
+document.getElementById("fObs").value
+
 };
-let result=id?await db.from("alumnos").update(obj).eq("id",id):await db.from("alumnos").insert(obj);
-if(result.error){alert(result.error.message);return;}
-closeModal();await loadAlumnos();
+
+const result=
+id
+?
+await db
+.from("alumnos")
+.update(obj)
+.eq("id",id)
+:
+await db
+.from("alumnos")
+.insert(obj);
+
+if(result.error){
+
+alert(
+"Error al guardar alumno: "+
+result.error.message
+);
+
+return;
+
 }
+
+closeModal();
+
+await loadAlumnos();
+
+alert("Alumno guardado correctamente.");
+
+}
+
+
+/* =========================
+ACTIVAR ALUMNO
+========================= */
 
 async function toggleAlumno(id,activo){
-const {error}=await db.from("alumnos").update({activo:!activo}).eq("id",id);
-if(error){alert(error.message);return;}
-await loadAlumnos();
+
+const {
+error
+}=
+await db
+.from("alumnos")
+.update({
+activo:!activo
+})
+.eq("id",id);
+
+if(error){
+
+alert(error.message);
+
+return;
+
 }
+
+await loadAlumnos();
+
+}
+
+
+/* =========================
+ELIMINAR ALUMNO
+========================= */
 
 async function deleteAlumno(id){
-if(!confirm("¿Eliminar este alumno?"))return;
-const {error}=await db.from("alumnos").delete().eq("id",id);
-if(error){alert(error.message);return;}
-await loadAlumnos();
+
+if(
+!confirm(
+"¿Eliminar este alumno?"
+)
+)
+return;
+
+const {
+error
+}=
+await db
+.from("alumnos")
+.delete()
+.eq("id",id);
+
+if(error){
+
+alert(error.message);
+
+return;
+
 }
+
+await loadAlumnos();
+
+}
+
+
+/* =========================
+BOOKINGS
+ESTRUCTURA REAL
+========================= */
 
 async function loadBookings(){
-const {data,error}=await db.from("bookings").select("*").order("created_at",{ascending:false});
-if(error){console.error(error);return;}
-bookings=data||[];
-document.getElementById("sBookings").textContent=bookings.length;
-renderBookings();
+
+const {
+data,
+error
+}=
+await db
+.from("bookings")
+.select("*")
+.order("created_at",{ascending:false});
+
+if(error){
+
+console.error(error);
+
+return;
+
 }
+
+bookings=data || [];
+
+document
+.getElementById("sBookings")
+.textContent=
+bookings.length;
+
+renderBookings();
+
+}
+
+
+/* =========================
+MOSTRAR BOOKINGS
+========================= */
 
 function renderBookings(){
-const q=(document.getElementById("buscarBooking")?.value||"").toLowerCase();
-const rows=bookings.filter(b=>[b.nombre,b.whatsapp,b.curso,b.estado].join(" ").toLowerCase().includes(q));
-document.getElementById("bookingsTable").innerHTML=rows.map(b=>`
+
+const q=
+(
+document
+.getElementById("buscarBooking")
+?.value || ""
+)
+.toLowerCase();
+
+const rows=
+bookings.filter(b=>
+[
+b.client_name,
+b.phone,
+b.details,
+b.status
+]
+.join(" ")
+.toLowerCase()
+.includes(q)
+);
+
+document
+.getElementById("bookingsTable")
+.innerHTML=
+rows.map(b=>`
+
 <tr>
-<td>${esc(b.nombre)}</td><td>${esc(b.whatsapp)}</td><td>${esc(b.curso)}</td>
-<td>${esc(b.fecha)}</td><td>${esc(b.horario)}</td><td>${esc(b.estado)}</td>
+
+<td>${esc(b.client_name)}</td>
+
+<td>${esc(b.phone)}</td>
+
+<td>${esc(b.service_id)}</td>
+
+<td>${esc(b.preferred_date)}</td>
+
+<td>${esc(b.preferred_time)}</td>
+
+<td>${esc(b.status)}</td>
+
+<td>${esc(b.details)}</td>
+
 <td class="actions">
-<button class="secondary" onclick="openBooking('${b.id}')">Editar</button>
-<button class="danger" onclick="deleteBooking('${b.id}')">Eliminar</button>
+
+<button
+class="secondary"
+onclick="openBooking('${b.id}')"
+>
+Editar
+</button>
+
+<button
+class="danger"
+onclick="deleteBooking('${b.id}')"
+>
+Eliminar
+</button>
+
 </td>
-</tr>`).join("");
+
+</tr>
+
+`).join("");
+
 }
+
+
+/* =========================
+NUEVO BOOKING
+========================= */
 
 function openBooking(id=null){
-const b=bookings.find(x=>x.id===id)||{};
-document.getElementById("modalTitle").textContent=id?"Editar reserva":"Nueva reserva";
-document.getElementById("modalContent").innerHTML=`
-<form onsubmit="saveBooking(event,'${id||""}')">
-<input id="bNombre" placeholder="Nombre" value="${esc(b.nombre)}">
-<input id="bWhatsapp" placeholder="WhatsApp" value="${esc(b.whatsapp)}">
-<input id="bCurso" placeholder="Curso" value="${esc(b.curso)}">
-<input id="bFecha" type="date" value="${b.fecha||""}">
-<input id="bHorario" placeholder="Horario" value="${esc(b.horario)}">
-<select id="bEstado">
-<option value="pendiente" ${b.estado==="pendiente"?"selected":""}>Pendiente</option>
-<option value="confirmada" ${b.estado==="confirmada"?"selected":""}>Confirmada</option>
-<option value="cancelada" ${b.estado==="cancelada"?"selected":""}>Cancelada</option>
+
+const b=
+bookings.find(x=>x.id===id) || {};
+
+document
+.getElementById("modalTitle")
+.textContent=
+id
+?
+"Editar reserva"
+:
+"Nueva reserva";
+
+document
+.getElementById("modalContent")
+.innerHTML=`
+
+<form
+onsubmit="saveBooking(event,'${id||""}')"
+>
+
+<input
+id="bClient"
+placeholder="Nombre del cliente"
+value="${esc(b.client_name)}"
+required
+>
+
+<input
+id="bPhone"
+placeholder="Teléfono / WhatsApp"
+value="${esc(b.phone)}"
+>
+
+<input
+id="bService"
+placeholder="Servicio / Curso"
+value="${esc(b.service_id)}"
+>
+
+<input
+id="bDate"
+type="date"
+value="${b.preferred_date||""}"
+>
+
+<input
+id="bTime"
+type="time"
+value="${b.preferred_time||""}"
+>
+
+<select id="bStatus">
+
+<option value="pendiente"
+${b.status==="pendiente"?"selected":""}>
+Pendiente
+</option>
+
+<option value="confirmada"
+${b.status==="confirmada"?"selected":""}>
+Confirmada
+</option>
+
+<option value="cancelada"
+${b.status==="cancelada"?"selected":""}>
+Cancelada
+</option>
+
 </select>
-<textarea id="bObs" placeholder="Observaciones">${esc(b.observaciones)}</textarea>
-<button class="primary">Guardar reserva</button>
-</form>`;
+
+<textarea
+id="bDetails"
+placeholder="Detalles"
+>${esc(b.details)}</textarea>
+
+<button
+class="primary"
+type="submit"
+>
+Guardar reserva
+</button>
+
+</form>
+`;
+
 openModal();
+
 }
 
-async function saveBooking(e,id){
-e.preventDefault();
-const obj={nombre:bNombre.value,whatsapp:bWhatsapp.value,curso:bCurso.value,fecha:bFecha.value,horario:bHorario.value,estado:bEstado.value,observaciones:bObs.value};
-const result=id?await db.from("bookings").update(obj).eq("id",id):await db.from("bookings").insert(obj);
-if(result.error){alert(result.error.message);return;}
-closeModal();await loadBookings();
+
+/* =========================
+GUARDAR BOOKING
+========================= */
+
+async function saveBooking(event,id){
+
+event.preventDefault();
+
+const obj={
+
+client_name:
+document.getElementById("bClient").value,
+
+phone:
+document.getElementById("bPhone").value,
+
+preferred_date:
+document.getElementById("bDate").value || null,
+
+preferred_time:
+document.getElementById("bTime").value || null,
+
+details:
+document.getElementById("bDetails").value,
+
+status:
+document.getElementById("bStatus").value
+
+};
+
+/*
+service_id es UUID en la tabla real.
+Por eso no enviamos el texto del servicio
+a service_id.
+*/
+
+const result=
+id
+?
+await db
+.from("bookings")
+.update(obj)
+.eq("id",id)
+:
+await db
+.from("bookings")
+.insert(obj);
+
+if(result.error){
+
+alert(
+"Error al guardar reserva: "+
+result.error.message
+);
+
+return;
+
 }
+
+closeModal();
+
+await loadBookings();
+
+alert(
+"Reserva guardada correctamente."
+);
+
+}
+
+
+/* =========================
+ELIMINAR BOOKING
+========================= */
 
 async function deleteBooking(id){
-if(!confirm("¿Eliminar esta reserva?"))return;
-const {error}=await db.from("bookings").delete().eq("id",id);
-if(error){alert(error.message);return;}
-await loadBookings();
+
+if(
+!confirm(
+"¿Eliminar esta reserva?"
+)
+)
+return;
+
+const {
+error
+}=
+await db
+.from("bookings")
+.delete()
+.eq("id",id);
+
+if(error){
+
+alert(error.message);
+
+return;
+
 }
+
+await loadBookings();
+
+}
+
+
+/* =========================
+CURSOS
+ESTRUCTURA REAL
+========================= */
 
 async function loadCursos(){
-const {data,error}=await db.from("cursos").select("*").order("created_at",{ascending:false});
-if(error){console.error(error);return;}
-cursos=data||[];
-document.getElementById("sCursos").textContent=cursos.length;
-renderCursos();
-renderPublicCourses();
+
+const {
+data,
+error
+}=
+await db
+.from("cursos")
+.select("*")
+.order("created_at",{ascending:false});
+
+if(error){
+
+console.error(error);
+
+return;
+
 }
+
+cursos=data || [];
+
+document
+.getElementById("sCursos")
+.textContent=
+cursos.length;
+
+renderCursos();
+
+renderPublicCourses();
+
+}
+
+
+/* =========================
+MOSTRAR CURSOS
+========================= */
 
 function renderCursos(){
-const q=(document.getElementById("buscarCurso")?.value||"").toLowerCase();
-const rows=cursos.filter(c=>[c.nombre,c.descripcion,c.horario].join(" ").toLowerCase().includes(q));
-document.getElementById("cursosTable").innerHTML=rows.map(c=>`
+
+const q=
+(
+document
+.getElementById("buscarCurso")
+?.value || ""
+)
+.toLowerCase();
+
+const rows=
+cursos.filter(c=>
+[
+c.nombre,
+c.descripcion
+]
+.join(" ")
+.toLowerCase()
+.includes(q)
+);
+
+document
+.getElementById("cursosTable")
+.innerHTML=
+rows.map(c=>`
+
 <tr>
-<td>${esc(c.nombre)}</td><td>${esc(c.descripcion)}</td>
-<td>$${Number(c.precio||0).toFixed(2)}</td><td>${esc(c.horario)}</td>
-<td><span class="badge ${c.activo?"ok":"off"}">${c.activo?"Activo":"Inactivo"}</span></td>
-<td class="actions">
-<button class="secondary" onclick="openCurso('${c.id}')">Editar</button>
-<button class="secondary" onclick="toggleCurso('${c.id}',${c.activo})">${c.activo?"Desactivar":"Activar"}</button>
-<button class="danger" onclick="deleteCurso('${c.id}')">Eliminar</button>
+
+<td>${esc(c.nombre)}</td>
+
+<td>${esc(c.descripcion)}</td>
+
+<td>
+$${Number(c.precio||0).toFixed(2)}
 </td>
-</tr>`).join("");
+
+<td>
+
+<span
+class="badge ${c.activo?"ok":"off"}"
+>
+
+${c.activo?"Activo":"Inactivo"}
+
+</span>
+
+</td>
+
+<td class="actions">
+
+<button
+class="secondary"
+onclick="openCurso(${c.id})"
+>
+Editar
+</button>
+
+<button
+class="secondary"
+onclick="toggleCurso(${c.id},${c.activo})"
+>
+${c.activo?"Desactivar":"Activar"}
+</button>
+
+<button
+class="danger"
+onclick="deleteCurso(${c.id})"
+>
+Eliminar
+</button>
+
+</td>
+
+</tr>
+
+`).join("");
+
 }
+
+
+/* =========================
+NUEVO CURSO
+========================= */
 
 function openCurso(id=null){
-const c=cursos.find(x=>x.id===id)||{};
-document.getElementById("modalTitle").textContent=id?"Editar curso":"Nuevo curso";
-document.getElementById("modalContent").innerHTML=`
-<form onsubmit="saveCurso(event,'${id||""}')">
-<input id="cNombre" placeholder="Nombre del curso" value="${esc(c.nombre)}" required>
-<textarea id="cDescripcion" placeholder="Descripción">${esc(c.descripcion)}</textarea>
-<input id="cPrecio" type="number" step="0.01" placeholder="Precio" value="${c.precio||0}">
-<input id="cHorario" placeholder="Horario" value="${esc(c.horario)}">
-<button class="primary">Guardar curso</button>
-</form>`;
+
+const c=
+cursos.find(x=>x.id===Number(id))
+||
+{};
+
+document
+.getElementById("modalTitle")
+.textContent=
+id
+?
+"Editar curso"
+:
+"Nuevo curso";
+
+document
+.getElementById("modalContent")
+.innerHTML=`
+
+<form
+onsubmit="saveCurso(event,'${id||""}')"
+>
+
+<input
+id="cNombre"
+placeholder="Nombre del curso"
+value="${esc(c.nombre)}"
+required
+>
+
+<textarea
+id="cDescripcion"
+placeholder="Descripción"
+>${esc(c.descripcion)}</textarea>
+
+<input
+id="cPrecio"
+type="number"
+step="0.01"
+placeholder="Precio"
+value="${c.precio||0}"
+>
+
+<button
+class="primary"
+type="submit"
+>
+Guardar curso
+</button>
+
+</form>
+`;
+
 openModal();
+
 }
 
-async function saveCurso(e,id){
-e.preventDefault();
-const obj={nombre:cNombre.value,descripcion:cDescripcion.value,precio:Number(cPrecio.value||0),horario:cHorario.value};
-const result=id?await db.from("cursos").update(obj).eq("id",id):await db.from("cursos").insert(obj);
-if(result.error){alert(result.error.message);return;}
-closeModal();await loadCursos();
+
+/* =========================
+GUARDAR CURSO
+========================= */
+
+async function saveCurso(event,id){
+
+event.preventDefault();
+
+const obj={
+
+nombre:
+document.getElementById("cNombre").value,
+
+descripcion:
+document.getElementById("cDescripcion").value,
+
+precio:
+Number(
+document.getElementById("cPrecio").value || 0
+)
+
+};
+
+const result=
+id
+?
+await db
+.from("cursos")
+.update(obj)
+.eq("id",Number(id))
+:
+await db
+.from("cursos")
+.insert(obj);
+
+if(result.error){
+
+alert(
+"Error al guardar curso: "+
+result.error.message
+);
+
+return;
+
 }
+
+closeModal();
+
+await loadCursos();
+
+alert(
+"Curso guardado correctamente."
+);
+
+}
+
+
+/* =========================
+ACTIVAR CURSO
+========================= */
 
 async function toggleCurso(id,activo){
-const {error}=await db.from("cursos").update({activo:!activo}).eq("id",id);
-if(error){alert(error.message);return;}
-await loadCursos();
+
+const {
+error
+}=
+await db
+.from("cursos")
+.update({
+activo:!activo
+})
+.eq("id",Number(id));
+
+if(error){
+
+alert(error.message);
+
+return;
+
 }
+
+await loadCursos();
+
+}
+
+
+/* =========================
+ELIMINAR CURSO
+========================= */
 
 async function deleteCurso(id){
-if(!confirm("¿Eliminar este curso?"))return;
-const {error}=await db.from("cursos").delete().eq("id",id);
-if(error){alert(error.message);return;}
-await loadCursos();
+
+if(
+!confirm(
+"¿Eliminar este curso?"
+)
+)
+return;
+
+const {
+error
+}=
+await db
+.from("cursos")
+.delete()
+.eq("id",Number(id));
+
+if(error){
+
+alert(error.message);
+
+return;
+
 }
+
+await loadCursos();
+
+}
+
+
+/* =========================
+CURSOS PÚBLICOS
+========================= */
 
 function renderPublicCourses(){
-const box=document.getElementById("publicCourses");
-const active=cursos.filter(c=>c.activo);
+
+const box=
+document.getElementById(
+"publicCourses"
+);
+
+const active=
+cursos.filter(c=>c.activo);
+
 if(!active.length){
-box.innerHTML=`<div class="card"><h3>Próximamente</h3><p>Estamos preparando nuestros cursos.</p></div>`;
-return;
-}
-box.innerHTML=active.map(c=>`
+
+box.innerHTML=`
+
 <div class="card">
-<h3>${esc(c.nombre)}</h3>
-<p>${esc(c.descripcion)}</p>
-<p><strong>Horario:</strong> ${esc(c.horario||"Consultar")}</p>
-<p><strong>Precio:</strong> $${Number(c.precio||0).toFixed(2)}</p>
-</div>`).join("");
+
+<h3>Próximamente</h3>
+
+<p>
+Estamos preparando nuestros cursos.
+</p>
+
+</div>
+`;
+
+return;
+
 }
+
+box.innerHTML=
+active.map(c=>`
+
+<div class="card">
+
+<h3>
+${esc(c.nombre)}
+</h3>
+
+<p>
+${esc(c.descripcion)}
+</p>
+
+<p>
+<strong>Precio:</strong>
+$${Number(c.precio||0).toFixed(2)}
+</p>
+
+</div>
+
+`).join("");
+
+}
+
+
+/* =========================
+PAGOS
+========================= */
 
 async function loadPagos(){
-const {data,error}=await db.from("pagos").select("*").order("created_at",{ascending:false});
-if(error){console.error(error);return;}
-pagos=data||[];
-document.getElementById("sPagos").textContent=pagos.length;
-renderPagos();
+
+const {
+data,
+error
+}=
+await db
+.from("pagos")
+.select("*")
+.order("created_at",{ascending:false});
+
+if(error){
+
+console.error(error);
+
+return;
+
 }
+
+pagos=data || [];
+
+document
+.getElementById("sPagos")
+.textContent=
+pagos.length;
+
+renderPagos();
+
+}
+
 
 function nombreAlumno(id){
-const a=alumnos.find(x=>x.id===id);
-return a?a.nombre+" "+(a.apellido||""):id||"";
+
+const a=
+alumnos.find(x=>x.id===id);
+
+if(!a)
+return id || "";
+
+return(
+a.nombre+
+" "+
+(a.apellido||"")
+);
+
 }
+
 
 function renderPagos(){
-const q=(document.getElementById("buscarPago")?.value||"").toLowerCase();
-const rows=pagos.filter(p=>[nombreAlumno(p.alumno_id),p.metodo,p.concepto].join(" ").toLowerCase().includes(q));
-document.getElementById("pagosTable").innerHTML=rows.map(p=>`
+
+const q=
+(
+document
+.getElementById("buscarPago")
+?.value || ""
+)
+.toLowerCase();
+
+const rows=
+pagos.filter(p=>
+[
+nombreAlumno(p.alumno_id),
+p.metodo,
+p.concepto
+]
+.join(" ")
+.toLowerCase()
+.includes(q)
+);
+
+document
+.getElementById("pagosTable")
+.innerHTML=
+rows.map(p=>`
+
 <tr>
-<td>${esc(nombreAlumno(p.alumno_id))}</td>
-<td>$${Number(p.importe||0).toFixed(2)}</td>
-<td>${esc(p.fecha)}</td>
-<td>${esc(p.metodo)}</td>
-<td>${esc(p.concepto)}</td>
-<td><button class="danger" onclick="deletePago('${p.id}')">Eliminar</button></td>
-</tr>`).join("");
+
+<td>
+${esc(nombreAlumno(p.alumno_id))}
+</td>
+
+<td>
+$${Number(p.importe||0).toFixed(2)}
+</td>
+
+<td>
+${esc(p.fecha)}
+</td>
+
+<td>
+${esc(p.metodo)}
+</td>
+
+<td>
+${esc(p.concepto)}
+</td>
+
+<td>
+
+<button
+class="danger"
+onclick="deletePago('${p.id}')"
+>
+Eliminar
+</button>
+
+</td>
+
+</tr>
+
+`).join("");
+
 }
+
+
+/* =========================
+NUEVO PAGO
+========================= */
 
 function openPago(){
-const options=alumnos.map(a=>`<option value="${a.id}">${esc(a.nombre+" "+(a.apellido||""))}</option>`).join("");
-document.getElementById("modalTitle").textContent="Nuevo pago";
-document.getElementById("modalContent").innerHTML=`
-<form onsubmit="savePago(event)">
-<select id="pAlumno"><option value="">Seleccionar alumno</option>${options}</select>
-<input id="pImporte" type="number" step="0.01" placeholder="Importe" required>
-<input id="pFecha" type="date" value="${new Date().toISOString().split("T")[0]}">
-<select id="pMetodo">
-<option value="">Método de pago</option>
-<option value="efectivo">Efectivo</option>
-<option value="transferencia">Transferencia</option>
-<option value="mercado_pago">Mercado Pago</option>
-<option value="otro">Otro</option>
+
+const options=
+alumnos.map(a=>`
+
+<option value="${a.id}">
+
+${esc(
+a.nombre+
+" "+
+(a.apellido||"")
+)}
+
+</option>
+
+`).join("");
+
+document
+.getElementById("modalTitle")
+.textContent=
+"Nuevo pago";
+
+document
+.getElementById("modalContent")
+.innerHTML=`
+
+<form
+onsubmit="savePago(event)"
+>
+
+<select id="pAlumno">
+
+<option value="">
+Seleccionar alumno
+</option>
+
+${options}
+
 </select>
-<input id="pConcepto" placeholder="Concepto">
-<textarea id="pObs" placeholder="Observaciones"></textarea>
-<button class="primary">Registrar pago</button>
-</form>`;
+
+<input
+id="pImporte"
+type="number"
+step="0.01"
+placeholder="Importe"
+required
+>
+
+<input
+id="pFecha"
+type="date"
+value="${
+new Date()
+.toISOString()
+.split("T")[0]
+}"
+>
+
+<select id="pMetodo">
+
+<option value="">
+Método de pago
+</option>
+
+<option value="efectivo">
+Efectivo
+</option>
+
+<option value="transferencia">
+Transferencia
+</option>
+
+<option value="mercado_pago">
+Mercado Pago
+</option>
+
+<option value="otro">
+Otro
+</option>
+
+</select>
+
+<input
+id="pConcepto"
+placeholder="Concepto"
+>
+
+<textarea
+id="pObs"
+placeholder="Observaciones"
+></textarea>
+
+<button
+class="primary"
+type="submit"
+>
+Registrar pago
+</button>
+
+</form>
+`;
+
 openModal();
+
 }
 
-async function savePago(e){
-e.preventDefault();
-const obj={alumno_id:pAlumno.value||null,importe:Number(pImporte.value),fecha:pFecha.value,metodo:pMetodo.value,concepto:pConcepto.value,observaciones:pObs.value};
-const {error}=await db.from("pagos").insert(obj);
-if(error){alert(error.message);return;}
-closeModal();await loadPagos();
+
+/* =========================
+GUARDAR PAGO
+========================= */
+
+async function savePago(event){
+
+event.preventDefault();
+
+const obj={
+
+alumno_id:
+document.getElementById("pAlumno").value
+||
+null,
+
+importe:
+Number(
+document.getElementById("pImporte").value
+),
+
+fecha:
+document.getElementById("pFecha").value,
+
+metodo:
+document.getElementById("pMetodo").value,
+
+concepto:
+document.getElementById("pConcepto").value,
+
+observaciones:
+document.getElementById("pObs").value
+
+};
+
+const {
+error
+}=
+await db
+.from("pagos")
+.insert(obj);
+
+if(error){
+
+alert(
+"Error al registrar pago: "+
+error.message
+);
+
+return;
+
 }
+
+closeModal();
+
+await loadPagos();
+
+alert(
+"Pago registrado correctamente."
+);
+
+}
+
+
+/* =========================
+ELIMINAR PAGO
+========================= */
 
 async function deletePago(id){
-if(!confirm("¿Eliminar este pago?"))return;
-const {error}=await db.from("pagos").delete().eq("id",id);
-if(error){alert(error.message);return;}
-await loadPagos();
+
+if(
+!confirm(
+"¿Eliminar este pago?"
+)
+)
+return;
+
+const {
+error
+}=
+await db
+.from("pagos")
+.delete()
+.eq("id",id);
+
+if(error){
+
+alert(error.message);
+
+return;
+
 }
+
+await loadPagos();
+
+}
+
+
+/* =========================
+MODAL
+========================= */
 
 function openModal(){
-document.getElementById("modal").style.display="block";
+
+document
+.getElementById("modal")
+.style.display="block";
+
 }
+
 
 function closeModal(){
-document.getElementById("modal").style.display="none";
+
+document
+.getElementById("modal")
+.style.display="none";
+
 }
 
-document.addEventListener("DOMContentLoaded",async()=>{
-const {data}=await db.auth.getSession();
+
+/* =========================
+INICIO
+========================= */
+
+document.addEventListener(
+"DOMContentLoaded",
+async()=>{
+
+const {
+data
+}=
+await db.auth.getSession();
+
 if(data.session){
-document.getElementById("loginBox").style.display="none";
-document.getElementById("dashboard").style.display="block";
-document.getElementById("adminEmail").textContent=data.session.user.email;
+
+document
+.getElementById("loginBox")
+.style.display="none";
+
+document
+.getElementById("dashboard")
+.style.display="block";
+
+document
+.getElementById("adminEmail")
+.textContent=
+data.session.user.email;
+
 await loadAll();
-}else{
-await loadCursos();
+
 }
+else{
+
+await loadCursos();
+
+}
+
 });
+
 </script>
 
 </body>
