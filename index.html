@@ -3,956 +3,600 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RoXThal Art Design</title>
+  <meta name="description" content="RoXThal Art Design - Tatuajes, fileteado porteño, dibujo, pintura y diseño.">
 
-  <title>RoXThal Art Design | Arte, Tatuajes, Cursos y Fileteado</title>
-
-  <meta
-    name="description"
-    content="RoXThal Art Design - Tatuajes, dibujo, pintura, fileteado porteño, cursos y talleres."
-  >
-
-  <meta name="theme-color" content="#111111">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      background:#101014;
+      color:#fff;
+      line-height:1.5
     }
-
-    html {
-      scroll-behavior: smooth;
+    header{
+      position:sticky;
+      top:0;
+      z-index:10;
+      background:#0b0b0d;
+      border-bottom:1px solid #333;
+      padding:15px
     }
-
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #111;
-      color: #fff;
-      line-height: 1.6;
+    .nav{
+      max-width:1100px;
+      margin:auto;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px
     }
-
-    a {
-      color: inherit;
-      text-decoration: none;
+    .logo{font-size:22px;font-weight:bold}
+    .logo span{color:#f2c94c}
+    nav{display:flex;gap:8px;flex-wrap:wrap}
+    nav a,button{
+      background:#1d1d23;
+      color:#fff;
+      border:1px solid #444;
+      border-radius:9px;
+      padding:10px 13px;
+      text-decoration:none;
+      cursor:pointer
     }
-
-    .container {
-      width: 100%;
-      max-width: 1100px;
-      margin: auto;
+    nav a:hover,button:hover{border-color:#f2c94c}
+    .hero{
+      text-align:center;
+      padding:100px 20px;
+      background:radial-gradient(circle at top,#34343d,#101014 60%)
     }
-
-    /* HERO */
-
-    header {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 30px 20px;
-      background:
-        radial-gradient(circle at top, #333 0%, #111 45%, #050505 100%);
-      position: relative;
-      overflow: hidden;
+    .hero h1{font-size:clamp(40px,9vw,85px);margin:0}
+    .hero h1 span{color:#f2c94c}
+    .hero p{max-width:700px;margin:25px auto;color:#ccc;font-size:18px}
+    .btn{
+      display:inline-block;
+      background:#f2c94c;
+      color:#111;
+      padding:13px 18px;
+      border-radius:10px;
+      text-decoration:none;
+      font-weight:bold;
+      margin:5px
     }
-
-    header::before {
-      content: "XT";
-      position: absolute;
-      font-size: clamp(180px, 45vw, 520px);
-      font-weight: 900;
-      color: rgba(255,255,255,0.025);
-      z-index: 0;
-      transform: rotate(-8deg);
+    main{max-width:1100px;margin:auto;padding:20px}
+    section{padding:60px 0;border-bottom:1px solid #29292f}
+    h2{font-size:32px}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:18px
     }
-
-    .hero {
-      position: relative;
-      z-index: 1;
-      max-width: 900px;
+    .card{
+      background:#19191f;
+      border:1px solid #333;
+      border-radius:15px;
+      padding:22px
     }
-
-    .brand {
-      font-size: clamp(48px, 12vw, 110px);
-      font-weight: 900;
-      letter-spacing: -4px;
-      text-transform: uppercase;
-      line-height: 0.95;
-      text-shadow:
-        3px 3px 0 #000,
-        6px 6px 0 rgba(255,255,255,0.08);
+    .card h3{margin-top:0;color:#f2c94c}
+    .muted{color:#bbb}
+    form{max-width:650px;display:grid;gap:12px}
+    input,textarea,select{
+      width:100%;
+      padding:13px;
+      background:#0d0d10;
+      color:#fff;
+      border:1px solid #444;
+      border-radius:9px
     }
-
-    .brand span {
-      color: #d4af37;
+    textarea{min-height:120px}
+    #admin{display:none}
+    #dashboard{display:none}
+    .status{
+      padding:12px;
+      margin:12px 0;
+      border-radius:9px;
+      background:#24242b
     }
-
-    .subtitle {
-      margin-top: 25px;
-      font-size: clamp(18px, 4vw, 28px);
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    .hero-text {
-      margin: 20px auto 30px;
-      max-width: 700px;
-      color: #ccc;
-      font-size: 17px;
-    }
-
-    /* BOTONES */
-
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 14px 22px;
-      border-radius: 50px;
-      font-weight: bold;
-      text-transform: uppercase;
-      transition: 0.3s;
-      border: 2px solid #fff;
-      text-align: center;
-    }
-
-    .btn:hover {
-      transform: translateY(-3px);
-    }
-
-    .btn-whatsapp {
-      background: #25D366;
-      border-color: #25D366;
-      color: #fff;
-    }
-
-    .btn-whatsapp:hover {
-      background: #1ebe5d;
-      border-color: #1ebe5d;
-    }
-
-    .btn-instagram {
-      background: linear-gradient(
-        45deg,
-        #f09433,
-        #e6683c,
-        #dc2743,
-        #cc2366,
-        #bc1888
-      );
-      border: none;
-      color: #fff;
-    }
-
-    /* NAV */
-
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(0,0,0,0.96);
-      border-bottom: 1px solid #333;
-    }
-
-    .nav-container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 14px 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 22px;
-      flex-wrap: wrap;
-    }
-
-    nav a {
-      font-weight: bold;
-      font-size: 13px;
-      text-transform: uppercase;
-      color: #ddd;
-    }
-
-    nav a:hover {
-      color: #d4af37;
-    }
-
-    /* SECCIONES */
-
-    section {
-      padding: 80px 20px;
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: clamp(32px, 7vw, 55px);
-      margin-bottom: 15px;
-      text-transform: uppercase;
-    }
-
-    .section-title span {
-      color: #d4af37;
-    }
-
-    .section-intro {
-      text-align: center;
-      max-width: 750px;
-      margin: 0 auto 45px;
-      color: #bbb;
-      font-size: 17px;
-    }
-
-    /* NOSOTROS */
-
-    #nosotros {
-      background: #181818;
-    }
-
-    .about {
-      max-width: 850px;
-      margin: auto;
-      text-align: center;
-    }
-
-    .about p {
-      margin-bottom: 18px;
-      color: #ddd;
-      font-size: 18px;
-    }
-
-    /* SERVICIOS Y CURSOS */
-
-    #servicios,
-    #cursos {
-      background: #0d0d0d;
-    }
-
-    #cursos {
-      background:
-        radial-gradient(circle at center, #252525 0%, #0d0d0d 75%);
-    }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
-
-    .service {
-      padding: 30px 25px;
-      background: #1b1b1b;
-      border: 1px solid #333;
-      border-radius: 15px;
-      text-align: center;
-      transition: 0.3s;
-    }
-
-    .service:hover {
-      transform: translateY(-5px);
-      border-color: #d4af37;
-    }
-
-    .service-icon {
-      font-size: 45px;
-      margin-bottom: 15px;
-    }
-
-    .service h3 {
-      font-size: 22px;
-      margin-bottom: 10px;
-      color: #d4af37;
-    }
-
-    .service p {
-      color: #bbb;
-    }
-
-    .course-list {
-      text-align: left;
-      max-width: 420px;
-      margin: 0 auto;
-      color: #ccc;
-    }
-
-    .course-list li {
-      margin-bottom: 7px;
-    }
-
-    .course-button {
-      margin-top: 20px;
-    }
-
-    /* GALERÍA */
-
-    #galeria {
-      background: #181818;
-    }
-
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-    }
-
-    .gallery-item {
-      min-height: 220px;
-      border-radius: 12px;
-      border: 1px solid #333;
-      background:
-        linear-gradient(135deg, #222, #101010);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 20px;
-      color: #777;
-    }
-
-    .gallery-item strong {
-      color: #d4af37;
-      display: block;
-      font-size: 20px;
-      margin-bottom: 5px;
-    }
-
-    /* CONTACTO */
-
-    #contacto {
-      background:
-        radial-gradient(circle at center, #292929 0%, #0b0b0b 70%);
-      text-align: center;
-    }
-
-    .contact-box {
-      max-width: 750px;
-      margin: auto;
-      padding: 45px 25px;
-      border: 1px solid #333;
-      border-radius: 20px;
-      background: rgba(0,0,0,0.35);
-    }
-
-    .contact-box h3 {
-      font-size: 30px;
-      margin-bottom: 15px;
-    }
-
-    .contact-box p {
-      color: #bbb;
-      margin-bottom: 20px;
-    }
-
-    .contact-data {
-      margin: 25px 0;
-      font-size: 18px;
-    }
-
-    .contact-data strong {
-      color: #d4af37;
-    }
-
-    /* FOOTER */
-
-    footer {
-      background: #050505;
-      text-align: center;
-      padding: 35px 20px;
-      color: #888;
-      border-top: 1px solid #222;
-    }
-
-    footer strong {
-      color: #fff;
-    }
-
-    .social {
-      margin-top: 12px;
-    }
-
-    .social a {
-      color: #d4af37;
-      font-weight: bold;
-    }
-
-    /* WHATSAPP FLOTANTE */
-
-    .whatsapp-float {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      width: 62px;
-      height: 62px;
-      border-radius: 50%;
-      background: #25D366;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 31px;
-      z-index: 2000;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-      transition: 0.3s;
-    }
-
-    .whatsapp-float:hover {
-      transform: scale(1.1);
-    }
-
-    /* MÓVIL */
-
-    @media (max-width: 700px) {
-
-      .brand {
-        letter-spacing: -2px;
-      }
-
-      .nav-container {
-        gap: 12px;
-      }
-
-      nav a {
-        font-size: 11px;
-      }
-
-      section {
-        padding: 60px 15px;
-      }
-
-      .services-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .gallery {
-        grid-template-columns: 1fr;
-      }
-
-      .gallery-item {
-        min-height: 170px;
-      }
-
-      .btn {
-        width: 100%;
-        max-width: 320px;
-      }
-
-      .whatsapp-float {
-        width: 58px;
-        height: 58px;
-        right: 15px;
-        bottom: 15px;
-      }
+    table{width:100%;border-collapse:collapse}
+    th,td{border:1px solid #444;padding:8px;text-align:left}
+    th{background:#27272d}
+    .table-wrap{overflow:auto}
+    footer{text-align:center;color:#aaa;padding:35px 15px}
+    @media(max-width:700px){
+      .nav{flex-direction:column}
+      nav{justify-content:center}
     }
   </style>
 </head>
 
 <body>
 
-  <!-- HERO -->
-
-  <header id="inicio">
-
-    <div class="hero">
-
-      <div class="brand">
-        RoX<span>Thal</span>
-      </div>
-
-      <div class="subtitle">
-        Art Design
-      </div>
-
-      <p class="hero-text">
-        Arte, tatuajes, dibujo, pintura, diseño y
-        fileteado porteño.
-        Creaciones únicas con identidad propia.
-      </p>
-
-      <div class="buttons">
-
-        <a
-          class="btn btn-whatsapp"
-          href="https://wa.me/5491169633376?text=Hola%20RoXThal%20Art%20Design%2C%20quiero%20hacer%20una%20consulta."
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          💬 WhatsApp
-        </a>
-
-        <a
-          class="btn btn-instagram"
-          href="https://www.instagram.com/roxthalartdesign/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          📸 Instagram
-        </a>
-
-      </div>
-
-    </div>
-
-  </header>
-
-
-  <!-- NAVEGACIÓN -->
-
-  <nav>
-
-    <div class="nav-container">
-
+<header>
+  <div class="nav">
+    <div class="logo">RoXThal <span>Art Design</span></div>
+    <nav>
       <a href="#inicio">Inicio</a>
-      <a href="#nosotros">Nosotros</a>
       <a href="#servicios">Servicios</a>
       <a href="#cursos">Cursos</a>
-      <a href="#galeria">Galería</a>
+      <a href="#reservas">Reservas</a>
       <a href="#contacto">Contacto</a>
-
-    </div>
-
-  </nav>
-
-
-  <!-- NOSOTROS -->
-
-  <section id="nosotros">
-
-    <div class="container">
-
-      <h2 class="section-title">
-        RoX<span>Thal</span> Art Design
-      </h2>
-
-      <div class="about">
-
-        <p>
-          Un espacio dedicado al arte, el diseño,
-          el tatuaje y la expresión individual.
-        </p>
-
-        <p>
-          Trabajamos diferentes disciplinas artísticas,
-          combinando técnicas tradicionales y contemporáneas
-          para crear piezas únicas.
-        </p>
-
-        <p>
-          Desde un tatuaje hasta una obra de arte,
-          un diseño o un fileteado porteño,
-          cada proyecto se desarrolla con personalidad,
-          detalle y carácter.
-        </p>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- SERVICIOS -->
-
-  <section id="servicios">
-
-    <div class="container">
-
-      <h2 class="section-title">
-        Nuestros <span>Servicios</span>
-      </h2>
-
-      <p class="section-intro">
-        Descubrí todo lo que podemos crear juntos.
-      </p>
-
-      <div class="services-grid">
-
-        <div class="service">
-
-          <div class="service-icon">🖋️</div>
-
-          <h3>Tatuajes</h3>
-
-          <p>
-            Diseños personalizados y tatuajes adaptados
-            a la idea y estilo de cada persona.
-          </p>
-
-        </div>
-
-
-        <div class="service">
-
-          <div class="service-icon">🎨</div>
-
-          <h3>Dibujo y Pintura</h3>
-
-          <p>
-            Obras, ilustraciones, dibujos y pinturas
-            realizadas de forma personalizada.
-          </p>
-
-        </div>
-
-
-        <div class="service">
-
-          <div class="service-icon">🇦🇷</div>
-
-          <h3>Fileteado Porteño</h3>
-
-          <p>
-            Realizamos todo tipo de fileteados al más
-            puro estilo del fileteado porteño argentino.
-          </p>
-
-        </div>
-
-
-        <div class="service">
-
-          <div class="service-icon">✏️</div>
-
-          <h3>Diseño</h3>
-
-          <p>
-            Creación de diseños, ilustraciones,
-            cartelería y proyectos artísticos.
-          </p>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- CURSOS Y TALLERES -->
-
-  <section id="cursos">
-
-    <div class="container">
-
-      <h2 class="section-title">
-        Cursos y <span>Talleres</span>
-      </h2>
-
-      <p class="section-intro">
-        Aprendé, desarrollá tu creatividad y descubrí
-        nuevas técnicas artísticas junto a
-        RoXThal Art Design.
-      </p>
-
-
-      <div class="services-grid">
-
-
-        <!-- TATUAJE -->
-
-        <div class="service">
-
-          <div class="service-icon">🖋️</div>
-
-          <h3>
-            Curso de Iniciación al Tatuaje
-          </h3>
-
-          <p>
-            Formación inicial para quienes quieren
-            introducirse en el mundo del tatuaje y
-            comenzar a desarrollar sus habilidades.
-          </p>
-
-          <br>
-
-          <ul class="course-list">
-
-            <li>• Introducción al tatuaje</li>
-            <li>• Herramientas y materiales</li>
-            <li>• Higiene y preparación del espacio</li>
-            <li>• Técnicas básicas</li>
-            <li>• Diseño y preparación de trabajos</li>
-            <li>• Orientación personalizada</li>
-
-          </ul>
-
-          <div class="course-button">
-
-            <a
-              class="btn btn-whatsapp"
-              href="https://wa.me/5491169633376?text=Hola%20RoXThal%20Art%20Design%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20Curso%20de%20Iniciaci%C3%B3n%20al%20Tatuaje."
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              💬 Consultar
-            </a>
-
-          </div>
-
-        </div>
-
-
-        <!-- DIBUJO Y PINTURA -->
-
-        <div class="service">
-
-          <div class="service-icon">🎨</div>
-
-          <h3>
-            Curso de Dibujo y Pintura
-          </h3>
-
-          <p>
-            Formación artística para aprender y
-            perfeccionar diferentes técnicas de
-            dibujo y pintura.
-          </p>
-
-          <br>
-
-          <ul class="course-list">
-
-            <li>• Fundamentos del dibujo</li>
-            <li>• Proporciones y composición</li>
-            <li>• Luz y sombra</li>
-            <li>• Color</li>
-            <li>• Técnicas de pintura</li>
-            <li>• Desarrollo de proyectos personales</li>
-
-          </ul>
-
-          <div class="course-button">
-
-            <a
-              class="btn btn-whatsapp"
-              href="https://wa.me/5491169633376?text=Hola%20RoXThal%20Art%20Design%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20Curso%20de%20Dibujo%20y%20Pintura."
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              💬 Consultar
-            </a>
-
-          </div>
-
-        </div>
-
-
-        <!-- TALLER INFANTIL -->
-
-        <div class="service">
-
-          <div class="service-icon">🧒🎨</div>
-
-          <h3>
-            Taller Infantil de Dibujo y Pintura
-          </h3>
-
-          <p>
-            Un espacio creativo pensado para que los
-            niños experimenten con el dibujo, la pintura
-            y diferentes formas de expresión artística.
-          </p>
-
-          <br>
-
-          <ul class="course-list">
-
-            <li>• Dibujo creativo</li>
-            <li>• Pintura y experimentación</li>
-            <li>• Juegos artísticos</li>
-            <li>• Desarrollo de imaginación</li>
-            <li>• Expresión artística</li>
-            <li>• Actividades adaptadas por edad</li>
-
-          </ul>
-
-          <div class="course-button">
-
-            <a
-              class="btn btn-whatsapp"
-              href="https://wa.me/5491169633376?text=Hola%20RoXThal%20Art%20Design%2C%20quiero%20informaci%C3%B3n%20sobre%20los%20Talleres%20Infantiles%20de%20Dibujo%20y%20Pintura."
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              💬 Consultar
-            </a>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- GALERÍA -->
-
-  <section id="galeria">
-
-    <div class="container">
-
-      <h2 class="section-title">
-        <span>Galería</span>
-      </h2>
-
-      <p class="section-intro">
-        Próximamente podrás encontrar aquí nuestros
-        trabajos y proyectos.
-      </p>
-
-      <div class="gallery">
-
-        <div class="gallery-item">
-          <div>
-            <strong>Tatuajes</strong>
-            Diseños y trabajos realizados
-          </div>
-        </div>
-
-        <div class="gallery-item">
-          <div>
-            <strong>Fileteado</strong>
-            Arte tradicional argentino
-          </div>
-        </div>
-
-        <div class="gallery-item">
-          <div>
-            <strong>Arte</strong>
-            Dibujos y pinturas
-          </div>
-        </div>
-
-        <div class="gallery-item">
-          <div>
-            <strong>Diseño</strong>
-            Proyectos personalizados
-          </div>
-        </div>
-
-        <div class="gallery-item">
-          <div>
-            <strong>Ilustración</strong>
-            Creaciones originales
-          </div>
-        </div>
-
-        <div class="gallery-item">
-          <div>
-            <strong>RoXThal</strong>
-            Art Design
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- CONTACTO -->
-
-  <section id="contacto">
-
-    <div class="container">
-
-      <div class="contact-box">
-
-        <h3>
-          ¿Tenés un proyecto en mente?
-        </h3>
-
-        <p>
-          Contactanos directamente y contanos qué querés crear.
-        </p>
-
-        <div class="contact-data">
-
-          <p>
-            <strong>WhatsApp:</strong><br>
-            +54 9 11 6963-3376
-          </p>
-
-          <p>
-            <strong>Instagram:</strong><br>
-            @roxthalartdesign
-          </p>
-
-        </div>
-
-        <div class="buttons">
-
-          <a
-            class="btn btn-whatsapp"
-            href="https://wa.me/5491169633376?text=Hola%20RoXThal%20Art%20Design%2C%20quiero%20hacer%20una%20consulta."
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            💬 Escribir por WhatsApp
-          </a>
-
-          <a
-            class="btn btn-instagram"
-            href="https://www.instagram.com/roxthalartdesign/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            📸 Ver Instagram
-          </a>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- FOOTER -->
-
-  <footer>
-
-    <p>
-      © 2026 <strong>RoXThal Art Design</strong>
-    </p>
-
-    <div class="social">
-
-      <a
-        href="https://www.instagram.com/roxthalartdesign/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        @roxthalartdesign
-      </a>
-
-    </div>
-
-  </footer>
-
-
-  <!-- WHATSAPP FLOTANTE -->
-
-  <a
-    class="whatsapp-float"
-    href="https://wa.me/5491169633376?text=Hola%20RoXThal%20Art%20Design%2C%20quiero%20hacer%20una%20consulta."
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Contactar por WhatsApp"
-    title="Contactar por WhatsApp"
-  >
-    💬
+      <a href="#admin">Admin</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="inicio">
+  <h1>RoXThal <span>Art Design</span></h1>
+  <p>
+    Tatuajes, arte, dibujo, pintura, diseño y
+    todo tipo de fileteados al más puro estilo fileteado porteño.
+  </p>
+
+  <a class="btn"
+     href="https://wa.me/5491169633376?text=Hola%20RoXThal%20Art%20Design%2C%20quiero%20hacer%20una%20consulta."
+     target="_blank">
+    WhatsApp
   </a>
+
+  <a class="btn"
+     href="https://instagram.com/roxthalartdesign"
+     target="_blank">
+    Instagram
+  </a>
+</section>
+
+<main>
+
+<section id="servicios">
+  <h2>Servicios</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>Tatuajes</h3>
+      <p class="muted">
+        Diseños personalizados y trabajos de tatuaje adaptados a cada proyecto.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Fileteado porteño</h3>
+      <p class="muted">
+        Realizamos todo tipo de fileteados al más puro estilo fileteado porteño.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Dibujo y pintura</h3>
+      <p class="muted">
+        Obras, encargos y trabajos artísticos.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Diseño</h3>
+      <p class="muted">
+        Propuestas creativas e identidad visual.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<section id="cursos">
+  <h2>Cursos</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>Dibujo y pintura</h3>
+      <p class="muted">
+        Clases para iniciación y desarrollo de técnicas artísticas.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Iniciación al tatuaje</h3>
+      <p class="muted">
+        Introducción al mundo del tatuaje y sus fundamentos.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<section id="reservas">
+  <h2>Reserva / Consulta</h2>
+
+  <form id="bookingForm">
+
+    <input id="nombre" required placeholder="Nombre">
+
+    <input id="telefono" placeholder="Teléfono">
+
+    <select id="servicio" required>
+      <option value="">Selecciona un servicio</option>
+      <option>Tatuaje</option>
+      <option>Fileteado porteño</option>
+      <option>Dibujo y pintura</option>
+      <option>Curso</option>
+      <option>Diseño</option>
+    </select>
+
+    <textarea id="consulta" placeholder="Cuéntanos qué necesitas"></textarea>
+
+    <button type="submit">Enviar por WhatsApp</button>
+
+  </form>
+</section>
+
+<section id="contacto">
+  <h2>Contacto</h2>
+
+  <div class="card">
+    <p><strong>Ubicación:</strong> San Antonio de Padua</p>
+    <p><strong>WhatsApp:</strong> +54 9 11 6963-3376</p>
+    <p><strong>Instagram:</strong> @roxthalartdesign</p>
+  </div>
+</section>
+
+<section id="admin">
+
+  <h2>Panel de administración</h2>
+
+  <div id="loginBox" class="card">
+
+    <form id="loginForm">
+
+      <input
+        id="email"
+        type="email"
+        placeholder="Correo de administrador"
+        required>
+
+      <input
+        id="password"
+        type="password"
+        placeholder="Contraseña"
+        required>
+
+      <button type="submit">Entrar</button>
+
+    </form>
+
+    <div id="loginStatus"></div>
+
+  </div>
+
+  <div id="dashboard">
+
+    <div class="card">
+      <h3>Administrador</h3>
+      <p id="adminEmail"></p>
+
+      <button id="actualizar">Actualizar datos</button>
+      <button id="cerrarSesion">Cerrar sesión</button>
+    </div>
+
+    <div id="datos"></div>
+
+  </div>
+
+</section>
+
+</main>
+
+<footer>
+  © 2026 RoXThal Art Design
+</footer>
+
+<script>
+
+const SUPABASE_URL =
+"https://lvvhpuedktdmfehvhcwk.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp";
+
+const ADMIN_EMAIL =
+"xtroxthal@gmail.com";
+
+const supabaseClient =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+/* WHATSAPP */
+
+document.getElementById("bookingForm").addEventListener("submit",function(e){
+
+  e.preventDefault();
+
+  const nombre =
+  document.getElementById("nombre").value;
+
+  const telefono =
+  document.getElementById("telefono").value;
+
+  const servicio =
+  document.getElementById("servicio").value;
+
+  const consulta =
+  document.getElementById("consulta").value;
+
+  const mensaje =
+  "Hola RoXThal Art Design.%0A%0A" +
+  "Nombre: " + encodeURIComponent(nombre) +
+  "%0ATeléfono: " + encodeURIComponent(telefono) +
+  "%0AServicio: " + encodeURIComponent(servicio) +
+  "%0AConsulta: " + encodeURIComponent(consulta);
+
+  window.open(
+    "https://wa.me/5491169633376?text=" + mensaje,
+    "_blank"
+  );
+
+});
+
+
+/* LOGIN */
+
+document.getElementById("loginForm").addEventListener("submit",async function(e){
+
+  e.preventDefault();
+
+  const email =
+  document.getElementById("email").value.trim();
+
+  const password =
+  document.getElementById("password").value;
+
+  const status =
+  document.getElementById("loginStatus");
+
+  if(email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()){
+
+    status.innerHTML =
+    "Este acceso es solamente para el administrador.";
+
+    return;
+  }
+
+  status.innerHTML =
+  "Iniciando sesión...";
+
+  const {data,error} =
+  await supabaseClient.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if(error){
+
+    status.innerHTML =
+    "Error: " + error.message;
+
+    return;
+  }
+
+  status.innerHTML =
+  "Sesión iniciada correctamente.";
+
+  mostrarPanel(data.user);
+
+});
+
+
+/* PANEL */
+
+async function mostrarPanel(user){
+
+  document.getElementById("loginBox").style.display="none";
+
+  document.getElementById("dashboard").style.display="block";
+
+  document.getElementById("adminEmail").textContent =
+  user.email;
+
+  cargarDatos();
+
+}
+
+
+/* DATOS */
+
+async function cargarDatos(){
+
+  const contenedor =
+  document.getElementById("datos");
+
+  contenedor.innerHTML =
+  "<p>Cargando datos...</p>";
+
+  const tablas =
+  ["Alumnos","Booking","Cursos","Pagos"];
+
+  contenedor.innerHTML="";
+
+  for(const tabla of tablas){
+
+    const {data,error} =
+    await supabaseClient
+    .from(tabla)
+    .select("*")
+    .limit(100);
+
+    const bloque =
+    document.createElement("div");
+
+    bloque.className="card";
+
+    const titulo =
+    document.createElement("h3");
+
+    titulo.textContent=tabla;
+
+    bloque.appendChild(titulo);
+
+    if(error){
+
+      const p =
+      document.createElement("p");
+
+      p.className="muted";
+
+      p.textContent =
+      "No se pudieron cargar los datos.";
+
+      bloque.appendChild(p);
+
+      contenedor.appendChild(bloque);
+
+      continue;
+    }
+
+    if(!data || data.length===0){
+
+      const p =
+      document.createElement("p");
+
+      p.className="muted";
+
+      p.textContent="Sin registros.";
+
+      bloque.appendChild(p);
+
+      contenedor.appendChild(bloque);
+
+      continue;
+    }
+
+    const columnas =
+    Object.keys(data[0]);
+
+    const wrap =
+    document.createElement("div");
+
+    wrap.className="table-wrap";
+
+    const table =
+    document.createElement("table");
+
+    const thead =
+    document.createElement("thead");
+
+    const tr =
+    document.createElement("tr");
+
+    columnas.forEach(col=>{
+
+      const th =
+      document.createElement("th");
+
+      th.textContent=col;
+
+      tr.appendChild(th);
+
+    });
+
+    thead.appendChild(tr);
+
+    table.appendChild(thead);
+
+    const tbody =
+    document.createElement("tbody");
+
+    data.forEach(fila=>{
+
+      const tr =
+      document.createElement("tr");
+
+      columnas.forEach(col=>{
+
+        const td =
+        document.createElement("td");
+
+        const valor =
+        fila[col];
+
+        td.textContent =
+        valor === null
+        ? ""
+        : typeof valor === "object"
+        ? JSON.stringify(valor)
+        : valor;
+
+        tr.appendChild(td);
+
+      });
+
+      tbody.appendChild(tr);
+
+    });
+
+    table.appendChild(tbody);
+
+    wrap.appendChild(table);
+
+    bloque.appendChild(wrap);
+
+    contenedor.appendChild(bloque);
+
+  }
+
+}
+
+
+/* ACTUALIZAR */
+
+document.getElementById("actualizar")
+.addEventListener("click",cargarDatos);
+
+
+/* CERRAR SESIÓN */
+
+document.getElementById("cerrarSesion")
+.addEventListener("click",async function(){
+
+  await supabaseClient.auth.signOut();
+
+  document.getElementById("dashboard").style.display="none";
+
+  document.getElementById("loginBox").style.display="block";
+
+  document.getElementById("loginForm").reset();
+
+});
+
+
+/* SESIÓN EXISTENTE */
+
+async function comprobarSesion(){
+
+  const {data} =
+  await supabaseClient.auth.getSession();
+
+  const user =
+  data.session?.user;
+
+  if(
+    user &&
+    user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase()
+  ){
+
+    mostrarPanel(user);
+
+  }
+
+}
+
+comprobarSesion();
+
+</script>
 
 </body>
 </html>
