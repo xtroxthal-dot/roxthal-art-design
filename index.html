@@ -1882,6 +1882,40 @@ db.auth.onAuthStateChange((event,session)=>{
 checkSession();
 renderPublicCourses();
 </script>
+<!-- MEJORAS DEL PANEL -->
+<style>
+  .roxthal-admin-badge {
+    position: fixed;
+    right: 14px;
+    bottom: 14px;
+    z-index: 9999;
+    padding: 8px 12px;
+    border-radius: 20px;
+    background: #111;
+    color: #fff;
+    font-size: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,.25);
+  }
 
+  @media (max-width: 600px) {
+    button {
+      min-height: 44px;
+    }
+
+    input,
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
+
+    table {
+      font-size: 13px;
+    }
+  }
+</style>
+
+<div class="roxthal-admin-badge">
+  RoXThal Admin
+</div>
 </body>
 </html>
