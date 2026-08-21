@@ -5,282 +5,271 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>RoXThal Art Design</title>
-
-  <meta name="description"
-        content="RoXThal Art Design - Tatuajes, fileteado porteño, dibujo, pintura y diseño.">
+  <meta name="description" content="RoXThal Art Design - Arte, tatuajes, fileteado porteño, dibujo, pintura y cursos.">
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     * {
       box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #0d0d0f;
-      color: #ffffff;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
       line-height: 1.5;
     }
 
-    a {
-      color: inherit;
-    }
-
     header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(10,10,12,.97);
-      border-bottom: 1px solid #333;
+      background: #000;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 2px solid #d4af37;
     }
 
-    .nav {
-      max-width: 1100px;
-      margin: auto;
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
+    header h1 {
+      color: #d4af37;
+      font-size: 32px;
+      margin-bottom: 5px;
     }
 
-    .logo {
-      font-size: 22px;
-      font-weight: 900;
-      white-space: nowrap;
-    }
-
-    .logo span {
-      color: #f2c94c;
+    header p {
+      color: #ddd;
     }
 
     nav {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 7px;
-    }
-
-    nav a {
-      display: inline-block;
-      padding: 9px 11px;
-      border: 1px solid #3b3b42;
-      border-radius: 9px;
-      background: #19191f;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    nav a:hover {
-      border-color: #f2c94c;
-      color: #f2c94c;
-    }
-
-    .hero {
-      min-height: 72vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 70px 18px;
-      background:
-        radial-gradient(circle at top, #34343d 0%, #15151a 42%, #0d0d0f 75%);
-    }
-
-    .hero-content {
-      max-width: 900px;
-    }
-
-    .hero h1 {
-      margin: 0;
-      font-size: clamp(42px, 9vw, 90px);
-      line-height: 1;
-    }
-
-    .hero h1 span {
-      color: #f2c94c;
-    }
-
-    .hero p {
-      max-width: 720px;
-      margin: 25px auto;
-      color: #ccc;
-      font-size: 18px;
-    }
-
-    .buttons {
-      display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
+      padding: 12px;
+      background: #181818;
     }
 
-    .btn {
-      display: inline-block;
-      padding: 13px 18px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 900;
-      border: 1px solid #444;
-      background: #1b1b21;
+    nav button {
+      background: #222;
+      color: #fff;
+      border: 1px solid #555;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
     }
 
-    .btn.primary {
-      background: #f2c94c;
-      color: #111;
-      border-color: #f2c94c;
-    }
-
-    main {
-      max-width: 1100px;
-      margin: auto;
-      padding: 10px 18px 70px;
+    nav button:hover {
+      background: #d4af37;
+      color: #000;
     }
 
     section {
-      padding: 60px 0;
-      border-bottom: 1px solid #29292f;
+      padding: 35px 20px;
+      max-width: 1100px;
+      margin: auto;
     }
 
-    h2 {
-      font-size: 32px;
-      margin-top: 0;
+    .hero {
+      text-align: center;
+      padding: 70px 20px;
+      background: linear-gradient(135deg, #111, #222);
     }
 
-    .grid {
+    .hero h2 {
+      font-size: 40px;
+      color: #d4af37;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: auto;
+      color: #ddd;
+      font-size: 18px;
+    }
+
+    .cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
+      gap: 20px;
+      margin-top: 25px;
     }
 
     .card {
-      background: #19191f;
+      background: #1c1c1c;
       border: 1px solid #333;
-      border-radius: 15px;
-      padding: 22px;
+      border-radius: 12px;
+      padding: 25px;
     }
 
     .card h3 {
-      margin-top: 0;
-      color: #f2c94c;
+      color: #d4af37;
+      margin-bottom: 10px;
     }
 
-    .muted {
-      color: #bbb;
+    .admin-login,
+    .admin-panel {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 25px;
+      background: #1b1b1b;
+      border-radius: 12px;
+      border: 1px solid #444;
     }
 
-    form {
-      max-width: 650px;
-      display: grid;
-      gap: 12px;
+    .login-box {
+      max-width: 400px;
+      margin: auto;
     }
 
     input,
-    textarea,
-    select {
+    select,
+    textarea {
       width: 100%;
-      padding: 13px;
-      border-radius: 9px;
-      border: 1px solid #444;
-      background: #0d0d10;
+      padding: 12px;
+      margin: 7px 0 14px;
+      border-radius: 7px;
+      border: 1px solid #555;
+      background: #111;
       color: #fff;
-      font-size: 16px;
     }
 
     textarea {
-      min-height: 120px;
+      min-height: 100px;
       resize: vertical;
     }
 
-    button {
-      padding: 13px 16px;
-      border-radius: 9px;
-      border: 1px solid #444;
-      background: #f2c94c;
-      color: #111;
-      font-weight: 900;
+    button.primary {
+      background: #d4af37;
+      color: #000;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 7px;
       cursor: pointer;
-      font-size: 15px;
+      font-weight: bold;
     }
 
-    button:hover {
-      opacity: .9;
+    button.danger {
+      background: #a33;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 7px;
+      cursor: pointer;
     }
 
-    #admin {
-      display: block;
-    }
-
-    #dashboard {
+    .message {
+      margin: 15px 0;
+      padding: 12px;
+      border-radius: 7px;
       display: none;
     }
 
-    .status {
-      margin-top: 12px;
-      padding: 12px;
-      border-radius: 9px;
-      background: #222229;
-      color: #ddd;
+    .success {
+      background: #164d25;
+      display: block;
+    }
+
+    .error {
+      background: #5c1d1d;
+      display: block;
+    }
+
+    .admin-menu {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 20px 0;
+    }
+
+    .admin-menu button {
+      padding: 10px 14px;
+      background: #292929;
+      color: #fff;
+      border: 1px solid #555;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    .admin-menu button.active {
+      background: #d4af37;
+      color: #000;
+    }
+
+    .admin-section {
+      display: none;
+    }
+
+    .admin-section.active {
+      display: block;
     }
 
     .table-wrap {
       overflow-x: auto;
+      margin-top: 20px;
     }
 
     table {
       width: 100%;
-      min-width: 600px;
       border-collapse: collapse;
+      min-width: 700px;
     }
 
     th,
     td {
-      padding: 9px;
       border: 1px solid #444;
+      padding: 10px;
       text-align: left;
     }
 
     th {
-      background: #28282f;
-      color: #f2c94c;
+      background: #292929;
+      color: #d4af37;
+    }
+
+    td {
+      background: #151515;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .stat {
+      background: #222;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 30px;
+      color: #d4af37;
     }
 
     footer {
-      padding: 35px 18px;
+      margin-top: 40px;
+      padding: 25px;
       text-align: center;
+      background: #000;
       color: #aaa;
     }
 
-    @media (max-width: 750px) {
+    a {
+      color: #d4af37;
+    }
 
-      .nav {
-        flex-direction: column;
-        align-items: stretch;
+    @media (max-width: 600px) {
+      .hero h2 {
+        font-size: 30px;
       }
 
-      .logo {
-        text-align: center;
-      }
-
-      nav {
-        display: flex !important;
-        width: 100%;
-      }
-
-      nav a {
-        flex: 1 1 auto;
-        text-align: center;
-      }
-
-      .hero {
-        min-height: 65vh;
+      section {
+        padding: 25px 15px;
       }
     }
   </style>
@@ -289,269 +278,357 @@
 <body>
 
 <header>
-
-  <div class="nav">
-
-    <div class="logo">
-      RoXThal <span>Art Design</span>
-    </div>
-
-    <nav>
-      <a href="#inicio">Inicio</a>
-      <a href="#servicios">Servicios</a>
-      <a href="#cursos">Cursos</a>
-      <a href="#reservas">Reservas</a>
-      <a href="#contacto">Contacto</a>
-      <a href="#admin">ADMIN</a>
-    </nav>
-
-  </div>
-
+  <h1>RoXThal Art Design</h1>
+  <p>Arte · Tatuajes · Fileteado Porteño · Dibujo · Pintura</p>
 </header>
 
-
-<section class="hero" id="inicio">
-
-  <div class="hero-content">
-
-    <h1>
-      RoXThal <span>Art Design</span>
-    </h1>
-
-    <p>
-      Tatuajes, arte, dibujo, pintura, diseño y
-      todo tipo de fileteados al más puro estilo
-      fileteado porteño.
-    </p>
-
-    <div class="buttons">
-
-      <a
-        class="btn primary"
-        href="https://wa.me/5491169633376?text=Hola%20RoXThal%20Art%20Design%2C%20quiero%20hacer%20una%20consulta."
-        target="_blank"
-        rel="noopener">
-        WhatsApp
-      </a>
-
-      <a
-        class="btn"
-        href="https://instagram.com/roxthalartdesign"
-        target="_blank"
-        rel="noopener">
-        Instagram
-      </a>
-
-    </div>
-
-  </div>
-
-</section>
-
+<nav>
+  <button onclick="goTo('inicio')">Inicio</button>
+  <button onclick="goTo('servicios')">Servicios</button>
+  <button onclick="goTo('cursosPublicos')">Cursos</button>
+  <button onclick="goTo('contacto')">Contacto</button>
+  <button onclick="goTo('admin')">Administrador</button>
+</nav>
 
 <main>
 
-<section id="servicios">
+<section id="inicio" class="hero">
+  <h2>RoXThal Art Design</h2>
+  <p>
+    Espacio dedicado al arte, tatuaje, dibujo, pintura y
+    fileteado porteño al más puro estilo argentino.
+  </p>
+</section>
 
+<section id="servicios">
   <h2>Servicios</h2>
 
-  <div class="grid">
-
+  <div class="cards">
     <div class="card">
       <h3>Tatuajes</h3>
-      <p class="muted">
-        Diseños personalizados y trabajos de tatuaje
-        adaptados a cada proyecto.
-      </p>
+      <p>Diseños personalizados y trabajos artísticos.</p>
     </div>
 
     <div class="card">
-      <h3>Fileteado porteño</h3>
-      <p class="muted">
-        Realizamos todo tipo de fileteados al más puro
-        estilo fileteado porteño.
-      </p>
+      <h3>Fileteado Porteño</h3>
+      <p>Trabajos de fileteado al estilo tradicional argentino.</p>
     </div>
 
     <div class="card">
-      <h3>Dibujo y pintura</h3>
-      <p class="muted">
-        Obras, encargos y trabajos artísticos.
-      </p>
+      <h3>Dibujo</h3>
+      <p>Clases y desarrollo de técnicas de dibujo.</p>
     </div>
 
     <div class="card">
-      <h3>Diseño</h3>
-      <p class="muted">
-        Propuestas creativas e identidad visual.
-      </p>
+      <h3>Pintura</h3>
+      <p>Clases de pintura y desarrollo artístico.</p>
     </div>
-
   </div>
-
 </section>
 
-
-<section id="cursos">
-
+<section id="cursosPublicos">
   <h2>Cursos</h2>
-
-  <div class="grid">
-
+  <div id="publicCourses" class="cards">
     <div class="card">
-      <h3>Dibujo y pintura</h3>
-      <p class="muted">
-        Clases para iniciación y desarrollo de técnicas artísticas.
-      </p>
+      <h3>Cargando cursos...</h3>
     </div>
-
-    <div class="card">
-      <h3>Iniciación al tatuaje</h3>
-      <p class="muted">
-        Introducción al mundo del tatuaje y sus fundamentos.
-      </p>
-    </div>
-
   </div>
-
 </section>
-
-
-<section id="reservas">
-
-  <h2>Reserva / Consulta</h2>
-
-  <p class="muted">
-    Completa el formulario y envía tu consulta directamente por WhatsApp.
-  </p>
-
-  <form id="bookingForm">
-
-    <input
-      id="nombre"
-      type="text"
-      placeholder="Nombre"
-      required>
-
-    <input
-      id="telefono"
-      type="tel"
-      placeholder="Teléfono">
-
-    <select id="servicio" required>
-
-      <option value="">
-        Selecciona un servicio
-      </option>
-
-      <option>Tatuaje</option>
-      <option>Fileteado porteño</option>
-      <option>Dibujo y pintura</option>
-      <option>Curso</option>
-      <option>Diseño</option>
-
-    </select>
-
-    <textarea
-      id="consulta"
-      placeholder="Cuéntanos qué necesitas"></textarea>
-
-    <button type="submit">
-      Enviar por WhatsApp
-    </button>
-
-  </form>
-
-</section>
-
 
 <section id="contacto">
-
   <h2>Contacto</h2>
 
   <div class="card">
-
-    <p>
-      <strong>Ubicación:</strong>
-      San Antonio de Padua
+    <p><strong>WhatsApp:</strong>
+      <a href="https://wa.me/5491169633376" target="_blank">
+        +54 9 11 6963-3376
+      </a>
     </p>
 
-    <p>
-      <strong>WhatsApp:</strong>
-      +54 9 11 6963-3376
+    <p><strong>Instagram:</strong>
+      <a href="https://instagram.com/roxthalartdesign" target="_blank">
+        @roxthalartdesign
+      </a>
     </p>
 
-    <p>
-      <strong>Instagram:</strong>
-      @roxthalartdesign
-    </p>
-
+    <p><strong>Ubicación:</strong> San Antonio de Padua</p>
   </div>
-
 </section>
 
+<!-- LOGIN -->
 
-<section id="admin">
+<section id="admin" class="admin-login">
 
-  <h2>Administración</h2>
+  <div id="loginBox" class="login-box">
 
-  <div id="loginBox" class="card">
+    <h2>Acceso de Administrador</h2>
 
-    <h3>Acceso administrador</h3>
-
-    <p class="muted">
-      Inicia sesión para acceder a los datos de RoXThal Art Design.
+    <p style="margin:10px 0 20px;color:#bbb;">
+      Inicia sesión para administrar RoXThal Art Design.
     </p>
 
-    <form id="loginForm">
+    <label>Email</label>
+    <input id="loginEmail" type="email" placeholder="Correo electrónico">
 
-      <input
-        id="email"
-        type="email"
-        placeholder="Correo electrónico"
-        autocomplete="username"
-        required>
+    <label>Contraseña</label>
+    <input id="loginPassword" type="password" placeholder="Contraseña">
 
-      <input
-        id="password"
-        type="password"
-        placeholder="Contraseña"
-        autocomplete="current-password"
-        required>
+    <button class="primary" onclick="login()">
+      Iniciar sesión
+    </button>
 
-      <button type="submit">
-        Entrar
-      </button>
-
-    </form>
-
-    <div id="loginStatus"></div>
+    <div id="loginMessage" class="message"></div>
 
   </div>
 
+  <!-- PANEL -->
 
-  <div id="dashboard">
+  <div id="dashboard" class="admin-panel" style="display:none;">
 
-    <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+      <div>
+        <h2>Panel de Administración</h2>
+        <p id="adminEmail" style="color:#aaa;"></p>
+      </div>
 
-      <h3>Panel de administrador</h3>
-
-      <p>
-        Usuario:
-        <strong id="adminEmail"></strong>
-      </p>
-
-      <button id="actualizar">
-        Actualizar datos
-      </button>
-
-      <button id="cerrarSesion">
+      <button class="danger" onclick="logout()">
         Cerrar sesión
       </button>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat">
+        <strong id="statAlumnos">0</strong>
+        Alumnos
+      </div>
+
+      <div class="stat">
+        <strong id="statBookings">0</strong>
+        Bookings
+      </div>
+
+      <div class="stat">
+        <strong id="statCursos">0</strong>
+        Cursos
+      </div>
+
+      <div class="stat">
+        <strong id="statPagos">0</strong>
+        Pagos
+      </div>
+    </div>
+
+    <div class="admin-menu">
+      <button class="active" onclick="showAdminSection('alumnos', this)">
+        Alumnos
+      </button>
+
+      <button onclick="showAdminSection('bookings', this)">
+        Bookings
+      </button>
+
+      <button onclick="showAdminSection('cursos', this)">
+        Cursos
+      </button>
+
+      <button onclick="showAdminSection('pagos', this)">
+        Pagos
+      </button>
+    </div>
+
+    <!-- ALUMNOS -->
+
+    <div id="section-alumnos" class="admin-section active">
+
+      <h3>Alumnos</h3>
+
+      <form onsubmit="addAlumno(event)">
+
+        <input id="alNombre" placeholder="Nombre" required>
+
+        <input id="alApellido" placeholder="Apellido">
+
+        <input id="alWhatsapp" placeholder="WhatsApp">
+
+        <input id="alEmail" type="email" placeholder="Email">
+
+        <input id="alCurso" placeholder="Curso">
+
+        <input id="alHorario" placeholder="Horario">
+
+        <input id="alFecha" type="date">
+
+        <input id="alImporte" type="number" step="0.01" placeholder="Importe">
+
+        <textarea id="alObservaciones" placeholder="Observaciones"></textarea>
+
+        <button class="primary" type="submit">
+          Agregar alumno
+        </button>
+
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>WhatsApp</th>
+              <th>Email</th>
+              <th>Curso</th>
+              <th>Horario</th>
+              <th>Importe</th>
+              <th>Activo</th>
+            </tr>
+          </thead>
+
+          <tbody id="alumnosTable"></tbody>
+        </table>
+      </div>
 
     </div>
 
-    <div id="datos"></div>
+    <!-- BOOKINGS -->
+
+    <div id="section-bookings" class="admin-section">
+
+      <h3>Bookings / Reservas</h3>
+
+      <form onsubmit="addBooking(event)">
+
+        <input id="bkNombre" placeholder="Nombre">
+
+        <input id="bkWhatsapp" placeholder="WhatsApp">
+
+        <input id="bkCurso" placeholder="Curso">
+
+        <input id="bkFecha" type="date">
+
+        <input id="bkHorario" placeholder="Horario">
+
+        <select id="bkEstado">
+          <option value="pendiente">Pendiente</option>
+          <option value="confirmada">Confirmada</option>
+          <option value="cancelada">Cancelada</option>
+        </select>
+
+        <textarea id="bkObservaciones" placeholder="Observaciones"></textarea>
+
+        <button class="primary" type="submit">
+          Crear booking
+        </button>
+
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>WhatsApp</th>
+              <th>Curso</th>
+              <th>Fecha</th>
+              <th>Horario</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+
+          <tbody id="bookingsTable"></tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- CURSOS -->
+
+    <div id="section-cursos" class="admin-section">
+
+      <h3>Cursos</h3>
+
+      <form onsubmit="addCurso(event)">
+
+        <input id="cursoNombre" placeholder="Nombre del curso" required>
+
+        <input id="cursoDescripcion" placeholder="Descripción">
+
+        <input id="cursoPrecio" type="number" step="0.01" placeholder="Precio">
+
+        <input id="cursoHorario" placeholder="Horario">
+
+        <button class="primary" type="submit">
+          Agregar curso
+        </button>
+
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Precio</th>
+              <th>Horario</th>
+              <th>Activo</th>
+            </tr>
+          </thead>
+
+          <tbody id="cursosTable"></tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- PAGOS -->
+
+    <div id="section-pagos" class="admin-section">
+
+      <h3>Pagos</h3>
+
+      <form onsubmit="addPago(event)">
+
+        <input id="pagoAlumno" placeholder="ID del alumno">
+
+        <input id="pagoImporte" type="number" step="0.01" placeholder="Importe" required>
+
+        <input id="pagoFecha" type="date">
+
+        <select id="pagoMetodo">
+          <option value="">Método de pago</option>
+          <option value="efectivo">Efectivo</option>
+          <option value="transferencia">Transferencia</option>
+          <option value="mercado_pago">Mercado Pago</option>
+          <option value="otro">Otro</option>
+        </select>
+
+        <input id="pagoConcepto" placeholder="Concepto">
+
+        <textarea id="pagoObservaciones" placeholder="Observaciones"></textarea>
+
+        <button class="primary" type="submit">
+          Registrar pago
+        </button>
+
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Alumno</th>
+              <th>Importe</th>
+              <th>Fecha</th>
+              <th>Método</th>
+              <th>Concepto</th>
+            </tr>
+          </thead>
+
+          <tbody id="pagosTable"></tbody>
+        </table>
+      </div>
+
+    </div>
 
   </div>
 
@@ -559,450 +636,705 @@
 
 </main>
 
-
 <footer>
-
-  RoXThal Art Design © 2026
-
+  <p>© 2026 RoXThal Art Design</p>
 </footer>
-
 
 <script>
 
-const SUPABASE_URL =
-  "https://lvvhpuedktdmfehvhcwk.supabase.co";
+  /* =========================
+     SUPABASE
+  ========================= */
 
-const SUPABASE_KEY =
-  "sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp";
+  const SUPABASE_URL =
+    "https://lvvhpuedktdmfehvhcwk.supabase.co";
 
-const ADMIN_EMAIL =
-  "xtroxthal@gmail.com";
+  const SUPABASE_KEY =
+    "sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp";
 
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-
-
-/* =========================
-   WHATSAPP
-========================= */
-
-document
-  .getElementById("bookingForm")
-  .addEventListener("submit", function(event) {
-
-    event.preventDefault();
-
-    const nombre =
-      document.getElementById("nombre").value.trim();
-
-    const telefono =
-      document.getElementById("telefono").value.trim();
-
-    const servicio =
-      document.getElementById("servicio").value;
-
-    const consulta =
-      document.getElementById("consulta").value.trim();
-
-    const texto =
-      "Hola RoXThal Art Design.%0A%0A" +
-      "Nombre: " + encodeURIComponent(nombre) +
-      "%0ATeléfono: " + encodeURIComponent(telefono) +
-      "%0AServicio: " + encodeURIComponent(servicio) +
-      "%0AConsulta: " + encodeURIComponent(consulta);
-
-    window.open(
-      "https://wa.me/5491169633376?text=" + texto,
-      "_blank"
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
     );
 
-  });
+
+  /* =========================
+     NAVEGACIÓN
+  ========================= */
+
+  function goTo(id) {
+    const element = document.getElementById(id);
+
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth"
+      });
+    }
+  }
 
 
-/* =========================
-   LOGIN
-========================= */
+  /* =========================
+     MENSAJES
+  ========================= */
 
-document
-  .getElementById("loginForm")
-  .addEventListener("submit", async function(event) {
+  function showMessage(id, text, type) {
 
-    event.preventDefault();
+    const element = document.getElementById(id);
+
+    element.textContent = text;
+
+    element.className = "message " + type;
+
+  }
+
+
+  /* =========================
+     LOGIN
+  ========================= */
+
+  async function login() {
 
     const email =
-      document.getElementById("email").value.trim();
+      document.getElementById("loginEmail").value.trim();
 
     const password =
-      document.getElementById("password").value;
+      document.getElementById("loginPassword").value;
 
-    const status =
-      document.getElementById("loginStatus");
+    if (!email || !password) {
 
-    status.className = "status";
-    status.textContent = "Comprobando acceso...";
-
-
-    if (
-      email.toLowerCase() !==
-      ADMIN_EMAIL.toLowerCase()
-    ) {
-
-      status.textContent =
-        "Este acceso está reservado al administrador.";
+      showMessage(
+        "loginMessage",
+        "Completa email y contraseña.",
+        "error"
+      );
 
       return;
     }
 
-
-    const { data, error } =
-      await supabaseClient.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
-
+    const {
+      data,
+      error
+    } = await supabaseClient.auth.signInWithPassword({
+      email: email,
+      password: password
+    });
 
     if (error) {
 
-      status.textContent =
-        "No se pudo iniciar sesión: " +
-        error.message;
+      showMessage(
+        "loginMessage",
+        error.message,
+        "error"
+      );
 
       return;
     }
 
+    document.getElementById("loginBox").style.display = "none";
 
-    status.textContent =
-      "Acceso correcto.";
+    document.getElementById("dashboard").style.display = "block";
 
-    mostrarPanel(data.user);
+    document.getElementById("adminEmail").textContent =
+      data.user.email;
 
-  });
+    await loadDashboard();
 
-
-/* =========================
-   MOSTRAR PANEL
-========================= */
-
-function mostrarPanel(user) {
-
-  document.getElementById("loginBox").style.display =
-    "none";
-
-  document.getElementById("dashboard").style.display =
-    "block";
-
-  document.getElementById("adminEmail").textContent =
-    user.email;
-
-  cargarDatos();
-
-}
+  }
 
 
-/* =========================
-   CARGAR DATOS
-========================= */
+  /* =========================
+     LOGOUT
+  ========================= */
 
-async function cargarDatos() {
+  async function logout() {
 
-  const contenedor =
-    document.getElementById("datos");
+    await supabaseClient.auth.signOut();
 
-  contenedor.innerHTML =
-    "<div class='card'>Cargando datos...</div>";
+    document.getElementById("dashboard").style.display = "none";
 
+    document.getElementById("loginBox").style.display = "block";
 
-  const tablas = [
-    {
-      nombre: "Alumnos",
-      tabla: "alumnos"
-    },
-    {
-      nombre: "Booking",
-      tabla: "booking"
-    },
-    {
-      nombre: "Cursos",
-      tabla: "cursos"
-    },
-    {
-      nombre: "Pagos",
-      tabla: "pagos"
-    }
-  ];
+    document.getElementById("loginPassword").value = "";
+
+  }
 
 
-  contenedor.innerHTML = "";
+  /* =========================
+     SESIÓN EXISTENTE
+  ========================= */
 
+  async function checkSession() {
 
-  for (const elemento of tablas) {
+    const {
+      data
+    } = await supabaseClient.auth.getSession();
 
-    const bloque =
-      document.createElement("div");
+    if (data.session) {
 
-    bloque.className = "card";
+      document.getElementById("loginBox").style.display = "none";
 
-    const titulo =
-      document.createElement("h3");
+      document.getElementById("dashboard").style.display = "block";
 
-    titulo.textContent =
-      elemento.nombre;
+      document.getElementById("adminEmail").textContent =
+        data.session.user.email;
 
-    bloque.appendChild(titulo);
+      await loadDashboard();
 
-
-    const resultado =
-      await supabaseClient
-        .from(elemento.tabla)
-        .select("*")
-        .limit(100);
-
-
-    if (resultado.error) {
-
-      const mensaje =
-        document.createElement("p");
-
-      mensaje.className =
-        "muted";
-
-      mensaje.textContent =
-        "No se pueden mostrar los datos de esta tabla con los permisos actuales.";
-
-      bloque.appendChild(mensaje);
-
-      contenedor.appendChild(bloque);
-
-      continue;
     }
 
-
-    const datos =
-      resultado.data;
+  }
 
 
-    if (!datos || datos.length === 0) {
+  /* =========================
+     MENÚ ADMIN
+  ========================= */
 
-      const mensaje =
-        document.createElement("p");
+  function showAdminSection(name, button) {
 
-      mensaje.className =
-        "muted";
-
-      mensaje.textContent =
-        "No hay registros todavía.";
-
-      bloque.appendChild(mensaje);
-
-      contenedor.appendChild(bloque);
-
-      continue;
-    }
-
-
-    const columnas =
-      Object.keys(datos[0]);
-
-
-    const envoltorio =
-      document.createElement("div");
-
-    envoltorio.className =
-      "table-wrap";
-
-
-    const tabla =
-      document.createElement("table");
-
-
-    const encabezado =
-      document.createElement("thead");
-
-
-    const filaEncabezado =
-      document.createElement("tr");
-
-
-    columnas.forEach(function(columna) {
-
-      const th =
-        document.createElement("th");
-
-      th.textContent =
-        columna;
-
-      filaEncabezado.appendChild(th);
-
-    });
-
-
-    encabezado.appendChild(
-      filaEncabezado
-    );
-
-    tabla.appendChild(
-      encabezado
-    );
-
-
-    const cuerpo =
-      document.createElement("tbody");
-
-
-    datos.forEach(function(fila) {
-
-      const tr =
-        document.createElement("tr");
-
-
-      columnas.forEach(function(columna) {
-
-        const td =
-          document.createElement("td");
-
-        const valor =
-          fila[columna];
-
-
-        if (valor === null) {
-
-          td.textContent = "";
-
-        } else if (
-          typeof valor === "object"
-        ) {
-
-          td.textContent =
-            JSON.stringify(valor);
-
-        } else {
-
-          td.textContent =
-            String(valor);
-
-        }
-
-
-        tr.appendChild(td);
-
+    document.querySelectorAll(".admin-section")
+      .forEach(section => {
+        section.classList.remove("active");
       });
 
+    document.querySelectorAll(".admin-menu button")
+      .forEach(btn => {
+        btn.classList.remove("active");
+      });
 
-      cuerpo.appendChild(tr);
+    document
+      .getElementById("section-" + name)
+      .classList.add("active");
+
+    button.classList.add("active");
+
+  }
+
+
+  /* =========================
+     DASHBOARD
+  ========================= */
+
+  async function loadDashboard() {
+
+    await loadAlumnos();
+
+    await loadBookings();
+
+    await loadCursos();
+
+    await loadPagos();
+
+    await loadPublicCourses();
+
+  }
+
+
+  /* =========================
+     ALUMNOS
+  ========================= */
+
+  async function loadAlumnos() {
+
+    const {
+      data,
+      error
+    } = await supabaseClient
+      .from("alumnos")
+      .select("*")
+      .order("created_at", {
+        ascending: false
+      });
+
+    if (error) {
+
+      console.error(error);
+
+      return;
+    }
+
+    document.getElementById("statAlumnos").textContent =
+      data.length;
+
+    const tbody =
+      document.getElementById("alumnosTable");
+
+    tbody.innerHTML = "";
+
+    data.forEach(alumno => {
+
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${escapeHtml(alumno.nombre || "")}</td>
+        <td>${escapeHtml(alumno.apellido || "")}</td>
+        <td>${escapeHtml(alumno.whatsapp || "")}</td>
+        <td>${escapeHtml(alumno.email || "")}</td>
+        <td>${escapeHtml(alumno.curso || "")}</td>
+        <td>${escapeHtml(alumno.horario || "")}</td>
+        <td>${Number(alumno.importe || 0).toFixed(2)}</td>
+        <td>${alumno.activo ? "Sí" : "No"}</td>
+      `;
+
+      tbody.appendChild(row);
 
     });
 
+  }
 
-    tabla.appendChild(cuerpo);
 
-    envoltorio.appendChild(tabla);
+  async function addAlumno(event) {
 
-    bloque.appendChild(envoltorio);
+    event.preventDefault();
 
-    contenedor.appendChild(bloque);
+    const alumno = {
+
+      nombre:
+        document.getElementById("alNombre").value,
+
+      apellido:
+        document.getElementById("alApellido").value,
+
+      whatsapp:
+        document.getElementById("alWhatsapp").value,
+
+      email:
+        document.getElementById("alEmail").value,
+
+      curso:
+        document.getElementById("alCurso").value,
+
+      horario:
+        document.getElementById("alHorario").value,
+
+      fecha_inscripcion:
+        document.getElementById("alFecha").value ||
+        new Date().toISOString().split("T")[0],
+
+      importe:
+        Number(document.getElementById("alImporte").value || 0),
+
+      observaciones:
+        document.getElementById("alObservaciones").value,
+
+      activo: true
+
+    };
+
+    const {
+      error
+    } = await supabaseClient
+      .from("alumnos")
+      .insert([alumno]);
+
+    if (error) {
+
+      alert("Error al guardar alumno: " + error.message);
+
+      return;
+    }
+
+    event.target.reset();
+
+    await loadAlumnos();
+
+    alert("Alumno guardado correctamente.");
 
   }
 
-}
+
+  /* =========================
+     BOOKINGS
+  ========================= */
+
+  async function loadBookings() {
+
+    const {
+      data,
+      error
+    } = await supabaseClient
+      .from("bookings")
+      .select("*")
+      .order("created_at", {
+        ascending: false
+      });
+
+    if (error) {
+
+      console.error(error);
+
+      return;
+    }
+
+    document.getElementById("statBookings").textContent =
+      data.length;
+
+    const tbody =
+      document.getElementById("bookingsTable");
+
+    tbody.innerHTML = "";
+
+    data.forEach(booking => {
+
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${escapeHtml(booking.nombre || "")}</td>
+        <td>${escapeHtml(booking.whatsapp || "")}</td>
+        <td>${escapeHtml(booking.curso || "")}</td>
+        <td>${escapeHtml(booking.fecha || "")}</td>
+        <td>${escapeHtml(booking.horario || "")}</td>
+        <td>${escapeHtml(booking.estado || "")}</td>
+      `;
+
+      tbody.appendChild(row);
+
+    });
+
+  }
 
 
-/* =========================
-   ACTUALIZAR
-========================= */
+  async function addBooking(event) {
 
-document
-  .getElementById("actualizar")
-  .addEventListener(
-    "click",
-    cargarDatos
-  );
+    event.preventDefault();
+
+    const booking = {
+
+      nombre:
+        document.getElementById("bkNombre").value,
+
+      whatsapp:
+        document.getElementById("bkWhatsapp").value,
+
+      curso:
+        document.getElementById("bkCurso").value,
+
+      fecha:
+        document.getElementById("bkFecha").value,
+
+      horario:
+        document.getElementById("bkHorario").value,
+
+      estado:
+        document.getElementById("bkEstado").value,
+
+      observaciones:
+        document.getElementById("bkObservaciones").value
+
+    };
+
+    const {
+      error
+    } = await supabaseClient
+      .from("bookings")
+      .insert([booking]);
+
+    if (error) {
+
+      alert("Error al guardar booking: " + error.message);
+
+      return;
+    }
+
+    event.target.reset();
+
+    await loadBookings();
+
+    alert("Booking guardado correctamente.");
+
+  }
 
 
-/* =========================
-   CERRAR SESIÓN
-========================= */
+  /* =========================
+     CURSOS
+  ========================= */
 
-document
-  .getElementById("cerrarSesion")
-  .addEventListener(
-    "click",
+  async function loadCursos() {
+
+    const {
+      data,
+      error
+    } = await supabaseClient
+      .from("cursos")
+      .select("*")
+      .order("created_at", {
+        ascending: false
+      });
+
+    if (error) {
+
+      console.error(error);
+
+      return;
+    }
+
+    document.getElementById("statCursos").textContent =
+      data.length;
+
+    const tbody =
+      document.getElementById("cursosTable");
+
+    tbody.innerHTML = "";
+
+    data.forEach(curso => {
+
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${escapeHtml(curso.nombre || "")}</td>
+        <td>${escapeHtml(curso.descripcion || "")}</td>
+        <td>${Number(curso.precio || 0).toFixed(2)}</td>
+        <td>${escapeHtml(curso.horario || "")}</td>
+        <td>${curso.activo ? "Sí" : "No"}</td>
+      `;
+
+      tbody.appendChild(row);
+
+    });
+
+  }
+
+
+  async function addCurso(event) {
+
+    event.preventDefault();
+
+    const curso = {
+
+      nombre:
+        document.getElementById("cursoNombre").value,
+
+      descripcion:
+        document.getElementById("cursoDescripcion").value,
+
+      precio:
+        Number(document.getElementById("cursoPrecio").value || 0),
+
+      horario:
+        document.getElementById("cursoHorario").value,
+
+      activo: true
+
+    };
+
+    const {
+      error
+    } = await supabaseClient
+      .from("cursos")
+      .insert([curso]);
+
+    if (error) {
+
+      alert("Error al guardar curso: " + error.message);
+
+      return;
+    }
+
+    event.target.reset();
+
+    await loadCursos();
+
+    await loadPublicCourses();
+
+    alert("Curso guardado correctamente.");
+
+  }
+
+
+  /* =========================
+     CURSOS PÚBLICOS
+  ========================= */
+
+  async function loadPublicCourses() {
+
+    const {
+      data,
+      error
+    } = await supabaseClient
+      .from("cursos")
+      .select("nombre,descripcion,precio,horario")
+      .eq("activo", true)
+      .order("created_at", {
+        ascending: false
+      });
+
+    const container =
+      document.getElementById("publicCourses");
+
+    if (error) {
+
+      container.innerHTML = `
+        <div class="card">
+          <h3>Cursos</h3>
+          <p>Consulta nuestros cursos de RoXThal Art Design.</p>
+        </div>
+      `;
+
+      return;
+    }
+
+    if (!data.length) {
+
+      container.innerHTML = `
+        <div class="card">
+          <h3>Próximamente</h3>
+          <p>Estamos preparando nuestros cursos.</p>
+        </div>
+      `;
+
+      return;
+    }
+
+    container.innerHTML = "";
+
+    data.forEach(curso => {
+
+      const card = document.createElement("div");
+
+      card.className = "card";
+
+      card.innerHTML = `
+        <h3>${escapeHtml(curso.nombre)}</h3>
+        <p>${escapeHtml(curso.descripcion || "")}</p>
+        <p><strong>Horario:</strong> ${escapeHtml(curso.horario || "Consultar")}</p>
+        <p><strong>Precio:</strong> $${Number(curso.precio || 0).toFixed(2)}</p>
+      `;
+
+      container.appendChild(card);
+
+    });
+
+  }
+
+
+  /* =========================
+     PAGOS
+  ========================= */
+
+  async function loadPagos() {
+
+    const {
+      data,
+      error
+    } = await supabaseClient
+      .from("pagos")
+      .select("*")
+      .order("created_at", {
+        ascending: false
+      });
+
+    if (error) {
+
+      console.error(error);
+
+      return;
+    }
+
+    document.getElementById("statPagos").textContent =
+      data.length;
+
+    const tbody =
+      document.getElementById("pagosTable");
+
+    tbody.innerHTML = "";
+
+    data.forEach(pago => {
+
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${escapeHtml(pago.alumno_id || "")}</td>
+        <td>$${Number(pago.importe || 0).toFixed(2)}</td>
+        <td>${escapeHtml(pago.fecha || "")}</td>
+        <td>${escapeHtml(pago.metodo || "")}</td>
+        <td>${escapeHtml(pago.concepto || "")}</td>
+      `;
+
+      tbody.appendChild(row);
+
+    });
+
+  }
+
+
+  async function addPago(event) {
+
+    event.preventDefault();
+
+    const pago = {
+
+      alumno_id:
+        document.getElementById("pagoAlumno").value || null,
+
+      importe:
+        Number(document.getElementById("pagoImporte").value || 0),
+
+      fecha:
+        document.getElementById("pagoFecha").value ||
+        new Date().toISOString().split("T")[0],
+
+      metodo:
+        document.getElementById("pagoMetodo").value,
+
+      concepto:
+        document.getElementById("pagoConcepto").value,
+
+      observaciones:
+        document.getElementById("pagoObservaciones").value
+
+    };
+
+    const {
+      error
+    } = await supabaseClient
+      .from("pagos")
+      .insert([pago]);
+
+    if (error) {
+
+      alert("Error al registrar pago: " + error.message);
+
+      return;
+    }
+
+    event.target.reset();
+
+    await loadPagos();
+
+    alert("Pago registrado correctamente.");
+
+  }
+
+
+  /* =========================
+     SEGURIDAD HTML
+  ========================= */
+
+  function escapeHtml(value) {
+
+    const div = document.createElement("div");
+
+    div.textContent = value;
+
+    return div.innerHTML;
+
+  }
+
+
+  /* =========================
+     INICIO
+  ========================= */
+
+  document.addEventListener(
+    "DOMContentLoaded",
     async function() {
 
-      await supabaseClient.auth.signOut();
+      await loadPublicCourses();
 
-      document.getElementById(
-        "dashboard"
-      ).style.display = "none";
-
-      document.getElementById(
-        "loginBox"
-      ).style.display = "block";
-
-      document.getElementById(
-        "loginForm"
-      ).reset();
+      await checkSession();
 
     }
   );
-
-
-/* =========================
-   COMPROBAR SESIÓN
-========================= */
-
-async function comprobarSesion() {
-
-  const { data } =
-    await supabaseClient.auth.getSession();
-
-  const user =
-    data.session?.user;
-
-
-  if (
-    user &&
-    user.email &&
-    user.email.toLowerCase() ===
-    ADMIN_EMAIL.toLowerCase()
-  ) {
-
-    mostrarPanel(user);
-
-  }
-
-}
-
-
-comprobarSesion();
-
-
-/* =========================
-   CAMBIOS DE SESIÓN
-========================= */
-
-supabaseClient.auth.onAuthStateChange(
-  function(event, session) {
-
-    if (
-      event === "SIGNED_OUT" ||
-      !session
-    ) {
-
-      document.getElementById(
-        "dashboard"
-      ).style.display = "none";
-
-      document.getElementById(
-        "loginBox"
-      ).style.display = "block";
-
-    }
-
-  }
-);
 
 </script>
 
