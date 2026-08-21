@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>RoXThal Art Design | Arte, Tatuajes y Fileteado Porteño</title>
+  <title>RoXThal Art Design | Arte, Tatuajes, Cursos y Fileteado</title>
 
   <meta
     name="description"
-    content="RoXThal Art Design - Tatuajes, dibujo, pintura, diseño y fileteado porteño. Contactanos por WhatsApp e Instagram."
+    content="RoXThal Art Design - Tatuajes, dibujo, pintura, fileteado porteño, cursos y talleres."
   >
 
   <meta name="theme-color" content="#111111">
@@ -36,12 +36,13 @@
       text-decoration: none;
     }
 
-    img {
-      max-width: 100%;
-      display: block;
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: auto;
     }
 
-    /* HEADER */
+    /* HERO */
 
     header {
       min-height: 100vh;
@@ -102,6 +103,8 @@
       font-size: 17px;
     }
 
+    /* BOTONES */
+
     .buttons {
       display: flex;
       justify-content: center;
@@ -111,18 +114,17 @@
 
     .btn {
       display: inline-block;
-      padding: 15px 24px;
+      padding: 14px 22px;
       border-radius: 50px;
       font-weight: bold;
       text-transform: uppercase;
       transition: 0.3s;
       border: 2px solid #fff;
+      text-align: center;
     }
 
     .btn:hover {
       transform: translateY(-3px);
-      background: #fff;
-      color: #111;
     }
 
     .btn-whatsapp {
@@ -133,7 +135,6 @@
 
     .btn-whatsapp:hover {
       background: #1ebe5d;
-      color: #fff;
       border-color: #1ebe5d;
     }
 
@@ -147,6 +148,7 @@
         #bc1888
       );
       border: none;
+      color: #fff;
     }
 
     /* NAV */
@@ -155,7 +157,7 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(0,0,0,0.95);
+      background: rgba(0,0,0,0.96);
       border-bottom: 1px solid #333;
     }
 
@@ -166,13 +168,13 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 25px;
+      gap: 22px;
       flex-wrap: wrap;
     }
 
     nav a {
       font-weight: bold;
-      font-size: 14px;
+      font-size: 13px;
       text-transform: uppercase;
       color: #ddd;
     }
@@ -181,16 +183,10 @@
       color: #d4af37;
     }
 
-    /* SECTIONS */
+    /* SECCIONES */
 
     section {
       padding: 80px 20px;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 1100px;
-      margin: auto;
     }
 
     .section-title {
@@ -212,7 +208,7 @@
       font-size: 17px;
     }
 
-    /* ABOUT */
+    /* NOSOTROS */
 
     #nosotros {
       background: #181818;
@@ -230,10 +226,16 @@
       font-size: 18px;
     }
 
-    /* SERVICES */
+    /* SERVICIOS Y CURSOS */
 
-    #servicios {
+    #servicios,
+    #cursos {
       background: #0d0d0d;
+    }
+
+    #cursos {
+      background:
+        radial-gradient(circle at center, #252525 0%, #0d0d0d 75%);
     }
 
     .services-grid {
@@ -270,150 +272,23 @@
     .service p {
       color: #bbb;
     }
-<!-- CURSOS Y TALLERES -->
 
-<section id="cursos">
+    .course-list {
+      text-align: left;
+      max-width: 420px;
+      margin: 0 auto;
+      color: #ccc;
+    }
 
-  <div class="container">
+    .course-list li {
+      margin-bottom: 7px;
+    }
 
-    <h2 class="section-title">
-      Cursos y <span>Talleres</span>
-    </h2>
+    .course-button {
+      margin-top: 20px;
+    }
 
-    <p class="section-intro">
-      Aprendé, desarrollá tu creatividad y descubrí nuevas
-      técnicas artísticas junto a RoXThal Art Design.
-    </p>
-
-    <div class="services-grid">
-
-      <!-- CURSO DE TATUAJE -->
-
-      <div class="service">
-
-        <div class="service-icon">🖋️</div>
-
-        <h3>
-          Curso de Iniciación al Tatuaje
-        </h3>
-
-        <p>
-          Una formación inicial para quienes quieren
-          introducirse en el mundo del tatuaje y comenzar
-          a desarrollar sus habilidades artísticas.
-        </p>
-
-        <br>
-
-        <p>
-          • Introducción al tatuaje<br>
-          • Herramientas y materiales<br>
-          • Higiene y preparación del espacio<br>
-          • Técnicas básicas<br>
-          • Diseño y preparación de trabajos<br>
-          • Orientación personalizada
-        </p>
-
-        <br>
-
-        <a
-          class="btn btn-whatsapp"
-          href="https://wa.me/5491169633376?text=Hola%20RoXThal%20Art%20Design%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20Curso%20de%20Iniciaci%C3%B3n%20al%20Tatuaje."
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          💬 Consultar
-        </a>
-
-      </div>
-
-
-      <!-- CURSO DE DIBUJO Y PINTURA -->
-
-      <div class="service">
-
-        <div class="service-icon">🎨</div>
-
-        <h3>
-          Curso de Dibujo y Pintura
-        </h3>
-
-        <p>
-          Formación artística para aprender y perfeccionar
-          diferentes técnicas de dibujo y pintura.
-        </p>
-
-        <br>
-
-        <p>
-          • Fundamentos del dibujo<br>
-          • Proporciones y composición<br>
-          • Luz y sombra<br>
-          • Color<br>
-          • Técnicas de pintura<br>
-          • Desarrollo de proyectos personales
-        </p>
-
-        <br>
-
-        <a
-          class="btn btn-whatsapp"
-          href="https://wa.me/5491169633376?text=Hola%20RoXThal%20Art%20Design%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20Curso%20de%20Dibujo%20y%20Pintura."
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          💬 Consultar
-        </a>
-
-      </div>
-
-
-      <!-- TALLER INFANTIL -->
-
-      <div class="service">
-
-        <div class="service-icon">🧒🎨</div>
-
-        <h3>
-          Taller Infantil de Dibujo y Pintura
-        </h3>
-
-        <p>
-          Un espacio creativo pensado para que los niños
-          puedan experimentar con el dibujo, la pintura
-          y diferentes formas de expresión artística.
-        </p>
-
-        <br>
-
-        <p>
-          • Dibujo creativo<br>
-          • Pintura y experimentación<br>
-          • Juegos artísticos<br>
-          • Desarrollo de imaginación<br>
-          • Expresión artística<br>
-          • Actividades adaptadas por edad
-        </p>
-
-        <br>
-
-        <a
-          class="btn btn-whatsapp"
-          href="https://wa.me/5491169633376?text=Hola%20RoXThal%20Art%20Design%2C%20quiero%20informaci%C3%B3n%20sobre%20los%20Talleres%20Infantiles%20de%20Dibujo%20y%20Pintura."
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          💬 Consultar
-        </a>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-    /* GALLERY */
+    /* GALERÍA */
 
     #galeria {
       background: #181818;
@@ -430,11 +305,7 @@
       border-radius: 12px;
       border: 1px solid #333;
       background:
-        linear-gradient(
-          135deg,
-          #222,
-          #101010
-        );
+        linear-gradient(135deg, #222, #101010);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -450,7 +321,7 @@
       margin-bottom: 5px;
     }
 
-    /* CONTACT */
+    /* CONTACTO */
 
     #contacto {
       background:
@@ -474,7 +345,7 @@
 
     .contact-box p {
       color: #bbb;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
 
     .contact-data {
@@ -509,7 +380,7 @@
       font-weight: bold;
     }
 
-    /* WHATSAPP FLOATING BUTTON */
+    /* WHATSAPP FLOTANTE */
 
     .whatsapp-float {
       position: fixed;
@@ -532,7 +403,7 @@
       transform: scale(1.1);
     }
 
-    /* MOBILE */
+    /* MÓVIL */
 
     @media (max-width: 700px) {
 
@@ -596,16 +467,16 @@
       </div>
 
       <p class="hero-text">
-        Arte, tatuajes, dibujo, pintura y diseño.
-        Creamos trabajos únicos con identidad propia,
-        pasión y estilo.
+        Arte, tatuajes, dibujo, pintura, diseño y
+        fileteado porteño.
+        Creaciones únicas con identidad propia.
       </p>
 
       <div class="buttons">
 
         <a
           class="btn btn-whatsapp"
-          href="https://wa.me/5491169633376?text=Hola%20RoXThal%20Art%20Design%2C%20quiero%20consultar%20por%20sus%20servicios."
+          href="https://wa.me/5491169633376?text=Hola%20RoXThal%20Art%20Design%2C%20quiero%20hacer%20una%20consulta."
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -627,19 +498,24 @@
 
   </header>
 
-  <!-- NAVIGATION -->
+
+  <!-- NAVEGACIÓN -->
 
   <nav>
+
     <div class="nav-container">
 
       <a href="#inicio">Inicio</a>
       <a href="#nosotros">Nosotros</a>
       <a href="#servicios">Servicios</a>
+      <a href="#cursos">Cursos</a>
       <a href="#galeria">Galería</a>
       <a href="#contacto">Contacto</a>
 
     </div>
+
   </nav>
+
 
   <!-- NOSOTROS -->
 
@@ -654,8 +530,8 @@
       <div class="about">
 
         <p>
-          Un espacio dedicado al arte, el diseño y la expresión
-          individual.
+          Un espacio dedicado al arte, el diseño,
+          el tatuaje y la expresión individual.
         </p>
 
         <p>
@@ -665,9 +541,10 @@
         </p>
 
         <p>
-          Desde un tatuaje hasta una obra de arte o un
-          fileteado porteño, cada proyecto se desarrolla
-          buscando personalidad, detalle y carácter.
+          Desde un tatuaje hasta una obra de arte,
+          un diseño o un fileteado porteño,
+          cada proyecto se desarrolla con personalidad,
+          detalle y carácter.
         </p>
 
       </div>
@@ -676,7 +553,8 @@
 
   </section>
 
-  <!-- SERVICES -->
+
+  <!-- SERVICIOS -->
 
   <section id="servicios">
 
@@ -693,39 +571,58 @@
       <div class="services-grid">
 
         <div class="service">
+
           <div class="service-icon">🖋️</div>
+
           <h3>Tatuajes</h3>
+
           <p>
             Diseños personalizados y tatuajes adaptados
             a la idea y estilo de cada persona.
           </p>
+
         </div>
 
+
         <div class="service">
+
           <div class="service-icon">🎨</div>
+
           <h3>Dibujo y Pintura</h3>
+
           <p>
             Obras, ilustraciones, dibujos y pinturas
             realizadas de forma personalizada.
           </p>
+
         </div>
 
+
         <div class="service">
+
           <div class="service-icon">🇦🇷</div>
+
           <h3>Fileteado Porteño</h3>
+
           <p>
             Realizamos todo tipo de fileteados al más
             puro estilo del fileteado porteño argentino.
           </p>
+
         </div>
 
+
         <div class="service">
+
           <div class="service-icon">✏️</div>
+
           <h3>Diseño</h3>
+
           <p>
-            Creación de diseños, ilustraciones, cartelería
-            y proyectos artísticos personalizados.
+            Creación de diseños, ilustraciones,
+            cartelería y proyectos artísticos.
           </p>
+
         </div>
 
       </div>
@@ -734,7 +631,169 @@
 
   </section>
 
-  <!-- GALLERY -->
+
+  <!-- CURSOS Y TALLERES -->
+
+  <section id="cursos">
+
+    <div class="container">
+
+      <h2 class="section-title">
+        Cursos y <span>Talleres</span>
+      </h2>
+
+      <p class="section-intro">
+        Aprendé, desarrollá tu creatividad y descubrí
+        nuevas técnicas artísticas junto a
+        RoXThal Art Design.
+      </p>
+
+
+      <div class="services-grid">
+
+
+        <!-- TATUAJE -->
+
+        <div class="service">
+
+          <div class="service-icon">🖋️</div>
+
+          <h3>
+            Curso de Iniciación al Tatuaje
+          </h3>
+
+          <p>
+            Formación inicial para quienes quieren
+            introducirse en el mundo del tatuaje y
+            comenzar a desarrollar sus habilidades.
+          </p>
+
+          <br>
+
+          <ul class="course-list">
+
+            <li>• Introducción al tatuaje</li>
+            <li>• Herramientas y materiales</li>
+            <li>• Higiene y preparación del espacio</li>
+            <li>• Técnicas básicas</li>
+            <li>• Diseño y preparación de trabajos</li>
+            <li>• Orientación personalizada</li>
+
+          </ul>
+
+          <div class="course-button">
+
+            <a
+              class="btn btn-whatsapp"
+              href="https://wa.me/5491169633376?text=Hola%20RoXThal%20Art%20Design%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20Curso%20de%20Iniciaci%C3%B3n%20al%20Tatuaje."
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              💬 Consultar
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <!-- DIBUJO Y PINTURA -->
+
+        <div class="service">
+
+          <div class="service-icon">🎨</div>
+
+          <h3>
+            Curso de Dibujo y Pintura
+          </h3>
+
+          <p>
+            Formación artística para aprender y
+            perfeccionar diferentes técnicas de
+            dibujo y pintura.
+          </p>
+
+          <br>
+
+          <ul class="course-list">
+
+            <li>• Fundamentos del dibujo</li>
+            <li>• Proporciones y composición</li>
+            <li>• Luz y sombra</li>
+            <li>• Color</li>
+            <li>• Técnicas de pintura</li>
+            <li>• Desarrollo de proyectos personales</li>
+
+          </ul>
+
+          <div class="course-button">
+
+            <a
+              class="btn btn-whatsapp"
+              href="https://wa.me/5491169633376?text=Hola%20RoXThal%20Art%20Design%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20Curso%20de%20Dibujo%20y%20Pintura."
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              💬 Consultar
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <!-- TALLER INFANTIL -->
+
+        <div class="service">
+
+          <div class="service-icon">🧒🎨</div>
+
+          <h3>
+            Taller Infantil de Dibujo y Pintura
+          </h3>
+
+          <p>
+            Un espacio creativo pensado para que los
+            niños experimenten con el dibujo, la pintura
+            y diferentes formas de expresión artística.
+          </p>
+
+          <br>
+
+          <ul class="course-list">
+
+            <li>• Dibujo creativo</li>
+            <li>• Pintura y experimentación</li>
+            <li>• Juegos artísticos</li>
+            <li>• Desarrollo de imaginación</li>
+            <li>• Expresión artística</li>
+            <li>• Actividades adaptadas por edad</li>
+
+          </ul>
+
+          <div class="course-button">
+
+            <a
+              class="btn btn-whatsapp"
+              href="https://wa.me/5491169633376?text=Hola%20RoXThal%20Art%20Design%2C%20quiero%20informaci%C3%B3n%20sobre%20los%20Talleres%20Infantiles%20de%20Dibujo%20y%20Pintura."
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              💬 Consultar
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- GALERÍA -->
 
   <section id="galeria">
 
@@ -799,7 +858,8 @@
 
   </section>
 
-  <!-- CONTACT -->
+
+  <!-- CONTACTO -->
 
   <section id="contacto">
 
@@ -857,6 +917,7 @@
 
   </section>
 
+
   <!-- FOOTER -->
 
   <footer>
@@ -866,6 +927,7 @@
     </p>
 
     <div class="social">
+
       <a
         href="https://www.instagram.com/roxthalartdesign/"
         target="_blank"
@@ -873,11 +935,13 @@
       >
         @roxthalartdesign
       </a>
+
     </div>
 
   </footer>
 
-  <!-- FLOATING WHATSAPP -->
+
+  <!-- WHATSAPP FLOTANTE -->
 
   <a
     class="whatsapp-float"
@@ -892,4 +956,3 @@
 
 </body>
 </html>
-<!-- RoXThal Art Design -->
