@@ -12,127 +12,273 @@ content="RoXThal Art Design - Arte, tatuajes, fileteado porteño, dibujo, pintur
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+:root{
+  --bg:#080809;
+  --panel:#141418;
+  --panel2:#1d1d23;
+  --gold:#d7b45a;
+  --gold2:#f2da91;
+  --text:#f5f5f5;
+  --muted:#a8a8ad;
+  --line:#303038;
+  --ok:#43b879;
+  --danger:#d65353;
+  --shadow:0 15px 40px rgba(0,0,0,.35);
+}
+
 *{
   box-sizing:border-box;
-  margin:0;
-  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 body{
-  font-family:Arial,sans-serif;
-  background:#111;
-  color:#fff;
+  margin:0;
+  background:
+    radial-gradient(circle at top,#25252b 0,#080809 50%);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
   line-height:1.5;
 }
 
-header{
-  background:#000;
-  padding:22px;
-  text-align:center;
-  border-bottom:2px solid #d4af37;
-}
-
-header h1{
-  color:#d4af37;
-  font-size:32px;
-}
-
-header p{
-  color:#ccc;
-}
-
-nav{
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:8px;
-  padding:12px;
-  background:#181818;
+a{
+  color:var(--gold2);
 }
 
 button{
+  font:inherit;
   cursor:pointer;
 }
 
-nav button,
-.admin-menu button{
-  background:#252525;
-  color:#fff;
-  border:1px solid #555;
-  padding:10px 15px;
-  border-radius:8px;
+.top{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(7,7,8,.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
 }
 
-nav button:hover,
-.admin-menu button.active{
-  background:#d4af37;
-  color:#000;
+.nav{
+  max-width:1200px;
+  margin:auto;
+  padding:12px 16px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.brand{
+  font-weight:800;
+  color:var(--gold);
+  font-size:21px;
+  margin-right:auto;
+}
+
+.nav button,
+.admin-nav button{
+  border:1px solid #45454c;
+  background:#1a1a1f;
+  color:#fff;
+  border-radius:9px;
+  padding:9px 12px;
+}
+
+.nav button:hover,
+.admin-nav button.active{
+  background:var(--gold);
+  color:#111;
+  border-color:var(--gold);
 }
 
 section{
-  max-width:1150px;
+  max-width:1200px;
   margin:auto;
-  padding:35px 20px;
+  padding:60px 18px;
 }
 
 .hero{
-  text-align:center;
   max-width:none;
-  padding:80px 20px;
-  background:linear-gradient(135deg,#111,#222);
+  min-height:78vh;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  padding:70px 18px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.25),
+      rgba(0,0,0,.9)
+    ),
+    url("https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1800&q=85")
+    center/cover;
 }
 
-.hero h2{
-  font-size:42px;
-  color:#d4af37;
-  margin-bottom:15px;
+.hero-box{
+  max-width:900px;
+}
+
+.eyebrow{
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--gold2);
+  font-size:12px;
+}
+
+.hero h1{
+  font-size:clamp(42px,8vw,82px);
+  margin:12px 0;
+  color:#fff;
+  text-shadow:0 4px 25px #000;
 }
 
 .hero p{
-  font-size:18px;
-  color:#ddd;
+  font-size:clamp(17px,3vw,23px);
+  color:#eee;
 }
 
-.cards{
+.gold{
+  color:var(--gold);
+}
+
+.cta{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:25px;
+}
+
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:12px 18px;
+  font-weight:700;
+}
+
+.btn-gold{
+  background:var(--gold);
+  color:#111;
+}
+
+.btn-dark{
+  background:#18181d;
+  color:#fff;
+  border:1px solid #555;
+  text-decoration:none;
+}
+
+.grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  grid-template-columns:
+    repeat(auto-fit,minmax(240px,1fr));
   gap:18px;
-  margin-top:22px;
 }
 
-.card,
-.admin-panel,
-.login-box{
-  background:#1b1b1b;
-  border:1px solid #3d3d3d;
-  border-radius:12px;
-  padding:22px;
+.card{
+  background:
+    linear-gradient(145deg,#1d1d23,#101014);
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+
+.card-img{
+  height:220px;
+  background-size:cover;
+  background-position:center;
+}
+
+.card-body{
+  padding:20px;
 }
 
 .card h3{
-  color:#d4af37;
-  margin-bottom:8px;
+  margin:0 0 8px;
+  color:var(--gold2);
 }
 
-.login-box{
-  max-width:430px;
+.muted{
+  color:var(--muted);
+}
+
+.about{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:28px;
+  align-items:center;
+}
+
+.about-img{
+  min-height:380px;
+  border-radius:18px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.05),
+      rgba(0,0,0,.35)
+    ),
+    url("https://images.unsplash.com/photo-1577083288073-40892c0860a4?auto=format&fit=crop&w=1000&q=85")
+    center/cover;
+  box-shadow:var(--shadow);
+}
+
+.quote{
+  border-left:4px solid var(--gold);
+  padding:10px 18px;
+  color:#ddd;
+}
+
+.contact{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+}
+
+.contact .card{
+  padding:22px;
+}
+
+.admin-wrap{
+  max-width:1200px;
   margin:auto;
+  padding:40px 18px;
+}
+
+.login{
+  max-width:430px;
+  margin:30px auto;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:25px;
+  box-shadow:var(--shadow);
+}
+
+.login h2,
+.admin-wrap h2{
+  color:var(--gold);
 }
 
 input,
 select,
 textarea{
   width:100%;
-  background:#101010;
+  background:#0d0d10;
   color:#fff;
-  border:1px solid #555;
-  border-radius:7px;
+  border:1px solid #45454f;
+  border-radius:9px;
   padding:11px;
   margin:6px 0 13px;
 }
 
 textarea{
-  min-height:90px;
+  min-height:95px;
   resize:vertical;
 }
 
@@ -142,60 +288,54 @@ label{
   margin-top:5px;
 }
 
-.primary{
-  background:#d4af37;
-  color:#000;
-  border:0;
-  padding:11px 17px;
-  border-radius:7px;
-  font-weight:bold;
+.stats{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(160px,1fr));
+  gap:14px;
+  margin:20px 0;
 }
 
-.danger{
-  background:#a52b2b;
-  color:#fff;
-  border:0;
-  padding:9px 13px;
-  border-radius:7px;
+.stat{
+  background:
+    linear-gradient(145deg,#222228,#121216);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:18px;
+  box-shadow:var(--shadow);
 }
 
-.secondary{
-  background:#333;
-  color:#fff;
-  border:1px solid #666;
-  padding:8px 11px;
-  border-radius:6px;
-}
-
-.message{
-  padding:10px;
-  margin-top:12px;
-  border-radius:7px;
-  display:none;
-}
-
-.message.show{
+.stat b{
   display:block;
+  color:var(--gold2);
+  font-size:28px;
+  margin-bottom:3px;
 }
 
-.message.error{
-  background:#602020;
+.stat-label{
+  color:#bbb;
 }
 
-.message.success{
-  background:#175126;
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:18px;
+  margin-bottom:20px;
 }
 
 .admin-panel{
-  max-width:none;
-  margin-top:25px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:22px;
+  box-shadow:var(--shadow);
 }
 
-.admin-menu{
+.admin-nav{
   display:flex;
   gap:8px;
   flex-wrap:wrap;
-  margin:20px 0;
+  margin:18px 0;
 }
 
 .admin-section{
@@ -206,192 +346,473 @@ label{
   display:block;
 }
 
-.stats{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:12px;
-  margin:20px 0;
-}
-
-.stat{
-  background:#252525;
-  border-radius:10px;
-  padding:18px;
-  text-align:center;
-}
-
-.stat strong{
-  display:block;
-  color:#d4af37;
-  font-size:30px;
-}
-
 .toolbar{
   display:flex;
   gap:10px;
   flex-wrap:wrap;
-  margin:15px 0;
+  margin:14px 0;
 }
 
 .toolbar input{
-  margin:0;
   flex:1;
   min-width:220px;
+  margin:0;
 }
 
 .table-wrap{
-  overflow-x:auto;
-  margin-top:15px;
+  overflow:auto;
+  border-radius:10px;
 }
 
 table{
   width:100%;
-  border-collapse:collapse;
   min-width:900px;
+  border-collapse:collapse;
 }
 
 th,
 td{
-  border:1px solid #444;
-  padding:9px;
+  padding:10px;
+  border:1px solid #36363e;
   text-align:left;
 }
 
 th{
-  background:#292929;
-  color:#d4af37;
+  background:#24242b;
+  color:var(--gold2);
 }
 
 td{
-  background:#151515;
-}
-
-.actions{
-  display:flex;
-  gap:5px;
-  flex-wrap:wrap;
+  background:#121216;
 }
 
 .badge{
   display:inline-block;
-  padding:4px 8px;
-  border-radius:10px;
+  border-radius:20px;
+  padding:4px 9px;
   font-size:12px;
   background:#333;
 }
 
 .badge.ok{
-  background:#175126;
+  background:#174d34;
 }
 
-.badge.off{
-  background:#602020;
+.badge.bad{
+  background:#5b2222;
+}
+
+.badge.pending{
+  background:#66511c;
+}
+
+.actions{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+.small{
+  padding:7px 9px;
+  border-radius:7px;
+  border:1px solid #555;
+  background:#292930;
+  color:#fff;
+}
+
+.danger{
+  background:#6a2525 !important;
+  border-color:#8e3a3a !important;
+}
+
+.list{
+  display:grid;
+  gap:9px;
+}
+
+.list-item{
+  padding:12px;
+  border:1px solid #333;
+  border-radius:10px;
+  background:#111116;
+}
+
+.empty{
+  padding:25px;
+  text-align:center;
+  color:#888;
+}
+
+.notice{
+  padding:12px;
+  border-radius:10px;
+  background:#3b2d15;
+  border:1px solid #665524;
+  color:#f4df9d;
+  margin:10px 0;
+}
+
+.footer{
+  text-align:center;
+  border-top:1px solid var(--line);
+  padding:30px 18px;
+  color:#999;
 }
 
 .modal{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.8);
-  z-index:10;
-  padding:20px;
+  z-index:50;
+  background:rgba(0,0,0,.84);
+  padding:18px;
   overflow:auto;
 }
 
 .modal-box{
-  max-width:650px;
-  margin:50px auto;
-  background:#1b1b1b;
-  border:1px solid #555;
-  border-radius:12px;
-  padding:25px;
+  max-width:680px;
+  margin:45px auto;
+  background:#18181d;
+  border:1px solid #444;
+  border-radius:16px;
+  padding:22px;
+  box-shadow:var(--shadow);
 }
 
-footer{
-  text-align:center;
-  background:#000;
-  color:#aaa;
-  padding:25px;
-  margin-top:30px;
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-a{
-  color:#d4af37;
+.source-note{
+  font-size:11px;
+  color:#777;
+  margin-top:12px;
 }
 
-.empty{
-  padding:20px;
-  text-align:center;
-  color:#aaa;
-}
+@media(max-width:750px){
 
-@media(max-width:600px){
+  .about,
+  .dashboard-grid{
+    grid-template-columns:1fr;
+  }
 
-  .hero h2{
-    font-size:30px;
+  .nav{
+    overflow:auto;
+    flex-wrap:nowrap;
+  }
+
+  .nav button{
+    white-space:nowrap;
+  }
+
+  .hero{
+    min-height:70vh;
+  }
+
+  .admin-wrap{
+    padding:25px 10px;
   }
 
   section{
-    padding:25px 14px;
+    padding:45px 13px;
   }
 
+  .card-img{
+    height:180px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<h1>RoXThal Art Design</h1>
-<p>Arte · Tatuajes · Fileteado Porteño · Dibujo · Pintura</p>
-</header>
+<header class="top">
 
-<nav>
-<button onclick="go('inicio')">Inicio</button>
-<button onclick="go('servicios')">Servicios</button>
-<button onclick="go('cursosPublicos')">Cursos</button>
-<button onclick="go('contacto')">Contacto</button>
-<button onclick="go('admin')">Administrador</button>
-</nav>
+<div class="nav">
+
+<div class="brand">
+RoXThal Art Design
+</div>
+
+<button onclick="go('inicio')">
+Inicio
+</button>
+
+<button onclick="go('servicios')">
+Servicios
+</button>
+
+<button onclick="go('galeria')">
+Galería
+</button>
+
+<button onclick="go('cursosPublicos')">
+Cursos
+</button>
+
+<button onclick="go('contacto')">
+Contacto
+</button>
+
+<button onclick="go('admin')">
+Administrador
+</button>
+
+</div>
+
+</header>
 
 
 <section id="inicio" class="hero">
 
-<h2>RoXThal Art Design</h2>
+<div class="hero-box">
+
+<div class="eyebrow">
+Arte argentino · San Antonio de Padua
+</div>
+
+<h1>
+RoXThal <span class="gold">Art Design</span>
+</h1>
 
 <p>
 Arte, tatuajes, dibujo, pintura y fileteado porteño
-al más puro estilo argentino.
+con identidad propia.
 </p>
+
+<div class="cta">
+
+<button
+class="btn btn-gold"
+onclick="go('galeria')"
+>
+Ver trabajos
+</button>
+
+<a
+class="btn btn-dark"
+href="https://wa.me/5491169633376"
+target="_blank"
+>
+WhatsApp
+</a>
+
+</div>
+
+</div>
 
 </section>
 
 
 <section id="servicios">
 
-<h2>Servicios</h2>
-
-<div class="cards">
-
-<div class="card">
-<h3>Tatuajes</h3>
-<p>Diseños personalizados y trabajos artísticos.</p>
+<div class="eyebrow">
+Lo que hacemos
 </div>
 
-<div class="card">
-<h3>Fileteado Porteño</h3>
-<p>Trabajos de fileteado al estilo tradicional argentino.</p>
+<h2>
+Arte que se transforma
+</h2>
+
+<div class="grid">
+
+<article class="card">
+
+<div
+class="card-img"
+style="background-image:url('https://images.unsplash.com/photo-1611501275019-9b5c8c7b4a4a?auto=format&fit=crop&w=1000&q=85')"
+></div>
+
+<div class="card-body">
+
+<h3>
+Tatuajes
+</h3>
+
+<p class="muted">
+Diseños personalizados, composición artística
+y trabajos con identidad.
+</p>
+
 </div>
 
-<div class="card">
-<h3>Dibujo</h3>
-<p>Clases y desarrollo de técnicas de dibujo.</p>
+</article>
+
+
+<article class="card">
+
+<div
+class="card-img"
+style="background-image:url('https://images.unsplash.com/photo-1547891654-e66ed7ebb968?auto=format&fit=crop&w=1000&q=85')"
+></div>
+
+<div class="card-body">
+
+<h3>
+Fileteado Porteño
+</h3>
+
+<p class="muted">
+Ornamentación, letras, flores y composición
+inspiradas en la tradición porteña.
+</p>
+
 </div>
 
-<div class="card">
-<h3>Pintura</h3>
-<p>Clases de pintura y desarrollo artístico.</p>
+</article>
+
+
+<article class="card">
+
+<div
+class="card-img"
+style="background-image:url('https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=1000&q=85')"
+></div>
+
+<div class="card-body">
+
+<h3>
+Dibujo y Pintura
+</h3>
+
+<p class="muted">
+Clases y acompañamiento para desarrollar
+técnica y creatividad.
+</p>
+
 </div>
+
+</article>
+
+</div>
+
+<p class="source-note">
+Las imágenes actuales son representativas.
+Podemos reemplazarlas posteriormente por fotos
+reales de los trabajos de RoXThal.
+</p>
+
+</section>
+
+
+<section id="galeria">
+
+<div class="eyebrow">
+Inspiración
+</div>
+
+<h2>
+Galería representativa
+</h2>
+
+<div class="grid">
+
+<article class="card">
+
+<div
+class="card-img"
+style="background-image:url('https://images.unsplash.com/photo-1547891654-e66ed7ebb968?auto=format&fit=crop&w=1200&q=85')"
+></div>
+
+<div class="card-body">
+
+<h3>
+Fileteado
+</h3>
+
+<p class="muted">
+Color, volumen, flores y ornamentación porteña.
+</p>
+
+</div>
+
+</article>
+
+
+<article class="card">
+
+<div
+class="card-img"
+style="background-image:url('https://images.unsplash.com/photo-1611501275019-9b5c8c7b4a4a?auto=format&fit=crop&w=1200&q=85')"
+></div>
+
+<div class="card-body">
+
+<h3>
+Tattoo Studio
+</h3>
+
+<p class="muted">
+Un espacio dedicado al trabajo artístico
+y profesional.
+</p>
+
+</div>
+
+</article>
+
+
+<article class="card">
+
+<div
+class="card-img"
+style="background-image:url('https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=1200&q=85')"
+></div>
+
+<div class="card-body">
+
+<h3>
+Pintura
+</h3>
+
+<p class="muted">
+Herramientas, pinceles y proceso creativo.
+</p>
+
+</div>
+
+</article>
+
+</div>
+
+</section>
+
+
+<section>
+
+<div class="about">
+
+<div>
+
+<div class="eyebrow">
+Nuestra identidad
+</div>
+
+<h2>
+Del dibujo al soporte final
+</h2>
+
+<p>
+En RoXThal Art Design unimos dibujo, pintura,
+tatuaje y fileteado para crear trabajos con personalidad.
+</p>
+
+<p class="quote">
+El fileteado porteño forma parte de la identidad
+artística y cultural de Buenos Aires.
+</p>
+
+<p>
+La tradición se adapta a nuevos soportes y
+continúa inspirando nuevas formas de expresión.
+</p>
+
+</div>
+
+
+<div class="about-img"></div>
 
 </div>
 
@@ -400,12 +821,25 @@ al más puro estilo argentino.
 
 <section id="cursosPublicos">
 
-<h2>Cursos</h2>
+<div class="eyebrow">
+Formación
+</div>
 
-<div id="publicCourses" class="cards">
+<h2>
+Cursos
+</h2>
+
+<div
+id="publicCourses"
+class="grid"
+>
 
 <div class="card">
-<h3>Cargando cursos...</h3>
+
+<div class="card-body">
+Cargando cursos...
+</div>
+
 </div>
 
 </div>
@@ -415,34 +849,67 @@ al más puro estilo argentino.
 
 <section id="contacto">
 
-<h2>Contacto</h2>
+<div class="eyebrow">
+Contacto
+</div>
+
+<h2>
+Hablemos de tu proyecto
+</h2>
+
+<div class="contact">
 
 <div class="card">
 
+<h3>
+WhatsApp
+</h3>
+
 <p>
-<strong>WhatsApp:</strong>
+
 <a
 href="https://wa.me/5491169633376"
 target="_blank"
 >
 +54 9 11 6963-3376
 </a>
+
 </p>
 
+</div>
+
+
+<div class="card">
+
+<h3>
+Instagram
+</h3>
+
 <p>
-<strong>Instagram:</strong>
+
 <a
 href="https://instagram.com/roxthalartdesign"
 target="_blank"
 >
 @roxthalartdesign
 </a>
+
 </p>
 
+</div>
+
+
+<div class="card">
+
+<h3>
+Ubicación
+</h3>
+
 <p>
-<strong>Ubicación:</strong>
 San Antonio de Padua
 </p>
+
+</div>
 
 </div>
 
@@ -451,15 +918,24 @@ San Antonio de Padua
 
 <section id="admin">
 
-<div id="loginBox" class="login-box">
+<div class="admin-wrap">
 
-<h2>Administrador</h2>
+<div
+id="loginBox"
+class="login"
+>
 
-<p style="color:#aaa;margin:8px 0 18px">
+<h2>
+Administrador
+</h2>
+
+<p class="muted">
 Acceso exclusivo del administrador.
 </p>
 
-<label>Email</label>
+<label>
+Email
+</label>
 
 <input
 id="loginEmail"
@@ -467,7 +943,9 @@ type="email"
 placeholder="Correo"
 >
 
-<label>Contraseña</label>
+<label>
+Contraseña
+</label>
 
 <input
 id="loginPassword"
@@ -476,47 +954,51 @@ placeholder="Contraseña"
 >
 
 <button
-class="primary"
+class="btn btn-gold"
 onclick="login()"
 >
 Iniciar sesión
 </button>
 
-<div
-id="loginMsg"
-class="message"
-></div>
+<div id="loginMsg"></div>
 
 </div>
 
 
 <div
 id="dashboard"
-class="admin-panel"
 style="display:none"
 >
+
+<div class="admin-panel">
 
 <div style="
 display:flex;
 justify-content:space-between;
+gap:12px;
 align-items:center;
-gap:10px;
-flex-wrap:wrap
+flex-wrap:wrap;
 ">
 
 <div>
 
-<h2>Panel de Administración</h2>
+<div class="eyebrow">
+Panel privado
+</div>
 
-<p
+<h2>
+Administración RoXThal
+</h2>
+
+<div
 id="adminEmail"
-style="color:#aaa"
-></p>
+class="muted"
+></div>
 
 </div>
 
 <button
-class="danger"
+class="small danger"
 onclick="logout()"
 >
 Cerrar sesión
@@ -528,29 +1010,79 @@ Cerrar sesión
 <div class="stats">
 
 <div class="stat">
-<strong id="sAlumnos">0</strong>
-Alumnos
+<b id="sAlumnos">0</b>
+<span class="stat-label">Alumnos</span>
 </div>
 
 <div class="stat">
-<strong id="sBookings">0</strong>
-Bookings
+<b id="sBookings">0</b>
+<span class="stat-label">Reservas</span>
 </div>
 
 <div class="stat">
-<strong id="sCursos">0</strong>
-Cursos
+<b id="sCursos">0</b>
+<span class="stat-label">Cursos</span>
 </div>
 
 <div class="stat">
-<strong id="sPagos">0</strong>
-Pagos
+<b id="sPagos">0</b>
+<span class="stat-label">Pagos</span>
+</div>
+
+<div class="stat">
+<b id="sIngresos">$0</b>
+<span class="stat-label">Cobrado</span>
+</div>
+
+<div class="stat">
+<b id="sPendientes">$0</b>
+<span class="stat-label">Pendiente</span>
 </div>
 
 </div>
 
 
-<div class="admin-menu">
+<div class="dashboard-grid">
+
+<div class="card">
+
+<div class="card-body">
+
+<h3>
+Próximas reservas
+</h3>
+
+<div
+id="nextBookings"
+class="list"
+></div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-body">
+
+<h3>
+Estado de pagos
+</h3>
+
+<div
+id="paymentSummary"
+class="list"
+></div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="admin-nav">
 
 <button
 class="active"
@@ -580,27 +1112,27 @@ Pagos
 </div>
 
 
-<!-- =========================
-ALUMNOS
-========================= -->
+<!-- ALUMNOS -->
 
 <div
 id="alumnos"
 class="admin-section active"
 >
 
-<h3>Alumnos</h3>
+<h3>
+Alumnos
+</h3>
 
 <div class="toolbar">
 
 <input
 id="buscarAlumno"
-placeholder="🔎 Buscar alumno..."
+placeholder="Buscar alumno..."
 oninput="renderAlumnos()"
 >
 
 <button
-class="primary"
+class="btn btn-gold"
 onclick="openAlumno()"
 >
 + Nuevo alumno
@@ -622,7 +1154,7 @@ onclick="openAlumno()"
 <th>Email</th>
 <th>Curso</th>
 <th>Horario</th>
-<th>Fecha inscripción</th>
+<th>Inscripción</th>
 <th>Importe</th>
 <th>Estado</th>
 <th>Acciones</th>
@@ -640,27 +1172,27 @@ onclick="openAlumno()"
 </div>
 
 
-<!-- =========================
-BOOKINGS
-========================= -->
+<!-- BOOKINGS -->
 
 <div
 id="bookings"
 class="admin-section"
 >
 
-<h3>Bookings / Reservas</h3>
+<h3>
+Bookings / Reservas
+</h3>
 
 <div class="toolbar">
 
 <input
 id="buscarBooking"
-placeholder="🔎 Buscar reserva..."
+placeholder="Buscar reserva..."
 oninput="renderBookings()"
 >
 
 <button
-class="primary"
+class="btn btn-gold"
 onclick="openBooking()"
 >
 + Nueva reserva
@@ -698,27 +1230,27 @@ onclick="openBooking()"
 </div>
 
 
-<!-- =========================
-CURSOS
-========================= -->
+<!-- CURSOS -->
 
 <div
 id="cursos"
 class="admin-section"
 >
 
-<h3>Cursos</h3>
+<h3>
+Cursos
+</h3>
 
 <div class="toolbar">
 
 <input
 id="buscarCurso"
-placeholder="🔎 Buscar curso..."
+placeholder="Buscar curso..."
 oninput="renderCursos()"
 >
 
 <button
-class="primary"
+class="btn btn-gold"
 onclick="openCurso()"
 >
 + Nuevo curso
@@ -753,27 +1285,27 @@ onclick="openCurso()"
 </div>
 
 
-<!-- =========================
-PAGOS
-========================= -->
+<!-- PAGOS -->
 
 <div
 id="pagos"
 class="admin-section"
 >
 
-<h3>Pagos</h3>
+<h3>
+Pagos
+</h3>
 
 <div class="toolbar">
 
 <input
 id="buscarPago"
-placeholder="🔎 Buscar pago..."
+placeholder="Buscar pago..."
 oninput="renderPagos()"
 >
 
 <button
-class="primary"
+class="btn btn-gold"
 onclick="openPago()"
 >
 + Nuevo pago
@@ -810,14 +1342,19 @@ onclick="openPago()"
 
 </div>
 
+
+</div>
+
+</div>
+
 </div>
 
 </section>
 
 
-<footer>
+<footer class="footer">
 
-© 2026 RoXThal Art Design
+© 2026 RoXThal Art Design · Arte, tatuajes y fileteado porteño
 
 </footer>
 
@@ -829,18 +1366,14 @@ class="modal"
 
 <div class="modal-box">
 
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:center
-">
+<div class="modal-head">
 
 <h2 id="modalTitle">
 Formulario
 </h2>
 
 <button
-class="secondary"
+class="small"
 onclick="closeModal()"
 >
 ✕
@@ -885,8 +1418,36 @@ let pagos = [];
 
 
 /* =====================================================
-NAVEGACIÓN
+UTILIDADES
 ===================================================== */
+
+function esc(value){
+
+const div =
+document.createElement("div");
+
+div.textContent =
+value ?? "";
+
+return div.innerHTML;
+
+}
+
+
+function money(value){
+
+return "$" +
+Number(value || 0)
+.toLocaleString(
+"es-AR",
+{
+minimumFractionDigits:2,
+maximumFractionDigits:2
+}
+);
+
+}
+
 
 function go(id){
 
@@ -904,19 +1465,25 @@ behavior:"smooth"
 }
 
 
-/* =====================================================
-ESCAPAR HTML
-===================================================== */
+function panel(id,button){
 
-function esc(value){
+document
+.querySelectorAll(".admin-section")
+.forEach(
+x => x.classList.remove("active")
+);
 
-const div =
-document.createElement("div");
+document
+.querySelectorAll(".admin-nav button")
+.forEach(
+x => x.classList.remove("active")
+);
 
-div.textContent =
-value ?? "";
+document
+.getElementById(id)
+.classList.add("active");
 
-return div.innerHTML;
+button.classList.add("active");
 
 }
 
@@ -924,6 +1491,32 @@ return div.innerHTML;
 /* =====================================================
 LOGIN
 ===================================================== */
+
+function showLoginMessage(
+text,
+success=false
+){
+
+const box =
+document.getElementById(
+"loginMsg"
+);
+
+box.className =
+"notice";
+
+box.textContent =
+text;
+
+box.style.background =
+success
+?
+"#173b29"
+:
+"#3b2d15";
+
+}
+
 
 async function login(){
 
@@ -941,8 +1534,7 @@ document
 if(!email || !password){
 
 showLoginMessage(
-"Completa email y contraseña.",
-"error"
+"Completa email y contraseña."
 );
 
 return;
@@ -961,8 +1553,7 @@ password
 if(error){
 
 showLoginMessage(
-error.message,
-"error"
+error.message
 );
 
 return;
@@ -989,10 +1580,6 @@ await loadAll();
 }
 
 
-/* =====================================================
-LOGOUT
-===================================================== */
-
 async function logout(){
 
 await db.auth.signOut();
@@ -1011,63 +1598,19 @@ document
 
 
 /* =====================================================
-MENSAJE LOGIN
-===================================================== */
-
-function showLoginMessage(text,type){
-
-const box =
-document.getElementById("loginMsg");
-
-box.textContent =
-text;
-
-box.className =
-"message show " + type;
-
-}
-
-
-/* =====================================================
-CAMBIAR PANEL
-===================================================== */
-
-function panel(id,button){
-
-document
-.querySelectorAll(".admin-section")
-.forEach(x =>
-x.classList.remove("active")
-);
-
-document
-.querySelectorAll(".admin-menu button")
-.forEach(x =>
-x.classList.remove("active")
-);
-
-document
-.getElementById(id)
-.classList.add("active");
-
-button.classList.add("active");
-
-}
-
-
-/* =====================================================
-CARGAR TODO
+CARGA GENERAL
 ===================================================== */
 
 async function loadAll(){
 
-await loadAlumnos();
+await Promise.all([
+loadAlumnos(),
+loadBookings(),
+loadCursos(),
+loadPagos()
+]);
 
-await loadBookings();
-
-await loadCursos();
-
-await loadPagos();
+updateDashboard();
 
 }
 
@@ -1087,7 +1630,9 @@ await db
 .select("*")
 .order(
 "created_at",
-{ascending:false}
+{
+ascending:false
+}
 );
 
 if(error){
@@ -1114,23 +1659,20 @@ renderAlumnos();
 }
 
 
-/* =====================================================
-MOSTRAR ALUMNOS
-===================================================== */
-
 function renderAlumnos(){
 
-const search =
+const q =
 (
 document
 .getElementById("buscarAlumno")
-?.value || ""
+.value ||
+""
 )
 .toLowerCase();
 
 const rows =
-alumnos.filter(a =>
-
+alumnos.filter(
+a =>
 [
 a.nombre,
 a.apellido,
@@ -1141,32 +1683,16 @@ a.horario
 ]
 .join(" ")
 .toLowerCase()
-.includes(search)
-
+.includes(q)
 );
 
-const table =
-document.getElementById(
-"alumnosTable"
-);
-
-if(!rows.length){
-
-table.innerHTML =
-`
-<tr>
-<td colspan="10" class="empty">
-No hay alumnos.
-</td>
-</tr>
-`;
-
-return;
-
-}
-
-table.innerHTML =
-rows.map(a => `
+document
+.getElementById("alumnosTable")
+.innerHTML =
+rows.length
+?
+rows.map(
+a => `
 
 <tr>
 
@@ -1184,13 +1710,11 @@ rows.map(a => `
 
 <td>${esc(a.fecha_inscripcion)}</td>
 
-<td>
-$${Number(a.importe || 0).toFixed(2)}
-</td>
+<td>${money(a.importe)}</td>
 
 <td>
 
-<span class="badge ${a.activo ? "ok" : "off"}">
+<span class="badge ${a.activo ? "ok" : "bad"}">
 
 ${a.activo ? "Activo" : "Inactivo"}
 
@@ -1201,21 +1725,21 @@ ${a.activo ? "Activo" : "Inactivo"}
 <td class="actions">
 
 <button
-class="secondary"
+class="small"
 onclick="openAlumno('${a.id}')"
 >
 Editar
 </button>
 
 <button
-class="secondary"
+class="small"
 onclick="toggleAlumno('${a.id}',${a.activo})"
 >
 ${a.activo ? "Desactivar" : "Activar"}
 </button>
 
 <button
-class="danger"
+class="small danger"
 onclick="deleteAlumno('${a.id}')"
 >
 Eliminar
@@ -1225,20 +1749,26 @@ Eliminar
 
 </tr>
 
-`).join("");
+`
+).join("")
+:
+`
+<tr>
+<td colspan="10" class="empty">
+No hay alumnos.
+</td>
+</tr>
+`;
 
 }
 
 
-/* =====================================================
-FORMULARIO ALUMNO
-===================================================== */
-
 function openAlumno(id=null){
 
-const alumno =
+const a =
 alumnos.find(
-a => String(a.id) === String(id)
+x =>
+String(x.id) === String(id)
 ) || {};
 
 document
@@ -1262,7 +1792,7 @@ onsubmit="saveAlumno(event,'${id || ""}')"
 
 <input
 id="fNombre"
-value="${esc(alumno.nombre)}"
+value="${esc(a.nombre)}"
 required
 >
 
@@ -1270,14 +1800,14 @@ required
 
 <input
 id="fApellido"
-value="${esc(alumno.apellido)}"
+value="${esc(a.apellido)}"
 >
 
 <label>WhatsApp</label>
 
 <input
 id="fWhatsapp"
-value="${esc(alumno.whatsapp)}"
+value="${esc(a.whatsapp)}"
 >
 
 <label>Email</label>
@@ -1285,21 +1815,21 @@ value="${esc(alumno.whatsapp)}"
 <input
 id="fEmail"
 type="email"
-value="${esc(alumno.email)}"
+value="${esc(a.email)}"
 >
 
 <label>Curso</label>
 
 <input
 id="fCurso"
-value="${esc(alumno.curso)}"
+value="${esc(a.curso)}"
 >
 
 <label>Horario</label>
 
 <input
 id="fHorario"
-value="${esc(alumno.horario)}"
+value="${esc(a.horario)}"
 >
 
 <label>Fecha de inscripción</label>
@@ -1307,7 +1837,7 @@ value="${esc(alumno.horario)}"
 <input
 id="fFecha"
 type="date"
-value="${esc(alumno.fecha_inscripcion)}"
+value="${esc(a.fecha_inscripcion)}"
 >
 
 <label>Importe</label>
@@ -1316,23 +1846,24 @@ value="${esc(alumno.fecha_inscripcion)}"
 id="fImporte"
 type="number"
 step="0.01"
-value="${alumno.importe || 0}"
+value="${a.importe || 0}"
 >
 
 <label>Observaciones</label>
 
 <textarea
 id="fObs"
->${esc(alumno.observaciones)}</textarea>
+>${esc(a.observaciones)}</textarea>
 
 <button
-class="primary"
+class="btn btn-gold"
 type="submit"
 >
 Guardar alumno
 </button>
 
 </form>
+
 `;
 
 openModal();
@@ -1340,70 +1871,79 @@ openModal();
 }
 
 
-/* =====================================================
-GUARDAR ALUMNO
-===================================================== */
-
-async function saveAlumno(event,id){
+async function saveAlumno(
+event,
+id
+){
 
 event.preventDefault();
 
 const obj = {
 
 nombre:
-document.getElementById("fNombre").value,
+document
+.getElementById("fNombre")
+.value,
 
 apellido:
-document.getElementById("fApellido").value,
+document
+.getElementById("fApellido")
+.value,
 
 whatsapp:
-document.getElementById("fWhatsapp").value,
+document
+.getElementById("fWhatsapp")
+.value,
 
 email:
-document.getElementById("fEmail").value,
+document
+.getElementById("fEmail")
+.value,
 
 curso:
-document.getElementById("fCurso").value,
+document
+.getElementById("fCurso")
+.value,
 
 horario:
-document.getElementById("fHorario").value,
+document
+.getElementById("fHorario")
+.value,
 
 fecha_inscripcion:
-document.getElementById("fFecha").value
+document
+.getElementById("fFecha")
+.value
 ||
 new Date()
 .toISOString()
-.split("T")[0],
+.slice(0,10),
 
 importe:
 Number(
-document.getElementById("fImporte").value || 0
+document
+.getElementById("fImporte")
+.value || 0
 ),
 
 observaciones:
-document.getElementById("fObs").value
+document
+.getElementById("fObs")
+.value
 
 };
 
-let result;
-
-if(id){
-
-result =
+const result =
+id
+?
 await db
 .from("alumnos")
 .update(obj)
-.eq("id",id);
-
-}
-else{
-
-result =
+.eq("id",id)
+:
 await db
 .from("alumnos")
 .insert(obj);
-
-}
 
 if(result.error){
 
@@ -1420,6 +1960,8 @@ closeModal();
 
 await loadAlumnos();
 
+updateDashboard();
+
 alert(
 "Alumno guardado correctamente"
 );
@@ -1427,11 +1969,10 @@ alert(
 }
 
 
-/* =====================================================
-ACTIVAR / DESACTIVAR ALUMNO
-===================================================== */
-
-async function toggleAlumno(id,activo){
+async function toggleAlumno(
+id,
+activo
+){
 
 const {
 error
@@ -1453,12 +1994,10 @@ return;
 
 await loadAlumnos();
 
+updateDashboard();
+
 }
 
-
-/* =====================================================
-ELIMINAR ALUMNO
-===================================================== */
 
 async function deleteAlumno(id){
 
@@ -1487,12 +2026,18 @@ return;
 
 await loadAlumnos();
 
+await loadPagos();
+
+updateDashboard();
+
 }
 
 
 /* =====================================================
 BOOKINGS
-ESTRUCTURA REAL
+IMPORTANTE:
+service_id ES UUID.
+NO SE ENVÍA TEXTO COMO "DIBUJO Y PINTURA".
 ===================================================== */
 
 async function loadBookings(){
@@ -1506,7 +2051,9 @@ await db
 .select("*")
 .order(
 "created_at",
-{ascending:false}
+{
+ascending:false
+}
 );
 
 if(error){
@@ -1533,23 +2080,20 @@ renderBookings();
 }
 
 
-/* =====================================================
-MOSTRAR BOOKINGS
-===================================================== */
-
 function renderBookings(){
 
-const search =
+const q =
 (
 document
 .getElementById("buscarBooking")
-?.value || ""
+.value ||
+""
 )
 .toLowerCase();
 
 const rows =
-bookings.filter(b =>
-
+bookings.filter(
+b =>
 [
 b.client_name,
 b.phone,
@@ -1561,60 +2105,76 @@ b.status
 ]
 .join(" ")
 .toLowerCase()
-.includes(search)
-
+.includes(q)
 );
 
-const table =
-document.getElementById(
-"bookingsTable"
-);
+document
+.getElementById("bookingsTable")
+.innerHTML =
+rows.length
+?
+rows.map(
+b => `
 
-if(!rows.length){
-
-table.innerHTML =
-`
 <tr>
-<td colspan="8" class="empty">
-No hay reservas.
+
+<td>
+${esc(b.client_name)}
 </td>
-</tr>
-`;
 
-return;
+<td>
+${esc(b.phone)}
+</td>
 
+<td>
+${esc(b.service_id || "—")}
+</td>
+
+<td>
+${esc(b.preferred_date)}
+</td>
+
+<td>
+${esc(b.preferred_time)}
+</td>
+
+<td>
+
+<span class="badge
+${
+b.status === "confirmada"
+?
+"ok"
+:
+b.status === "cancelada"
+?
+"bad"
+:
+"pending"
 }
+">
 
-table.innerHTML =
-rows.map(b => `
+${esc(b.status)}
 
-<tr>
+</span>
 
-<td>${esc(b.client_name)}</td>
+</td>
 
-<td>${esc(b.phone)}</td>
-
-<td>${esc(b.service_id)}</td>
-
-<td>${esc(b.preferred_date)}</td>
-
-<td>${esc(b.preferred_time)}</td>
-
-<td>${esc(b.status)}</td>
-
-<td>${esc(b.details)}</td>
+<td>
+${esc(b.details)}
+</td>
 
 <td class="actions">
 
 <button
-class="secondary"
+class="small"
 onclick="openBooking('${b.id}')"
 >
 Editar
 </button>
 
 <button
-class="danger"
+class="small danger"
 onclick="deleteBooking('${b.id}')"
 >
 Eliminar
@@ -1624,20 +2184,26 @@ Eliminar
 
 </tr>
 
-`).join("");
+`
+).join("")
+:
+`
+<tr>
+<td colspan="8" class="empty">
+No hay reservas.
+</td>
+</tr>
+`;
 
 }
 
 
-/* =====================================================
-FORMULARIO BOOKING
-===================================================== */
-
 function openBooking(id=null){
 
-const booking =
+const b =
 bookings.find(
-b => String(b.id) === String(id)
+x =>
+String(x.id) === String(id)
 ) || {};
 
 document
@@ -1657,86 +2223,106 @@ document
 onsubmit="saveBooking(event,'${id || ""}')"
 >
 
-<label>Nombre del cliente</label>
+<label>
+Nombre del cliente
+</label>
 
 <input
 id="bClient"
-value="${esc(booking.client_name)}"
+value="${esc(b.client_name)}"
 required
 >
 
-<label>Teléfono / WhatsApp</label>
+<label>
+Teléfono / WhatsApp
+</label>
 
 <input
 id="bPhone"
-value="${esc(booking.phone)}"
+value="${esc(b.phone)}"
 >
 
-<label>Servicio / Curso</label>
+<label>
+Servicio ID
+</label>
 
 <input
 id="bService"
-value="${esc(booking.service_id)}"
-placeholder="Nombre del servicio o curso"
+value="${esc(b.service_id)}"
+placeholder="UUID del servicio, si corresponde"
 >
 
-<label>Fecha preferida</label>
+<small class="muted">
+Este campo es opcional porque en Supabase
+service_id es UUID.
+</small>
+
+<label>
+Fecha preferida
+</label>
 
 <input
 id="bDate"
 type="date"
-value="${esc(booking.preferred_date)}"
+value="${esc(b.preferred_date)}"
 >
 
-<label>Hora preferida</label>
+<label>
+Hora preferida
+</label>
 
 <input
 id="bTime"
 type="time"
-value="${esc(booking.preferred_time)}"
+value="${esc(b.preferred_time)}"
 >
 
-<label>Estado</label>
+<label>
+Estado
+</label>
 
 <select id="bStatus">
 
 <option
 value="pendiente"
-${booking.status === "pendiente" ? "selected" : ""}
+${b.status === "pendiente" ? "selected" : ""}
 >
 Pendiente
 </option>
 
 <option
 value="confirmada"
-${booking.status === "confirmada" ? "selected" : ""}
+${b.status === "confirmada" ? "selected" : ""}
 >
 Confirmada
 </option>
 
 <option
 value="cancelada"
-${booking.status === "cancelada" ? "selected" : ""}
+${b.status === "cancelada" ? "selected" : ""}
 >
 Cancelada
 </option>
 
 </select>
 
-<label>Detalles</label>
+<label>
+Detalles
+</label>
 
 <textarea
 id="bDetails"
->${esc(booking.details)}</textarea>
+>${esc(b.details)}</textarea>
 
 <button
-class="primary"
+class="btn btn-gold"
 type="submit"
 >
 Guardar reserva
 </button>
 
 </form>
+
 `;
 
 openModal();
@@ -1744,59 +2330,83 @@ openModal();
 }
 
 
-/* =====================================================
-GUARDAR BOOKING
-===================================================== */
+function isUuid(value){
 
-async function saveBooking(event,id){
+return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+.test(value);
+
+}
+
+
+async function saveBooking(
+event,
+id
+){
 
 event.preventDefault();
+
+const serviceValue =
+document
+.getElementById("bService")
+.value
+.trim();
 
 const obj = {
 
 client_name:
-document.getElementById("bClient").value,
+document
+.getElementById("bClient")
+.value,
 
 phone:
-document.getElementById("bPhone").value,
+document
+.getElementById("bPhone")
+.value,
+
+service_id:
+serviceValue && isUuid(serviceValue)
+?
+serviceValue
+:
+null,
 
 preferred_date:
-document.getElementById("bDate").value
+document
+.getElementById("bDate")
+.value
 ||
 null,
 
 preferred_time:
-document.getElementById("bTime").value
+document
+.getElementById("bTime")
+.value
 ||
 null,
 
 details:
-document.getElementById("bDetails").value,
+document
+.getElementById("bDetails")
+.value,
 
 status:
-document.getElementById("bStatus").value
+document
+.getElementById("bStatus")
+.value
 
 };
 
-let result;
-
-if(id){
-
-result =
+const result =
+id
+?
 await db
 .from("bookings")
 .update(obj)
-.eq("id",id);
-
-}
-else{
-
-result =
+.eq("id",id)
+:
 await db
 .from("bookings")
 .insert(obj);
-
-}
 
 if(result.error){
 
@@ -1813,16 +2423,14 @@ closeModal();
 
 await loadBookings();
 
+updateDashboard();
+
 alert(
 "Reserva guardada correctamente"
 );
 
 }
 
-
-/* =====================================================
-ELIMINAR BOOKING
-===================================================== */
 
 async function deleteBooking(id){
 
@@ -1851,12 +2459,13 @@ return;
 
 await loadBookings();
 
+updateDashboard();
+
 }
 
 
 /* =====================================================
 CURSOS
-ESTRUCTURA REAL
 ===================================================== */
 
 async function loadCursos(){
@@ -1870,7 +2479,9 @@ await db
 .select("*")
 .order(
 "created_at",
-{ascending:false}
+{
+ascending:false
+}
 );
 
 if(error){
@@ -1899,69 +2510,56 @@ renderPublicCourses();
 }
 
 
-/* =====================================================
-MOSTRAR CURSOS
-===================================================== */
-
 function renderCursos(){
 
-const search =
+const q =
 (
 document
 .getElementById("buscarCurso")
-?.value || ""
+.value ||
+""
 )
 .toLowerCase();
 
 const rows =
-cursos.filter(c =>
-
+cursos.filter(
+c =>
 [
 c.nombre,
 c.descripcion
 ]
 .join(" ")
 .toLowerCase()
-.includes(search)
-
+.includes(q)
 );
 
-const table =
-document.getElementById(
-"cursosTable"
-);
-
-if(!rows.length){
-
-table.innerHTML =
-`
-<tr>
-<td colspan="5" class="empty">
-No hay cursos.
-</td>
-</tr>
-`;
-
-return;
-
-}
-
-table.innerHTML =
-rows.map(c => `
+document
+.getElementById("cursosTable")
+.innerHTML =
+rows.length
+?
+rows.map(
+c => `
 
 <tr>
-
-<td>${esc(c.nombre)}</td>
-
-<td>${esc(c.descripcion)}</td>
 
 <td>
-$${Number(c.precio || 0).toFixed(2)}
+${esc(c.nombre)}
+</td>
+
+<td>
+${esc(c.descripcion)}
+</td>
+
+<td>
+${money(c.precio)}
 </td>
 
 <td>
 
-<span class="badge ${c.activo ? "ok" : "off"}">
+<span class="badge
+${c.activo ? "ok" : "bad"}
+">
 
 ${c.activo ? "Activo" : "Inactivo"}
 
@@ -1972,21 +2570,21 @@ ${c.activo ? "Activo" : "Inactivo"}
 <td class="actions">
 
 <button
-class="secondary"
+class="small"
 onclick="openCurso(${c.id})"
 >
 Editar
 </button>
 
 <button
-class="secondary"
+class="small"
 onclick="toggleCurso(${c.id},${c.activo})"
 >
 ${c.activo ? "Desactivar" : "Activar"}
 </button>
 
 <button
-class="danger"
+class="small danger"
 onclick="deleteCurso(${c.id})"
 >
 Eliminar
@@ -1996,20 +2594,26 @@ Eliminar
 
 </tr>
 
-`).join("");
+`
+).join("")
+:
+`
+<tr>
+<td colspan="5" class="empty">
+No hay cursos.
+</td>
+</tr>
+`;
 
 }
 
 
-/* =====================================================
-FORMULARIO CURSO
-===================================================== */
-
 function openCurso(id=null){
 
-const curso =
+const c =
 cursos.find(
-c => Number(c.id) === Number(id)
+x =>
+Number(x.id) === Number(id)
 ) || {};
 
 document
@@ -2029,37 +2633,44 @@ document
 onsubmit="saveCurso(event,'${id || ""}')"
 >
 
-<label>Nombre</label>
+<label>
+Nombre
+</label>
 
 <input
 id="cNombre"
-value="${esc(curso.nombre)}"
+value="${esc(c.nombre)}"
 required
 >
 
-<label>Descripción</label>
+<label>
+Descripción
+</label>
 
 <textarea
 id="cDescripcion"
->${esc(curso.descripcion)}</textarea>
+>${esc(c.descripcion)}</textarea>
 
-<label>Precio</label>
+<label>
+Precio
+</label>
 
 <input
 id="cPrecio"
 type="number"
 step="0.01"
-value="${curso.precio || 0}"
+value="${c.precio || 0}"
 >
 
 <button
-class="primary"
+class="btn btn-gold"
 type="submit"
 >
 Guardar curso
 </button>
 
 </form>
+
 `;
 
 openModal();
@@ -2067,48 +2678,45 @@ openModal();
 }
 
 
-/* =====================================================
-GUARDAR CURSO
-===================================================== */
-
-async function saveCurso(event,id){
+async function saveCurso(
+event,
+id
+){
 
 event.preventDefault();
 
 const obj = {
 
 nombre:
-document.getElementById("cNombre").value,
+document
+.getElementById("cNombre")
+.value,
 
 descripcion:
-document.getElementById("cDescripcion").value,
+document
+.getElementById("cDescripcion")
+.value,
 
 precio:
 Number(
-document.getElementById("cPrecio").value || 0
+document
+.getElementById("cPrecio")
+.value || 0
 )
 
 };
 
-let result;
-
-if(id){
-
-result =
+const result =
+id
+?
 await db
 .from("cursos")
 .update(obj)
-.eq("id",Number(id));
-
-}
-else{
-
-result =
+.eq("id",Number(id))
+:
 await db
 .from("cursos")
 .insert(obj);
-
-}
 
 if(result.error){
 
@@ -2132,11 +2740,10 @@ alert(
 }
 
 
-/* =====================================================
-ACTIVAR / DESACTIVAR CURSO
-===================================================== */
-
-async function toggleCurso(id,activo){
+async function toggleCurso(
+id,
+activo
+){
 
 const {
 error
@@ -2160,10 +2767,6 @@ await loadCursos();
 
 }
 
-
-/* =====================================================
-ELIMINAR CURSO
-===================================================== */
 
 async function deleteCurso(id){
 
@@ -2202,9 +2805,8 @@ CURSOS PÚBLICOS
 function renderPublicCourses(){
 
 const box =
-document.getElementById(
-"publicCourses"
-);
+document
+.getElementById("publicCourses");
 
 const active =
 cursos.filter(
@@ -2217,11 +2819,17 @@ box.innerHTML = `
 
 <div class="card">
 
-<h3>Próximamente</h3>
+<div class="card-body">
 
-<p>
+<h3>
+Próximamente
+</h3>
+
+<p class="muted">
 Estamos preparando nuestros cursos.
 </p>
+
+</div>
 
 </div>
 
@@ -2232,38 +2840,43 @@ return;
 }
 
 box.innerHTML =
-active.map(c => `
+active.map(
+c => `
 
-<div class="card">
+<article class="card">
+
+<div class="card-body">
 
 <h3>
 ${esc(c.nombre)}
 </h3>
 
-<p>
+<p class="muted">
 ${esc(c.descripcion)}
 </p>
 
-<p style="margin-top:10px">
-
+<p>
 <strong>
-Precio:
+${money(c.precio)}
 </strong>
-
-$${Number(c.precio || 0).toFixed(2)}
-
 </p>
 
 </div>
 
-`).join("");
+</article>
+
+`
+).join("");
 
 }
 
 
 /* =====================================================
 PAGOS
-ESTRUCTURA REAL:
+ESTRUCTURA REAL DE SUPABASE
+===================================================== */
+
+/*
 id
 alumno_id
 importe
@@ -2273,7 +2886,7 @@ concepto
 estado
 observaciones
 created_at
-===================================================== */
+*/
 
 async function loadPagos(){
 
@@ -2286,7 +2899,9 @@ await db
 .select("*")
 .order(
 "created_at",
-{ascending:false}
+{
+ascending:false
+}
 );
 
 if(error){
@@ -2313,15 +2928,12 @@ renderPagos();
 }
 
 
-/* =====================================================
-NOMBRE DEL ALUMNO
-===================================================== */
-
 function nombreAlumno(id){
 
 const alumno =
 alumnos.find(
-a => Number(a.id) === Number(id)
+a =>
+Number(a.id) === Number(id)
 );
 
 if(!alumno){
@@ -2339,23 +2951,20 @@ return (
 }
 
 
-/* =====================================================
-MOSTRAR PAGOS
-===================================================== */
-
 function renderPagos(){
 
-const search =
+const q =
 (
 document
 .getElementById("buscarPago")
-?.value || ""
+.value ||
+""
 )
 .toLowerCase();
 
 const rows =
-pagos.filter(p =>
-
+pagos.filter(
+p =>
 [
 nombreAlumno(p.alumno_id),
 p.importe,
@@ -2367,32 +2976,16 @@ p.observaciones
 ]
 .join(" ")
 .toLowerCase()
-.includes(search)
-
+.includes(q)
 );
 
-const table =
-document.getElementById(
-"pagosTable"
-);
-
-if(!rows.length){
-
-table.innerHTML =
-`
-<tr>
-<td colspan="8" class="empty">
-No hay pagos.
-</td>
-</tr>
-`;
-
-return;
-
-}
-
-table.innerHTML =
-rows.map(p => `
+document
+.getElementById("pagosTable")
+.innerHTML =
+rows.length
+?
+rows.map(
+p => `
 
 <tr>
 
@@ -2401,7 +2994,7 @@ ${esc(nombreAlumno(p.alumno_id))}
 </td>
 
 <td>
-$${Number(p.importe || 0).toFixed(2)}
+${money(p.importe)}
 </td>
 
 <td>
@@ -2419,7 +3012,17 @@ ${esc(p.concepto)}
 <td>
 
 <span class="badge
-${p.estado === "pagado" ? "ok" : "off"}
+${
+p.estado === "pagado"
+?
+"ok"
+:
+p.estado === "pendiente"
+?
+"pending"
+:
+"bad"
+}
 ">
 
 ${esc(p.estado)}
@@ -2432,18 +3035,18 @@ ${esc(p.estado)}
 ${esc(p.observaciones)}
 </td>
 
-<td>
+<td class="actions">
 
 <button
-class="secondary"
-onclick="openPago('${p.id}')"
+class="small"
+onclick="openPago(${p.id})"
 >
 Editar
 </button>
 
 <button
-class="danger"
-onclick="deletePago('${p.id}')"
+class="small danger"
+onclick="deletePago(${p.id})"
 >
 Eliminar
 </button>
@@ -2452,39 +3055,57 @@ Eliminar
 
 </tr>
 
-`).join("");
+`
+).join("")
+:
+`
+<tr>
+<td colspan="8" class="empty">
+No hay pagos.
+</td>
+</tr>
+`;
 
 }
 
 
-/* =====================================================
-FORMULARIO PAGO
-===================================================== */
-
 function openPago(id=null){
 
-const pago =
+const p =
 pagos.find(
-p => Number(p.id) === Number(id)
+x =>
+Number(x.id) === Number(id)
 ) || {};
 
 const options =
-alumnos.map(a => `
+alumnos.map(
+a => `
 
 <option
 value="${a.id}"
-${Number(pago.alumno_id) === Number(a.id) ? "selected" : ""}
+${
+Number(p.alumno_id) === Number(a.id)
+?
+"selected"
+:
+""
+}
 >
 
 ${esc(
-(a.nombre || "") +
+(
+a.nombre || ""
+) +
 " " +
-(a.apellido || "")
+(
+a.apellido || ""
+)
 )}
 
 </option>
 
-`).join("");
+`
+).join("");
 
 document
 .getElementById("modalTitle")
@@ -2503,7 +3124,9 @@ document
 onsubmit="savePago(event,'${id || ""}')"
 >
 
-<label>Alumno</label>
+<label>
+Alumno
+</label>
 
 <select
 id="pAlumno"
@@ -2518,88 +3141,125 @@ ${options}
 
 </select>
 
-<label>Importe</label>
+<label>
+Importe
+</label>
 
 <input
 id="pImporte"
 type="number"
 step="0.01"
-value="${pago.importe || ""}"
+value="${p.importe || ""}"
 required
 >
 
-<label>Fecha de pago</label>
+<label>
+Fecha de pago
+</label>
 
 <input
 id="pFechaPago"
 type="date"
 value="${
-pago.fecha_pago ||
+p.fecha_pago ||
 new Date()
 .toISOString()
-.split("T")[0]
+.slice(0,10)
 }"
 required
 >
 
-<label>Fecha de vencimiento</label>
+<label>
+Fecha de vencimiento
+</label>
 
 <input
 id="pFechaVencimiento"
 type="date"
-value="${pago.fecha_vencimiento || ""}"
+value="${p.fecha_vencimiento || ""}"
 >
 
-<label>Concepto</label>
+<label>
+Concepto
+</label>
 
 <input
 id="pConcepto"
-value="${esc(pago.concepto)}"
-placeholder="Concepto"
+value="${esc(p.concepto)}"
 >
 
-<label>Estado</label>
+<label>
+Estado
+</label>
 
-<select id="pEstado">
+<select
+id="pEstado"
+>
 
 <option
 value="pagado"
-${pago.estado === "pagado" ? "selected" : ""}
+${
+p.estado === "pagado"
+?
+"selected"
+:
+""
+}
 >
 Pagado
 </option>
 
 <option
 value="pendiente"
-${pago.estado === "pendiente" ? "selected" : ""}
+${
+p.estado === "pendiente"
+?
+"selected"
+:
+""
+}
 >
 Pendiente
 </option>
 
 <option
 value="vencido"
-${pago.estado === "vencido" ? "selected" : ""}
+${
+p.estado === "vencido"
+?
+"selected"
+:
+""
+}
 >
 Vencido
 </option>
 
 </select>
 
-<label>Observaciones</label>
+<label>
+Observaciones
+</label>
 
 <textarea
 id="pObs"
-placeholder="Observaciones"
->${esc(pago.observaciones)}</textarea>
+>${esc(p.observaciones)}</textarea>
 
 <button
-class="primary"
+class="btn btn-gold"
 type="submit"
 >
-${id ? "Guardar cambios" : "Registrar pago"}
+${
+id
+?
+"Guardar cambios"
+:
+"Registrar pago"
+}
 </button>
 
 </form>
+
 `;
 
 openModal();
@@ -2607,18 +3267,17 @@ openModal();
 }
 
 
-/* =====================================================
-GUARDAR PAGO
-===================================================== */
-
-async function savePago(event,id){
+async function savePago(
+event,
+id
+){
 
 event.preventDefault();
 
 const alumnoId =
-document.getElementById(
-"pAlumno"
-).value;
+document
+.getElementById("pAlumno")
+.value;
 
 if(!alumnoId){
 
@@ -2637,59 +3296,51 @@ Number(alumnoId),
 
 importe:
 Number(
-document.getElementById(
-"pImporte"
-).value
+document
+.getElementById("pImporte")
+.value
 ),
 
 fecha_pago:
-document.getElementById(
-"pFechaPago"
-).value,
+document
+.getElementById("pFechaPago")
+.value,
 
 fecha_vencimiento:
-document.getElementById(
-"pFechaVencimiento"
-).value
+document
+.getElementById("pFechaVencimiento")
+.value
 ||
 null,
 
 concepto:
-document.getElementById(
-"pConcepto"
-).value,
+document
+.getElementById("pConcepto")
+.value,
 
 estado:
-document.getElementById(
-"pEstado"
-).value,
+document
+.getElementById("pEstado")
+.value,
 
 observaciones:
-document.getElementById(
-"pObs"
-).value
+document
+.getElementById("pObs")
+.value
 
 };
 
-let result;
-
-if(id){
-
-result =
+const result =
+id
+?
 await db
 .from("pagos")
 .update(obj)
-.eq("id",Number(id));
-
-}
-else{
-
-result =
+.eq("id",Number(id))
+:
 await db
 .from("pagos")
 .insert(obj);
-
-}
 
 if(result.error){
 
@@ -2706,6 +3357,8 @@ closeModal();
 
 await loadPagos();
 
+updateDashboard();
+
 alert(
 id
 ?
@@ -2716,10 +3369,6 @@ id
 
 }
 
-
-/* =====================================================
-ELIMINAR PAGO
-===================================================== */
 
 async function deletePago(id){
 
@@ -2748,6 +3397,162 @@ return;
 
 await loadPagos();
 
+updateDashboard();
+
+}
+
+
+/* =====================================================
+DASHBOARD
+===================================================== */
+
+function updateDashboard(){
+
+const ingresos =
+pagos
+.filter(
+p => p.estado === "pagado"
+)
+.reduce(
+(sum,p) =>
+sum + Number(p.importe || 0),
+0
+);
+
+const pendientes =
+pagos
+.filter(
+p => p.estado !== "pagado"
+)
+.reduce(
+(sum,p) =>
+sum + Number(p.importe || 0),
+0
+);
+
+document
+.getElementById("sIngresos")
+.textContent =
+money(ingresos);
+
+document
+.getElementById("sPendientes")
+.textContent =
+money(pendientes);
+
+
+const today =
+new Date()
+.toISOString()
+.slice(0,10);
+
+const next =
+bookings
+.filter(
+b =>
+b.preferred_date &&
+b.preferred_date >= today
+)
+.sort(
+(a,b) =>
+(
+(a.preferred_date || "") +
+(a.preferred_time || "")
+)
+.localeCompare(
+(a.preferred_date || "") +
+(a.preferred_time || "")
+)
+)
+.slice(0,5);
+
+
+document
+.getElementById("nextBookings")
+.innerHTML =
+next.length
+?
+next.map(
+b => `
+
+<div class="list-item">
+
+<strong>
+${esc(b.client_name)}
+</strong>
+
+<br>
+
+<span class="muted">
+
+${esc(b.preferred_date || "")}
+
+${esc(b.preferred_time || "")}
+
+·
+
+${esc(b.status || "")}
+
+</span>
+
+</div>
+
+`
+).join("")
+:
+`
+<div class="empty">
+No hay próximas reservas.
+</div>
+`;
+
+
+const counts = {
+pagado:0,
+pendiente:0,
+vencido:0
+};
+
+pagos.forEach(
+p => {
+
+if(
+Object.prototype.hasOwnProperty
+.call(
+counts,
+p.estado
+)
+){
+
+counts[p.estado]++;
+
+}
+
+}
+);
+
+
+document
+.getElementById("paymentSummary")
+.innerHTML = `
+
+<div class="list-item">
+Pagados:
+<strong>${counts.pagado}</strong>
+</div>
+
+<div class="list-item">
+Pendientes:
+<strong>${counts.pendiente}</strong>
+</div>
+
+<div class="list-item">
+Vencidos:
+<strong>${counts.vencido}</strong>
+</div>
+
+`;
+
 }
 
 
@@ -2774,10 +3579,6 @@ document
 
 }
 
-
-/* =====================================================
-CERRAR MODAL AL HACER CLICK FUERA
-===================================================== */
 
 document
 .getElementById("modal")
