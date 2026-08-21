@@ -3,11 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>RoXThal Art Design</title>
-
-<meta name="description"
-content="RoXThal Art Design - Arte, tatuajes, fileteado porteño, dibujo, pintura y diseño">
+<meta name="description" content="RoXThal Art Design - Arte, tatuajes, fileteado porteño, dibujo, pintura y diseño">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -15,24 +12,16 @@ content="RoXThal Art Design - Arte, tatuajes, fileteado porteño, dibujo, pintur
 :root{
   --bg:#080809;
   --panel:#141418;
-  --panel2:#1d1d23;
   --gold:#d7b45a;
   --gold2:#f2da91;
   --text:#f5f5f5;
   --muted:#a8a8ad;
   --line:#303038;
-  --ok:#43b879;
-  --danger:#d65353;
-  --shadow:0 15px 40px rgba(0,0,0,.35);
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
-html{
-  scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
   margin:0;
@@ -43,9 +32,7 @@ body{
   line-height:1.5;
 }
 
-a{
-  color:var(--gold2);
-}
+a{color:var(--gold2)}
 
 button{
   font:inherit;
@@ -57,7 +44,6 @@ button{
   top:0;
   z-index:20;
   background:rgba(7,7,8,.95);
-  backdrop-filter:blur(12px);
   border-bottom:1px solid var(--line);
 }
 
@@ -78,8 +64,7 @@ button{
   margin-right:auto;
 }
 
-.nav button,
-.admin-nav button{
+.nav button{
   border:1px solid #45454c;
   background:#1a1a1f;
   color:#fff;
@@ -87,11 +72,9 @@ button{
   padding:9px 12px;
 }
 
-.nav button:hover,
-.admin-nav button.active{
+.nav button:hover{
   background:var(--gold);
   color:#111;
-  border-color:var(--gold);
 }
 
 section{
@@ -117,9 +100,7 @@ section{
     center/cover;
 }
 
-.hero-box{
-  max-width:900px;
-}
+.hero-box{max-width:900px}
 
 .eyebrow{
   letter-spacing:3px;
@@ -131,18 +112,13 @@ section{
 .hero h1{
   font-size:clamp(42px,8vw,82px);
   margin:12px 0;
-  color:#fff;
-  text-shadow:0 4px 25px #000;
 }
 
 .hero p{
   font-size:clamp(17px,3vw,23px);
-  color:#eee;
 }
 
-.gold{
-  color:var(--gold);
-}
+.gold{color:var(--gold)}
 
 .cta{
   display:flex;
@@ -184,7 +160,6 @@ section{
   border:1px solid var(--line);
   border-radius:16px;
   overflow:hidden;
-  box-shadow:var(--shadow);
 }
 
 .card-img{
@@ -193,18 +168,14 @@ section{
   background-position:center;
 }
 
-.card-body{
-  padding:20px;
-}
+.card-body{padding:20px}
 
 .card h3{
   margin:0 0 8px;
   color:var(--gold2);
 }
 
-.muted{
-  color:var(--muted);
-}
+.muted{color:var(--muted)}
 
 .about{
   display:grid;
@@ -217,14 +188,8 @@ section{
   min-height:380px;
   border-radius:18px;
   background:
-    linear-gradient(
-      180deg,
-      rgba(0,0,0,.05),
-      rgba(0,0,0,.35)
-    ),
     url("https://images.unsplash.com/photo-1577083288073-40892c0860a4?auto=format&fit=crop&w=1000&q=85")
     center/cover;
-  box-shadow:var(--shadow);
 }
 
 .quote{
@@ -240,9 +205,7 @@ section{
   gap:15px;
 }
 
-.contact .card{
-  padding:22px;
-}
+.contact .card{padding:22px}
 
 .admin-wrap{
   max-width:1200px;
@@ -257,7 +220,6 @@ section{
   border:1px solid var(--line);
   border-radius:16px;
   padding:25px;
-  box-shadow:var(--shadow);
 }
 
 .login h2,
@@ -297,38 +259,25 @@ label{
 }
 
 .stat{
-  background:
-    linear-gradient(145deg,#222228,#121216);
+  background:#17171c;
   border:1px solid var(--line);
   border-radius:14px;
   padding:18px;
-  box-shadow:var(--shadow);
 }
 
 .stat b{
   display:block;
   color:var(--gold2);
   font-size:28px;
-  margin-bottom:3px;
 }
 
-.stat-label{
-  color:#bbb;
-}
-
-.dashboard-grid{
-  display:grid;
-  grid-template-columns:1.1fr .9fr;
-  gap:18px;
-  margin-bottom:20px;
-}
+.stat-label{color:#bbb}
 
 .admin-panel{
   background:var(--panel);
   border:1px solid var(--line);
   border-radius:16px;
   padding:22px;
-  box-shadow:var(--shadow);
 }
 
 .admin-nav{
@@ -338,13 +287,22 @@ label{
   margin:18px 0;
 }
 
-.admin-section{
-  display:none;
+.admin-nav button{
+  border:1px solid #45454c;
+  background:#1a1a1f;
+  color:#fff;
+  border-radius:9px;
+  padding:9px 12px;
 }
 
-.admin-section.active{
-  display:block;
+.admin-nav button.active{
+  background:var(--gold);
+  color:#111;
 }
+
+.admin-section{display:none}
+
+.admin-section.active{display:block}
 
 .toolbar{
   display:flex;
@@ -359,10 +317,7 @@ label{
   margin:0;
 }
 
-.table-wrap{
-  overflow:auto;
-  border-radius:10px;
-}
+.table-wrap{overflow:auto}
 
 table{
   width:100%;
@@ -370,8 +325,7 @@ table{
   border-collapse:collapse;
 }
 
-th,
-td{
+th,td{
   padding:10px;
   border:1px solid #36363e;
   text-align:left;
@@ -382,9 +336,7 @@ th{
   color:var(--gold2);
 }
 
-td{
-  background:#121216;
-}
+td{background:#121216}
 
 .badge{
   display:inline-block;
@@ -394,17 +346,11 @@ td{
   background:#333;
 }
 
-.badge.ok{
-  background:#174d34;
-}
+.badge.ok{background:#174d34}
 
-.badge.bad{
-  background:#5b2222;
-}
+.badge.bad{background:#5b2222}
 
-.badge.pending{
-  background:#66511c;
-}
+.badge.pending{background:#66511c}
 
 .actions{
   display:flex;
@@ -422,7 +368,6 @@ td{
 
 .danger{
   background:#6a2525 !important;
-  border-color:#8e3a3a !important;
 }
 
 .list{
@@ -476,7 +421,6 @@ td{
   border:1px solid #444;
   border-radius:16px;
   padding:22px;
-  box-shadow:var(--shadow);
 }
 
 .modal-head{
@@ -485,16 +429,9 @@ td{
   align-items:center;
 }
 
-.source-note{
-  font-size:11px;
-  color:#777;
-  margin-top:12px;
-}
-
 @media(max-width:750px){
 
-  .about,
-  .dashboard-grid{
+  .about{
     grid-template-columns:1fr;
   }
 
@@ -517,16 +454,7 @@ td{
 
   section{
     padding:45px 13px;
-  }
-
-  .card-img{
-    height:180px;
-  }
-}
-</style>
-</head>
-
-<body>
+  }<body>
 
 <header class="top">
 
@@ -536,34 +464,16 @@ td{
 RoXThal Art Design
 </div>
 
-<button onclick="go('inicio')">
-Inicio
-</button>
-
-<button onclick="go('servicios')">
-Servicios
-</button>
-
-<button onclick="go('galeria')">
-Galería
-</button>
-
-<button onclick="go('cursosPublicos')">
-Cursos
-</button>
-
-<button onclick="go('contacto')">
-Contacto
-</button>
-
-<button onclick="go('admin')">
-Administrador
-</button>
+<button onclick="go('inicio')">Inicio</button>
+<button onclick="go('servicios')">Servicios</button>
+<button onclick="go('galeria')">Galería</button>
+<button onclick="go('cursosPublicos')">Cursos</button>
+<button onclick="go('contacto')">Contacto</button>
+<button onclick="go('admin')">Administrador</button>
 
 </div>
 
 </header>
-
 
 <section id="inicio" class="hero">
 
@@ -605,7 +515,6 @@ WhatsApp
 
 </section>
 
-
 <section id="servicios">
 
 <div class="eyebrow">
@@ -627,9 +536,7 @@ style="background-image:url('https://images.unsplash.com/photo-1611501275019-9b5
 
 <div class="card-body">
 
-<h3>
-Tatuajes
-</h3>
+<h3>Tatuajes</h3>
 
 <p class="muted">
 Diseños personalizados, composición artística
@@ -640,7 +547,6 @@ y trabajos con identidad.
 
 </article>
 
-
 <article class="card">
 
 <div
@@ -650,9 +556,7 @@ style="background-image:url('https://images.unsplash.com/photo-1547891654-e66ed7
 
 <div class="card-body">
 
-<h3>
-Fileteado Porteño
-</h3>
+<h3>Fileteado Porteño</h3>
 
 <p class="muted">
 Ornamentación, letras, flores y composición
@@ -663,7 +567,6 @@ inspiradas en la tradición porteña.
 
 </article>
 
-
 <article class="card">
 
 <div
@@ -673,9 +576,7 @@ style="background-image:url('https://images.unsplash.com/photo-1460661419201-fd4
 
 <div class="card-body">
 
-<h3>
-Dibujo y Pintura
-</h3>
+<h3>Dibujo y Pintura</h3>
 
 <p class="muted">
 Clases y acompañamiento para desarrollar
@@ -688,14 +589,7 @@ técnica y creatividad.
 
 </div>
 
-<p class="source-note">
-Las imágenes actuales son representativas.
-Podemos reemplazarlas posteriormente por fotos
-reales de los trabajos de RoXThal.
-</p>
-
 </section>
-
 
 <section id="galeria">
 
@@ -703,9 +597,7 @@ reales de los trabajos de RoXThal.
 Inspiración
 </div>
 
-<h2>
-Galería representativa
-</h2>
+<h2>Galería representativa</h2>
 
 <div class="grid">
 
@@ -718,9 +610,7 @@ style="background-image:url('https://images.unsplash.com/photo-1547891654-e66ed7
 
 <div class="card-body">
 
-<h3>
-Fileteado
-</h3>
+<h3>Fileteado</h3>
 
 <p class="muted">
 Color, volumen, flores y ornamentación porteña.
@@ -729,7 +619,6 @@ Color, volumen, flores y ornamentación porteña.
 </div>
 
 </article>
-
 
 <article class="card">
 
@@ -740,9 +629,7 @@ style="background-image:url('https://images.unsplash.com/photo-1611501275019-9b5
 
 <div class="card-body">
 
-<h3>
-Tattoo Studio
-</h3>
+<h3>Tattoo Studio</h3>
 
 <p class="muted">
 Un espacio dedicado al trabajo artístico
@@ -753,7 +640,6 @@ y profesional.
 
 </article>
 
-
 <article class="card">
 
 <div
@@ -763,9 +649,7 @@ style="background-image:url('https://images.unsplash.com/photo-1460661419201-fd4
 
 <div class="card-body">
 
-<h3>
-Pintura
-</h3>
+<h3>Pintura</h3>
 
 <p class="muted">
 Herramientas, pinceles y proceso creativo.
@@ -778,7 +662,6 @@ Herramientas, pinceles y proceso creativo.
 </div>
 
 </section>
-
 
 <section>
 
@@ -811,13 +694,11 @@ continúa inspirando nuevas formas de expresión.
 
 </div>
 
-
 <div class="about-img"></div>
 
 </div>
 
 </section>
-
 
 <section id="cursosPublicos">
 
@@ -825,14 +706,9 @@ continúa inspirando nuevas formas de expresión.
 Formación
 </div>
 
-<h2>
-Cursos
-</h2>
+<h2>Cursos</h2>
 
-<div
-id="publicCourses"
-class="grid"
->
+<div id="publicCourses" class="grid">
 
 <div class="card">
 
@@ -845,7 +721,6 @@ Cargando cursos...
 </div>
 
 </section>
-
 
 <section id="contacto">
 
@@ -861,9 +736,7 @@ Hablemos de tu proyecto
 
 <div class="card">
 
-<h3>
-WhatsApp
-</h3>
+<h3>WhatsApp</h3>
 
 <p>
 
@@ -878,12 +751,9 @@ target="_blank"
 
 </div>
 
-
 <div class="card">
 
-<h3>
-Instagram
-</h3>
+<h3>Instagram</h3>
 
 <p>
 
@@ -898,12 +768,9 @@ target="_blank"
 
 </div>
 
-
 <div class="card">
 
-<h3>
-Ubicación
-</h3>
+<h3>Ubicación</h3>
 
 <p>
 San Antonio de Padua
@@ -913,29 +780,19 @@ San Antonio de Padua
 
 </div>
 
-</section>
-
-
-<section id="admin">
+</section><section id="admin">
 
 <div class="admin-wrap">
 
-<div
-id="loginBox"
-class="login"
->
+<div id="loginBox" class="login">
 
-<h2>
-Administrador
-</h2>
+<h2>Administrador</h2>
 
 <p class="muted">
 Acceso exclusivo del administrador.
 </p>
 
-<label>
-Email
-</label>
+<label>Email</label>
 
 <input
 id="loginEmail"
@@ -943,9 +800,7 @@ type="email"
 placeholder="Correo"
 >
 
-<label>
-Contraseña
-</label>
+<label>Contraseña</label>
 
 <input
 id="loginPassword"
@@ -965,10 +820,7 @@ Iniciar sesión
 </div>
 
 
-<div
-id="dashboard"
-style="display:none"
->
+<div id="dashboard" style="display:none">
 
 <div class="admin-panel">
 
@@ -1042,7 +894,7 @@ Cerrar sesión
 </div>
 
 
-<div class="dashboard-grid">
+<div class="grid">
 
 <div class="card">
 
@@ -1112,16 +964,12 @@ Pagos
 </div>
 
 
-<!-- ALUMNOS -->
-
 <div
 id="alumnos"
 class="admin-section active"
 >
 
-<h3>
-Alumnos
-</h3>
+<h3>Alumnos</h3>
 
 <div class="toolbar">
 
@@ -1147,7 +995,6 @@ onclick="openAlumno()"
 <thead>
 
 <tr>
-
 <th>Nombre</th>
 <th>Apellido</th>
 <th>WhatsApp</th>
@@ -1158,7 +1005,6 @@ onclick="openAlumno()"
 <th>Importe</th>
 <th>Estado</th>
 <th>Acciones</th>
-
 </tr>
 
 </thead>
@@ -1171,8 +1017,6 @@ onclick="openAlumno()"
 
 </div>
 
-
-<!-- BOOKINGS -->
 
 <div
 id="bookings"
@@ -1207,7 +1051,6 @@ onclick="openBooking()"
 <thead>
 
 <tr>
-
 <th>Cliente</th>
 <th>Teléfono</th>
 <th>Servicio</th>
@@ -1216,7 +1059,6 @@ onclick="openBooking()"
 <th>Estado</th>
 <th>Detalles</th>
 <th>Acciones</th>
-
 </tr>
 
 </thead>
@@ -1230,16 +1072,12 @@ onclick="openBooking()"
 </div>
 
 
-<!-- CURSOS -->
-
 <div
 id="cursos"
 class="admin-section"
 >
 
-<h3>
-Cursos
-</h3>
+<h3>Cursos</h3>
 
 <div class="toolbar">
 
@@ -1265,13 +1103,11 @@ onclick="openCurso()"
 <thead>
 
 <tr>
-
 <th>Nombre</th>
 <th>Descripción</th>
 <th>Precio</th>
 <th>Estado</th>
 <th>Acciones</th>
-
 </tr>
 
 </thead>
@@ -1285,16 +1121,12 @@ onclick="openCurso()"
 </div>
 
 
-<!-- PAGOS -->
-
 <div
 id="pagos"
 class="admin-section"
 >
 
-<h3>
-Pagos
-</h3>
+<h3>Pagos</h3>
 
 <div class="toolbar">
 
@@ -1320,7 +1152,6 @@ onclick="openPago()"
 <thead>
 
 <tr>
-
 <th>Alumno</th>
 <th>Importe</th>
 <th>Fecha pago</th>
@@ -1329,7 +1160,6 @@ onclick="openPago()"
 <th>Estado</th>
 <th>Observaciones</th>
 <th>Acciones</th>
-
 </tr>
 
 </thead>
@@ -1342,7 +1172,6 @@ onclick="openPago()"
 
 </div>
 
-
 </div>
 
 </div>
@@ -1351,13 +1180,11 @@ onclick="openPago()"
 
 </section>
 
-
 <footer class="footer">
 
 © 2026 RoXThal Art Design · Arte, tatuajes y fileteado porteño
 
 </footer>
-
 
 <div
 id="modal"
@@ -1387,2256 +1214,9 @@ onclick="closeModal()"
 
 </div>
 
-
-<script>
-
-/* =====================================================
-SUPABASE
-===================================================== */
-
-const SUPABASE_URL =
-"https://lvvhpuedktdmfehvhcwk.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp";
-
-const db =
-window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
-
-
-/* =====================================================
-DATOS
-===================================================== */
-
-let alumnos = [];
-let bookings = [];
-let cursos = [];
-let pagos = [];
-
-
-/* =====================================================
-UTILIDADES
-===================================================== */
-
-function esc(value){
-
-const div =
-document.createElement("div");
-
-div.textContent =
-value ?? "";
-
-return div.innerHTML;
-
-}
-
-
-function money(value){
-
-return "$" +
-Number(value || 0)
-.toLocaleString(
-"es-AR",
-{
-minimumFractionDigits:2,
-maximumFractionDigits:2
-}
-);
-
-}
-
-
-function go(id){
-
-const element =
-document.getElementById(id);
-
-if(element){
-
-element.scrollIntoView({
-behavior:"smooth"
-});
-
-}
-
-}
-
-
-function panel(id,button){
-
-document
-.querySelectorAll(".admin-section")
-.forEach(
-x => x.classList.remove("active")
-);
-
-document
-.querySelectorAll(".admin-nav button")
-.forEach(
-x => x.classList.remove("active")
-);
-
-document
-.getElementById(id)
-.classList.add("active");
-
-button.classList.add("active");
-
-}
-
-
-/* =====================================================
-LOGIN
-===================================================== */
-
-function showLoginMessage(
-text,
-success=false
-){
-
-const box =
-document.getElementById(
-"loginMsg"
-);
-
-box.className =
-"notice";
-
-box.textContent =
-text;
-
-box.style.background =
-success
-?
-"#173b29"
-:
-"#3b2d15";
-
-}
-
-
-async function login(){
-
-const email =
-document
-.getElementById("loginEmail")
-.value
-.trim();
-
-const password =
-document
-.getElementById("loginPassword")
-.value;
-
-if(!email || !password){
-
-showLoginMessage(
-"Completa email y contraseña."
-);
-
-return;
-
-}
-
-const {
-data,
-error
-} =
-await db.auth.signInWithPassword({
-email,
-password
-});
-
-if(error){
-
-showLoginMessage(
-error.message
-);
-
-return;
-
-}
-
-document
-.getElementById("loginBox")
-.style.display =
-"none";
-
-document
-.getElementById("dashboard")
-.style.display =
-"block";
-
-document
-.getElementById("adminEmail")
-.textContent =
-data.user.email;
-
-await loadAll();
-
-}
-
-
-async function logout(){
-
-await db.auth.signOut();
-
-document
-.getElementById("dashboard")
-.style.display =
-"none";
-
-document
-.getElementById("loginBox")
-.style.display =
-"block";
-
-}
-
-
-/* =====================================================
-CARGA GENERAL
-===================================================== */
-
-async function loadAll(){
-
-await Promise.all([
-loadAlumnos(),
-loadBookings(),
-loadCursos(),
-loadPagos()
-]);
-
-updateDashboard();
-
-}
-
-
-/* =====================================================
-ALUMNOS
-===================================================== */
-
-async function loadAlumnos(){
-
-const {
-data,
-error
-} =
-await db
-.from("alumnos")
-.select("*")
-.order(
-"created_at",
-{
-ascending:false
-}
-);
-
-if(error){
-
-console.error(
-"Error alumnos:",
-error
-);
-
-return;
-
-}
-
-alumnos =
-data || [];
-
-document
-.getElementById("sAlumnos")
-.textContent =
-alumnos.length;
-
-renderAlumnos();
-
-}
-
-
-function renderAlumnos(){
-
-const q =
-(
-document
-.getElementById("buscarAlumno")
-.value ||
-""
-)
-.toLowerCase();
-
-const rows =
-alumnos.filter(
-a =>
-[
-a.nombre,
-a.apellido,
-a.whatsapp,
-a.email,
-a.curso,
-a.horario
-]
-.join(" ")
-.toLowerCase()
-.includes(q)
-);
-
-document
-.getElementById("alumnosTable")
-.innerHTML =
-rows.length
-?
-rows.map(
-a => `
-
-<tr>
-
-<td>${esc(a.nombre)}</td>
-
-<td>${esc(a.apellido)}</td>
-
-<td>${esc(a.whatsapp)}</td>
-
-<td>${esc(a.email)}</td>
-
-<td>${esc(a.curso)}</td>
-
-<td>${esc(a.horario)}</td>
-
-<td>${esc(a.fecha_inscripcion)}</td>
-
-<td>${money(a.importe)}</td>
-
-<td>
-
-<span class="badge ${a.activo ? "ok" : "bad"}">
-
-${a.activo ? "Activo" : "Inactivo"}
-
-</span>
-
-</td>
-
-<td class="actions">
-
-<button
-class="small"
-onclick="openAlumno('${a.id}')"
->
-Editar
-</button>
-
-<button
-class="small"
-onclick="toggleAlumno('${a.id}',${a.activo})"
->
-${a.activo ? "Desactivar" : "Activar"}
-</button>
-
-<button
-class="small danger"
-onclick="deleteAlumno('${a.id}')"
->
-Eliminar
-</button>
-
-</td>
-
-</tr>
-
-`
-).join("")
-:
-`
-<tr>
-<td colspan="10" class="empty">
-No hay alumnos.
-</td>
-</tr>
-`;
-
-}
-
-
-function openAlumno(id=null){
-
-const a =
-alumnos.find(
-x =>
-String(x.id) === String(id)
-) || {};
-
-document
-.getElementById("modalTitle")
-.textContent =
-id
-?
-"Editar alumno"
-:
-"Nuevo alumno";
-
-document
-.getElementById("modalContent")
-.innerHTML = `
-
-<form
-onsubmit="saveAlumno(event,'${id || ""}')"
->
-
-<label>Nombre</label>
-
-<input
-id="fNombre"
-value="${esc(a.nombre)}"
-required
->
-
-<label>Apellido</label>
-
-<input
-id="fApellido"
-value="${esc(a.apellido)}"
->
-
-<label>WhatsApp</label>
-
-<input
-id="fWhatsapp"
-value="${esc(a.whatsapp)}"
->
-
-<label>Email</label>
-
-<input
-id="fEmail"
-type="email"
-value="${esc(a.email)}"
->
-
-<label>Curso</label>
-
-<input
-id="fCurso"
-value="${esc(a.curso)}"
->
-
-<label>Horario</label>
-
-<input
-id="fHorario"
-value="${esc(a.horario)}"
->
-
-<label>Fecha de inscripción</label>
-
-<input
-id="fFecha"
-type="date"
-value="${esc(a.fecha_inscripcion)}"
->
-
-<label>Importe</label>
-
-<input
-id="fImporte"
-type="number"
-step="0.01"
-value="${a.importe || 0}"
->
-
-<label>Observaciones</label>
-
-<textarea
-id="fObs"
->${esc(a.observaciones)}</textarea>
-
-<button
-class="btn btn-gold"
-type="submit"
->
-Guardar alumno
-</button>
-
-</form>
-
-`;
-
-openModal();
-
-}
-
-
-async function saveAlumno(
-event,
-id
-){
-
-event.preventDefault();
-
-const obj = {
-
-nombre:
-document
-.getElementById("fNombre")
-.value,
-
-apellido:
-document
-.getElementById("fApellido")
-.value,
-
-whatsapp:
-document
-.getElementById("fWhatsapp")
-.value,
-
-email:
-document
-.getElementById("fEmail")
-.value,
-
-curso:
-document
-.getElementById("fCurso")
-.value,
-
-horario:
-document
-.getElementById("fHorario")
-.value,
-
-fecha_inscripcion:
-document
-.getElementById("fFecha")
-.value
-||
-new Date()
-.toISOString()
-.slice(0,10),
-
-importe:
-Number(
-document
-.getElementById("fImporte")
-.value || 0
-),
-
-observaciones:
-document
-.getElementById("fObs")
-.value
-
-};
-
-const result =
-id
-?
-await db
-.from("alumnos")
-.update(obj)
-.eq("id",id)
-:
-await db
-.from("alumnos")
-.insert(obj);
-
-if(result.error){
-
-alert(
-"Error al guardar alumno: " +
-result.error.message
-);
-
-return;
-
-}
-
-closeModal();
-
-await loadAlumnos();
-
-updateDashboard();
-
-alert(
-"Alumno guardado correctamente"
-);
-
-}
-
-
-async function toggleAlumno(
-id,
-activo
-){
-
-const {
-error
-} =
-await db
-.from("alumnos")
-.update({
-activo:!activo
-})
-.eq("id",id);
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-await loadAlumnos();
-
-updateDashboard();
-
-}
-
-
-async function deleteAlumno(id){
-
-if(
-!confirm(
-"¿Eliminar este alumno?"
-)
-)
-return;
-
-const {
-error
-} =
-await db
-.from("alumnos")
-.delete()
-.eq("id",id);
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-await loadAlumnos();
-
-await loadPagos();
-
-updateDashboard();
-
-}
-
-
-/* =====================================================
-BOOKINGS
-IMPORTANTE:
-service_id ES UUID.
-NO SE ENVÍA TEXTO COMO "DIBUJO Y PINTURA".
-===================================================== */
-
-async function loadBookings(){
-
-const {
-data,
-error
-} =
-await db
-.from("bookings")
-.select("*")
-.order(
-"created_at",
-{
-ascending:false
-}
-);
-
-if(error){
-
-console.error(
-"Error bookings:",
-error
-);
-
-return;
-
-}
-
-bookings =
-data || [];
-
-document
-.getElementById("sBookings")
-.textContent =
-bookings.length;
-
-renderBookings();
-
-}
-
-
-function renderBookings(){
-
-const q =
-(
-document
-.getElementById("buscarBooking")
-.value ||
-""
-)
-.toLowerCase();
-
-const rows =
-bookings.filter(
-b =>
-[
-b.client_name,
-b.phone,
-b.service_id,
-b.preferred_date,
-b.preferred_time,
-b.details,
-b.status
-]
-.join(" ")
-.toLowerCase()
-.includes(q)
-);
-
-document
-.getElementById("bookingsTable")
-.innerHTML =
-rows.length
-?
-rows.map(
-b => `
-
-<tr>
-
-<td>
-${esc(b.client_name)}
-</td>
-
-<td>
-${esc(b.phone)}
-</td>
-
-<td>
-${esc(b.service_id || "—")}
-</td>
-
-<td>
-${esc(b.preferred_date)}
-</td>
-
-<td>
-${esc(b.preferred_time)}
-</td>
-
-<td>
-
-<span class="badge
-${
-b.status === "confirmada"
-?
-"ok"
-:
-b.status === "cancelada"
-?
-"bad"
-:
-"pending"
-}
-">
-
-${esc(b.status)}
-
-</span>
-
-</td>
-
-<td>
-${esc(b.details)}
-</td>
-
-<td class="actions">
-
-<button
-class="small"
-onclick="openBooking('${b.id}')"
->
-Editar
-</button>
-
-<button
-class="small danger"
-onclick="deleteBooking('${b.id}')"
->
-Eliminar
-</button>
-
-</td>
-
-</tr>
-
-`
-).join("")
-:
-`
-<tr>
-<td colspan="8" class="empty">
-No hay reservas.
-</td>
-</tr>
-`;
-
-}
-
-
-function openBooking(id=null){
-
-const b =
-bookings.find(
-x =>
-String(x.id) === String(id)
-) || {};
-
-document
-.getElementById("modalTitle")
-.textContent =
-id
-?
-"Editar reserva"
-:
-"Nueva reserva";
-
-document
-.getElementById("modalContent")
-.innerHTML = `
-
-<form
-onsubmit="saveBooking(event,'${id || ""}')"
->
-
-<label>
-Nombre del cliente
-</label>
-
-<input
-id="bClient"
-value="${esc(b.client_name)}"
-required
->
-
-<label>
-Teléfono / WhatsApp
-</label>
-
-<input
-id="bPhone"
-value="${esc(b.phone)}"
->
-
-<label>
-Servicio ID
-</label>
-
-<input
-id="bService"
-value="${esc(b.service_id)}"
-placeholder="UUID del servicio, si corresponde"
->
-
-<small class="muted">
-Este campo es opcional porque en Supabase
-service_id es UUID.
-</small>
-
-<label>
-Fecha preferida
-</label>
-
-<input
-id="bDate"
-type="date"
-value="${esc(b.preferred_date)}"
->
-
-<label>
-Hora preferida
-</label>
-
-<input
-id="bTime"
-type="time"
-value="${esc(b.preferred_time)}"
->
-
-<label>
-Estado
-</label>
-
-<select id="bStatus">
-
-<option
-value="pendiente"
-${b.status === "pendiente" ? "selected" : ""}
->
-Pendiente
-</option>
-
-<option
-value="confirmada"
-${b.status === "confirmada" ? "selected" : ""}
->
-Confirmada
-</option>
-
-<option
-value="cancelada"
-${b.status === "cancelada" ? "selected" : ""}
->
-Cancelada
-</option>
-
-</select>
-
-<label>
-Detalles
-</label>
-
-<textarea
-id="bDetails"
->${esc(b.details)}</textarea>
-
-<button
-class="btn btn-gold"
-type="submit"
->
-Guardar reserva
-</button>
-
-</form>
-
-`;
-
-openModal();
-
-}
-
-
-function isUuid(value){
-
-return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
-.test(value);
-
-}
-
-
-async function saveBooking(
-event,
-id
-){
-
-event.preventDefault();
-
-const serviceValue =
-document
-.getElementById("bService")
-.value
-.trim();
-
-const obj = {
-
-client_name:
-document
-.getElementById("bClient")
-.value,
-
-phone:
-document
-.getElementById("bPhone")
-.value,
-
-service_id:
-serviceValue && isUuid(serviceValue)
-?
-serviceValue
-:
-null,
-
-preferred_date:
-document
-.getElementById("bDate")
-.value
-||
-null,
-
-preferred_time:
-document
-.getElementById("bTime")
-.value
-||
-null,
-
-details:
-document
-.getElementById("bDetails")
-.value,
-
-status:
-document
-.getElementById("bStatus")
-.value
-
-};
-
-const result =
-id
-?
-await db
-.from("bookings")
-.update(obj)
-.eq("id",id)
-:
-await db
-.from("bookings")
-.insert(obj);
-
-if(result.error){
-
-alert(
-"Error al guardar reserva: " +
-result.error.message
-);
-
-return;
-
-}
-
-closeModal();
-
-await loadBookings();
-
-updateDashboard();
-
-alert(
-"Reserva guardada correctamente"
-);
-
-}
-
-
-async function deleteBooking(id){
-
-if(
-!confirm(
-"¿Eliminar esta reserva?"
-)
-)
-return;
-
-const {
-error
-} =
-await db
-.from("bookings")
-.delete()
-.eq("id",id);
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-await loadBookings();
-
-updateDashboard();
-
-}
-
-
-/* =====================================================
-CURSOS
-===================================================== */
-
-async function loadCursos(){
-
-const {
-data,
-error
-} =
-await db
-.from("cursos")
-.select("*")
-.order(
-"created_at",
-{
-ascending:false
-}
-);
-
-if(error){
-
-console.error(
-"Error cursos:",
-error
-);
-
-return;
-
-}
-
-cursos =
-data || [];
-
-document
-.getElementById("sCursos")
-.textContent =
-cursos.length;
-
-renderCursos();
-
-renderPublicCourses();
-
-}
-
-
-function renderCursos(){
-
-const q =
-(
-document
-.getElementById("buscarCurso")
-.value ||
-""
-)
-.toLowerCase();
-
-const rows =
-cursos.filter(
-c =>
-[
-c.nombre,
-c.descripcion
-]
-.join(" ")
-.toLowerCase()
-.includes(q)
-);
-
-document
-.getElementById("cursosTable")
-.innerHTML =
-rows.length
-?
-rows.map(
-c => `
-
-<tr>
-
-<td>
-${esc(c.nombre)}
-</td>
-
-<td>
-${esc(c.descripcion)}
-</td>
-
-<td>
-${money(c.precio)}
-</td>
-
-<td>
-
-<span class="badge
-${c.activo ? "ok" : "bad"}
-">
-
-${c.activo ? "Activo" : "Inactivo"}
-
-</span>
-
-</td>
-
-<td class="actions">
-
-<button
-class="small"
-onclick="openCurso(${c.id})"
->
-Editar
-</button>
-
-<button
-class="small"
-onclick="toggleCurso(${c.id},${c.activo})"
->
-${c.activo ? "Desactivar" : "Activar"}
-</button>
-
-<button
-class="small danger"
-onclick="deleteCurso(${c.id})"
->
-Eliminar
-</button>
-
-</td>
-
-</tr>
-
-`
-).join("")
-:
-`
-<tr>
-<td colspan="5" class="empty">
-No hay cursos.
-</td>
-</tr>
-`;
-
-}
-
-
-function openCurso(id=null){
-
-const c =
-cursos.find(
-x =>
-Number(x.id) === Number(id)
-) || {};
-
-document
-.getElementById("modalTitle")
-.textContent =
-id
-?
-"Editar curso"
-:
-"Nuevo curso";
-
-document
-.getElementById("modalContent")
-.innerHTML = `
-
-<form
-onsubmit="saveCurso(event,'${id || ""}')"
->
-
-<label>
-Nombre
-</label>
-
-<input
-id="cNombre"
-value="${esc(c.nombre)}"
-required
->
-
-<label>
-Descripción
-</label>
-
-<textarea
-id="cDescripcion"
->${esc(c.descripcion)}</textarea>
-
-<label>
-Precio
-</label>
-
-<input
-id="cPrecio"
-type="number"
-step="0.01"
-value="${c.precio || 0}"
->
-
-<button
-class="btn btn-gold"
-type="submit"
->
-Guardar curso
-</button>
-
-</form>
-
-`;
-
-openModal();
-
-}
-
-
-async function saveCurso(
-event,
-id
-){
-
-event.preventDefault();
-
-const obj = {
-
-nombre:
-document
-.getElementById("cNombre")
-.value,
-
-descripcion:
-document
-.getElementById("cDescripcion")
-.value,
-
-precio:
-Number(
-document
-.getElementById("cPrecio")
-.value || 0
-)
-
-};
-
-const result =
-id
-?
-await db
-.from("cursos")
-.update(obj)
-.eq("id",Number(id))
-:
-await db
-.from("cursos")
-.insert(obj);
-
-if(result.error){
-
-alert(
-"Error al guardar curso: " +
-result.error.message
-);
-
-return;
-
-}
-
-closeModal();
-
-await loadCursos();
-
-alert(
-"Curso guardado correctamente"
-);
-
-}
-
-
-async function toggleCurso(
-id,
-activo
-){
-
-const {
-error
-} =
-await db
-.from("cursos")
-.update({
-activo:!activo
-})
-.eq("id",Number(id));
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-await loadCursos();
-
-}
-
-
-async function deleteCurso(id){
-
-if(
-!confirm(
-"¿Eliminar este curso?"
-)
-)
-return;
-
-const {
-error
-} =
-await db
-.from("cursos")
-.delete()
-.eq("id",Number(id));
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-await loadCursos();
-
-}
-
-
-/* =====================================================
-CURSOS PÚBLICOS
-===================================================== */
-
-function renderPublicCourses(){
-
-const box =
-document
-.getElementById("publicCourses");
-
-const active =
-cursos.filter(
-c => c.activo
-);
-
-if(!active.length){
-
-box.innerHTML = `
-
-<div class="card">
-
-<div class="card-body">
-
-<h3>
-Próximamente
-</h3>
-
-<p class="muted">
-Estamos preparando nuestros cursos.
-</p>
-
-</div>
-
-</div>
-
-`;
-
-return;
-
-}
-
-box.innerHTML =
-active.map(
-c => `
-
-<article class="card">
-
-<div class="card-body">
-
-<h3>
-${esc(c.nombre)}
-</h3>
-
-<p class="muted">
-${esc(c.descripcion)}
-</p>
-
-<p>
-<strong>
-${money(c.precio)}
-</strong>
-</p>
-
-</div>
-
-</article>
-
-`
-).join("");
-
-}
-
-
-/* =====================================================
-PAGOS
-ESTRUCTURA REAL DE SUPABASE
-===================================================== */
-
-/*
-id
-alumno_id
-importe
-fecha_pago
-fecha_vencimiento
-concepto
-estado
-observaciones
-created_at
-*/
-
-async function loadPagos(){
-
-const {
-data,
-error
-} =
-await db
-.from("pagos")
-.select("*")
-.order(
-"created_at",
-{
-ascending:false
-}
-);
-
-if(error){
-
-console.error(
-"Error pagos:",
-error
-);
-
-return;
-
-}
-
-pagos =
-data || [];
-
-document
-.getElementById("sPagos")
-.textContent =
-pagos.length;
-
-renderPagos();
-
-}
-
-
-function nombreAlumno(id){
-
-const alumno =
-alumnos.find(
-a =>
-Number(a.id) === Number(id)
-);
-
-if(!alumno){
-
-return id || "";
-
-}
-
-return (
-(alumno.nombre || "") +
-" " +
-(alumno.apellido || "")
-).trim();
-
-}
-
-
-function renderPagos(){
-
-const q =
-(
-document
-.getElementById("buscarPago")
-.value ||
-""
-)
-.toLowerCase();
-
-const rows =
-pagos.filter(
-p =>
-[
-nombreAlumno(p.alumno_id),
-p.importe,
-p.fecha_pago,
-p.fecha_vencimiento,
-p.concepto,
-p.estado,
-p.observaciones
-]
-.join(" ")
-.toLowerCase()
-.includes(q)
-);
-
-document
-.getElementById("pagosTable")
-.innerHTML =
-rows.length
-?
-rows.map(
-p => `
-
-<tr>
-
-<td>
-${esc(nombreAlumno(p.alumno_id))}
-</td>
-
-<td>
-${money(p.importe)}
-</td>
-
-<td>
-${esc(p.fecha_pago)}
-</td>
-
-<td>
-${esc(p.fecha_vencimiento)}
-</td>
-
-<td>
-${esc(p.concepto)}
-</td>
-
-<td>
-
-<span class="badge
-${
-p.estado === "pagado"
-?
-"ok"
-:
-p.estado === "pendiente"
-?
-"pending"
-:
-"bad"
-}
-">
-
-${esc(p.estado)}
-
-</span>
-
-</td>
-
-<td>
-${esc(p.observaciones)}
-</td>
-
-<td class="actions">
-
-<button
-class="small"
-onclick="openPago(${p.id})"
->
-Editar
-</button>
-
-<button
-class="small danger"
-onclick="deletePago(${p.id})"
->
-Eliminar
-</button>
-
-</td>
-
-</tr>
-
-`
-).join("")
-:
-`
-<tr>
-<td colspan="8" class="empty">
-No hay pagos.
-</td>
-</tr>
-`;
-
-}
-
-
-function openPago(id=null){
-
-const p =
-pagos.find(
-x =>
-Number(x.id) === Number(id)
-) || {};
-
-const options =
-alumnos.map(
-a => `
-
-<option
-value="${a.id}"
-${
-Number(p.alumno_id) === Number(a.id)
-?
-"selected"
-:
-""
-}
->
-
-${esc(
-(
-a.nombre || ""
-) +
-" " +
-(
-a.apellido || ""
-)
-)}
-
-</option>
-
-`
-).join("");
-
-document
-.getElementById("modalTitle")
-.textContent =
-id
-?
-"Editar pago"
-:
-"Nuevo pago";
-
-document
-.getElementById("modalContent")
-.innerHTML = `
-
-<form
-onsubmit="savePago(event,'${id || ""}')"
->
-
-<label>
-Alumno
-</label>
-
-<select
-id="pAlumno"
-required
->
-
-<option value="">
-Seleccionar alumno
-</option>
-
-${options}
-
-</select>
-
-<label>
-Importe
-</label>
-
-<input
-id="pImporte"
-type="number"
-step="0.01"
-value="${p.importe || ""}"
-required
->
-
-<label>
-Fecha de pago
-</label>
-
-<input
-id="pFechaPago"
-type="date"
-value="${
-p.fecha_pago ||
-new Date()
-.toISOString()
-.slice(0,10)
-}"
-required
->
-
-<label>
-Fecha de vencimiento
-</label>
-
-<input
-id="pFechaVencimiento"
-type="date"
-value="${p.fecha_vencimiento || ""}"
->
-
-<label>
-Concepto
-</label>
-
-<input
-id="pConcepto"
-value="${esc(p.concepto)}"
->
-
-<label>
-Estado
-</label>
-
-<select
-id="pEstado"
->
-
-<option
-value="pagado"
-${
-p.estado === "pagado"
-?
-"selected"
-:
-""
-}
->
-Pagado
-</option>
-
-<option
-value="pendiente"
-${
-p.estado === "pendiente"
-?
-"selected"
-:
-""
-}
->
-Pendiente
-</option>
-
-<option
-value="vencido"
-${
-p.estado === "vencido"
-?
-"selected"
-:
-""
-}
->
-Vencido
-</option>
-
-</select>
-
-<label>
-Observaciones
-</label>
-
-<textarea
-id="pObs"
->${esc(p.observaciones)}</textarea>
-
-<button
-class="btn btn-gold"
-type="submit"
->
-${
-id
-?
-"Guardar cambios"
-:
-"Registrar pago"
-}
-</button>
-
-</form>
-
-`;
-
-openModal();
-
-}
-
-
-async function savePago(
-event,
-id
-){
-
-event.preventDefault();
-
-const alumnoId =
-document
-.getElementById("pAlumno")
-.value;
-
-if(!alumnoId){
-
-alert(
-"Selecciona un alumno."
-);
-
-return;
-
-}
-
-const obj = {
-
-alumno_id:
-Number(alumnoId),
-
-importe:
-Number(
-document
-.getElementById("pImporte")
-.value
-),
-
-fecha_pago:
-document
-.getElementById("pFechaPago")
-.value,
-
-fecha_vencimiento:
-document
-.getElementById("pFechaVencimiento")
-.value
-||
-null,
-
-concepto:
-document
-.getElementById("pConcepto")
-.value,
-
-estado:
-document
-.getElementById("pEstado")
-.value,
-
-observaciones:
-document
-.getElementById("pObs")
-.value
-
-};
-
-const result =
-id
-?
-await db
-.from("pagos")
-.update(obj)
-.eq("id",Number(id))
-:
-await db
-.from("pagos")
-.insert(obj);
-
-if(result.error){
-
-alert(
-"Error al registrar pago: " +
-result.error.message
-);
-
-return;
-
-}
-
-closeModal();
-
-await loadPagos();
-
-updateDashboard();
-
-alert(
-id
-?
-"Pago actualizado correctamente"
-:
-"Pago registrado correctamente"
-);
-
-}
-
-
-async function deletePago(id){
-
-if(
-!confirm(
-"¿Eliminar este pago?"
-)
-)
-return;
-
-const {
-error
-} =
-await db
-.from("pagos")
-.delete()
-.eq("id",Number(id));
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-await loadPagos();
-
-updateDashboard();
-
-}
-
-
-/* =====================================================
-DASHBOARD
-===================================================== */
-
-function updateDashboard(){
-
-const ingresos =
-pagos
-.filter(
-p => p.estado === "pagado"
-)
-.reduce(
-(sum,p) =>
-sum + Number(p.importe || 0),
-0
-);
-
-const pendientes =
-pagos
-.filter(
-p => p.estado !== "pagado"
-)
-.reduce(
-(sum,p) =>
-sum + Number(p.importe || 0),
-0
-);
-
-document
-.getElementById("sIngresos")
-.textContent =
-money(ingresos);
-
-document
-.getElementById("sPendientes")
-.textContent =
-money(pendientes);
-
-
-const today =
-new Date()
-.toISOString()
-.slice(0,10);
-
-const next =
-bookings
-.filter(
-b =>
-b.preferred_date &&
-b.preferred_date >= today
-)
-.sort(
-(a,b) =>
-(
-(a.preferred_date || "") +
-(a.preferred_time || "")
-)
-.localeCompare(
-(a.preferred_date || "") +
-(a.preferred_time || "")
-)
-)
-.slice(0,5);
-
-
-document
-.getElementById("nextBookings")
-.innerHTML =
-next.length
-?
-next.map(
-b => `
-
-<div class="list-item">
-
-<strong>
-${esc(b.client_name)}
-</strong>
-
-<br>
-
-<span class="muted">
-
-${esc(b.preferred_date || "")}
-
-${esc(b.preferred_time || "")}
-
-·
-
-${esc(b.status || "")}
-
-</span>
-
-</div>
-
-`
-).join("")
-:
-`
-<div class="empty">
-No hay próximas reservas.
-</div>
-`;
-
-
-const counts = {
-pagado:0,
-pendiente:0,
-vencido:0
-};
-
-pagos.forEach(
-p => {
-
-if(
-Object.prototype.hasOwnProperty
-.call(
-counts,
-p.estado
-)
-){
-
-counts[p.estado]++;
-
-}
-
-}
-);
-
-
-document
-.getElementById("paymentSummary")
-.innerHTML = `
-
-<div class="list-item">
-Pagados:
-<strong>${counts.pagado}</strong>
-</div>
-
-<div class="list-item">
-Pendientes:
-<strong>${counts.pendiente}</strong>
-</div>
-
-<div class="list-item">
-Vencidos:
-<strong>${counts.vencido}</strong>
-</div>
-
-`;
-
-}
-
-
-/* =====================================================
-MODAL
-===================================================== */
-
-function openModal(){
-
-document
-.getElementById("modal")
-.style.display =
-"block";
-
-}
-
-
-function closeModal(){
-
-document
-.getElementById("modal")
-.style.display =
-"none";
-
-}
-
-
-document
-.getElementById("modal")
-.addEventListener(
-"click",
-function(event){
-
-if(event.target === this){
-
-closeModal();
-
-}
-
-});
-
-
-/* =====================================================
-INICIO
-===================================================== */
-
-document.addEventListener(
-"DOMContentLoaded",
-async function(){
-
-const {
-data
-} =
-await db.auth.getSession();
-
-if(data.session){
-
-document
-.getElementById("loginBox")
-.style.display =
-"none";
-
-document
-.getElementById("dashboard")
-.style.display =
-"block";
-
-document
-.getElementById("adminEmail")
-.textContent =
-data.session.user.email;
-
-await loadAll();
-
-}
-else{
-
-await loadCursos();
-
-}
-
-});
-
-</script>
-
-</body>
-</html>
+  .card-img{
+    height:180px;
+  }
+}
+</style>
+</head>
