@@ -2021,5 +2021,116 @@ function cambiarRadioRoxthal() {
   }
 }
 </script>
+  <!-- =========================================================
+     ROXTHAL MULTI STYLE RADIO
+     SEGUNDA EMISORA - NO MODIFICA LA ANTERIOR
+     ========================================================= -->
+
+<div style="margin:20px auto;padding:20px;max-width:520px;text-align:center;background:#111;color:white;border-radius:18px;border:1px solid #444;box-shadow:0 4px 15px rgba(0,0,0,.35);">
+
+  <h2 style="margin:0 0 8px;font-size:24px;">🎵 ROXTHAL MULTI STYLE RADIO</h2>
+
+  <p style="margin:0 0 16px;color:#ccc;">
+    Muchos estilos de música en una sola emisora
+  </p>
+
+  <select
+    id="roxthalMultiStyle"
+    onchange="cambiarRadioRoxthalMulti()"
+    style="width:100%;padding:12px;margin-bottom:15px;border-radius:10px;font-size:16px;">
+
+    <option value="https://ice1.somafm.com/groovesalad-128-mp3">
+      🎧 Chill / Lounge
+    </option>
+
+    <option value="https://ice1.somafm.com/indiepop-128-mp3">
+      🎤 Indie / Pop
+    </option>
+
+    <option value="https://ice1.somafm.com/metal-128-mp3">
+      🤘 Metal
+    </option>
+
+    <option value="https://ice1.somafm.com/secretagent-128-mp3">
+      🕵️ Jazz / Espionaje
+    </option>
+
+    <option value="https://ice1.somafm.com/jazzandblues-128-mp3">
+      🎷 Jazz / Blues
+    </option>
+
+    <option value="https://ice1.somafm.com/seveninch-128-mp3">
+      🎸 Soul / Funk
+    </option>
+
+    <option value="https://ice1.somafm.com/suburbsofgoa-128-mp3">
+      🌴 Electrónica / Goa
+    </option>
+
+    <option value="https://ice1.somafm.com/dronezone-128-mp3">
+      🌌 Ambient / Experimental
+    </option>
+
+    <option value="https://ice1.somafm.com/bootliquor-128-mp3">
+      🤠 Country
+    </option>
+
+    <option value="https://ice1.somafm.com/leftcoast70s-128-mp3">
+      🕺 Clásicos / 70s
+    </option>
+
+  </select>
+
+  <audio
+    id="roxthalMultiPlayer"
+    controls
+    preload="none"
+    style="width:100%;">
+
+    <source
+      src="https://ice1.somafm.com/groovesalad-128-mp3"
+      type="audio/mpeg">
+
+    Tu navegador no puede reproducir esta emisora.
+
+  </audio>
+
+  <p
+    id="roxthalMultiStatus"
+    style="margin:12px 0 0;color:#aaa;font-size:14px;">
+
+    🎧 Chill / Lounge seleccionado
+
+  </p>
+
+</div>
+
+<script>
+function cambiarRadioRoxthalMulti() {
+
+  const selector = document.getElementById("roxthalMultiStyle");
+  const player = document.getElementById("roxthalMultiPlayer");
+  const status = document.getElementById("roxthalMultiStatus");
+
+  const nuevaEmisora = selector.value;
+  const nombre = selector.options[selector.selectedIndex].text.trim();
+
+  const estabaReproduciendo = !player.paused;
+
+  player.pause();
+  player.src = nuevaEmisora;
+  player.load();
+
+  status.textContent = "🎵 " + nombre + " seleccionado";
+
+  if (estabaReproduciendo) {
+    player.play().catch(function() {
+      status.textContent = "▶️ Pulsa Play para comenzar " + nombre;
+    });
+  }
+}
+</script>
+
+<!-- FIN DE ROXTHAL MULTI STYLE RADIO -->
 </body>
 </html>
