@@ -1997,30 +1997,6 @@ renderPublicCourses();
 </div>
 
 <script>
-function cambiarRadioRoxthal() {
-
-  const selector = document.getElementById("roxthalRadioStyle");
-  const player = document.getElementById("roxthalRadioPlayer");
-  const status = document.getElementById("roxthalRadioStatus");
-
-  const nuevaEmisora = selector.value;
-  const nombre = selector.options[selector.selectedIndex].text;
-
-  const estabaReproduciendo = !player.paused;
-
-  player.pause();
-  player.src = nuevaEmisora;
-  player.load();
-
-  status.textContent = "🎵 " + nombre + " seleccionado";
-
-  if (estabaReproduciendo) {
-    player.play().catch(function() {
-      status.textContent = "▶️ Pulsa Play para comenzar " + nombre;
-    });
-  }
-}
-</script>
   <!-- =========================================================
      ROXTHAL MULTI STYLE RADIO
      SEGUNDA EMISORA - NO MODIFICA LA ANTERIOR
