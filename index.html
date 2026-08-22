@@ -1918,4 +1918,165 @@ renderPublicCourses();
   RoXThal Admin
 </div>
 </body>
+  <!-- ===== SELECTOR DE MÚSICA ROXTHAL ===== -->
+<section id="roxthal-radio" style="
+  max-width:500px;
+  margin:25px auto;
+  padding:20px;
+  background:#111;
+  border:2px solid #444;
+  border-radius:18px;
+  text-align:center;
+  color:white;
+  font-family:Arial,sans-serif;
+  box-sizing:border-box;
+">
+
+  <h2 style="margin:0 0 15px;font-size:24px;">
+    🎵 Música RoXThal
+  </h2>
+
+  <p style="margin:0 0 15px;color:#bbb;">
+    Elige el tipo de música
+  </p>
+
+  <select id="roxthalGenre" style="
+    width:100%;
+    padding:13px;
+    border-radius:10px;
+    border:1px solid #666;
+    background:#222;
+    color:white;
+    font-size:16px;
+    margin-bottom:15px;
+  ">
+    <option value="rock">🎸 Rock</option>
+    <option value="nacional">🇦🇷 Rock Nacional</option>
+    <option value="pop">🎤 Pop</option>
+    <option value="electronica">🎧 Electrónica</option>
+    <option value="clasicos">📻 Clásicos</option>
+  </select>
+
+  <div id="roxthalStation" style="
+    font-size:17px;
+    font-weight:bold;
+    margin:10px 0 15px;
+  ">
+    Rock
+  </div>
+
+  <audio id="roxthalAudio"
+         controls
+         preload="none"
+         style="width:100%;">
+  </audio>
+
+  <button id="roxthalPlay" style="
+    margin-top:15px;
+    padding:12px 25px;
+    border:0;
+    border-radius:10px;
+    background:#e00000;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+  ">
+    ▶ Reproducir
+  </button>
+
+  <p style="
+    margin:15px 0 0;
+    font-size:12px;
+    color:#888;
+  ">
+    RoXThal Art Design
+  </p>
+
+</section>
+
+<script>
+const roxthalStations = {
+
+  rock: {
+    name: "🎸 Rock",
+    url: "https://streaming.exclusive.radio/er/rock"
+  },
+
+  nacional: {
+    name: "🇦🇷 Rock Nacional",
+    url: "https://streaming.exclusive.radio/er/rocknacional"
+  },
+
+  pop: {
+    name: "🎤 Pop",
+    url: "https://streaming.exclusive.radio/er/pop"
+  },
+
+  electronica: {
+    name: "🎧 Electrónica",
+    url: "https://streaming.exclusive.radio/er/electronic"
+  },
+
+  clasicos: {
+    name: "📻 Clásicos",
+    url: "https://streaming.exclusive.radio/er/classics"
+  }
+
+};
+
+const roxthalGenre = document.getElementById("roxthalGenre");
+const roxthalAudio = document.getElementById("roxthalAudio");
+const roxthalStation = document.getElementById("roxthalStation");
+const roxthalPlay = document.getElementById("roxthalPlay");
+
+function cambiarMusica() {
+
+  const tipo = roxthalGenre.value;
+  const emisora = roxthalStations[tipo];
+
+  roxthalAudio.pause();
+
+  roxthalAudio.src = emisora.url;
+  roxthalAudio.load();
+
+  roxthalStation.textContent = emisora.name;
+
+  roxthalPlay.textContent = "▶ Reproducir";
+}
+
+roxthalGenre.addEventListener("change", cambiarMusica);
+
+roxthalPlay.addEventListener("click", function() {
+
+  if (roxthalAudio.paused) {
+
+    roxthalAudio.play()
+      .then(() => {
+        roxthalPlay.textContent = "⏸ Pausar";
+      })
+      .catch(() => {
+        alert("No se pudo iniciar esta emisora. Prueba otra.");
+      });
+
+  } else {
+
+    roxthalAudio.pause();
+    roxthalPlay.textContent = "▶ Reproducir";
+
+  }
+
+});
+
+roxthalAudio.addEventListener("play", function() {
+  roxthalPlay.textContent = "⏸ Pausar";
+});
+
+roxthalAudio.addEventListener("pause", function() {
+  roxthalPlay.textContent = "▶ Reproducir";
+});
+
+cambiarMusica();
+</script>
+<!-- ===== FIN SELECTOR DE MÚSICA ROXTHAL ===== -->
 </html>
