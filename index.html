@@ -1957,6 +1957,44 @@ renderPublicCourses();
   </p>
 
 </div>
+<div style="margin:20px auto;padding:20px;max-width:520px;text-align:center;background:#111;color:white;border-radius:18px;border:1px solid #444;box-shadow:0 4px 15px rgba(0,0,0,.35);">
+
+  <h2 style="margin:0 0 8px;font-size:24px;">🎸 ROXTHAL ROCK RADIO</h2>
+  <p style="margin:0 0 16px;color:#ccc;">Elige tu estilo de música</p>
+
+  <select id="roxthalRadioStyle"
+          onchange="cambiarRadioRoxthal()"
+          style="width:100%;padding:12px;margin-bottom:15px;border-radius:10px;font-size:16px;">
+    <option value="https://mp3channels.webradio.rockantenne.de/rockantenne">
+      🎸 Rock
+    </option>
+    <option value="https://mp3channels.webradio.rockantenne.de/rockantenne-classic-perlen">
+      🎸 Rock Clásico
+    </option>
+    <option value="https://mp3channels.webradio.rockantenne.de/rockantenne-heavy-metal">
+      🤘 Heavy Metal
+    </option>
+    <option value="https://mp3channels.webradio.rockantenne.de/rockantenne-hard-rock">
+      🔥 Hard Rock
+    </option>
+  </select>
+
+  <audio id="roxthalRadioPlayer"
+         controls
+         preload="none"
+         style="width:100%;">
+    <source
+      src="https://mp3channels.webradio.rockantenne.de/rockantenne"
+      type="audio/mpeg">
+    Tu navegador no puede reproducir esta emisora.
+  </audio>
+
+  <p id="roxthalRadioStatus"
+     style="margin:12px 0 0;color:#aaa;font-size:14px;">
+    🎵 Rock seleccionado
+  </p>
+
+</div>
 
 <script>
 function cambiarRadioRoxthal() {
