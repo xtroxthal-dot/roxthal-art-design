@@ -1920,60 +1920,103 @@ renderPublicCourses();
 </body>
   <!-- ===== SELECTOR DE MÚSICA ROXTHAL ===== -->
 <section id="roxthal-radio" style="
-  max-width:500px;
+  max-width:520px;
   margin:25px auto;
   padding:20px;
   background:#111;
   border:2px solid #444;
   border-radius:18px;
-  text-align:center;
   color:white;
   font-family:Arial,sans-serif;
   box-sizing:border-box;
 ">
 
-  <h2 style="margin:0 0 15px;font-size:24px;">
+  <h2 style="text-align:center;margin:0 0 8px;">
     🎵 Música RoXThal
   </h2>
 
-  <p style="margin:0 0 15px;color:#bbb;">
-    Elige el tipo de música
+  <p style="text-align:center;color:#aaa;margin:0 0 18px;">
+    Busca y escucha emisoras de todo el mundo
   </p>
+
+  <input id="roxthalSearch"
+    type="search"
+    placeholder="🔎 Buscar emisora, artista o estilo..."
+    style="
+      width:100%;
+      padding:13px;
+      border-radius:10px;
+      border:1px solid #555;
+      background:#222;
+      color:white;
+      font-size:16px;
+      box-sizing:border-box;
+      margin-bottom:12px;
+    ">
 
   <select id="roxthalGenre" style="
     width:100%;
     padding:13px;
     border-radius:10px;
-    border:1px solid #666;
+    border:1px solid #555;
     background:#222;
     color:white;
     font-size:16px;
-    margin-bottom:15px;
+    box-sizing:border-box;
+    margin-bottom:12px;
   ">
+
+    <option value="">🎶 Todos los estilos</option>
+
     <option value="rock">🎸 Rock</option>
-    <option value="nacional">🇦🇷 Rock Nacional</option>
+    <option value="hard rock">🤘 Hard Rock</option>
+    <option value="metal">🔥 Metal</option>
+    <option value="alternative">🖤 Alternative</option>
+    <option value="punk">🧨 Punk</option>
+    <option value="indie">🎵 Indie</option>
+
     <option value="pop">🎤 Pop</option>
-    <option value="electronica">🎧 Electrónica</option>
-    <option value="clasicos">📻 Clásicos</option>
+    <option value="dance">💃 Dance</option>
+    <option value="disco">🪩 Disco</option>
+    <option value="80s">📼 Años 80</option>
+    <option value="90s">📻 Años 90</option>
+    <option value="2000s">💿 Años 2000</option>
+
+    <option value="electronic">🎧 Electrónica</option>
+    <option value="house">🏠 House</option>
+    <option value="techno">⚡ Techno</option>
+    <option value="trance">🔺 Trance</option>
+    <option value="ambient">🌙 Ambient</option>
+    <option value="chillout">😌 Chillout</option>
+
+    <option value="jazz">🎷 Jazz</option>
+    <option value="blues">🎺 Blues</option>
+    <option value="soul">🎹 Soul</option>
+    <option value="funk">🕺 Funk</option>
+    <option value="rnb">🎤 R&B</option>
+
+    <option value="reggae">🇯🇲 Reggae</option>
+    <option value="ska">🎶 Ska</option>
+    <option value="hip hop">🎤 Hip-Hop</option>
+    <option value="rap">🎤 Rap</option>
+
+    <option value="latin">🌎 Latino</option>
+    <option value="salsa">💃 Salsa</option>
+    <option value="reggaeton">🔥 Reggaetón</option>
+    <option value="bachata">❤️ Bachata</option>
+    <option value="tango">🇦🇷 Tango</option>
+
+    <option value="classical">🎻 Clásica</option>
+    <option value="opera">🎼 Ópera</option>
+    <option value="country">🤠 Country</option>
+    <option value="world">🌍 World Music</option>
+    <option value="kpop">🇰🇷 K-Pop</option>
+    <option value="jpop">🇯🇵 J-Pop</option>
   </select>
 
-  <div id="roxthalStation" style="
-    font-size:17px;
-    font-weight:bold;
-    margin:10px 0 15px;
-  ">
-    Rock
-  </div>
-
-  <audio id="roxthalAudio"
-         controls
-         preload="none"
-         style="width:100%;">
-  </audio>
-
-  <button id="roxthalPlay" style="
-    margin-top:15px;
-    padding:12px 25px;
+  <button id="roxthalBuscar" style="
+    width:100%;
+    padding:13px;
     border:0;
     border-radius:10px;
     background:#e00000;
@@ -1981,102 +2024,399 @@ renderPublicCourses();
     font-size:16px;
     font-weight:bold;
     cursor:pointer;
+    margin-bottom:15px;
   ">
-    ▶ Reproducir
+    🔎 Buscar emisoras
   </button>
 
+  <div id="roxthalEstado"
+       style="
+         text-align:center;
+         color:#aaa;
+         margin:10px 0;
+       ">
+    Selecciona un estilo y pulsa buscar
+  </div>
+
+  <div id="roxthalLista"></div>
+
+  <div id="roxthalPlayerBox"
+       style="
+         display:none;
+         margin-top:18px;
+         padding-top:15px;
+         border-top:1px solid #444;
+       ">
+
+    <div id="roxthalNombre"
+         style="
+           text-align:center;
+           font-weight:bold;
+           font-size:17px;
+           margin-bottom:10px;
+         ">
+    </div>
+
+    <div id="roxthalNowPlaying"
+         style="
+           text-align:center;
+           color:#aaa;
+           font-size:14px;
+           margin-bottom:10px;
+         ">
+      Información de la emisora
+    </div>
+
+    <audio id="roxthalAudio"
+           controls
+           preload="none"
+           style="width:100%;">
+    </audio>
+
+  </div>
+
   <p style="
-    margin:15px 0 0;
-    font-size:12px;
-    color:#888;
+    text-align:center;
+    color:#666;
+    font-size:11px;
+    margin:18px 0 0;
   ">
-    RoXThal Art Design
+    RoXThal Art Design · Radio Online
   </p>
 
 </section>
 
 <script>
-const roxthalStations = {
 
-  rock: {
-    name: "🎸 Rock",
-    url: "https://streaming.exclusive.radio/er/rock"
-  },
+(function(){
 
-  nacional: {
-    name: "🇦🇷 Rock Nacional",
-    url: "https://streaming.exclusive.radio/er/rocknacional"
-  },
+  const searchInput =
+    document.getElementById("roxthalSearch");
 
-  pop: {
-    name: "🎤 Pop",
-    url: "https://streaming.exclusive.radio/er/pop"
-  },
+  const genreSelect =
+    document.getElementById("roxthalGenre");
 
-  electronica: {
-    name: "🎧 Electrónica",
-    url: "https://streaming.exclusive.radio/er/electronic"
-  },
+  const buscarBtn =
+    document.getElementById("roxthalBuscar");
 
-  clasicos: {
-    name: "📻 Clásicos",
-    url: "https://streaming.exclusive.radio/er/classics"
+  const estado =
+    document.getElementById("roxthalEstado");
+
+  const lista =
+    document.getElementById("roxthalLista");
+
+  const playerBox =
+    document.getElementById("roxthalPlayerBox");
+
+  const audio =
+    document.getElementById("roxthalAudio");
+
+  const nombre =
+    document.getElementById("roxthalNombre");
+
+  const nowPlaying =
+    document.getElementById("roxthalNowPlaying");
+
+
+  const servidores = [
+    "https://de1.api.radio-browser.info",
+    "https://at1.api.radio-browser.info",
+    "https://nl1.api.radio-browser.info"
+  ];
+
+
+  let servidorActual = 0;
+
+
+  async function buscarEmisoras(){
+
+    const texto =
+      searchInput.value.trim();
+
+    const genero =
+      genreSelect.value;
+
+    lista.innerHTML = "";
+
+    estado.textContent =
+      "🔄 Buscando emisoras...";
+
+
+    let parametro = "";
+
+    if(texto){
+
+      parametro =
+        "&name=" +
+        encodeURIComponent(texto);
+
+    } else if(genero){
+
+      parametro =
+        "&tag=" +
+        encodeURIComponent(genero);
+
+    }
+
+
+    const url =
+      servidores[servidorActual] +
+      "/json/stations/search?" +
+      "limit=25" +
+      "&hidebroken=true" +
+      "&order=votes" +
+      "&reverse=true" +
+      parametro;
+
+
+    try{
+
+      const respuesta =
+        await fetch(url, {
+          headers:{
+            "Accept":"application/json"
+          }
+        });
+
+
+      if(!respuesta.ok)
+        throw new Error("Error API");
+
+
+      const emisoras =
+        await respuesta.json();
+
+
+      mostrarEmisoras(emisoras);
+
+
+    }catch(error){
+
+      servidorActual =
+        (servidorActual + 1) %
+        servidores.length;
+
+
+      estado.textContent =
+        "⚠️ No se pudo conectar. Pulsa buscar nuevamente.";
+
+    }
+
   }
 
-};
 
-const roxthalGenre = document.getElementById("roxthalGenre");
-const roxthalAudio = document.getElementById("roxthalAudio");
-const roxthalStation = document.getElementById("roxthalStation");
-const roxthalPlay = document.getElementById("roxthalPlay");
+  function mostrarEmisoras(emisoras){
 
-function cambiarMusica() {
+    lista.innerHTML = "";
 
-  const tipo = roxthalGenre.value;
-  const emisora = roxthalStations[tipo];
 
-  roxthalAudio.pause();
+    if(!emisoras.length){
 
-  roxthalAudio.src = emisora.url;
-  roxthalAudio.load();
+      estado.textContent =
+        "No encontramos emisoras. Prueba otro estilo.";
 
-  roxthalStation.textContent = emisora.name;
+      return;
 
-  roxthalPlay.textContent = "▶ Reproducir";
-}
+    }
 
-roxthalGenre.addEventListener("change", cambiarMusica);
 
-roxthalPlay.addEventListener("click", function() {
+    estado.textContent =
+      "📻 " +
+      emisoras.length +
+      " emisoras encontradas";
 
-  if (roxthalAudio.paused) {
 
-    roxthalAudio.play()
-      .then(() => {
-        roxthalPlay.textContent = "⏸ Pausar";
-      })
-      .catch(() => {
-        alert("No se pudo iniciar esta emisora. Prueba otra.");
+    emisoras.forEach(function(emisora){
+
+      if(!emisora.url_resolved)
+        return;
+
+
+      const tarjeta =
+        document.createElement("div");
+
+
+      tarjeta.style.cssText = `
+        display:flex;
+        align-items:center;
+        gap:10px;
+        padding:12px;
+        margin:8px 0;
+        background:#1d1d1d;
+        border:1px solid #333;
+        border-radius:12px;
+        cursor:pointer;
+      `;
+
+
+      const icono =
+        document.createElement("div");
+
+      icono.textContent = "📻";
+
+      icono.style.fontSize =
+        "24px";
+
+
+      const datos =
+        document.createElement("div");
+
+      datos.style.flex="1";
+
+
+      const titulo =
+        document.createElement("div");
+
+      titulo.textContent =
+        emisora.name || "Emisora";
+
+      titulo.style.fontWeight =
+        "bold";
+
+
+      const detalle =
+        document.createElement("div");
+
+      detalle.textContent =
+        (emisora.countrycode || "") +
+        " · " +
+        (emisora.codec || "") +
+        " · " +
+        (emisora.bitrate || "") +
+        " kbps";
+
+      detalle.style.cssText =
+        "font-size:11px;color:#888;margin-top:4px;";
+
+
+      datos.appendChild(titulo);
+      datos.appendChild(detalle);
+
+      tarjeta.appendChild(icono);
+      tarjeta.appendChild(datos);
+
+
+      tarjeta.addEventListener(
+        "click",
+        function(){
+
+          reproducir(emisora);
+
+        }
+      );
+
+
+      lista.appendChild(tarjeta);
+
+    });
+
+  }
+
+
+  function reproducir(emisora){
+
+    if(!emisora.url_resolved)
+      return;
+
+
+    audio.pause();
+
+    audio.src =
+      emisora.url_resolved;
+
+    audio.load();
+
+
+    nombre.textContent =
+      "🎵 " +
+      (emisora.name || "Emisora");
+
+
+    nowPlaying.textContent =
+      (emisora.country || "") +
+      " · " +
+      (emisora.tags || "Radio online");
+
+
+    playerBox.style.display =
+      "block";
+
+
+    audio.play()
+      .catch(function(){
+
+        nowPlaying.textContent =
+          "▶ Pulsa reproducir para comenzar";
+
       });
 
-  } else {
 
-    roxthalAudio.pause();
-    roxthalPlay.textContent = "▶ Reproducir";
+    if(emisora.stationuuid){
+
+      const servidor =
+        servidores[servidorActual];
+
+      fetch(
+        servidor +
+        "/json/url/" +
+        emisora.stationuuid
+      ).catch(function(){});
+
+    }
 
   }
 
-});
 
-roxthalAudio.addEventListener("play", function() {
-  roxthalPlay.textContent = "⏸ Pausar";
-});
+  buscarBtn.addEventListener(
+    "click",
+    buscarEmisoras
+  );
 
-roxthalAudio.addEventListener("pause", function() {
-  roxthalPlay.textContent = "▶ Reproducir";
-});
 
-cambiarMusica();
+  genreSelect.addEventListener(
+    "change",
+    function(){
+
+      searchInput.value = "";
+
+      buscarEmisoras();
+
+    }
+  );
+
+
+  searchInput.addEventListener(
+    "keydown",
+    function(event){
+
+      if(event.key === "Enter"){
+
+        buscarEmisoras();
+
+      }
+
+    }
+  );
+
+
+  audio.addEventListener(
+    "error",
+    function(){
+
+      nowPlaying.textContent =
+        "⚠️ Esta emisora no pudo reproducirse. Prueba otra.";
+
+    }
+  );
+
+
+  /* Carga inicial */
+  buscarEmisoras();
+
+
+})();
+
 </script>
+
 <!-- ===== FIN SELECTOR DE MÚSICA ROXTHAL ===== -->
 </html>
