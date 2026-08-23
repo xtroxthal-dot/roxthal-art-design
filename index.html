@@ -5839,3 +5839,570 @@ if(
 }
 
 </script>
+<!-- ============================================
+     PARTE 7
+     GESTOR DE IMÁGENES + SUPABASE
+============================================ -->
+
+<script>
+
+(function(){
+
+  /*
+   * Esperamos a que Supabase esté disponible.
+   */
+
+  function waitForSupabase(){
+
+    if(
+      typeof roxthalSupabase === "undefined" ||
+      !roxthalSupabase
+    ){
+
+      setTimeout(
+        waitForSupabase,
+        500
+      );
+
+      return;
+
+    }
+
+    console.log(
+      "✅ Gestor de imágenes conectado a Supabase."
+    );
+
+  }
+
+
+  waitForSupabase();
+
+
+  /* ============================================
+     CARGAR IMÁGENES DESDE SUPABASE
+  ============================================ */
+
+  window.loadImagesFromSupabase =
+    async function(){
+
+      if(
+        typeof roxthalSupabase === "undefined" ||
+        !roxthalSupabase
+      ){
+
+        console.warn(
+          "Supabase todavía no está disponible."
+        );
+
+        return [];
+
+      }
+
+
+      try{
+
+        const {
+          data,
+          error
+        } =
+          await roxthalSupabase
+            .from("images")
+            .select("*")
+            .order(
+              "created_at",
+              {
+                ascending:false
+              }
+            );
+
+
+        if(error){
+
+          console.error(
+            "Error cargando imágenes:",
+            error
+          );
+
+          return [];
+
+        }
+
+
+        return data || [];
+
+
+      }catch(error){
+
+        console.error(
+          "Error inesperado:",
+          error
+        );
+
+        return [];
+
+      }
+
+    };
+
+
+  /* ============================================
+     MOSTRAR IMÁGENES PÚBLICAS
+  ============================================ */
+
+  window.loadPublicImagesFromSupabase =
+    async function(){
+
+      if(
+        typeof roxthalSupabase === "undefined" ||
+        !roxthalSupabase
+      ){
+
+        return;
+
+      }
+
+
+      try{
+
+        const {
+          data,
+          error
+        } =
+          await roxthalSupabase
+            .from("images")
+            .select("*")
+            .eq(
+              "visible",
+              true
+            )
+            .order(
+              "created_at",
+              {
+                ascending:false
+              }
+            );
+
+
+        if(error){
+
+          console.error(
+            "Error cargando galería:",
+            error
+          );
+
+          return;
+
+        }
+
+
+        console.log(
+          "🖼️ Imágenes públicas:",
+          data
+        );
+
+
+        /*
+         * Si existe la galería pública,
+         * la actualizamos.
+         */
+
+        const gallery =
+          document.getElementById(
+            "publicGallery"
+          );
+
+
+        if(
+          gallery &&
+          Array.isArray(data)
+        ){
+
+          if(
+            data.length === 0
+          ){
+
+            gallery.innerHTML = `
+              <div class="empty">
+                🖼️
+                <br><br>
+                Todavía no hay imágenes
+                publicadas.
+              </div>
+            `;
+
+          }else{
+
+            gallery.innerHTML =
+              data
+                .map(
+                  image =>
+                    createSupabaseImageCard(
+                      image
+                    )
+                )
+                .join("");
+
+          }
+
+        }
+
+
+      }catch(error){
+
+        console.error(
+          error
+        );
+
+      }
+
+    };
+
+
+  /* ============================================
+     TARJETA PÚBLICA
+  ============================================ */
+
+  function createSupabaseImageCard(
+    image
+  ){
+
+    const title =
+      typeof escapeHTML === "function"
+        ? escapeHTML(
+            image.title || "Obra"
+          )
+        : image.title || "Obra";
+
+
+    const description =
+      typeof escapeHTML === "function"
+        ? escapeHTML(
+            image.description || ""
+          )
+        : image.description || "";
+
+
+    const url =
+      typeof escapeAttribute === "function"
+        ? escapeAttribute(
+            image.url || ""
+          )
+        : image.url || "";
+
+
+    return `
+
+      <article class="card">
+
+        <div
+          class="card-img"
+          style="
+            background-image:
+            url('${url}');
+          "
+        ></div>
+
+        <div class="card-body">
+
+          <h3>
+            ${title}
+          </h3>
+
+          <p class="muted">
+            ${description}
+          </p>
+
+          <span class="image-category">
+            ${
+              typeof getCategoryName === "function"
+                ? getCategoryName(
+                    image.category
+                  )
+                : image.category || "Otros"
+            }
+          </span>
+
+        </div>
+
+      </article>
+
+    `;
+
+  }
+
+
+  /* ============================================
+     AÑADIR IMAGEN A SUPABASE
+  ============================================ */
+
+  window.addImageToSupabase =
+    async function(image){
+
+      if(
+        !roxthalSupabase
+      ){
+
+        throw new Error(
+          "Supabase no está conectado."
+        );
+
+      }
+
+
+      const {
+        data,
+        error
+      } =
+        await roxthalSupabase
+          .from("images")
+          .insert({
+
+            title:
+              image.title,
+
+            category:
+              image.category || "otros",
+
+            url:
+              image.url,
+
+            description:
+              image.description || "",
+
+            visible:
+              image.visible !== false
+
+          })
+          .select()
+          .single();
+
+
+      if(error){
+
+        console.error(
+          "Error añadiendo imagen:",
+          error
+        );
+
+        throw error;
+
+      }
+
+
+      return data;
+
+    };
+
+
+  /* ============================================
+     ACTUALIZAR IMAGEN
+  ============================================ */
+
+  window.updateImageInSupabase =
+    async function(
+      id,
+      image
+    ){
+
+      if(
+        !roxthalSupabase
+      ){
+
+        throw new Error(
+          "Supabase no está conectado."
+        );
+
+      }
+
+
+      const {
+        data,
+        error
+      } =
+        await roxthalSupabase
+          .from("images")
+          .update({
+
+            title:
+              image.title,
+
+            category:
+              image.category || "otros",
+
+            url:
+              image.url,
+
+            description:
+              image.description || "",
+
+            visible:
+              image.visible !== false,
+
+            updated_at:
+              new Date().toISOString()
+
+          })
+          .eq(
+            "id",
+            id
+          )
+          .select()
+          .single();
+
+
+      if(error){
+
+        console.error(
+          "Error actualizando imagen:",
+          error
+        );
+
+        throw error;
+
+      }
+
+
+      return data;
+
+    };
+
+
+  /* ============================================
+     ELIMINAR IMAGEN
+  ============================================ */
+
+  window.deleteImageFromSupabase =
+    async function(id){
+
+      if(
+        !roxthalSupabase
+      ){
+
+        throw new Error(
+          "Supabase no está conectado."
+        );
+
+      }
+
+
+      const {
+        error
+      } =
+        await roxthalSupabase
+          .from("images")
+          .delete()
+          .eq(
+            "id",
+            id
+          );
+
+
+      if(error){
+
+        console.error(
+          "Error eliminando imagen:",
+          error
+        );
+
+        throw error;
+
+      }
+
+
+      return true;
+
+    };
+
+
+  /* ============================================
+     CAMBIAR VISIBILIDAD
+  ============================================ */
+
+  window.toggleImageSupabase =
+    async function(
+      id,
+      visible
+    ){
+
+      if(
+        !roxthalSupabase
+      ){
+
+        throw new Error(
+          "Supabase no está conectado."
+        );
+
+      }
+
+
+      const {
+        data,
+        error
+      } =
+        await roxthalSupabase
+          .from("images")
+          .update({
+
+            visible:
+              visible,
+
+            updated_at:
+              new Date().toISOString()
+
+          })
+          .eq(
+            "id",
+            id
+          )
+          .select()
+          .single();
+
+
+      if(error){
+
+        console.error(
+          "Error cambiando visibilidad:",
+          error
+        );
+
+        throw error;
+
+      }
+
+
+      return data;
+
+    };
+
+
+  /* ============================================
+     SINCRONIZAR AL ABRIR LA APP
+  ============================================ */
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+      setTimeout(
+        function(){
+
+          if(
+            typeof loadPublicImagesFromSupabase ===
+            "function"
+          ){
+
+            loadPublicImagesFromSupabase();
+
+          }
+
+        },
+        1200
+      );
+
+    }
+  );
+
+
+})();
+
+</script>
