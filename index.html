@@ -657,6 +657,72 @@ h3{
 }
 
 
+/* PAGOS */
+
+.payment-box{
+  margin-top:14px;
+  padding:14px;
+  border-radius:12px;
+  background:#18181d;
+  border:1px solid var(--line);
+}
+
+.payment-box h4{
+  margin:0 0 10px;
+  color:var(--gold2);
+}
+
+.payment-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:8px;
+}
+
+.payment-grid div{
+  background:#101014;
+  border-radius:8px;
+  padding:9px;
+}
+
+.payment-paid{
+  color:#65d18a;
+  font-weight:700;
+}
+
+.payment-pending{
+  color:#ff7b7b;
+  font-weight:700;
+}
+
+.payment-summary{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:10px;
+  margin:15px 0;
+}
+
+.payment-summary div{
+  background:#101014;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:14px;
+}
+
+.payment-summary strong{
+  display:block;
+  font-size:22px;
+  color:var(--gold2);
+}
+
+.payment-filter{
+  background:#0d0d10;
+  color:#fff;
+  border:1px solid #484850;
+  border-radius:9px;
+  padding:11px;
+}
+
+
 /* MOVIL */
 
 @media(max-width:750px){
@@ -793,20 +859,17 @@ Lo que hacemos
 <div class="grid">
 
 <article class="card">
-
 <div class="card-img"
 style="background-image:url('https://images.unsplash.com/photo-1611501275019-9b5c8c7b4a4a?auto=format&fit=crop&w=1000&q=85')">
 </div>
 
 <div class="card-body">
-
 <h3>🎨 Tatuajes</h3>
 
 <p class="muted">
 Diseños personalizados y trabajos
 con identidad propia.
 </p>
-
 </div>
 </article>
 
@@ -1314,15 +1377,42 @@ oninput="renderImages()">
 <div id="admin-alumnos"
 class="admin-section">
 
-<h3>👨‍🎓 Control de alumnos</h3>
+<h3>👨‍🎓 Control de alumnos y pagos</h3>
 
 <p class="muted">
-Desde aquí puedes administrar los alumnos
-y su información de formación.
+Administra los alumnos, sus cursos y el estado de sus pagos.
 </p>
 
 <div id="studentStatus"
 class="status"></div>
+
+
+<!-- RESUMEN DE PAGOS -->
+
+<div class="payment-summary">
+
+<div>
+<span class="muted">Alumnos</span>
+<strong id="totalStudents">0</strong>
+</div>
+
+<div>
+<span class="muted">Pagados</span>
+<strong id="paidStudents">0</strong>
+</div>
+
+<div>
+<span class="muted">Pendientes</span>
+<strong id="pendingStudents">0</strong>
+</div>
+
+<div>
+<span class="muted">Total cobrado</span>
+<strong id="totalPaidAmount">$0</strong>
+</div>
+
+</div>
+
 
 <div class="form-grid">
 
@@ -1362,18 +1452,23 @@ placeholder="11 1234-5678">
 <select id="studentCourse">
 
 <option value="">Seleccionar curso...</option>
+
 <option value="Dibujo y Pintura Profesional">
 Dibujo y Pintura Profesional
 </option>
+
 <option value="Taller infantil">
 Taller infantil
 </option>
+
 <option value="Iniciación al tatuaje">
 Iniciación al tatuaje
 </option>
+
 <option value="Fileteado Porteño">
 Fileteado Porteño
 </option>
+
 <option value="Otro">
 Otro
 </option>
@@ -1382,17 +1477,62 @@ Otro
 
 </label>
 
+
 <label class="field">
 
-<span>Estado</span>
+<span>Estado del alumno</span>
 
 <select id="studentStatusSelect">
 
 <option value="activo">Activo</option>
 <option value="inactivo">Inactivo</option>
+
 </select>
 
 </label>
+
+
+<label class="field">
+
+<span>💳 Estado del pago</span>
+
+<select id="studentPaymentStatus">
+
+<option value="pendiente">
+🔴 Pendiente
+</option>
+
+<option value="pagado">
+🟢 Pagado
+</option>
+
+</select>
+
+</label>
+
+
+<label class="field">
+
+<span>💰 Importe pagado</span>
+
+<input id="studentPaymentAmount"
+type="number"
+min="0"
+step="0.01"
+placeholder="Ej.: 25000">
+
+</label>
+
+
+<label class="field">
+
+<span>📅 Fecha de pago</span>
+
+<input id="studentPaymentDate"
+type="date">
+
+</label>
+
 
 <label class="field full">
 
@@ -1404,6 +1544,7 @@ placeholder="Observaciones del alumno..."></textarea>
 </label>
 
 </div>
+
 
 <div class="actions">
 
@@ -1420,6 +1561,7 @@ Limpiar
 
 </div>
 
+
 <div class="manager-tools">
 
 <button class="btn btn-dark"
@@ -1431,7 +1573,26 @@ onclick="loadStudents()">
 placeholder="🔎 Buscar alumno..."
 oninput="renderStudents()">
 
+<select id="paymentFilter"
+class="payment-filter"
+onchange="renderStudents()">
+
+<option value="todos">
+💳 Todos los pagos
+</option>
+
+<option value="pagado">
+🟢 Pagados
+</option>
+
+<option value="pendiente">
+🔴 Pendientes
+</option>
+
+</select>
+
 </div>
+
 
 <div id="studentCount"
 class="student-count"></div>
@@ -1454,8 +1615,7 @@ class="admin-section">
 
 <h3>Estado de conexión</h3>
 
-<div id="backendStatus"
-class="status show">
+<div id="backendStatus" class="status show">
 Comprobando Supabase…
 </div>
 
@@ -1472,6 +1632,11 @@ Tabla de imágenes:
 <p class="muted">
 Tabla de alumnos:
 <b>students</b>
+</p>
+
+<p class="muted">
+Control de pagos:
+<b>payment_status · payment_amount · payment_date</b>
 </p>
 
 </div>
@@ -1587,6 +1752,21 @@ function cat(v){
     pinturas:'Pinturas',
     otros:'Otros'
   })[v]||v||'Otros';
+
+}
+
+
+function formatMoney(value){
+
+  const number=Number(value||0);
+
+  return '$'+number.toLocaleString(
+    'es-AR',
+    {
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    }
+  );
 
 }
 
@@ -2308,6 +2488,48 @@ async function loadStudents(){
 
 
 /* =====================================================
+   ALUMNOS — RESUMEN PAGOS
+===================================================== */
+
+function renderPaymentSummary(){
+
+  const total=students.length;
+
+  const paid=students.filter(
+    s=>s.payment_status==='pagado'
+  ).length;
+
+  const pending=students.filter(
+    s=>s.payment_status!=='pagado'
+  ).length;
+
+  const amount=students.reduce(
+    (sum,s)=>{
+      return sum+
+        (s.payment_status==='pagado'
+        ?Number(s.payment_amount||0)
+        :0);
+    },
+    0
+  );
+
+  if($('totalStudents'))
+    $('totalStudents').textContent=total;
+
+  if($('paidStudents'))
+    $('paidStudents').textContent=paid;
+
+  if($('pendingStudents'))
+    $('pendingStudents').textContent=pending;
+
+  if($('totalPaidAmount'))
+    $('totalPaidAmount').textContent=
+      formatMoney(amount);
+
+}
+
+
+/* =====================================================
    ALUMNOS — MOSTRAR
 ===================================================== */
 
@@ -2321,20 +2543,34 @@ function renderStudents(){
     $('studentSearch')?.value||''
   ).toLowerCase().trim();
 
-  const list=students.filter(s=>
-    (s.name||'').toLowerCase().includes(q)||
-    (s.email||'').toLowerCase().includes(q)||
-    (s.phone||'').toLowerCase().includes(q)||
-    (s.course||'').toLowerCase().includes(q)||
-    (s.status||'').toLowerCase().includes(q)
-  );
+  const paymentFilter=
+    $('paymentFilter')?.value||'todos';
+
+  const list=students.filter(s=>{
+
+    const matchesSearch=
+      (s.name||'').toLowerCase().includes(q)||
+      (s.email||'').toLowerCase().includes(q)||
+      (s.phone||'').toLowerCase().includes(q)||
+      (s.course||'').toLowerCase().includes(q)||
+      (s.status||'').toLowerCase().includes(q);
+
+    const matchesPayment=
+      paymentFilter==='todos'||
+      (s.payment_status||'pendiente')===paymentFilter;
+
+    return matchesSearch&&matchesPayment;
+
+  });
+
+  renderPaymentSummary();
 
   $('studentCount').textContent=
-    `${students.length} alumno${
-      students.length===1?'':'s'
-    } registrado${
-      students.length===1?'':'s'
-    }.`;
+    `${list.length} alumno${
+      list.length===1?'':'s'
+    } mostrado${
+      list.length===1?'':'s'
+    } de ${students.length}.`;
 
   if(!list.length){
 
@@ -2352,7 +2588,24 @@ function renderStudents(){
 
   }
 
-  box.innerHTML=list.map(s=>`
+  box.innerHTML=list.map(s=>{
+
+    const paymentStatus=
+      s.payment_status==='pagado'
+      ?'pagado'
+      :'pendiente';
+
+    const paymentClass=
+      paymentStatus==='pagado'
+      ?'payment-paid'
+      :'payment-pending';
+
+    const paymentText=
+      paymentStatus==='pagado'
+      ?'🟢 PAGADO'
+      :'🔴 PENDIENTE';
+
+    return`
 
 <article class="student-card">
 
@@ -2361,8 +2614,11 @@ function renderStudents(){
 </h3>
 
 <span class="badge">
-${s.status==='activo'?'🟢 Activo':'⚪ Inactivo'}
+${s.status==='activo'
+?'🟢 Activo'
+:'⚪ Inactivo'}
 </span>
+
 
 <div class="student-info">
 
@@ -2383,6 +2639,37 @@ ${esc(s.email||'Sin email')}
 
 </div>
 
+
+<div class="payment-box">
+
+<h4>💳 Control de pago</h4>
+
+<div class="payment-grid">
+
+<div>
+<strong>Estado</strong><br>
+<span class="${paymentClass}">
+${paymentText}
+</span>
+</div>
+
+<div>
+<strong>Importe</strong><br>
+${formatMoney(s.payment_amount)}
+</div>
+
+<div>
+<strong>Fecha</strong><br>
+${s.payment_date
+?esc(s.payment_date)
+:'Sin registrar'}
+</div>
+
+</div>
+
+</div>
+
+
 ${
   s.notes
   ?`
@@ -2394,11 +2681,24 @@ ${
   :''
 }
 
+
 <div class="student-actions">
 
 <button class="btn btn-gold"
 onclick="editStudent('${s.id}')">
 ✏️ Editar
+</button>
+
+<button class="btn btn-dark"
+onclick="changeStudentPayment(
+'${s.id}',
+'${paymentStatus==='pagado'?'pendiente':'pagado'}'
+)">
+${
+paymentStatus==='pagado'
+?'🔴 Marcar pendiente'
+:'🟢 Marcar pagado'
+}
 </button>
 
 <button class="btn btn-dark"
@@ -2420,7 +2720,9 @@ onclick="deleteStudent('${s.id}')">
 
 </article>
 
-`).join('');
+`;
+
+  }).join('');
 
 }
 
@@ -2451,6 +2753,17 @@ async function saveStudent(){
     const statusValue=$('studentStatusSelect')
       .value;
 
+    const paymentStatus=
+      $('studentPaymentStatus').value;
+
+    const paymentAmount=
+      Number(
+        $('studentPaymentAmount').value||0
+      );
+
+    const paymentDate=
+      $('studentPaymentDate').value||null;
+
     const notes=$('studentNotes')
       .value.trim();
 
@@ -2468,6 +2781,9 @@ async function saveStudent(){
       phone,
       course,
       status:statusValue,
+      payment_status:paymentStatus,
+      payment_amount:paymentAmount,
+      payment_date:paymentDate,
       notes
     };
 
@@ -2494,7 +2810,7 @@ async function saveStudent(){
     status(
       'studentStatus',
       editingStudentId
-      ?'✅ Alumno actualizado correctamente.'
+      ?'✅ Alumno y pago actualizados correctamente.'
       :'✅ Alumno añadido correctamente.',
       'ok'
     );
@@ -2545,6 +2861,15 @@ function editStudent(id){
   $('studentStatusSelect').value=
     student.status||'activo';
 
+  $('studentPaymentStatus').value=
+    student.payment_status||'pendiente';
+
+  $('studentPaymentAmount').value=
+    student.payment_amount||'';
+
+  $('studentPaymentDate').value=
+    student.payment_date||'';
+
   $('studentNotes').value=
     student.notes||'';
 
@@ -2579,6 +2904,12 @@ function resetStudentForm(){
 
   $('studentStatusSelect').value='activo';
 
+  $('studentPaymentStatus').value='pendiente';
+
+  $('studentPaymentAmount').value='';
+
+  $('studentPaymentDate').value='';
+
   $('studentNotes').value='';
 
   $('studentSaveButton').textContent=
@@ -2612,6 +2943,54 @@ async function changeStudentStatus(
   }
 
   await loadStudents();
+
+}
+
+
+/* =====================================================
+   ALUMNOS — CAMBIAR PAGO
+===================================================== */
+
+async function changeStudentPayment(
+  id,
+  newStatus
+){
+
+  const updateData={
+    payment_status:newStatus
+  };
+
+  if(newStatus==='pagado'){
+
+    updateData.payment_date=
+      new Date()
+        .toISOString()
+        .slice(0,10);
+
+  }
+
+  const {error}=await sb
+    .from('students')
+    .update(updateData)
+    .eq('id',id);
+
+  if(error){
+
+    alert('Error: '+error.message);
+
+    return;
+
+  }
+
+  await loadStudents();
+
+  status(
+    'studentStatus',
+    newStatus==='pagado'
+    ?'✅ Pago marcado como pagado.'
+    :'🔴 Pago marcado como pendiente.',
+    newStatus==='pagado'?'ok':'err'
+  );
 
 }
 
