@@ -3,51 +3,3215 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>RoXThal Art Design</title>
-<meta name="description" content="RoXThal Art Design — arte, dibujo, pintura, tatuajes y formación artística.">
+
+<meta
+  name="description"
+  content="RoXThal Art Design — arte, dibujo, pintura, tatuajes, fileteado porteño y formación artística."
+>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-:root{--bg:#080809;--panel:#15151a;--panel2:#202027;--gold:#d7b45a;--gold2:#f2da91;--text:#f5f5f5;--muted:#aaa;--line:#383840;--blue:#1877f2;--green:#2f8a58;--red:#8a3b3b}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at top,#29292f 0,#080809 55%);color:var(--text);font:16px/1.5 Arial,Helvetica,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:var(--gold2)}
-.top{position:sticky;top:0;z-index:100;background:rgba(7,7,8,.97);border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}.nav{max-width:1200px;margin:auto;padding:12px 16px;display:flex;gap:8px;align-items:center;overflow:auto}.brand{font-weight:800;font-size:21px;color:var(--gold);margin-right:auto;white-space:nowrap}.nav button{background:#1a1a20;color:#fff;border:1px solid #484850;border-radius:9px;padding:9px 12px;white-space:nowrap}.nav button:hover{background:var(--gold);color:#111}
-section{max-width:1200px;margin:auto;padding:60px 18px}.hero{max-width:none;min-height:78vh;display:grid;place-items:center;text-align:center;padding:50px 18px;background:linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.9)),url('https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1800&q=85') center/cover}.hero-box{max-width:900px}.eyebrow{color:var(--gold2);text-transform:uppercase;letter-spacing:3px;font-size:12px;font-weight:700}.hero h1{font-size:clamp(42px,8vw,82px);line-height:1.05;margin:12px 0}.gold{color:var(--gold)}.hero p{max-width:700px;margin:auto;font-size:18px;color:#ddd}.cta{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:25px}.btn{display:inline-block;border:0;border-radius:10px;padding:12px 18px;font-weight:700;text-decoration:none}.btn-gold{background:var(--gold);color:#111}.btn-dark{background:#18181d;color:#fff;border:1px solid #555}.btn-facebook{background:var(--blue);color:#fff}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}.card{background:linear-gradient(145deg,#1d1d23,#101014);border:1px solid var(--line);border-radius:16px;overflow:hidden}.card-body{padding:20px}.card-img{height:220px;background-size:cover;background-position:center}.muted{color:var(--muted)}h2{font-size:clamp(30px,5vw,42px);margin:10px 0 25px}h3{color:var(--gold2)}.about{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center}.about-img{min-height:380px;border-radius:18px;background:url('https://images.unsplash.com/photo-1577083288073-40892c0860a4?auto=format&fit=crop&w=1000&q=85') center/cover}.quote{border-left:4px solid var(--gold);padding:10px 18px}.contact{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}.contact .card{padding:22px}.footer{text-align:center;border-top:1px solid var(--line);padding:30px 18px;color:#999}
-.admin-wrap{background:rgba(12,12,15,.8);border:1px solid var(--line);border-radius:18px;padding:20px}.admin-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.admin-nav button{background:#1a1a20;color:#fff;border:1px solid #484850;border-radius:9px;padding:10px 14px}.admin-nav button.active{background:var(--gold);color:#111}.admin-section{display:none}.admin-section.active{display:block}.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field input,.field select,.field textarea{width:100%;background:#0d0d10;color:#fff;border:1px solid #484850;border-radius:9px;padding:11px}.field textarea{min-height:100px;resize:vertical}.filebox{border:1px dashed #666;border-radius:12px;padding:14px;background:#101014}.preview{margin-top:12px;display:none;max-width:100%;max-height:260px;border-radius:12px;border:1px solid var(--line);object-fit:contain}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.status{margin:12px 0;padding:11px 13px;border-radius:10px;background:#15151a;border:1px solid var(--line);display:none}.status.show{display:block}.status.ok{border-color:var(--green)}.status.err{border-color:var(--red)}.login{max-width:460px}.manager-tools{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.image-card{display:grid;grid-template-columns:140px 1fr;gap:14px;padding:12px;border:1px solid var(--line);border-radius:14px;background:#101014}.image-card img{width:140px;height:110px;object-fit:cover;border-radius:10px}.image-meta{min-width:0}.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#292930;color:var(--gold2);font-size:12px}.empty{padding:30px;text-align:center;color:var(--muted);border:1px dashed #444;border-radius:12px}.hidden{display:none!important}
-@media(max-width:750px){section{padding:45px 13px}.about{grid-template-columns:1fr}.card-img{height:180px}.image-card{grid-template-columns:1fr}.image-card img{width:100%;height:190px}}
+
+:root{
+  --bg:#080809;
+  --panel:#15151a;
+  --panel2:#202027;
+  --gold:#d7b45a;
+  --gold2:#f2da91;
+  --text:#f5f5f5;
+  --muted:#aaa;
+  --line:#383840;
+  --blue:#1877f2;
+  --instagram:#d62976;
+  --green:#2f8a58;
+  --red:#8a3b3b;
+  --purple:#7026a8;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at top,#29292f 0,#080809 55%);
+  color:var(--text);
+  font:16px/1.5 Arial,Helvetica,sans-serif;
+}
+
+button,
+input,
+select,
+textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  color:var(--gold2);
+}
+
+.top{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(7,7,8,.97);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(8px);
+}
+
+.nav{
+  max-width:1250px;
+  margin:auto;
+  padding:10px 12px;
+  display:flex;
+  gap:7px;
+  align-items:center;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+
+.nav::-webkit-scrollbar{
+  display:none;
+}
+
+.brand{
+  font-weight:800;
+  font-size:20px;
+  color:var(--gold);
+  margin-right:auto;
+  white-space:nowrap;
+}
+
+.nav button{
+  background:#1a1a20;
+  color:#fff;
+  border:1px solid #484850;
+  border-radius:9px;
+  padding:9px 11px;
+  white-space:nowrap;
+}
+
+.nav button:hover{
+  background:var(--gold);
+  color:#111;
+}
+
+section{
+  max-width:1200px;
+  margin:auto;
+  padding:60px 18px;
+}
+
+.hero{
+  max-width:none;
+  min-height:78vh;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  padding:50px 18px;
+  background:
+    linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.9)),
+    url('https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1800&q=85')
+    center/cover;
+}
+
+.hero-box{
+  max-width:900px;
+}
+
+.eyebrow{
+  color:var(--gold2);
+  text-transform:uppercase;
+  letter-spacing:3px;
+  font-size:12px;
+  font-weight:700;
+}
+
+.hero h1{
+  font-size:clamp(42px,8vw,82px);
+  line-height:1.05;
+  margin:12px 0;
+}
+
+.gold{
+  color:var(--gold);
+}
+
+.hero p{
+  max-width:720px;
+  margin:auto;
+  font-size:18px;
+  color:#ddd;
+}
+
+.cta{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:25px;
+}
+
+.btn{
+  display:inline-block;
+  border:0;
+  border-radius:10px;
+  padding:12px 18px;
+  font-weight:700;
+  text-decoration:none;
+  transition:.2s;
+}
+
+.btn:hover{
+  transform:translateY(-1px);
+  filter:brightness(1.08);
+}
+
+.btn-gold{
+  background:var(--gold);
+  color:#111;
+}
+
+.btn-dark{
+  background:#18181d;
+  color:#fff;
+  border:1px solid #555;
+}
+
+.btn-facebook{
+  background:var(--blue);
+  color:#fff;
+}
+
+.btn-instagram{
+  background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);
+  color:#fff;
+}
+
+.btn-radio{
+  background:var(--purple);
+  color:#fff;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:18px;
+}
+
+.card{
+  background:linear-gradient(145deg,#1d1d23,#101014);
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+}
+
+.card-body{
+  padding:20px;
+}
+
+.card-img{
+  height:220px;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+
+.gallery-img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  display:block;
+  background:#080809;
+}
+
+.muted{
+  color:var(--muted);
+}
+
+h2{
+  font-size:clamp(30px,5vw,42px);
+  margin:10px 0 25px;
+}
+
+h3{
+  color:var(--gold2);
+}
+
+.about{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:28px;
+  align-items:center;
+}
+
+.about-img{
+  min-height:380px;
+  border-radius:18px;
+  background:
+    url('https://images.unsplash.com/photo-1577083288073-40892c0860a4?auto=format&fit=crop&w=1000&q=85')
+    center/cover;
+}
+
+.quote{
+  border-left:4px solid var(--gold);
+  padding:10px 18px;
+}
+
+.contact{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+}
+
+.contact .card{
+  padding:22px;
+}
+
+.footer{
+  text-align:center;
+  border-top:1px solid var(--line);
+  padding:30px 18px;
+  color:#999;
+}
+
+/* RADIO */
+
+.radio-main{
+  background:
+    linear-gradient(145deg,#201527,#100d13);
+  border:1px solid #503c5d;
+  border-radius:20px;
+  padding:24px;
+}
+
+.radio-header{
+  text-align:center;
+  margin-bottom:22px;
+}
+
+.radio-logo{
+  font-size:42px;
+}
+
+.radio-title{
+  font-size:28px;
+  font-weight:800;
+  color:var(--gold2);
+}
+
+.radio-subtitle{
+  color:var(--muted);
+}
+
+.radio-controls{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+.radio-controls select,
+.radio-controls input{
+  flex:1;
+  min-width:180px;
+  background:#0d0d10;
+  color:#fff;
+  border:1px solid #484850;
+  border-radius:9px;
+  padding:11px;
+}
+
+.radio-station{
+  display:grid;
+  grid-template-columns:70px 1fr auto;
+  align-items:center;
+  gap:14px;
+  background:#111117;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:12px;
+  margin-bottom:10px;
+}
+
+.station-logo{
+  width:60px;
+  height:60px;
+  object-fit:contain;
+  border-radius:10px;
+  background:#080809;
+}
+
+.station-info{
+  min-width:0;
+}
+
+.station-name{
+  color:var(--gold2);
+  font-weight:800;
+}
+
+.station-country{
+  color:#999;
+  font-size:13px;
+}
+
+.station-tags{
+  color:#777;
+  font-size:12px;
+  margin-top:3px;
+}
+
+.radio-player{
+  width:100%;
+  margin:15px 0;
+}
+
+.radio-playing{
+  border-color:var(--gold);
+  box-shadow:0 0 0 1px rgba(215,180,90,.25);
+}
+
+.radio-status{
+  padding:12px;
+  border-radius:10px;
+  background:#15151a;
+  border:1px solid var(--line);
+  color:#bbb;
+  margin-bottom:15px;
+}
+
+.radio-status.ok{
+  border-color:var(--green);
+  color:#ddd;
+}
+
+.radio-status.err{
+  border-color:var(--red);
+}
+
+.radio-loading{
+  text-align:center;
+  padding:25px;
+  color:#aaa;
+}
+
+/* ADMIN */
+
+.admin-wrap{
+  background:rgba(12,12,15,.8);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:20px;
+}
+
+.admin-nav{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+.admin-nav button{
+  background:#1a1a20;
+  color:#fff;
+  border:1px solid #484850;
+  border-radius:9px;
+  padding:10px 14px;
+}
+
+.admin-nav button.active{
+  background:var(--gold);
+  color:#111;
+}
+
+.admin-section{
+  display:none;
+}
+
+.admin-section.active{
+  display:block;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.field.full{
+  grid-column:1/-1;
+}
+
+.field input,
+.field select,
+.field textarea{
+  width:100%;
+  background:#0d0d10;
+  color:#fff;
+  border:1px solid #484850;
+  border-radius:9px;
+  padding:11px;
+}
+
+.field textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+.filebox{
+  border:1px dashed #666;
+  border-radius:12px;
+  padding:14px;
+  background:#101014;
+}
+
+.filebox input{
+  width:100%;
+}
+
+.preview{
+  margin-top:12px;
+  display:none;
+  max-width:100%;
+  max-height:280px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  object-fit:contain;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
+.status{
+  margin:12px 0;
+  padding:11px 13px;
+  border-radius:10px;
+  background:#15151a;
+  border:1px solid var(--line);
+  display:none;
+}
+
+.status.show{
+  display:block;
+}
+
+.status.ok{
+  border-color:var(--green);
+}
+
+.status.err{
+  border-color:var(--red);
+}
+
+.login{
+  max-width:460px;
+}
+
+.manager-tools{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:15px 0;
+}
+
+.manager-tools input{
+  flex:1;
+  min-width:180px;
+  background:#0d0d10;
+  color:#fff;
+  border:1px solid #484850;
+  border-radius:9px;
+  padding:11px;
+}
+
+.image-card{
+  display:grid;
+  grid-template-columns:150px 1fr;
+  gap:14px;
+  padding:12px;
+  margin-bottom:12px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#101014;
+}
+
+.image-card img{
+  width:150px;
+  height:115px;
+  object-fit:cover;
+  border-radius:10px;
+  background:#080809;
+}
+
+.image-meta{
+  min-width:0;
+}
+
+.badge{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#292930;
+  color:var(--gold2);
+  font-size:12px;
+}
+
+.empty{
+  padding:30px;
+  text-align:center;
+  color:var(--muted);
+  border:1px dashed #444;
+  border-radius:12px;
+}
+
+.hidden{
+  display:none!important;
+}
+
+@media(max-width:750px){
+
+  section{
+    padding:45px 13px;
+  }
+
+  .hero{
+    min-height:75vh;
+  }
+
+  .about{
+    grid-template-columns:1fr;
+  }
+
+  .card-img,
+  .gallery-img{
+    height:200px;
+  }
+
+  .image-card{
+    grid-template-columns:1fr;
+  }
+
+  .image-card img{
+    width:100%;
+    height:220px;
+  }
+
+  .nav{
+    padding:9px 8px;
+  }
+
+  .brand{
+    font-size:17px;
+  }
+
+  .nav button{
+    padding:8px 9px;
+    font-size:13px;
+  }
+
+  .btn{
+    width:100%;
+    text-align:center;
+  }
+
+  .cta{
+    width:100%;
+    max-width:420px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  .radio-station{
+    grid-template-columns:55px 1fr;
+  }
+
+  .radio-station .btn{
+    grid-column:1/-1;
+  }
+
+  .station-logo{
+    width:50px;
+    height:50px;
+  }
+}
+
 </style>
 </head>
+
 <body>
-<header class="top"><div class="nav"><div class="brand">RoXThal Art Design</div><button onclick="go('inicio')">Inicio</button><button onclick="go('servicios')">Servicios</button><button onclick="go('galeria')">Galería</button><button onclick="go('cursos')">Cursos</button><button onclick="go('contacto')">Contacto</button><button onclick="go('admin')">Administrador</button></div></header>
-<section id="inicio" class="hero"><div class="hero-box"><div class="eyebrow">Arte · Diseño · Inclusión</div><h1>RoXThal <span class="gold">Art Design</span></h1><p>Arte, dibujo, pintura, tatuajes, fileteado porteño y formación artística en San Antonio de Padua.</p><div class="cta"><button class="btn btn-gold" onclick="go('galeria')">🖼️ Ver trabajos</button><a class="btn btn-dark" href="https://wa.me/5491169633376" target="_blank" rel="noopener">📱 WhatsApp</a><a class="btn btn-facebook" href="https://www.facebook.com/share/14qh98ko3w2/" target="_blank" rel="noopener">🔵 Facebook</a></div></div></section>
-<section id="servicios"><div class="eyebrow">Lo que hacemos</div><h2>Arte que se transforma</h2><div class="grid"><article class="card"><div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1611501275019-9b5c8c7b4a4a?auto=format&fit=crop&w=1000&q=85')"></div><div class="card-body"><h3>🎨 Tatuajes</h3><p class="muted">Diseños personalizados y trabajos con identidad propia.</p></div></article><article class="card"><div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1547891654-e66ed7ebb968?auto=format&fit=crop&w=1000&q=85')"></div><div class="card-body"><h3>🖌️ Fileteado Porteño</h3><p class="muted">Ornamentación, letras, flores y composición.</p></div></article><article class="card"><div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=1000&q=85')"></div><div class="card-body"><h3>✏️ Dibujo y Pintura</h3><p class="muted">Clases y acompañamiento para desarrollar técnica y expresión.</p></div></article><article class="card"><div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&w=1000&q=85')"></div><div class="card-body"><h3>👨‍🎨 Atelier de Arte</h3><p class="muted">Espacio artístico inclusivo para aprender y crear.</p></div></article></div></section>
-<section><div class="about"><div><div class="eyebrow">Nuestra identidad</div><h2>Del dibujo al soporte final</h2><p>En RoXThal Art Design unimos dibujo, pintura, tatuaje y diseño para crear trabajos con personalidad.</p><p class="quote">El arte es una forma de expresión, aprendizaje e identidad.</p><p>Promovemos creatividad, inclusión y desarrollo artístico.</p></div><div class="about-img"></div></div></section>
-<section id="galeria"><div class="eyebrow">Trabajos</div><h2>Galería</h2><p class="muted">Las imágenes visibles se cargan desde Supabase.</p><div id="publicGallery" class="grid"><div class="empty">Cargando galería…</div></div></section>
-<section id="cursos"><div class="eyebrow">Formación</div><h2>Cursos y talleres</h2><div class="grid"><article class="card"><div class="card-body"><h3>🎨 Dibujo y Pintura Profesional</h3><p>Clases personalizadas, técnica, composición y proyecto artístico.</p></div></article><article class="card"><div class="card-body"><h3>🖌️ Taller infantil</h3><p>Espacio inclusivo para desarrollar creatividad y expresión.</p></div></article><article class="card"><div class="card-body"><h3>🖋️ Iniciación al tatuaje</h3><p>Formación progresiva sobre dibujo, diseño y fundamentos del tatuaje.</p></div></article></div></section>
-<section id="contacto"><div class="eyebrow">Contacto</div><h2>Hablemos</h2><div class="contact"><div class="card"><h3>📱 WhatsApp</h3><p><a href="https://wa.me/5491169633376" target="_blank">11 6963-3376</a></p></div><div class="card"><h3>🔵 Facebook</h3><p><a href="https://www.facebook.com/share/14qh98ko3w2/" target="_blank">RoXThal Art Design</a></p></div><div class="card"><h3>📍 San Antonio de Padua</h3><p class="muted">Buenos Aires, Argentina</p></div></div></section>
-<section id="admin"><div class="eyebrow">Gestión</div><h2>Administrador</h2><div class="admin-wrap"><div id="loginPanel" class="login"><h3>🔐 Acceso</h3><div class="form-grid"><label class="field"><span>Email</span><input id="loginEmail" type="email" autocomplete="username"></label><label class="field"><span>Contraseña</span><input id="loginPassword" type="password" autocomplete="current-password"></label></div><div class="actions"><button class="btn btn-gold" onclick="login()">Entrar</button></div><div id="loginStatus" class="status"></div></div><div id="adminPanel" class="hidden"><div class="admin-nav"><button class="active" onclick="showAdmin('imagenes',this)">🖼️ Imágenes</button><button onclick="showAdmin('estado',this)">⚙️ Estado</button><button onclick="logout()">Salir</button></div><div id="admin-imagenes" class="admin-section active"><h3>Gestor de imágenes</h3><p class="muted">Selecciona una foto directamente desde el teléfono. Se subirá a Supabase Storage y se registrará en la tabla <b>images</b>.</p><div class="form-grid"><label class="field"><span>Título</span><input id="imageTitle" placeholder="Ej.: Retrato en acrílico"></label><label class="field"><span>Categoría</span><select id="imageCategory"><option value="obras">Obras</option><option value="tatuajes">Tatuajes</option><option value="dibujos">Dibujos</option><option value="pinturas">Pinturas</option><option value="otros">Otros</option></select></label><label class="field full"><span>Descripción</span><textarea id="imageDescription" placeholder="Descripción de la obra"></textarea></label><div class="field full"><span>📷 Imagen desde el teléfono</span><div class="filebox"><input id="imageFile" type="file" accept="image/*" capture="environment"><img id="imagePreview" class="preview" alt="Vista previa"></div></div></div><div class="actions"><button class="btn btn-gold" onclick="uploadImage()">☁️ Subir imagen</button><button class="btn btn-dark" onclick="resetForm()">Limpiar</button></div><div id="uploadStatus" class="status"></div><div class="manager-tools"><button class="btn btn-dark" onclick="loadImages()">🔄 Actualizar</button><input id="imageSearch" placeholder="Buscar imagen…" oninput="renderImages()"></div><div id="imageManager"></div></div><div id="admin-estado" class="admin-section"><h3>Estado de conexión</h3><div id="backendStatus" class="status show">Comprobando Supabase…</div><p class="muted">Bucket utilizado: <b>images</b>. Tabla utilizada: <b>images</b>.</p></div></div></div></section>
-<footer class="footer">© 2026 RoXThal Art Design</footer>
+
+
+<!-- =====================================================
+     NAVEGACIÓN
+===================================================== -->
+
+<header class="top">
+
+<div class="nav">
+
+<div class="brand">
+RoXThal Art Design
+</div>
+
+<button onclick="go('inicio')">
+Inicio
+</button>
+
+<button onclick="go('servicios')">
+Servicios
+</button>
+
+<button onclick="go('galeria')">
+Galería
+</button>
+
+<button onclick="go('radio')">
+📻 Radio
+</button>
+
+<button onclick="go('cursos')">
+Cursos
+</button>
+
+<button onclick="go('contacto')">
+Contacto
+</button>
+
+<button onclick="go('admin')">
+Administrador
+</button>
+
+</div>
+
+</header>
+
+
+<!-- =====================================================
+     INICIO
+===================================================== -->
+
+<section id="inicio" class="hero">
+
+<div class="hero-box">
+
+<div class="eyebrow">
+Arte · Diseño · Inclusión
+</div>
+
+<h1>
+RoXThal
+<span class="gold">
+Art Design
+</span>
+</h1>
+
+<p>
+Arte, dibujo, pintura, tatuajes, fileteado porteño,
+diseño y formación artística en San Antonio de Padua.
+</p>
+
+<div class="cta">
+
+<button
+class="btn btn-gold"
+onclick="go('galeria')">
+🖼️ Ver trabajos
+</button>
+
+<a
+class="btn btn-dark"
+href="https://wa.me/5491169633376"
+target="_blank"
+rel="noopener">
+📱 WhatsApp
+</a>
+
+<a
+class="btn btn-facebook"
+href="https://www.facebook.com/share/14qh98ko3w2/"
+target="_blank"
+rel="noopener">
+🔵 Facebook
+</a>
+
+<a
+class="btn btn-instagram"
+href="https://www.instagram.com/roxthalartdesign/"
+target="_blank"
+rel="noopener">
+📸 Instagram
+</a>
+
+<button
+class="btn btn-radio"
+onclick="go('radio')">
+📻 RoXThal Radio
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     SERVICIOS
+===================================================== -->
+
+<section id="servicios">
+
+<div class="eyebrow">
+Lo que hacemos
+</div>
+
+<h2>
+Arte que se transforma
+</h2>
+
+<div class="grid">
+
+
+<article class="card">
+
+<div
+class="card-img"
+style="background-image:url('https://images.unsplash.com/photo-1611501275019-9b5c8c7b4a4a?auto=format&fit=crop&w=1000&q=85')">
+</div>
+
+<div class="card-body">
+
+<h3>
+🎨 Tatuajes
+</h3>
+
+<p class="muted">
+Diseños personalizados y trabajos con identidad propia.
+</p>
+
+</div>
+
+</article>
+
+
+<article class="card">
+
+<div
+class="card-img"
+style="background-image:url('https://images.unsplash.com/photo-1547891654-e66ed7ebb968?auto=format&fit=crop&w=1000&q=85')">
+</div>
+
+<div class="card-body">
+
+<h3>
+🖌️ Fileteado Porteño
+</h3>
+
+<p class="muted">
+Ornamentación, letras, flores y composición.
+</p>
+
+</div>
+
+</article>
+
+
+<article class="card">
+
+<div
+class="card-img"
+style="background-image:url('https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=1000&q=85')">
+</div>
+
+<div class="card-body">
+
+<h3>
+✏️ Dibujo y Pintura
+</h3>
+
+<p class="muted">
+Clases y acompañamiento para desarrollar técnica y expresión.
+</p>
+
+</div>
+
+</article>
+
+
+<article class="card">
+
+<div
+class="card-img"
+style="background-image:url('https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&w=1000&q=85')">
+</div>
+
+<div class="card-body">
+
+<h3>
+👨‍🎨 Atelier de Arte
+</h3>
+
+<p class="muted">
+Espacio artístico inclusivo para aprender y crear.
+</p>
+
+</div>
+
+</article>
+
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     IDENTIDAD
+===================================================== -->
+
+<section>
+
+<div class="about">
+
+<div>
+
+<div class="eyebrow">
+Nuestra identidad
+</div>
+
+<h2>
+Del dibujo al soporte final
+</h2>
+
+<p>
+En RoXThal Art Design unimos dibujo,
+pintura, tatuaje y diseño para crear
+trabajos con personalidad.
+</p>
+
+<p class="quote">
+El arte es una forma de expresión,
+aprendizaje e identidad.
+</p>
+
+<p>
+Promovemos creatividad, inclusión
+y desarrollo artístico.
+</p>
+
+</div>
+
+<div class="about-img"></div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     GALERÍA
+===================================================== -->
+
+<section id="galeria">
+
+<div class="eyebrow">
+Trabajos
+</div>
+
+<h2>
+Galería
+</h2>
+
+<p class="muted">
+Las imágenes publicadas se cargan automáticamente
+desde Supabase.
+</p>
+
+<div
+id="publicGallery"
+class="grid">
+
+<div class="empty">
+Cargando galería…
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     RADIO
+===================================================== -->
+
+<section id="radio">
+
+<div class="eyebrow">
+Música para acompañar el arte
+</div>
+
+<h2>
+📻 RoXThal Radio
+</h2>
+
+<div class="radio-main">
+
+<div class="radio-header">
+
+<div class="radio-logo">
+🎵
+</div>
+
+<div class="radio-title">
+Radio Musical
+</div>
+
+<div class="radio-subtitle">
+Emisoras de diferentes estilos y lugares del mundo.
+</div>
+
+</div>
+
+
+<div
+id="radioStatus"
+class="radio-status">
+Selecciona un género para cargar emisoras.
+</div>
+
+
+<div class="radio-controls">
+
+<select
+id="radioGenre"
+onchange="loadRadioStations()">
+
+<option value="">
+🎵 Todos los estilos
+</option>
+
+<option value="rock">
+🎸 Rock
+</option>
+
+<option value="pop">
+🎤 Pop
+</option>
+
+<option value="electronic">
+🎧 Electrónica
+</option>
+
+<option value="jazz">
+🎷 Jazz
+</option>
+
+<option value="blues">
+🎺 Blues
+</option>
+
+<option value="classical">
+🎻 Clásica
+</option>
+
+<option value="reggae">
+🌴 Reggae
+</option>
+
+<option value="latin">
+💃 Latina
+</option>
+
+<option value="tango">
+💃 Tango
+</option>
+
+<option value="folk">
+🪕 Folk
+</option>
+
+<option value="metal">
+🤘 Metal
+</option>
+
+<option value="hiphop">
+🎤 Hip-Hop
+</option>
+
+<option value="soul">
+🎙️ Soul
+</option>
+
+<option value="country">
+🤠 Country
+</option>
+
+<option value="ambient">
+🌌 Ambient
+</option>
+
+<option value="world">
+🌎 World
+</option>
+
+</select>
+
+
+<input
+id="radioSearch"
+type="search"
+placeholder="🔎 Buscar emisora…"
+oninput="filterRadioStations()">
+
+</div>
+
+
+<audio
+id="radioPlayer"
+class="radio-player"
+controls
+preload="none">
+</audio>
+
+
+<div
+id="radioStations">
+
+<div class="radio-loading">
+🎵 Cargando emisoras…
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     CURSOS
+===================================================== -->
+
+<section id="cursos">
+
+<div class="eyebrow">
+Formación
+</div>
+
+<h2>
+Cursos y talleres
+</h2>
+
+<div class="grid">
+
+
+<article class="card">
+
+<div class="card-body">
+
+<h3>
+🎨 Dibujo y Pintura Profesional
+</h3>
+
+<p>
+Clases personalizadas, técnica,
+composición y proyecto artístico.
+</p>
+
+</div>
+
+</article>
+
+
+<article class="card">
+
+<div class="card-body">
+
+<h3>
+🖌️ Taller infantil
+</h3>
+
+<p>
+Espacio inclusivo para desarrollar
+creatividad y expresión.
+</p>
+
+</div>
+
+</article>
+
+
+<article class="card">
+
+<div class="card-body">
+
+<h3>
+🖋️ Iniciación al tatuaje
+</h3>
+
+<p>
+Formación progresiva sobre dibujo,
+diseño y fundamentos del tatuaje.
+</p>
+
+</div>
+
+</article>
+
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     CONTACTO
+===================================================== -->
+
+<section id="contacto">
+
+<div class="eyebrow">
+Contacto
+</div>
+
+<h2>
+Hablemos
+</h2>
+
+<div class="contact">
+
+
+<div class="card">
+
+<h3>
+📱 WhatsApp
+</h3>
+
+<p>
+<a
+href="https://wa.me/5491169633376"
+target="_blank"
+rel="noopener">
+11 6963-3376
+</a>
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+🔵 Facebook
+</h3>
+
+<p>
+
+<a
+href="https://www.facebook.com/share/14qh98ko3w2/"
+target="_blank"
+rel="noopener">
+RoXThal Art Design
+</a>
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+📸 Instagram
+</h3>
+
+<p>
+
+<a
+href="https://www.instagram.com/roxthalartdesign/"
+target="_blank"
+rel="noopener">
+@roxthalartdesign
+</a>
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+📍 San Antonio de Padua
+</h3>
+
+<p class="muted">
+Buenos Aires, Argentina
+</p>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     ADMINISTRADOR
+===================================================== -->
+
+<section id="admin">
+
+<div class="eyebrow">
+Gestión
+</div>
+
+<h2>
+Administrador
+</h2>
+
+<div class="admin-wrap">
+
+
+<!-- LOGIN -->
+
+<div
+id="loginPanel"
+class="login">
+
+<h3>
+🔐 Acceso
+</h3>
+
+<div class="form-grid">
+
+<label class="field">
+
+<span>
+Email
+</span>
+
+<input
+id="loginEmail"
+type="email"
+autocomplete="username">
+
+</label>
+
+
+<label class="field">
+
+<span>
+Contraseña
+</span>
+
+<input
+id="loginPassword"
+type="password"
+autocomplete="current-password">
+
+</label>
+
+</div>
+
+<div class="actions">
+
+<button
+class="btn btn-gold"
+onclick="login()">
+Entrar
+</button>
+
+</div>
+
+<div
+id="loginStatus"
+class="status">
+</div>
+
+</div>
+
+
+<!-- PANEL ADMIN -->
+
+<div
+id="adminPanel"
+class="hidden">
+
+
+<div class="admin-nav">
+
+<button
+class="active"
+onclick="showAdmin('imagenes',this)">
+🖼️ Imágenes
+</button>
+
+<button
+onclick="showAdmin('estado',this)">
+⚙️ Estado
+</button>
+
+<button onclick="logout()">
+Salir
+</button>
+
+</div>
+
+
+<!-- IMÁGENES -->
+
+<div
+id="admin-imagenes"
+class="admin-section active">
+
+<h3>
+Gestor de imágenes
+</h3>
+
+<p class="muted">
+Selecciona una imagen directamente desde el teléfono.
+El sistema comprueba el archivo, genera una vista previa
+y reduce automáticamente fotografías demasiado grandes
+antes de enviarlas al almacenamiento.
+</p>
+
+
+<div class="form-grid">
+
+
+<label class="field">
+
+<span>
+Título
+</span>
+
+<input
+id="imageTitle"
+placeholder="Ej.: Retrato en acrílico">
+
+</label>
+
+
+<label class="field">
+
+<span>
+Categoría
+</span>
+
+<select id="imageCategory">
+
+<option value="obras">
+Obras
+</option>
+
+<option value="tatuajes">
+Tatuajes
+</option>
+
+<option value="dibujos">
+Dibujos
+</option>
+
+<option value="pinturas">
+Pinturas
+</option>
+
+<option value="otros">
+Otros
+</option>
+
+</select>
+
+</label>
+
+
+<label class="field full">
+
+<span>
+Descripción
+</span>
+
+<textarea
+id="imageDescription"
+placeholder="Descripción de la obra">
+</textarea>
+
+</label>
+
+
+<div class="field full">
+
+<span>
+📷 Imagen desde el teléfono
+</span>
+
+<div class="filebox">
+
+<input
+id="imageFile"
+type="file"
+accept="image/*"
+capture="environment">
+
+<img
+id="imagePreview"
+class="preview"
+alt="Vista previa">
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="actions">
+
+<button
+class="btn btn-gold"
+onclick="uploadImage()">
+☁️ Subir imagen
+</button>
+
+<button
+class="btn btn-dark"
+onclick="resetForm()">
+Limpiar
+</button>
+
+</div>
+
+
+<div
+id="uploadStatus"
+class="status">
+</div>
+
+
+<div class="manager-tools">
+
+<button
+class="btn btn-dark"
+onclick="loadImages()">
+🔄 Actualizar
+</button>
+
+<input
+id="imageSearch"
+placeholder="Buscar imagen…"
+oninput="renderImages()">
+
+</div>
+
+
+<div id="imageManager"></div>
+
+</div>
+
+
+<!-- ESTADO -->
+
+<div
+id="admin-estado"
+class="admin-section">
+
+<h3>
+Estado de conexión
+</h3>
+
+<div
+id="backendStatus"
+class="status show">
+Comprobando Supabase…
+</div>
+
+<p class="muted">
+Bucket utilizado:
+<b>images</b>
+</p>
+
+<p class="muted">
+Tabla utilizada:
+<b>images</b>
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<footer class="footer">
+
+© 2026 RoXThal Art Design
+
+</footer>
+
+
 <script>
-const SUPABASE_URL='https://lvvhpuedktdmfehvhcwk.supabase.co';
-const SUPABASE_ANON_KEY='sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp';
-const BUCKET='images';
-let sb=null, images=[], editingId=null;
-const $=id=>document.getElementById(id);
-function go(id){$(id)?.scrollIntoView({behavior:'smooth',block:'start'})}
-function status(id,msg,type=''){const el=$(id);if(!el)return;el.textContent=msg;el.className='status show '+type}
-function esc(v=''){return String(v).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
-function cat(v){return ({obras:'Obras',tatuajes:'Tatuajes',dibujos:'Dibujos',pinturas:'Pinturas',otros:'Otros'})[v]||v||'Otros'}
-async function init(){try{sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);status('backendStatus','✅ Supabase conectado.','ok');const {data:{session}}=await sb.auth.getSession();if(session)showLoggedIn(session);await loadPublic();}catch(e){status('backendStatus','❌ Error inicializando Supabase: '+e.message,'err');}}
-async function login(){try{if(!sb)throw Error('Supabase no está disponible.');const email=$('loginEmail').value.trim(),password=$('loginPassword').value;if(!email||!password)throw Error('Introduce email y contraseña.');const {data,error}=await sb.auth.signInWithPassword({email,password});if(error)throw error;showLoggedIn(data.session);status('loginStatus','✅ Sesión iniciada.','ok');await loadImages();}catch(e){status('loginStatus','❌ '+e.message,'err')}}
-function showLoggedIn(session){$('loginPanel').classList.add('hidden');$('adminPanel').classList.remove('hidden');}
-async function logout(){await sb?.auth.signOut();$('adminPanel').classList.add('hidden');$('loginPanel').classList.remove('hidden');}
-function showAdmin(id,btn){document.querySelectorAll('.admin-section').forEach(x=>x.classList.remove('active'));$('admin-'+id).classList.add('active');document.querySelectorAll('.admin-nav button').forEach(x=>x.classList.remove('active'));btn?.classList.add('active')}
-$('imageFile')?.addEventListener('change',e=>{const f=e.target.files?.[0];const img=$('imagePreview');if(!f){img.style.display='none';return}if(!f.type.startsWith('image/')){status('uploadStatus','❌ Selecciona una imagen válida.','err');e.target.value='';return}const r=new FileReader();r.onload=()=>{img.src=r.result;img.style.display='block'};r.readAsDataURL(f)})
-async function uploadImage(){try{if(!sb)throw Error('Supabase no está conectado.');const {data:{session}}=await sb.auth.getSession();if(!session)throw Error('Debes iniciar sesión.');const file=$('imageFile').files?.[0];if(!file)throw Error('Selecciona una imagen desde el teléfono.');const title=$('imageTitle').value.trim()||file.name.replace(/\.[^.]+$/,'');const category=$('imageCategory').value;const description=$('imageDescription').value.trim();const ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'');const path=`${Date.now()}-${crypto.randomUUID()}.${ext}`;status('uploadStatus','⏳ Subiendo imagen…');const up=await sb.storage.from(BUCKET).upload(path,file,{cacheControl:'3600',upsert:false,contentType:file.type});if(up.error)throw up.error;const pub=sb.storage.from(BUCKET).getPublicUrl(path);const {data,error}=await sb.from('images').insert({title,category,url:pub.data.publicUrl,description,visible:true}).select().single();if(error){await sb.storage.from(BUCKET).remove([path]);throw error}status('uploadStatus','✅ Imagen subida y guardada correctamente.','ok');resetForm();await loadImages();await loadPublic();}catch(e){status('uploadStatus','❌ '+(e.message||e),'err')}}
-function resetForm(){editingId=null;$('imageTitle').value='';$('imageDescription').value='';$('imageFile').value='';$('imagePreview').style.display='none'}
-async function loadImages(){if(!sb)return;const {data,error}=await sb.from('images').select('*').order('created_at',{ascending:false});if(error){status('uploadStatus','❌ No se pudieron cargar las imágenes: '+error.message,'err');return}images=data||[];renderImages()}
-function renderImages(){const q=($('imageSearch')?.value||'').toLowerCase();const list=images.filter(x=>(x.title||'').toLowerCase().includes(q)||(x.category||'').toLowerCase().includes(q));$('imageManager').innerHTML=list.length?list.map(x=>`<article class="image-card"><img src="${esc(x.url)}" alt="${esc(x.title)}"><div class="image-meta"><h3>${esc(x.title||'Sin título')}</h3><span class="badge">${esc(cat(x.category))}</span><p class="muted">${esc(x.description||'')}</p><p>${x.visible?'🟢 Visible':'⚪ Oculta'}</p><div class="actions"><button class="btn btn-dark" onclick="toggleVisible('${x.id}',${!x.visible})">${x.visible?'Ocultar':'Mostrar'}</button><button class="btn btn-dark" onclick="deleteImage('${x.id}')">🗑️ Eliminar</button></div></div></article>`).join(''):'<div class="empty">No hay imágenes para mostrar.</div>'}
-async function toggleVisible(id,visible){const {error}=await sb.from('images').update({visible,updated_at:new Date().toISOString()}).eq('id',id);if(error){alert('Error: '+error.message);return}await loadImages();await loadPublic()}
-async function deleteImage(id){if(!confirm('¿Eliminar esta imagen de la galería?'))return;const item=images.find(x=>String(x.id)===String(id));const {error}=await sb.from('images').delete().eq('id',id);if(error){alert('Error: '+error.message);return}if(item?.url){const m=item.url.match(/\/storage\/v1\/object\/public\/images\/(.+)$/);if(m)await sb.storage.from(BUCKET).remove([decodeURIComponent(m[1])])}await loadImages();await loadPublic()}
-async function loadPublic(){const box=$('publicGallery');if(!sb||!box)return;const {data,error}=await sb.from('images').select('id,title,category,url,description,visible,created_at').eq('visible',true).order('created_at',{ascending:false});if(error){box.innerHTML='<div class="empty">La galería todavía no está disponible.</div>';return}box.innerHTML=data?.length?data.map(x=>`<article class="card"><div class="card-img" style="background-image:url('${esc(x.url)}')"></div><div class="card-body"><h3>${esc(x.title||'Obra')}</h3><span class="badge">${esc(cat(x.category))}</span><p class="muted">${esc(x.description||'')}</p></div></article>`).join(''):'<div class="empty">Todavía no hay trabajos publicados.</div>'}
-window.addEventListener('DOMContentLoaded',init);
+
+/* =====================================================
+   SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+'https://lvvhpuedktdmfehvhcwk.supabase.co';
+
+const SUPABASE_ANON_KEY =
+'sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp';
+
+const BUCKET =
+'images';
+
+
+let sb=null;
+
+let images=[];
+
+let uploading=false;
+
+let radioStations=[];
+
+let currentRadioStation=null;
+
+
+/* =====================================================
+   UTILIDADES
+===================================================== */
+
+const $ =
+id => document.getElementById(id);
+
+
+function go(id){
+
+const el=$(id);
+
+if(el){
+
+el.scrollIntoView({
+behavior:'smooth',
+block:'start'
+});
+
+}
+
+}
+
+
+function status(id,msg,type=''){
+
+const el=$(id);
+
+if(!el)return;
+
+el.textContent=msg;
+
+el.className='status show '+type;
+
+}
+
+
+function esc(v=''){
+
+return String(v).replace(
+/[&<>'"]/g,
+c=>({
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+"'":'&#39;',
+'"':'&quot;'
+}[c])
+);
+
+}
+
+
+function cat(v){
+
+return ({
+obras:'Obras',
+tatuajes:'Tatuajes',
+dibujos:'Dibujos',
+pinturas:'Pinturas',
+otros:'Otros'
+})[v]||v||'Otros';
+
+}
+
+
+/* =====================================================
+   INICIALIZACIÓN
+===================================================== */
+
+async function init(){
+
+try{
+
+if(!window.supabase){
+
+throw new Error(
+'No se pudo cargar Supabase.'
+);
+
+}
+
+sb=
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_ANON_KEY
+);
+
+
+status(
+'backendStatus',
+'✅ Supabase conectado.',
+'ok'
+);
+
+
+const {
+data:{session}
+}=
+await sb.auth.getSession();
+
+
+if(session){
+
+showLoggedIn();
+
+await loadImages();
+
+}
+
+
+await loadPublic();
+
+loadRadioStations();
+
+}catch(e){
+
+console.error(e);
+
+status(
+'backendStatus',
+'❌ Error inicializando Supabase: '+e.message,
+'err'
+);
+
+}
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+async function login(){
+
+try{
+
+if(!sb){
+
+throw new Error(
+'Supabase no está disponible.'
+);
+
+}
+
+
+const email=
+$('loginEmail').value.trim();
+
+const password=
+$('loginPassword').value;
+
+
+if(!email||!password){
+
+throw new Error(
+'Introduce email y contraseña.'
+);
+
+}
+
+
+status(
+'loginStatus',
+'⏳ Iniciando sesión…'
+);
+
+
+const {
+data,
+error
+}=
+await sb.auth.signInWithPassword({
+email,
+password
+});
+
+
+if(error)throw error;
+
+
+showLoggedIn();
+
+
+status(
+'loginStatus',
+'✅ Sesión iniciada correctamente.',
+'ok'
+);
+
+
+await loadImages();
+
+
+}catch(e){
+
+status(
+'loginStatus',
+'❌ '+(e.message||e),
+'err'
+);
+
+}
+
+}
+
+
+function showLoggedIn(){
+
+$('loginPanel')
+.classList
+.add('hidden');
+
+$('adminPanel')
+.classList
+.remove('hidden');
+
+}
+
+
+async function logout(){
+
+try{
+
+await sb?.auth.signOut();
+
+}finally{
+
+$('adminPanel')
+.classList
+.add('hidden');
+
+$('loginPanel')
+.classList
+.remove('hidden');
+
+}
+
+}
+
+
+/* =====================================================
+   ADMIN
+===================================================== */
+
+function showAdmin(id,btn){
+
+document
+.querySelectorAll('.admin-section')
+.forEach(x=>
+x.classList.remove('active')
+);
+
+
+$('admin-'+id)
+.classList
+.add('active');
+
+
+document
+.querySelectorAll('.admin-nav button')
+.forEach(x=>
+x.classList.remove('active')
+);
+
+
+btn?.classList.add('active');
+
+}
+
+
+/* =====================================================
+   VISTA PREVIA
+===================================================== */
+
+$('imageFile')
+?.addEventListener(
+'change',
+handleFilePreview
+);
+
+
+function handleFilePreview(e){
+
+const file=
+e.target.files?.[0];
+
+const img=
+$('imagePreview');
+
+
+if(!file){
+
+img.style.display='none';
+
+return;
+
+}
+
+
+if(!file.type.startsWith('image/')){
+
+status(
+'uploadStatus',
+'❌ El archivo seleccionado no es una imagen.',
+'err'
+);
+
+e.target.value='';
+
+img.style.display='none';
+
+return;
+
+}
+
+
+const reader=
+new FileReader();
+
+
+reader.onload=()=>{
+
+img.src=reader.result;
+
+img.style.display='block';
+
+};
+
+
+reader.onerror=()=>{
+
+img.style.display='none';
+
+};
+
+
+reader.readAsDataURL(file);
+
+}
+
+
+/* =====================================================
+   COMPRESIÓN
+===================================================== */
+
+async function compressImage(file){
+
+const MAX_SIZE=
+5*1024*1024;
+
+
+if(file.size<=MAX_SIZE){
+
+return file;
+
+}
+
+
+let bitmap;
+
+
+try{
+
+bitmap=
+await createImageBitmap(file);
+
+}catch{
+
+return file;
+
+}
+
+
+const MAX_WIDTH=1800;
+
+const MAX_HEIGHT=1800;
+
+
+let width=bitmap.width;
+
+let height=bitmap.height;
+
+
+const ratio=
+Math.min(
+1,
+MAX_WIDTH/width,
+MAX_HEIGHT/height
+);
+
+
+width=
+Math.round(width*ratio);
+
+height=
+Math.round(height*ratio);
+
+
+const canvas=
+document.createElement('canvas');
+
+
+canvas.width=width;
+
+canvas.height=height;
+
+
+const ctx=
+canvas.getContext('2d');
+
+
+ctx.drawImage(
+bitmap,
+0,
+0,
+width,
+height
+);
+
+
+const blob=
+await new Promise(resolve=>
+canvas.toBlob(
+resolve,
+'image/jpeg',
+.85
+)
+);
+
+
+if(!blob){
+
+return file;
+
+}
+
+
+const name=
+file.name
+.replace(/\.[^.]+$/,'')
+.replace(/[^a-z0-9_\-]/gi,'_');
+
+
+return new File(
+[blob],
+name+'.jpg',
+{
+type:'image/jpeg',
+lastModified:Date.now()
+}
+);
+
+}
+
+
+/* =====================================================
+   SUBIR IMAGEN
+===================================================== */
+
+async function uploadImage(){
+
+if(uploading)return;
+
+
+try{
+
+uploading=true;
+
+
+if(!sb){
+
+throw new Error(
+'Supabase no está conectado.'
+);
+
+}
+
+
+const {
+data:{session}
+}=
+await sb.auth.getSession();
+
+
+if(!session){
+
+throw new Error(
+'Debes iniciar sesión como administrador.'
+);
+
+}
+
+
+const file=
+$('imageFile').files?.[0];
+
+
+if(!file){
+
+throw new Error(
+'Selecciona una imagen desde el teléfono.'
+);
+
+}
+
+
+const title=
+$('imageTitle')
+.value
+.trim()||
+file.name
+.replace(/\.[^.]+$/,'');
+
+
+const category=
+$('imageCategory').value;
+
+
+const description=
+$('imageDescription')
+.value
+.trim();
+
+
+status(
+'uploadStatus',
+'⏳ Preparando imagen…'
+);
+
+
+const processed=
+await compressImage(file);
+
+
+status(
+'uploadStatus',
+'☁️ Subiendo imagen…'
+);
+
+
+const ext=
+(
+processed.name
+.split('.')
+.pop()||
+'jpg'
+)
+.toLowerCase()
+.replace(/[^a-z0-9]/g,'');
+
+
+const uuid=
+crypto.randomUUID
+?crypto.randomUUID()
+:Math.random()
+.toString(36)
+.slice(2);
+
+
+const path=
+`${Date.now()}-${uuid}.${ext}`;
+
+
+const upload=
+await sb
+.storage
+.from(BUCKET)
+.upload(
+path,
+processed,
+{
+cacheControl:'3600',
+upsert:false,
+contentType:
+processed.type||
+'image/jpeg'
+}
+);
+
+
+if(upload.error){
+
+throw upload.error;
+
+}
+
+
+const publicData=
+sb
+.storage
+.from(BUCKET)
+.getPublicUrl(path);
+
+
+const publicUrl=
+publicData
+?.data
+?.publicUrl;
+
+
+if(!publicUrl){
+
+await sb
+.storage
+.from(BUCKET)
+.remove([path]);
+
+throw new Error(
+'No se pudo obtener la URL pública.'
+);
+
+}
+
+
+status(
+'uploadStatus',
+'💾 Guardando información…'
+);
+
+
+const {
+error
+}=
+await sb
+.from('images')
+.insert({
+title,
+category,
+url:publicUrl,
+description,
+visible:true
+});
+
+
+if(error){
+
+await sb
+.storage
+.from(BUCKET)
+.remove([path]);
+
+throw error;
+
+}
+
+
+status(
+'uploadStatus',
+'✅ Imagen subida y publicada correctamente.',
+'ok'
+);
+
+
+resetForm();
+
+await loadImages();
+
+await loadPublic();
+
+
+}catch(e){
+
+console.error(e);
+
+status(
+'uploadStatus',
+'❌ '+(e.message||e),
+'err'
+);
+
+}finally{
+
+uploading=false;
+
+}
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+function resetForm(){
+
+$('imageTitle').value='';
+
+$('imageDescription').value='';
+
+$('imageFile').value='';
+
+$('imagePreview').src='';
+
+$('imagePreview').style.display='none';
+
+}
+
+
+/* =====================================================
+   CARGAR IMÁGENES
+===================================================== */
+
+async function loadImages(){
+
+if(!sb)return;
+
+
+const {
+data,
+error
+}=
+await sb
+.from('images')
+.select('*')
+.order(
+'created_at',
+{
+ascending:false
+}
+);
+
+
+if(error){
+
+status(
+'uploadStatus',
+'❌ No se pudieron cargar las imágenes: '+error.message,
+'err'
+);
+
+return;
+
+}
+
+
+images=data||[];
+
+renderImages();
+
+}
+
+
+/* =====================================================
+   RENDER ADMIN
+===================================================== */
+
+function renderImages(){
+
+const box=
+$('imageManager');
+
+if(!box)return;
+
+
+const q=
+(
+$('imageSearch')
+?.value||
+''
+)
+.toLowerCase()
+.trim();
+
+
+const list=
+images.filter(x=>
+
+(x.title||'')
+.toLowerCase()
+.includes(q)
+
+||
+
+(x.category||'')
+.toLowerCase()
+.includes(q)
+
+||
+
+(x.description||'')
+.toLowerCase()
+.includes(q)
+
+);
+
+
+if(!list.length){
+
+box.innerHTML=
+'<div class="empty">No hay imágenes para mostrar.</div>';
+
+return;
+
+}
+
+
+box.innerHTML=
+list
+.map(x=>`
+
+<article class="image-card">
+
+<img
+src="${esc(x.url)}"
+alt="${esc(x.title||'Imagen')}"
+loading="lazy">
+
+<div class="image-meta">
+
+<h3>
+${esc(x.title||'Sin título')}
+</h3>
+
+<span class="badge">
+${esc(cat(x.category))}
+</span>
+
+<p class="muted">
+${esc(x.description||'')}
+</p>
+
+<p>
+${x.visible
+?'🟢 Visible'
+:'⚪ Oculta'}
+</p>
+
+<div class="actions">
+
+<button
+class="btn btn-dark"
+onclick="toggleVisible('${esc(x.id)}',${!x.visible})">
+
+${x.visible
+?'Ocultar'
+:'Mostrar'}
+
+</button>
+
+<button
+class="btn btn-dark"
+onclick="deleteImage('${esc(x.id)}')">
+
+🗑️ Eliminar
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+`)
+.join('');
+
+}
+
+
+/* =====================================================
+   MOSTRAR / OCULTAR
+===================================================== */
+
+async function toggleVisible(id,visible){
+
+try{
+
+const {
+error
+}=
+await sb
+.from('images')
+.update({
+visible,
+updated_at:
+new Date().toISOString()
+})
+.eq('id',id);
+
+
+if(error)throw error;
+
+
+await loadImages();
+
+await loadPublic();
+
+
+}catch(e){
+
+alert(
+'Error: '+e.message
+);
+
+}
+
+}
+
+
+/* =====================================================
+   ELIMINAR
+===================================================== */
+
+async function deleteImage(id){
+
+if(
+!confirm(
+'¿Eliminar esta imagen de la galería?'
+)
+){
+
+return;
+
+}
+
+
+try{
+
+const item=
+images.find(
+x=>String(x.id)===String(id)
+);
+
+
+const {
+error
+}=
+await sb
+.from('images')
+.delete()
+.eq('id',id);
+
+
+if(error)throw error;
+
+
+if(item?.url){
+
+try{
+
+const marker=
+'/storage/v1/object/public/';
+
+const index=
+item.url.indexOf(marker);
+
+
+if(index!==-1){
+
+const rest=
+item.url.slice(
+index+marker.length
+);
+
+const slash=
+rest.indexOf('/');
+
+
+if(slash!==-1){
+
+const bucket=
+rest.slice(0,slash);
+
+const filePath=
+decodeURIComponent(
+rest.slice(slash+1)
+);
+
+
+if(bucket===BUCKET){
+
+await sb
+.storage
+.from(BUCKET)
+.remove([filePath]);
+
+}
+
+}
+
+}
+
+}catch(storageError){
+
+console.warn(
+'Error eliminando archivo:',
+storageError
+);
+
+}
+
+}
+
+
+await loadImages();
+
+await loadPublic();
+
+
+}catch(e){
+
+alert(
+'Error eliminando imagen: '+e.message
+);
+
+}
+
+}
+
+
+/* =====================================================
+   GALERÍA PÚBLICA
+===================================================== */
+
+async function loadPublic(){
+
+const box=
+$('publicGallery');
+
+if(!sb||!box)return;
+
+
+const {
+data,
+error
+}=
+await sb
+.from('images')
+.select(
+'id,title,category,url,description,visible,created_at'
+)
+.eq('visible',true)
+.order(
+'created_at',
+{
+ascending:false
+}
+);
+
+
+if(error){
+
+console.error(error);
+
+box.innerHTML=
+'<div class="empty">La galería todavía no está disponible.</div>';
+
+return;
+
+}
+
+
+if(!data?.length){
+
+box.innerHTML=
+'<div class="empty">Todavía no hay trabajos publicados.</div>';
+
+return;
+
+}
+
+
+box.innerHTML=
+data
+.map(x=>`
+
+<article class="card">
+
+<img
+class="gallery-img"
+src="${esc(x.url)}"
+alt="${esc(x.title||'Obra de RoXThal Art Design')}"
+loading="lazy">
+
+<div class="card-body">
+
+<h3>
+${esc(x.title||'Obra')}
+</h3>
+
+<span class="badge">
+${esc(cat(x.category))}
+</span>
+
+<p class="muted">
+${esc(x.description||'')}
+</p>
+
+</div>
+
+</article>
+
+`)
+.join('');
+
+}
+
+
+/* =====================================================
+   RADIO
+===================================================== */
+
+const RADIO_APIS=[
+'https://de1.api.radio-browser.info',
+'https://nl1.api.radio-browser.info',
+'https://at1.api.radio-browser.info'
+];
+
+
+let radioApiIndex=0;
+
+
+async function radioFetch(path){
+
+let lastError=null;
+
+
+for(
+let i=0;
+i<RADIO_APIS.length;
+i++
+){
+
+const base=
+RADIO_APIS[
+(radioApiIndex+i)%RADIO_APIS.length
+];
+
+
+try{
+
+const response=
+await fetch(
+base+path,
+{
+headers:{
+'Accept':'application/json'
+}
+}
+);
+
+
+if(!response.ok){
+
+throw new Error(
+'HTTP '+response.status
+);
+
+}
+
+
+radioApiIndex=
+(RADIO_APIS.indexOf(base));
+
+return await response.json();
+
+
+}catch(e){
+
+lastError=e;
+
+}
+
+}
+
+
+throw lastError||
+new Error(
+'No se pudo conectar con el servicio de radio.'
+);
+
+}
+
+
+/* =====================================================
+   CARGAR EMISORAS
+===================================================== */
+
+async function loadRadioStations(){
+
+const genre=
+$('radioGenre').value;
+
+const box=
+$('radioStations');
+
+const stat=
+$('radioStatus');
+
+
+box.innerHTML=
+'<div class="radio-loading">📡 Buscando emisoras…</div>';
+
+
+stat.className=
+'radio-status';
+
+stat.textContent=
+'Buscando emisoras musicales disponibles…';
+
+
+try{
+
+let path;
+
+
+if(genre){
+
+path=
+'/json/stations/bytag/' +
+encodeURIComponent(genre) +
+'?limit=60&hidebroken=true&order=clickcount&reverse=true';
+
+}else{
+
+path=
+'/json/stations/search?limit=60&hidebroken=true&order=clickcount&reverse=true&is_https=true';
+
+}
+
+
+const data=
+await radioFetch(path);
+
+
+radioStations=
+(Array.isArray(data)?data:[])
+.filter(
+station=>
+station.url_resolved||
+station.url
+)
+.slice(0,60);
+
+
+renderRadioStations();
+
+
+stat.className=
+'radio-status ok';
+
+stat.textContent=
+radioStations.length
+?`🎵 ${radioStations.length} emisoras encontradas.`
+:'No se encontraron emisoras para este género.';
+
+
+}catch(e){
+
+console.error(e);
+
+box.innerHTML=
+`
+<div class="empty">
+❌ No se pudieron cargar las emisoras.
+<br><br>
+Comprueba la conexión a Internet e inténtalo nuevamente.
+</div>
+`;
+
+stat.className=
+'radio-status err';
+
+stat.textContent=
+'No se pudo conectar con el servicio de radio.';
+
+}
+
+}
+
+
+/* =====================================================
+   RENDER RADIO
+===================================================== */
+
+function renderRadioStations(){
+
+const box=
+$('radioStations');
+
+
+const q=
+(
+$('radioSearch')
+?.value||
+''
+)
+.toLowerCase()
+.trim();
+
+
+const list=
+radioStations.filter(station=>
+
+(station.name||'')
+.toLowerCase()
+.includes(q)
+
+||
+
+(station.country||'')
+.toLowerCase()
+.includes(q)
+
+||
+
+(station.tags||'')
+.toLowerCase()
+.includes(q)
+
+);
+
+
+if(!list.length){
+
+box.innerHTML=
+`
+<div class="empty">
+No hay emisoras que coincidan con la búsqueda.
+</div>
+`;
+
+return;
+
+}
+
+
+box.innerHTML=
+list
+.map((station,index)=>{
+
+const stream=
+station.url_resolved||
+station.url||
+'';
+
+
+const logo=
+station.favicon||
+'';
+
+
+const name=
+station.name||
+'Emisora';
+
+
+const country=
+station.country||
+'Internacional';
+
+
+const tags=
+station.tags||
+'';
+
+
+return `
+
+<div
+class="radio-station"
+id="station-${index}">
+
+${
+logo
+?
+`
+<img
+class="station-logo"
+src="${esc(logo)}"
+alt=""
+loading="lazy"
+onerror="this.style.visibility='hidden'">
+`
+:
+`
+<div class="station-logo"
+style="
+display:grid;
+place-items:center;
+font-size:25px;
+">
+📻
+</div>
+`
+}
+
+
+<div class="station-info">
+
+<div class="station-name">
+${esc(name)}
+</div>
+
+<div class="station-country">
+${esc(country)}
+</div>
+
+<div class="station-tags">
+${esc(tags)}
+</div>
+
+</div>
+
+
+<button
+class="btn btn-gold"
+onclick="playStation(${index})">
+
+▶️ Escuchar
+
+</button>
+
+</div>
+
+`;
+
+})
+.join('');
+
+}
+
+
+/* =====================================================
+   FILTRO RADIO
+===================================================== */
+
+function filterRadioStations(){
+
+renderRadioStations();
+
+}
+
+
+/* =====================================================
+   REPRODUCIR EMISORA
+===================================================== */
+
+async function playStation(index){
+
+const station=
+radioStations.filter(station=>{
+
+const q=
+(
+$('radioSearch')
+?.value||
+''
+)
+.toLowerCase()
+.trim();
+
+return (
+station.name||''
+)
+.toLowerCase()
+.includes(q)
+
+||
+
+(
+station.country||''
+)
+.toLowerCase()
+.includes(q)
+
+||
+
+(
+station.tags||''
+)
+.toLowerCase()
+.includes(q);
+
+})[index];
+
+
+if(!station)return;
+
+
+const player=
+$('radioPlayer');
+
+
+const stream=
+station.url_resolved||
+station.url;
+
+
+if(!stream){
+
+alert(
+'Esta emisora no tiene una dirección de reproducción disponible.'
+);
+
+return;
+
+}
+
+
+try{
+
+player.pause();
+
+player.src=stream;
+
+currentRadioStation=station;
+
+await player.play();
+
+
+document
+.querySelectorAll('.radio-station')
+.forEach(x=>
+x.classList.remove('radio-playing')
+);
+
+
+const elements=
+document.querySelectorAll(
+'.radio-station'
+);
+
+
+if(elements[index]){
+
+elements[index]
+.classList
+.add('radio-playing');
+
+}
+
+
+$('radioStatus').className=
+'radio-status ok';
+
+$('radioStatus').textContent=
+'🔴 Escuchando: '+
+(station.name||'Radio');
+
+
+player.scrollIntoView({
+behavior:'smooth',
+block:'center'
+});
+
+
+}catch(e){
+
+console.error(e);
+
+$('radioStatus').className=
+'radio-status err';
+
+$('radioStatus').textContent=
+'⚠️ Esta emisora no permite reproducción directa en este navegador. Prueba otra emisora.';
+
+}
+
+}
+
+
+/* =====================================================
+   EVENTOS DEL REPRODUCTOR
+===================================================== */
+
+$('radioPlayer')
+?.addEventListener(
+'error',
+()=>{
+
+$('radioStatus').className=
+'radio-status err';
+
+$('radioStatus').textContent=
+'⚠️ La emisora dejó de estar disponible. Puedes seleccionar otra.';
+
+}
+);
+
+
+$('radioPlayer')
+?.addEventListener(
+'ended',
+()=>{
+
+$('radioStatus').className=
+'radio-status';
+
+$('radioStatus').textContent=
+'Radio detenida.';
+
+}
+);
+
+
+/* =====================================================
+   ARRANQUE
+===================================================== */
+
+window.addEventListener(
+'DOMContentLoaded',
+init
+);
+
 </script>
-</body></html>
+
+</body>
+</html>
