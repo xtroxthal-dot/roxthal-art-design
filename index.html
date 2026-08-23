@@ -5,10 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>RoXThal Art Design</title>
 
-<meta
-  name="description"
-  content="RoXThal Art Design — arte, dibujo, pintura, tatuajes, radio y formación artística."
->
+<meta name="description" content="RoXThal Art Design — arte, dibujo, pintura, tatuajes, radio y formación artística.">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -273,6 +270,149 @@ h3{
   border-top:1px solid var(--line);
   padding:30px 18px;
   color:#999;
+}
+
+
+/* =====================================================
+   GALERÍA
+===================================================== */
+
+.gallery-card{
+  cursor:pointer;
+  transition:
+    transform .18s ease,
+    border-color .18s ease;
+}
+
+.gallery-card:hover{
+  transform:translateY(-3px);
+  border-color:var(--gold);
+}
+
+.gallery-card .card-img{
+  position:relative;
+}
+
+.gallery-card .card-img::after{
+  content:"🔍 Ver imagen";
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  background:rgba(0,0,0,.45);
+  opacity:0;
+  transition:opacity .18s ease;
+  color:#fff;
+  font-weight:700;
+}
+
+.gallery-card:hover .card-img::after{
+  opacity:1;
+}
+
+
+/* =====================================================
+   VISOR DE GALERÍA
+===================================================== */
+
+.lightbox{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(0,0,0,.92);
+}
+
+.lightbox.open{
+  display:flex;
+}
+
+.lightbox-content{
+  position:relative;
+  width:min(1100px,100%);
+  max-height:94vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+.lightbox-image{
+  max-width:100%;
+  max-height:72vh;
+  object-fit:contain;
+  border-radius:14px;
+  border:1px solid var(--line);
+  box-shadow:0 15px 50px rgba(0,0,0,.65);
+}
+
+.lightbox-info{
+  width:min(850px,100%);
+  margin-top:12px;
+  padding:14px 18px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:rgba(18,18,22,.97);
+  text-align:center;
+}
+
+.lightbox-info h3{
+  margin:0 0 4px;
+}
+
+.lightbox-info p{
+  margin:7px 0 0;
+  color:#ccc;
+}
+
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next{
+  position:absolute;
+  border:1px solid #666;
+  background:rgba(15,15,18,.9);
+  color:#fff;
+  border-radius:50%;
+  width:46px;
+  height:46px;
+  display:grid;
+  place-items:center;
+  font-size:22px;
+  z-index:2;
+}
+
+.lightbox-close{
+  right:0;
+  top:0;
+}
+
+.lightbox-prev{
+  left:0;
+  top:50%;
+  transform:translateY(-50%);
+}
+
+.lightbox-next{
+  right:0;
+  top:50%;
+  transform:translateY(-50%);
+}
+
+.lightbox-close:hover,
+.lightbox-prev:hover,
+.lightbox-next:hover{
+  background:var(--gold);
+  color:#111;
+  border-color:var(--gold);
+}
+
+.lightbox-counter{
+  margin-top:8px;
+  color:#aaa;
+  font-size:13px;
 }
 
 
@@ -612,6 +752,39 @@ h3{
     width:100%;
   }
 
+  .lightbox{
+    padding:10px;
+  }
+
+  .lightbox-image{
+    max-height:62vh;
+  }
+
+  .lightbox-close{
+    right:4px;
+    top:4px;
+  }
+
+  .lightbox-prev,
+  .lightbox-next{
+    top:auto;
+    bottom:105px;
+    transform:none;
+  }
+
+  .lightbox-prev{
+    left:15px;
+  }
+
+  .lightbox-next{
+    right:15px;
+  }
+
+  .lightbox-info{
+    padding:11px 12px;
+    margin-top:8px;
+  }
+
 }
 
 </style>
@@ -752,7 +925,6 @@ Arte que se transforma
 
 <div class="grid">
 
-
 <article class="card">
 
 <div
@@ -860,7 +1032,6 @@ para aprender y crear.
 
 </article>
 
-
 </div>
 
 </section>
@@ -924,7 +1095,7 @@ Galería
 </h2>
 
 <p class="muted">
-Las imágenes visibles se cargan desde Supabase.
+Toca una imagen para verla en grande.
 </p>
 
 <div
@@ -956,7 +1127,6 @@ Cursos y talleres
 </h2>
 
 <div class="grid">
-
 
 <article class="card">
 
@@ -1011,7 +1181,6 @@ diseño y fundamentos del tatuaje.
 
 </article>
 
-
 </div>
 
 </section>
@@ -1019,7 +1188,6 @@ diseño y fundamentos del tatuaje.
 
 <!-- =====================================================
      RADIO
-     OCULTA HASTA PULSAR EL BOTÓN
 ===================================================== -->
 
 <section id="radio">
@@ -1121,7 +1289,6 @@ placeholder="🔎 Buscar emisora..."
 
 </div>
 
-
 <div
 id="radioStatus"
 class="radio-status"
@@ -1129,14 +1296,12 @@ class="radio-status"
 Elegí un estilo musical para comenzar.
 </div>
 
-
 <audio
 id="radioPlayer"
 class="radio-player"
 controls
 preload="none"
 ></audio>
-
 
 <div id="radioStations">
 
@@ -1166,7 +1331,6 @@ Hablemos
 </h2>
 
 <div class="contact">
-
 
 <div class="card">
 
@@ -1243,7 +1407,6 @@ Buenos Aires, Argentina
 
 </div>
 
-
 </div>
 
 </section>
@@ -1265,7 +1428,6 @@ Administrador
 
 <div class="admin-wrap">
 
-
 <div
 id="loginPanel"
 class="login"
@@ -1276,7 +1438,6 @@ class="login"
 </h3>
 
 <div class="form-grid">
-
 
 <label class="field">
 
@@ -1307,9 +1468,7 @@ autocomplete="current-password"
 
 </label>
 
-
 </div>
-
 
 <div class="actions">
 
@@ -1321,7 +1480,6 @@ Entrar
 </button>
 
 </div>
-
 
 <div
 id="loginStatus"
@@ -1335,7 +1493,6 @@ class="status"
 id="adminPanel"
 class="hidden"
 >
-
 
 <div class="admin-nav">
 
@@ -1377,9 +1534,7 @@ y se registrará en la tabla
 <b>images</b>.
 </p>
 
-
 <div class="form-grid">
-
 
 <label class="field">
 
@@ -1467,9 +1622,7 @@ alt="Vista previa"
 
 </div>
 
-
 </div>
-
 
 <div class="actions">
 
@@ -1489,12 +1642,10 @@ Limpiar
 
 </div>
 
-
 <div
 id="uploadStatus"
 class="status"
 ></div>
-
 
 <div class="manager-tools">
 
@@ -1512,7 +1663,6 @@ oninput="renderImages()"
 >
 
 </div>
-
 
 <div id="imageManager"></div>
 
@@ -1544,7 +1694,6 @@ Tabla utilizada:
 
 </div>
 
-
 </div>
 
 </div>
@@ -1557,6 +1706,73 @@ Tabla utilizada:
 © 2026 RoXThal Art Design
 
 </footer>
+
+
+<!-- =====================================================
+     VISOR DE GALERÍA
+===================================================== -->
+
+<div
+id="galleryLightbox"
+class="lightbox"
+role="dialog"
+aria-modal="true"
+aria-label="Visor de galería"
+>
+
+<div class="lightbox-content">
+
+<button
+class="lightbox-close"
+onclick="closeLightbox()"
+aria-label="Cerrar"
+>
+✕
+</button>
+
+<button
+class="lightbox-prev"
+onclick="changeLightbox(-1)"
+aria-label="Anterior"
+>
+‹
+</button>
+
+<img
+id="lightboxImage"
+class="lightbox-image"
+alt=""
+>
+
+<button
+class="lightbox-next"
+onclick="changeLightbox(1)"
+aria-label="Siguiente"
+>
+›
+</button>
+
+<div class="lightbox-info">
+
+<h3 id="lightboxTitle"></h3>
+
+<span
+id="lightboxCategory"
+class="badge"
+></span>
+
+<p id="lightboxDescription"></p>
+
+<div
+id="lightboxCounter"
+class="lightbox-counter"
+></div>
+
+</div>
+
+</div>
+
+</div>
 
 
 <script>
@@ -1598,10 +1814,6 @@ function go(id){
 
 }
 
-
-/* =====================================================
-   RADIO: ABRIR / OCULTAR
-===================================================== */
 
 function openRadio(){
 
@@ -2419,6 +2631,11 @@ async function deleteImage(id){
    GALERÍA PÚBLICA
 ===================================================== */
 
+let imagesForGallery = [];
+
+let lightboxIndex = 0;
+
+
 async function loadPublic(){
 
   const box =
@@ -2464,6 +2681,10 @@ async function loadPublic(){
   }
 
 
+  imagesForGallery =
+    data || [];
+
+
   box.innerHTML =
 
     data?.length
@@ -2471,9 +2692,15 @@ async function loadPublic(){
     ?
 
     data.map(
-      x => `
+      (x,index) => `
 
-<article class="card">
+<article
+class="card gallery-card"
+onclick="openLightbox(${index})"
+tabindex="0"
+role="button"
+aria-label="Ver ${esc(x.title || 'Obra')}"
+>
 
 <div
 class="card-img"
@@ -2511,7 +2738,231 @@ ${esc(x.description || '')}
     </div>
     `;
 
+
+  document
+    .querySelectorAll('.gallery-card')
+    .forEach(
+      (card,index) => {
+
+        card.addEventListener(
+          'keydown',
+          e => {
+
+            if(
+              e.key === 'Enter' ||
+              e.key === ' '
+            ){
+
+              e.preventDefault();
+
+              openLightbox(index);
+
+            }
+
+          }
+        );
+
+      }
+    );
+
 }
+
+
+/* =====================================================
+   ABRIR GALERÍA
+===================================================== */
+
+function openLightbox(index){
+
+  if(
+    !imagesForGallery.length
+  ){
+    return;
+  }
+
+
+  lightboxIndex =
+    index;
+
+
+  renderLightbox();
+
+
+  $('galleryLightbox')
+    .classList
+    .add('open');
+
+
+  document.body.style.overflow =
+    'hidden';
+
+}
+
+
+/* =====================================================
+   CERRAR GALERÍA
+===================================================== */
+
+function closeLightbox(){
+
+  $('galleryLightbox')
+    .classList
+    .remove('open');
+
+
+  document.body.style.overflow =
+    '';
+
+}
+
+
+/* =====================================================
+   MOSTRAR IMAGEN
+===================================================== */
+
+function renderLightbox(){
+
+  const item =
+    imagesForGallery[
+      lightboxIndex
+    ];
+
+
+  if(!item){
+    return;
+  }
+
+
+  $('lightboxImage')
+    .src =
+    item.url;
+
+
+  $('lightboxImage')
+    .alt =
+    item.title ||
+    'Obra';
+
+
+  $('lightboxTitle')
+    .textContent =
+    item.title ||
+    'Obra';
+
+
+  $('lightboxCategory')
+    .textContent =
+    cat(
+      item.category
+    );
+
+
+  $('lightboxDescription')
+    .textContent =
+    item.description ||
+    '';
+
+
+  $('lightboxCounter')
+    .textContent =
+    `${lightboxIndex + 1} / ${imagesForGallery.length}`;
+
+}
+
+
+/* =====================================================
+   SIGUIENTE / ANTERIOR
+===================================================== */
+
+function changeLightbox(
+  step
+){
+
+  if(
+    !imagesForGallery.length
+  ){
+    return;
+  }
+
+
+  lightboxIndex =
+    (
+      lightboxIndex +
+      step +
+      imagesForGallery.length
+    )
+    %
+    imagesForGallery.length;
+
+
+  renderLightbox();
+
+}
+
+
+/* =====================================================
+   CERRAR TOCANDO FUERA
+===================================================== */
+
+$('galleryLightbox')
+?.addEventListener(
+  'click',
+  e => {
+
+    if(
+      e.target ===
+      $('galleryLightbox')
+    ){
+
+      closeLightbox();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   TECLADO GALERÍA
+===================================================== */
+
+document.addEventListener(
+  'keydown',
+  e => {
+
+    if(
+      !$('galleryLightbox')
+      ?.classList
+      .contains('open')
+    ){
+
+      return;
+
+    }
+
+
+    if(e.key === 'Escape'){
+
+      closeLightbox();
+
+    }
+
+
+    if(e.key === 'ArrowLeft'){
+
+      changeLightbox(-1);
+
+    }
+
+
+    if(e.key === 'ArrowRight'){
+
+      changeLightbox(1);
+
+    }
+
+  }
+);
 
 
 /* =====================================================
@@ -2527,6 +2978,7 @@ const RADIO_APIS = [
   'https://at1.api.radio-browser.info'
 
 ];
+
 
 let radioApiIndex = 0;
 
