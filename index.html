@@ -6406,3 +6406,268 @@ if(
 })();
 
 </script>
+<!-- ============================================
+     PARTE 8
+     DIAGNÓSTICO REAL DE SUPABASE
+============================================ -->
+
+<script>
+
+(function () {
+
+  function showSupabaseStatus(type, message) {
+
+    let status =
+      document.getElementById("supabaseStatus");
+
+    if (!status) {
+
+      console.log(message);
+
+      return;
+
+    }
+
+    status.className =
+      "supabase-status " + type;
+
+    status.textContent =
+      message;
+
+  }
+
+
+  async function testSupabaseDatabase() {
+
+    try {
+
+      const result =
+        await roxthalSupabase
+          .from("images")
+          .select("id")
+          .limit(1);
+
+
+      const data =
+        result.data;
+
+      const error =
+        result.error;
+
+
+      if (error) {
+
+        console.error(
+          "❌ Supabase responde, pero la tabla images dio error:",
+          error
+        );
+
+        showSupabaseStatus(
+          "error",
+          "🟠 Supabase conectado, pero hay un problema con la tabla images."
+        );
+
+        return;
+
+      }
+
+
+      console.log(
+        "🟢 Consulta Supabase correcta.",
+        data
+      );
+
+
+      showSupabaseStatus(
+        "success",
+        "🟢 Supabase conectado correctamente."
+      );
+
+
+    } catch (error) {
+
+      console.error(
+        "❌ Error comunicando con Supabase:",
+        error
+      );
+
+      showSupabaseStatus(
+        "error",
+        "🔴 Error comunicando con Supabase."
+      );
+
+    }
+
+  }
+
+
+  function checkSupabaseConnection() {
+
+    /* ================================
+       COMPROBAR LIBRERÍA
+    ================================= */
+
+    if (
+      typeof window.supabase ===
+      "undefined"
+    ) {
+
+      console.error(
+        "❌ La librería de Supabase no está cargada."
+      );
+
+      showSupabaseStatus(
+        "error",
+        "🔴 La librería de Supabase no se ha cargado."
+      );
+
+      return;
+
+    }
+
+
+    /* ================================
+       COMPROBAR CLIENTE
+    ================================= */
+
+    if (
+      typeof roxthalSupabase ===
+      "undefined" ||
+      !roxthalSupabase
+    ) {
+
+      console.error(
+        "❌ El cliente de Supabase no está inicializado."
+      );
+
+      showSupabaseStatus(
+        "error",
+        "🔴 Supabase todavía no está conectado."
+      );
+
+      return;
+
+    }
+
+
+    /* ================================
+       CLIENTE CORRECTO
+    ================================= */
+
+    console.log(
+      "🟢 Cliente Supabase inicializado."
+    );
+
+
+    showSupabaseStatus(
+      "success",
+      "🟢 Cliente Supabase inicializado."
+    );
+
+
+    /* ================================
+       PRUEBA REAL DE BASE DE DATOS
+    ================================= */
+
+    testSupabaseDatabase();
+
+  }
+
+
+  /* ================================
+     EJECUTAR AL CARGAR
+  ================================= */
+
+  function startSupabaseDiagnostic() {
+
+    setTimeout(
+      checkSupabaseConnection,
+      1500
+    );
+
+  }
+
+
+  if (
+    document.readyState ===
+    "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      startSupabaseDiagnostic
+    );
+
+  } else {
+
+    startSupabaseDiagnostic();
+
+  }
+
+})();
+
+</script>
+
+
+<style>
+
+/* ============================================
+   ESTADO DE SUPABASE
+============================================ */
+
+.supabase-status {
+
+  margin:
+    12px 0;
+
+  padding:
+    10px 13px;
+
+  border-radius:
+    8px;
+
+  font-size:
+    13px;
+
+  border:
+    1px solid transparent;
+
+}
+
+
+/* ============================================
+   CONECTADO
+============================================ */
+
+.supabase-status.success {
+
+  background:
+    rgba(70,180,100,.10);
+
+  color:
+    #78d895;
+
+  border-color:
+    rgba(70,180,100,.25);
+
+}
+
+
+/* ============================================
+   ERROR
+============================================ */
+
+.supabase-status.error {
+
+  background:
+    rgba(210,80,80,.10);
+
+  color:
+    #ed8b8b;
+
+  border-color:
+    rgba(210,80,80,.25);
+
+}
+
+</style>
