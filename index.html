@@ -200,6 +200,16 @@ section{
   color:#fff;
 }
 
+.btn-green{
+  background:var(--green);
+  color:#fff;
+}
+
+.btn-red{
+  background:var(--red);
+  color:#fff;
+}
+
 .grid{
   display:grid;
   grid-template-columns:
@@ -283,7 +293,7 @@ h3{
 
 
 /* =====================================================
-   VISOR DE GALERÍA
+   VISOR
 ===================================================== */
 
 .image-viewer{
@@ -493,7 +503,7 @@ h3{
 
 
 /* =====================================================
-   ADMINISTRADOR
+   ADMIN
 ===================================================== */
 
 .admin-wrap{
@@ -620,6 +630,16 @@ h3{
   margin:15px 0;
 }
 
+.manager-tools input{
+  flex:1;
+  min-width:220px;
+  background:#0d0d10;
+  color:#fff;
+  border:1px solid #484850;
+  border-radius:9px;
+  padding:11px;
+}
+
 .image-card{
   display:grid;
   grid-template-columns:140px 1fr;
@@ -640,6 +660,7 @@ h3{
   height:110px;
   object-fit:cover;
   border-radius:10px;
+  cursor:pointer;
 }
 
 .image-meta{
@@ -669,7 +690,125 @@ h3{
 
 
 /* =====================================================
-   MÓVIL
+   ALUMNOS
+===================================================== */
+
+.student-card{
+  background:#101014;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:16px;
+  margin-bottom:12px;
+}
+
+.student-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.student-name{
+  color:var(--gold2);
+  font-size:20px;
+  font-weight:700;
+}
+
+.student-data{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(180px,1fr));
+  gap:10px;
+  margin-top:12px;
+}
+
+.data-box{
+  background:#18181d;
+  border:1px solid #303038;
+  border-radius:10px;
+  padding:10px;
+}
+
+.data-label{
+  color:#888;
+  font-size:12px;
+}
+
+.data-value{
+  color:#fff;
+  font-weight:600;
+}
+
+.student-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:14px;
+}
+
+.summary-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(180px,1fr));
+  gap:12px;
+  margin-bottom:18px;
+}
+
+.summary-card{
+  background:
+    linear-gradient(
+      145deg,
+      #202027,
+      #111116
+    );
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:18px;
+}
+
+.summary-number{
+  font-size:28px;
+  color:var(--gold);
+  font-weight:800;
+}
+
+.summary-label{
+  color:#aaa;
+  font-size:13px;
+}
+
+.payment-card{
+  background:#101014;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:13px;
+  margin-bottom:9px;
+}
+
+.payment-row{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(150px,1fr));
+  gap:10px;
+}
+
+.amount{
+  color:#77d69a;
+  font-weight:800;
+}
+
+.student-edit-box{
+  margin-top:14px;
+  padding:15px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#15151a;
+}
+
+
+/* =====================================================
+   MOVIL
 ===================================================== */
 
 @media(max-width:750px){
@@ -770,10 +909,7 @@ Administrador
      INICIO
 ===================================================== -->
 
-<section
-id="inicio"
-class="hero"
->
+<section id="inicio" class="hero">
 
 <div class="hero-box">
 
@@ -852,7 +988,6 @@ Arte que se transforma
 </h2>
 
 <div class="grid">
-
 
 <article class="card">
 
@@ -961,7 +1096,6 @@ para aprender y crear.
 
 </article>
 
-
 </div>
 
 </section>
@@ -1058,7 +1192,6 @@ Cursos y talleres
 
 <div class="grid">
 
-
 <article class="card">
 
 <div class="card-body">
@@ -1112,7 +1245,6 @@ diseño y fundamentos del tatuaje.
 
 </article>
 
-
 </div>
 
 </section>
@@ -1147,69 +1279,22 @@ las emisoras disponibles.
 Elegir estilo musical...
 </option>
 
-<option value="rock">
-🎸 Rock
-</option>
-
-<option value="pop">
-🎤 Pop
-</option>
-
-<option value="electronic">
-🎧 Electrónica
-</option>
-
-<option value="jazz">
-🎷 Jazz
-</option>
-
-<option value="blues">
-🎺 Blues
-</option>
-
-<option value="classical">
-🎻 Clásica
-</option>
-
-<option value="reggae">
-🌴 Reggae
-</option>
-
-<option value="latin">
-💃 Latina
-</option>
-
-<option value="tango">
-🎼 Tango
-</option>
-
-<option value="folk">
-🪕 Folk
-</option>
-
-<option value="metal">
-🤘 Metal
-</option>
-
-<option value="hiphop">
-🎤 Hip-Hop
-</option>
-
-<option value="soul">
-🎙️ Soul
-</option>
-
-<option value="country">
-🤠 Country
-</option>
-
-<option value="ambient">
-🌌 Ambient
-</option>
-
-<option value="world">
-🌎 World
-</option>
+<option value="rock">🎸 Rock</option>
+<option value="pop">🎤 Pop</option>
+<option value="electronic">🎧 Electrónica</option>
+<option value="jazz">🎷 Jazz</option>
+<option value="blues">🎺 Blues</option>
+<option value="classical">🎻 Clásica</option>
+<option value="reggae">🌴 Reggae</option>
+<option value="latin">💃 Latina</option>
+<option value="tango">🎼 Tango</option>
+<option value="folk">🪕 Folk</option>
+<option value="metal">🤘 Metal</option>
+<option value="hiphop">🎤 Hip-Hop</option>
+<option value="soul">🎙️ Soul</option>
+<option value="country">🤠 Country</option>
+<option value="ambient">🌌 Ambient</option>
+<option value="world">🌎 World</option>
 
 </select>
 
@@ -1221,7 +1306,6 @@ placeholder="🔎 Buscar emisora..."
 
 </div>
 
-
 <div
 id="radioStatus"
 class="radio-status"
@@ -1229,14 +1313,12 @@ class="radio-status"
 Elegí un estilo musical para comenzar.
 </div>
 
-
 <audio
 id="radioPlayer"
 class="radio-player"
 controls
 preload="none"
 ></audio>
-
 
 <div id="radioStations">
 
@@ -1266,7 +1348,6 @@ Hablemos
 </h2>
 
 <div class="contact">
-
 
 <div class="card">
 
@@ -1343,14 +1424,13 @@ Buenos Aires, Argentina
 
 </div>
 
-
 </div>
 
 </section>
 
 
 <!-- =====================================================
-     ADMIN
+     ADMINISTRADOR
 ===================================================== -->
 
 <section id="admin">
@@ -1366,23 +1446,19 @@ Administrador
 <div class="admin-wrap">
 
 
-<div
-id="loginPanel"
-class="login"
->
+<!-- LOGIN -->
+
+<div id="loginPanel" class="login">
 
 <h3>
-🔐 Acceso
+🔐 Acceso administrador
 </h3>
 
 <div class="form-grid">
 
-
 <label class="field">
 
-<span>
-Email
-</span>
+<span>Email</span>
 
 <input
 id="loginEmail"
@@ -1395,9 +1471,7 @@ autocomplete="username"
 
 <label class="field">
 
-<span>
-Contraseña
-</span>
+<span>Contraseña</span>
 
 <input
 id="loginPassword"
@@ -1407,9 +1481,7 @@ autocomplete="current-password"
 
 </label>
 
-
 </div>
-
 
 <div class="actions">
 
@@ -1422,7 +1494,6 @@ Entrar
 
 </div>
 
-
 <div
 id="loginStatus"
 class="status"
@@ -1430,6 +1501,8 @@ class="status"
 
 </div>
 
+
+<!-- PANEL ADMIN -->
 
 <div
 id="adminPanel"
@@ -1447,6 +1520,18 @@ onclick="showAdmin('imagenes',this)"
 </button>
 
 <button
+onclick="showAdmin('alumnos',this)"
+>
+👨‍🎓 Alumnos
+</button>
+
+<button
+onclick="showAdmin('pagos',this)"
+>
+💰 Pagos
+</button>
+
+<button
 onclick="showAdmin('estado',this)"
 >
 ⚙️ Estado
@@ -1461,13 +1546,17 @@ Salir
 </div>
 
 
+<!-- ===================================================
+     IMÁGENES
+=================================================== -->
+
 <div
 id="admin-imagenes"
 class="admin-section active"
 >
 
 <h3>
-Gestor de imágenes
+🖼️ Gestor de imágenes
 </h3>
 
 <p class="muted">
@@ -1476,15 +1565,11 @@ Se subirá a Supabase Storage y se
 registrará en la tabla <b>images</b>.
 </p>
 
-
 <div class="form-grid">
-
 
 <label class="field">
 
-<span>
-Título
-</span>
+<span>Título</span>
 
 <input
 id="imageTitle"
@@ -1496,31 +1581,15 @@ placeholder="Ej.: Retrato en acrílico"
 
 <label class="field">
 
-<span>
-Categoría
-</span>
+<span>Categoría</span>
 
 <select id="imageCategory">
 
-<option value="obras">
-Obras
-</option>
-
-<option value="tatuajes">
-Tatuajes
-</option>
-
-<option value="dibujos">
-Dibujos
-</option>
-
-<option value="pinturas">
-Pinturas
-</option>
-
-<option value="otros">
-Otros
-</option>
+<option value="obras">Obras</option>
+<option value="tatuajes">Tatuajes</option>
+<option value="dibujos">Dibujos</option>
+<option value="pinturas">Pinturas</option>
+<option value="otros">Otros</option>
 
 </select>
 
@@ -1529,9 +1598,7 @@ Otros
 
 <label class="field full">
 
-<span>
-Descripción
-</span>
+<span>Descripción</span>
 
 <textarea
 id="imageDescription"
@@ -1552,7 +1619,7 @@ placeholder="Descripción de la obra"
 <input
 id="imageFile"
 type="file"
-accept="image/*"
+accept="image/jpeg,image/png,image/webp,image/gif"
 >
 
 <img
@@ -1564,7 +1631,6 @@ alt="Vista previa"
 </div>
 
 </div>
-
 
 </div>
 
@@ -1617,13 +1683,417 @@ oninput="renderImages()"
 </div>
 
 
+<!-- ===================================================
+     ALUMNOS
+=================================================== -->
+
+<div
+id="admin-alumnos"
+class="admin-section"
+>
+
+<h3>
+👨‍🎓 Control de alumnos
+</h3>
+
+<p class="muted">
+Desde aquí puedes registrar, modificar,
+consultar y eliminar alumnos.
+</p>
+
+
+<div class="form-grid">
+
+<label class="field">
+
+<span>Nombre y apellido</span>
+
+<input
+id="studentName"
+placeholder="Nombre completo"
+>
+
+</label>
+
+
+<label class="field">
+
+<span>Teléfono</span>
+
+<input
+id="studentPhone"
+type="tel"
+placeholder="11 0000-0000"
+>
+
+</label>
+
+
+<label class="field">
+
+<span>Email</span>
+
+<input
+id="studentEmail"
+type="email"
+placeholder="alumno@email.com"
+>
+
+</label>
+
+
+<label class="field">
+
+<span>Curso</span>
+
+<select id="studentCourse">
+
+<option value="Dibujo y Pintura">
+Dibujo y Pintura
+</option>
+
+<option value="Taller infantil">
+Taller infantil
+</option>
+
+<option value="Iniciación al tatuaje">
+Iniciación al tatuaje
+</option>
+
+<option value="Fileteado Porteño">
+Fileteado Porteño
+</option>
+
+<option value="Otro">
+Otro
+</option>
+
+</select>
+
+</label>
+
+
+<label class="field">
+
+<span>Estado</span>
+
+<select id="studentStatus">
+
+<option value="activo">
+Activo
+</option>
+
+<option value="inactivo">
+Inactivo
+</option>
+
+</select>
+
+</label>
+
+
+<label class="field">
+
+<span>Fecha de inscripción</span>
+
+<input
+id="studentDate"
+type="date"
+>
+
+</label>
+
+
+<label class="field full">
+
+<span>Notas</span>
+
+<textarea
+id="studentNotes"
+placeholder="Notas sobre el alumno..."
+></textarea>
+
+</label>
+
+</div>
+
+
+<div class="actions">
+
+<button
+class="btn btn-gold"
+onclick="saveStudent()"
+>
+💾 Guardar alumno
+</button>
+
+<button
+class="btn btn-dark"
+onclick="resetStudentForm()"
+>
+Limpiar
+</button>
+
+</div>
+
+
+<div
+id="studentStatus"
+class="status"
+></div>
+
+
+<div class="manager-tools">
+
+<button
+class="btn btn-dark"
+onclick="loadStudents()"
+>
+🔄 Actualizar
+</button>
+
+<input
+id="studentSearch"
+placeholder="🔎 Buscar alumno..."
+oninput="renderStudents()"
+>
+
+</div>
+
+
+<div id="studentManager"></div>
+
+</div>
+
+
+<!-- ===================================================
+     PAGOS
+=================================================== -->
+
+<div
+id="admin-pagos"
+class="admin-section"
+>
+
+<h3>
+💰 Control de pagos
+</h3>
+
+<p class="muted">
+Registro administrativo de pagos.
+Esta sección <b>no realiza cobros online</b>.
+</p>
+
+
+<div class="summary-grid">
+
+<div class="summary-card">
+
+<div
+id="summaryStudents"
+class="summary-number"
+>
+0
+</div>
+
+<div class="summary-label">
+Alumnos
+</div>
+
+</div>
+
+
+<div class="summary-card">
+
+<div
+id="summaryPayments"
+class="summary-number"
+>
+0
+</div>
+
+<div class="summary-label">
+Pagos registrados
+</div>
+
+</div>
+
+
+<div class="summary-card">
+
+<div
+id="summaryTotal"
+class="summary-number"
+>
+$0
+</div>
+
+<div class="summary-label">
+Total registrado
+</div>
+
+</div>
+
+</div>
+
+
+<h3>
+Registrar pago
+</h3>
+
+
+<div class="form-grid">
+
+<label class="field">
+
+<span>Alumno</span>
+
+<select id="paymentStudent">
+
+<option value="">
+Seleccionar alumno...
+</option>
+
+</select>
+
+</label>
+
+
+<label class="field">
+
+<span>Importe</span>
+
+<input
+id="paymentAmount"
+type="number"
+min="0"
+step="0.01"
+placeholder="0"
+>
+
+</label>
+
+
+<label class="field">
+
+<span>Fecha</span>
+
+<input
+id="paymentDate"
+type="date"
+>
+
+</label>
+
+
+<label class="field">
+
+<span>Medio de pago</span>
+
+<select id="paymentMethod">
+
+<option value="efectivo">
+Efectivo
+</option>
+
+<option value="transferencia">
+Transferencia
+</option>
+
+<option value="otro">
+Otro
+</option>
+
+</select>
+
+</label>
+
+
+<label class="field">
+
+<span>Concepto</span>
+
+<input
+id="paymentConcept"
+placeholder="Cuota, clase, curso..."
+>
+
+</label>
+
+
+<label class="field full">
+
+<span>Observaciones</span>
+
+<textarea
+id="paymentNotes"
+placeholder="Observaciones del pago..."
+></textarea>
+
+</label>
+
+</div>
+
+
+<div class="actions">
+
+<button
+class="btn btn-green"
+onclick="savePayment()"
+>
+💰 Registrar pago
+</button>
+
+<button
+class="btn btn-dark"
+onclick="resetPaymentForm()"
+>
+Limpiar
+</button>
+
+</div>
+
+
+<div
+id="paymentStatus"
+class="status"
+></div>
+
+
+<div class="manager-tools">
+
+<button
+class="btn btn-dark"
+onclick="loadPayments()"
+>
+🔄 Actualizar pagos
+</button>
+
+<input
+id="paymentSearch"
+placeholder="🔎 Buscar pago..."
+oninput="renderPayments()"
+>
+
+</div>
+
+
+<div id="paymentManager"></div>
+
+</div>
+
+
+<!-- ===================================================
+     ESTADO
+=================================================== -->
+
 <div
 id="admin-estado"
 class="admin-section"
 >
 
 <h3>
-Estado de conexión
+⚙️ Estado del sistema
 </h3>
 
 <div
@@ -1634,10 +2104,23 @@ Comprobando Supabase…
 </div>
 
 <p class="muted">
-Bucket utilizado:
-<b>images</b>.
-Tabla utilizada:
-<b>images</b>.
+Storage:
+<b>images</b>
+</p>
+
+<p class="muted">
+Tabla de galería:
+<b>images</b>
+</p>
+
+<p class="muted">
+Tabla de alumnos:
+<b>students</b>
+</p>
+
+<p class="muted">
+Tabla de pagos:
+<b>payments</b>
 </p>
 
 </div>
@@ -1651,7 +2134,7 @@ Tabla utilizada:
 
 
 <!-- =====================================================
-     VISOR DE IMAGEN COMPLETA
+     VISOR
 ===================================================== -->
 
 <div
@@ -1708,7 +2191,11 @@ let sb = null;
 
 let images = [];
 
-let editingId = null;
+let students = [];
+
+let payments = [];
+
+let editingStudentId = null;
 
 
 /* =====================================================
@@ -1729,14 +2216,10 @@ function go(id){
 }
 
 
-/* =====================================================
-   RADIO: ABRIR
-===================================================== */
-
 function openRadio(){
 
   const radio =
-    document.getElementById('radio');
+    $('radio');
 
   if(!radio){
     return;
@@ -1801,6 +2284,32 @@ function cat(v){
 }
 
 
+function money(value){
+
+  const n =
+    Number(value || 0);
+
+  return n.toLocaleString(
+    'es-AR',
+    {
+      style:'currency',
+      currency:'ARS',
+      maximumFractionDigits:2
+    }
+  );
+
+}
+
+
+function today(){
+
+  return new Date()
+    .toISOString()
+    .slice(0,10);
+
+}
+
+
 /* =====================================================
    SUPABASE INIT
 ===================================================== */
@@ -1833,9 +2342,13 @@ async function init(){
 
     if(session){
 
-      showLoggedIn(session);
+      showLoggedIn();
 
       await loadImages();
+
+      await loadStudents();
+
+      await loadPayments();
 
     }
 
@@ -1922,6 +2435,10 @@ async function login(){
 
     await loadImages();
 
+    await loadStudents();
+
+    await loadPayments();
+
   }catch(e){
 
     status(
@@ -1964,7 +2481,7 @@ async function logout(){
 
 
 /* =====================================================
-   ADMIN
+   ADMIN NAVEGACIÓN
 ===================================================== */
 
 function showAdmin(
@@ -1995,11 +2512,21 @@ function showAdmin(
 
   btn?.classList.add('active');
 
+
+  if(id === 'alumnos'){
+    loadStudents();
+  }
+
+  if(id === 'pagos'){
+    loadStudents();
+    loadPayments();
+  }
+
 }
 
 
 /* =====================================================
-   PREVISUALIZACIÓN
+   PREVISUALIZACIÓN IMAGEN
 ===================================================== */
 
 $('imageFile')
@@ -2114,11 +2641,10 @@ async function uploadImage(){
       .value
       .trim()
       ||
-      file.name
-        .replace(
-          /\.[^.]+$/,
-          ''
-        );
+      file.name.replace(
+        /\.[^.]+$/,
+        ''
+      );
 
 
     const category =
@@ -2187,7 +2713,6 @@ async function uploadImage(){
 
 
     const {
-      data,
       error
     } =
       await sb
@@ -2195,13 +2720,10 @@ async function uploadImage(){
         .insert({
           title,
           category,
-          url:
-            pub.data.publicUrl,
+          url:pub.data.publicUrl,
           description,
           visible:true
-        })
-        .select()
-        .single();
+        });
 
 
     if(error){
@@ -2244,13 +2766,10 @@ async function uploadImage(){
 
 
 /* =====================================================
-   RESET
+   RESET IMAGEN
 ===================================================== */
 
 function resetForm(){
-
-  editingId =
-    null;
 
   $('imageTitle')
     .value = '';
@@ -2269,7 +2788,7 @@ function resetForm(){
 
 
 /* =====================================================
-   CARGAR IMÁGENES ADMIN
+   CARGAR IMÁGENES
 ===================================================== */
 
 async function loadImages(){
@@ -2317,7 +2836,7 @@ async function loadImages(){
 
 
 /* =====================================================
-   RENDER ADMIN
+   RENDER IMÁGENES ADMIN
 ===================================================== */
 
 function renderImages(){
@@ -2359,6 +2878,7 @@ function renderImages(){
 <img
 src="${esc(x.url)}"
 alt="${esc(x.title)}"
+onclick="openImageViewerById('${esc(x.url)}','${esc(x.title || 'Obra')}')"
 >
 
 <div class="image-meta">
@@ -2385,7 +2905,7 @@ ${x.visible ? '🟢 Visible' : '⚪ Oculta'}
 class="btn btn-dark"
 onclick="
 toggleVisible(
-'${x.id}',
+'${esc(x.id)}',
 ${!x.visible}
 )
 "
@@ -2394,9 +2914,9 @@ ${x.visible ? 'Ocultar' : 'Mostrar'}
 </button>
 
 <button
-class="btn btn-dark"
+class="btn btn-red"
 onclick="
-deleteImage('${x.id}')
+deleteImage('${esc(x.id)}')
 "
 >
 🗑️ Eliminar
@@ -2437,10 +2957,7 @@ async function toggleVisible(
     await sb
       .from('images')
       .update({
-        visible,
-        updated_at:
-          new Date()
-            .toISOString()
+        visible
       })
       .eq(
         'id',
@@ -2468,7 +2985,7 @@ async function toggleVisible(
 
 
 /* =====================================================
-   ELIMINAR
+   ELIMINAR IMAGEN
 ===================================================== */
 
 async function deleteImage(id){
@@ -2516,21 +3033,31 @@ async function deleteImage(id){
 
   if(item?.url){
 
-    const match =
-      item.url.match(
-        /\/storage\/v1\/object\/public\/images\/(.+)$/
+    const marker =
+      '/storage/v1/object/public/images/';
+
+
+    const pos =
+      item.url.indexOf(
+        marker
       );
 
 
-    if(match){
+    if(pos >= 0){
+
+      const filePath =
+        decodeURIComponent(
+          item.url.slice(
+            pos + marker.length
+          )
+        );
+
 
       await sb
         .storage
         .from(BUCKET)
         .remove([
-          decodeURIComponent(
-            match[1]
-          )
+          filePath
         ]);
 
     }
@@ -2546,8 +3073,21 @@ async function deleteImage(id){
 
 
 /* =====================================================
-   VISOR DE IMAGEN COMPLETA
+   VISOR
 ===================================================== */
+
+function openImageViewerById(
+  url,
+  title=''
+){
+
+  openImageViewer(
+    url,
+    title
+  );
+
+}
+
 
 function openImageViewer(
   url,
@@ -2559,9 +3099,6 @@ function openImageViewer(
 
   const img =
     $('imageViewerImg');
-
-  const titleBox =
-    $('imageViewerTitle');
 
 
   if(!viewer || !img){
@@ -2577,12 +3114,9 @@ function openImageViewer(
     'Imagen';
 
 
-  if(titleBox){
-
-    titleBox.textContent =
-      title || '';
-
-  }
+  $('imageViewerTitle')
+    .textContent =
+    title || '';
 
 
   viewer
@@ -2595,10 +3129,6 @@ function openImageViewer(
 
 }
 
-
-/* =====================================================
-   CERRAR VISOR
-===================================================== */
 
 function closeImageViewer(
   event
@@ -2620,13 +3150,8 @@ function closeImageViewer(
     $('imageViewer');
 
 
-  if(!viewer){
-    return;
-  }
-
-
   viewer
-    .classList
+    ?.classList
     .remove('open');
 
 
@@ -2634,23 +3159,11 @@ function closeImageViewer(
     '';
 
 
-  const img =
-    $('imageViewerImg');
-
-
-  if(img){
-
-    img.src =
-      '';
-
-  }
+  $('imageViewerImg')
+    .src = '';
 
 }
 
-
-/* =====================================================
-   CERRAR VISOR CON ESC
-===================================================== */
 
 document.addEventListener(
   'keydown',
@@ -2728,12 +3241,7 @@ async function loadPublic(){
 
 <article
 class="card"
-onclick="
-openImageViewer(
-'${esc(x.url)}',
-'${esc(x.title || 'Obra')}'
-)
-"
+onclick="openImageViewerById('${esc(x.url)}','${esc(x.title || 'Obra')}')"
 style="cursor:pointer"
 >
 
@@ -2787,7 +3295,1158 @@ margin-top:10px;
 
 
 /* =====================================================
-   RADIO BROWSER
+   ALUMNOS
+===================================================== */
+
+async function loadStudents(){
+
+  if(!sb){
+    return;
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await sb
+      .from('students')
+      .select('*')
+      .order(
+        'name',
+        {
+          ascending:true
+        }
+      );
+
+
+  if(error){
+
+    status(
+      'studentStatus',
+      '❌ No se pudieron cargar los alumnos: ' +
+      error.message,
+      'err'
+    );
+
+    students = [];
+
+    renderStudents();
+
+    updateStudentSelect();
+
+    return;
+
+  }
+
+
+  students =
+    data || [];
+
+
+  renderStudents();
+
+  updateStudentSelect();
+
+  updateSummary();
+
+}
+
+
+/* =====================================================
+   GUARDAR ALUMNO
+===================================================== */
+
+async function saveStudent(){
+
+  try{
+
+    if(!sb){
+
+      throw Error(
+        'Supabase no está conectado.'
+      );
+
+    }
+
+
+    const name =
+      $('studentName')
+      .value
+      .trim();
+
+
+    if(!name){
+
+      throw Error(
+        'Introduce el nombre del alumno.'
+      );
+
+    }
+
+
+    const payload = {
+
+      name,
+
+      phone:
+        $('studentPhone')
+        .value
+        .trim(),
+
+      email:
+        $('studentEmail')
+        .value
+        .trim(),
+
+      course:
+        $('studentCourse')
+        .value,
+
+      status:
+        $('studentStatus')
+        .value,
+
+      enrollment_date:
+        $('studentDate')
+        .value ||
+        today(),
+
+      notes:
+        $('studentNotes')
+        .value
+        .trim()
+
+    };
+
+
+    let result;
+
+
+    if(editingStudentId){
+
+      result =
+        await sb
+          .from('students')
+          .update(payload)
+          .eq(
+            'id',
+            editingStudentId
+          );
+
+    }else{
+
+      result =
+        await sb
+          .from('students')
+          .insert(payload);
+
+    }
+
+
+    if(result.error){
+
+      throw result.error;
+
+    }
+
+
+    status(
+      'studentStatus',
+      editingStudentId
+      ?
+      '✅ Alumno actualizado.'
+      :
+      '✅ Alumno registrado.',
+      'ok'
+    );
+
+
+    resetStudentForm();
+
+    await loadStudents();
+
+  }catch(e){
+
+    status(
+      'studentStatus',
+      '❌ ' +
+      (e.message || e),
+      'err'
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   EDITAR ALUMNO
+===================================================== */
+
+function editStudent(id){
+
+  const student =
+    students.find(
+      x =>
+        String(x.id) ===
+        String(id)
+    );
+
+
+  if(!student){
+    return;
+  }
+
+
+  editingStudentId =
+    student.id;
+
+
+  $('studentName')
+    .value =
+    student.name || '';
+
+
+  $('studentPhone')
+    .value =
+    student.phone || '';
+
+
+  $('studentEmail')
+    .value =
+    student.email || '';
+
+
+  $('studentCourse')
+    .value =
+    student.course ||
+    'Dibujo y Pintura';
+
+
+  $('studentStatus')
+    .value =
+    student.status ||
+    'activo';
+
+
+  $('studentDate')
+    .value =
+    student.enrollment_date ||
+    '';
+
+
+  $('studentNotes')
+    .value =
+    student.notes || '';
+
+
+  $('studentName')
+    .focus();
+
+
+  status(
+    'studentStatus',
+    '✏️ Editando alumno.',
+    ''
+  );
+
+}
+
+
+/* =====================================================
+   RESET ALUMNO
+===================================================== */
+
+function resetStudentForm(){
+
+  editingStudentId =
+    null;
+
+
+  $('studentName')
+    .value = '';
+
+  $('studentPhone')
+    .value = '';
+
+  $('studentEmail')
+    .value = '';
+
+  $('studentCourse')
+    .value =
+    'Dibujo y Pintura';
+
+  $('studentStatus')
+    .value =
+    'activo';
+
+  $('studentDate')
+    .value =
+    today();
+
+  $('studentNotes')
+    .value = '';
+
+}
+
+
+/* =====================================================
+   ELIMINAR ALUMNO
+===================================================== */
+
+async function deleteStudent(id){
+
+  const student =
+    students.find(
+      x =>
+        String(x.id) ===
+        String(id)
+    );
+
+
+  if(
+    !confirm(
+      '¿Eliminar al alumno ' +
+      (student?.name || '') +
+      '?'
+    )
+  ){
+    return;
+  }
+
+
+  const {
+    error
+  } =
+    await sb
+      .from('students')
+      .delete()
+      .eq(
+        'id',
+        id
+      );
+
+
+  if(error){
+
+    alert(
+      'Error: ' +
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  await loadStudents();
+
+  await loadPayments();
+
+}
+
+
+/* =====================================================
+   RENDER ALUMNOS
+===================================================== */
+
+function renderStudents(){
+
+  const box =
+    $('studentManager');
+
+
+  if(!box){
+    return;
+  }
+
+
+  const q =
+    (
+      $('studentSearch')
+      ?.value ||
+      ''
+    )
+    .toLowerCase()
+    .trim();
+
+
+  const list =
+    students.filter(
+      s =>
+
+        (s.name || '')
+          .toLowerCase()
+          .includes(q)
+
+        ||
+
+        (s.phone || '')
+          .toLowerCase()
+          .includes(q)
+
+        ||
+
+        (s.email || '')
+          .toLowerCase()
+          .includes(q)
+
+        ||
+
+        (s.course || '')
+          .toLowerCase()
+          .includes(q)
+    );
+
+
+  if(!list.length){
+
+    box.innerHTML = `
+      <div class="empty">
+        No hay alumnos para mostrar.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+    list.map(
+      s => `
+
+<article class="student-card">
+
+<div class="student-head">
+
+<div>
+
+<div class="student-name">
+${esc(s.name || 'Sin nombre')}
+</div>
+
+<span class="badge">
+${esc(s.status || 'activo')}
+</span>
+
+</div>
+
+</div>
+
+
+<div class="student-data">
+
+<div class="data-box">
+
+<div class="data-label">
+Curso
+</div>
+
+<div class="data-value">
+${esc(s.course || '-')}
+</div>
+
+</div>
+
+
+<div class="data-box">
+
+<div class="data-label">
+Teléfono
+</div>
+
+<div class="data-value">
+${esc(s.phone || '-')}
+</div>
+
+</div>
+
+
+<div class="data-box">
+
+<div class="data-label">
+Email
+</div>
+
+<div class="data-value">
+${esc(s.email || '-')}
+</div>
+
+</div>
+
+
+<div class="data-box">
+
+<div class="data-label">
+Inscripción
+</div>
+
+<div class="data-value">
+${esc(s.enrollment_date || '-')}
+</div>
+
+</div>
+
+</div>
+
+
+${
+  s.notes
+  ?
+  `
+  <p class="muted">
+  📝 ${esc(s.notes)}
+  </p>
+  `
+  :
+  ''
+}
+
+
+<div class="student-actions">
+
+<button
+class="btn btn-gold"
+onclick="editStudent('${esc(s.id)}')"
+>
+✏️ Editar
+</button>
+
+<button
+class="btn btn-dark"
+onclick="showStudentPayments('${esc(s.id)}')"
+>
+💰 Ver pagos
+</button>
+
+<button
+class="btn btn-red"
+onclick="deleteStudent('${esc(s.id)}')"
+>
+🗑️ Eliminar
+</button>
+
+</div>
+
+</article>
+
+`
+    ).join('');
+
+}
+
+
+/* =====================================================
+   SELECT DE ALUMNOS
+===================================================== */
+
+function updateStudentSelect(){
+
+  const select =
+    $('paymentStudent');
+
+
+  if(!select){
+    return;
+  }
+
+
+  const current =
+    select.value;
+
+
+  select.innerHTML = `
+
+<option value="">
+Seleccionar alumno...
+</option>
+
+${
+  students.map(
+    s => `
+
+<option value="${esc(s.id)}">
+
+${esc(s.name)}
+
+${
+  s.course
+  ?
+  ' — ' + esc(s.course)
+  :
+  ''
+}
+
+</option>
+
+`
+  ).join('')
+}
+
+`;
+
+
+  if(
+    students.some(
+      s =>
+        String(s.id) ===
+        String(current)
+    )
+  ){
+
+    select.value =
+      current;
+
+  }
+
+}
+
+
+/* =====================================================
+   PAGOS
+===================================================== */
+
+async function loadPayments(){
+
+  if(!sb){
+    return;
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await sb
+      .from('payments')
+      .select('*')
+      .order(
+        'payment_date',
+        {
+          ascending:false
+        }
+      );
+
+
+  if(error){
+
+    status(
+      'paymentStatus',
+      '❌ No se pudieron cargar los pagos: ' +
+      error.message,
+      'err'
+    );
+
+    payments = [];
+
+    renderPayments();
+
+    updateSummary();
+
+    return;
+
+  }
+
+
+  payments =
+    data || [];
+
+
+  renderPayments();
+
+  updateSummary();
+
+}
+
+
+/* =====================================================
+   GUARDAR PAGO
+===================================================== */
+
+async function savePayment(){
+
+  try{
+
+    if(!sb){
+
+      throw Error(
+        'Supabase no está conectado.'
+      );
+
+    }
+
+
+    const studentId =
+      $('paymentStudent')
+      .value;
+
+
+    const amount =
+      Number(
+        $('paymentAmount')
+        .value
+      );
+
+
+    if(!studentId){
+
+      throw Error(
+        'Selecciona un alumno.'
+      );
+
+    }
+
+
+    if(
+      !Number.isFinite(amount) ||
+      amount <= 0
+    ){
+
+      throw Error(
+        'Introduce un importe válido.'
+      );
+
+    }
+
+
+    const payload = {
+
+      student_id:
+        studentId,
+
+      amount,
+
+      payment_date:
+        $('paymentDate')
+        .value ||
+        today(),
+
+      payment_method:
+        $('paymentMethod')
+        .value,
+
+      concept:
+        $('paymentConcept')
+        .value
+        .trim(),
+
+      notes:
+        $('paymentNotes')
+        .value
+        .trim()
+
+    };
+
+
+    const {
+      error
+    } =
+      await sb
+        .from('payments')
+        .insert(payload);
+
+
+    if(error){
+
+      throw error;
+
+    }
+
+
+    status(
+      'paymentStatus',
+      '✅ Pago registrado correctamente.',
+      'ok'
+    );
+
+
+    resetPaymentForm();
+
+    await loadPayments();
+
+  }catch(e){
+
+    status(
+      'paymentStatus',
+      '❌ ' +
+      (e.message || e),
+      'err'
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   RESET PAGO
+===================================================== */
+
+function resetPaymentForm(){
+
+  $('paymentStudent')
+    .value = '';
+
+  $('paymentAmount')
+    .value = '';
+
+  $('paymentDate')
+    .value =
+    today();
+
+  $('paymentMethod')
+    .value =
+    'efectivo';
+
+  $('paymentConcept')
+    .value = '';
+
+  $('paymentNotes')
+    .value = '';
+
+}
+
+
+/* =====================================================
+   ELIMINAR PAGO
+===================================================== */
+
+async function deletePayment(id){
+
+  if(
+    !confirm(
+      '¿Eliminar este registro de pago?'
+    )
+  ){
+    return;
+  }
+
+
+  const {
+    error
+  } =
+    await sb
+      .from('payments')
+      .delete()
+      .eq(
+        'id',
+        id
+      );
+
+
+  if(error){
+
+    alert(
+      'Error: ' +
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  await loadPayments();
+
+}
+
+
+/* =====================================================
+   RENDER PAGOS
+===================================================== */
+
+function renderPayments(){
+
+  const box =
+    $('paymentManager');
+
+
+  if(!box){
+    return;
+  }
+
+
+  const q =
+    (
+      $('paymentSearch')
+      ?.value ||
+      ''
+    )
+    .toLowerCase()
+    .trim();
+
+
+  const list =
+    payments.filter(
+      p => {
+
+        const student =
+          students.find(
+            s =>
+              String(s.id) ===
+              String(p.student_id)
+          );
+
+
+        const text =
+          [
+            student?.name,
+            p.payment_method,
+            p.concept,
+            p.notes,
+            p.payment_date
+          ]
+          .join(' ')
+          .toLowerCase();
+
+
+        return text.includes(q);
+
+      }
+    );
+
+
+  if(!list.length){
+
+    box.innerHTML = `
+      <div class="empty">
+        No hay pagos registrados.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+    list.map(
+      p => {
+
+        const student =
+          students.find(
+            s =>
+              String(s.id) ===
+              String(p.student_id)
+          );
+
+
+        return `
+
+<article class="payment-card">
+
+<div class="payment-row">
+
+<div>
+
+<div class="data-label">
+Alumno
+</div>
+
+<div class="data-value">
+${esc(student?.name || 'Alumno eliminado')}
+</div>
+
+</div>
+
+
+<div>
+
+<div class="data-label">
+Importe
+</div>
+
+<div class="amount">
+${money(p.amount)}
+</div>
+
+</div>
+
+
+<div>
+
+<div class="data-label">
+Fecha
+</div>
+
+<div class="data-value">
+${esc(p.payment_date || '-')}
+</div>
+
+</div>
+
+
+<div>
+
+<div class="data-label">
+Medio
+</div>
+
+<div class="data-value">
+${esc(p.payment_method || '-')}
+</div>
+
+</div>
+
+
+<div>
+
+<div class="data-label">
+Concepto
+</div>
+
+<div class="data-value">
+${esc(p.concept || '-')}
+</div>
+
+</div>
+
+</div>
+
+
+${
+  p.notes
+  ?
+  `
+  <p class="muted">
+  📝 ${esc(p.notes)}
+  </p>
+  `
+  :
+  ''
+}
+
+
+<div class="actions">
+
+<button
+class="btn btn-red"
+onclick="deletePayment('${esc(p.id)}')"
+>
+🗑️ Eliminar
+</button>
+
+</div>
+
+</article>
+
+`;
+
+      }
+    ).join('');
+
+}
+
+
+/* =====================================================
+   RESUMEN
+===================================================== */
+
+function updateSummary(){
+
+  const total =
+    payments.reduce(
+      (
+        sum,
+        p
+      ) =>
+        sum +
+        Number(
+          p.amount || 0
+        ),
+      0
+    );
+
+
+  $('summaryStudents')
+    && (
+      $('summaryStudents')
+        .textContent =
+        students.length
+    );
+
+
+  $('summaryPayments')
+    && (
+      $('summaryPayments')
+        .textContent =
+        payments.length
+    );
+
+
+  $('summaryTotal')
+    && (
+      $('summaryTotal')
+        .textContent =
+        money(total)
+    );
+
+}
+
+
+/* =====================================================
+   PAGOS DE UN ALUMNO
+===================================================== */
+
+function showStudentPayments(
+  studentId
+){
+
+  const student =
+    students.find(
+      s =>
+        String(s.id) ===
+        String(studentId)
+    );
+
+
+  if(!student){
+    return;
+  }
+
+
+  const studentPayments =
+    payments.filter(
+      p =>
+        String(p.student_id) ===
+        String(studentId)
+    );
+
+
+  const total =
+    studentPayments.reduce(
+      (
+        sum,
+        p
+      ) =>
+        sum +
+        Number(
+          p.amount || 0
+        ),
+      0
+    );
+
+
+  alert(
+    'ALUMNO: ' +
+    student.name +
+    '\n\n' +
+
+    'Pagos registrados: ' +
+    studentPayments.length +
+    '\n' +
+
+    'Total pagado: ' +
+    money(total)
+  );
+
+}
+
+
+/* =====================================================
+   RADIO
 ===================================================== */
 
 const RADIO_APIS = [
@@ -2804,10 +4463,6 @@ let radioApiIndex = 0;
 
 let radioStations = [];
 
-
-/* =====================================================
-   RADIO API
-===================================================== */
 
 async function radioFetch(
   path
@@ -2887,7 +4542,7 @@ async function radioFetch(
 
 
 /* =====================================================
-   ELEGIR ESTILO
+   RADIO ESTILO
 ===================================================== */
 
 $('radioGenre')
@@ -2937,7 +4592,7 @@ $('radioGenre')
 
 
 /* =====================================================
-   CARGAR EMISORAS
+   RADIO CARGAR
 ===================================================== */
 
 async function loadRadioStations(
@@ -3053,7 +4708,7 @@ async function loadRadioStations(
 
 
 /* =====================================================
-   MOSTRAR EMISORAS
+   RADIO MOSTRAR
 ===================================================== */
 
 function renderRadioStations(){
@@ -3124,23 +4779,17 @@ data-radio-index="${index}"
 
 ${
   logo
-
   ?
-
   `
   <img
   class="station-logo"
   src="${escapeRadioText(logo)}"
   alt=""
   loading="lazy"
-  onerror="
-  this.style.display='none'
-  "
+  onerror="this.style.display='none'"
   >
   `
-
   :
-
   `
   <div
   class="station-logo"
@@ -3202,7 +4851,7 @@ playRadioStation(${index})
 
 
 /* =====================================================
-   BUSCAR EMISORAS
+   RADIO BUSCAR
 ===================================================== */
 
 $('radioSearch')
@@ -3224,7 +4873,7 @@ $('radioSearch')
 
 
 /* =====================================================
-   REPRODUCIR RADIO
+   RADIO REPRODUCIR
 ===================================================== */
 
 async function playRadioStation(
@@ -3299,7 +4948,6 @@ async function playRadioStation(
     player.src =
       stream;
 
-
     player.style.display =
       'block';
 
@@ -3370,10 +5018,6 @@ async function playRadioStation(
 }
 
 
-/* =====================================================
-   SEGURIDAD RADIO
-===================================================== */
-
 function escapeRadioText(
   value=''
 ){
@@ -3393,10 +5037,6 @@ function escapeRadioText(
 }
 
 
-/* =====================================================
-   ERROR RADIO
-===================================================== */
-
 $('radioPlayer')
 ?.addEventListener(
   'error',
@@ -3410,6 +5050,39 @@ $('radioPlayer')
     $('radioStatus')
       .textContent =
       '⚠️ Esta emisora dejó de estar disponible.';
+
+  }
+);
+
+
+/* =====================================================
+   FECHAS INICIALES
+===================================================== */
+
+window.addEventListener(
+  'DOMContentLoaded',
+  function(){
+
+    if(
+      $('studentDate') &&
+      !$('studentDate').value
+    ){
+
+      $('studentDate').value =
+        today();
+
+    }
+
+
+    if(
+      $('paymentDate') &&
+      !$('paymentDate').value
+    ){
+
+      $('paymentDate').value =
+        today();
+
+    }
 
   }
 );
