@@ -1,11 +1,20 @@
 <!doctype html>
 <html lang="es">
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
+
 <title>RoXThal Art Design</title>
 
-<meta name="description" content="RoXThal Art Design — arte, dibujo, pintura, tatuajes, radio y formación artística.">
+<meta
+  name="description"
+  content="RoXThal Art Design — arte, dibujo, pintura, tatuajes, radio y formación artística."
+>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -273,152 +282,7 @@ h3{
 }
 
 
-/* =====================================================
-   GALERÍA
-===================================================== */
-
-.gallery-card{
-  cursor:pointer;
-  transition:
-    transform .18s ease,
-    border-color .18s ease;
-}
-
-.gallery-card:hover{
-  transform:translateY(-3px);
-  border-color:var(--gold);
-}
-
-.gallery-card .card-img{
-  position:relative;
-}
-
-.gallery-card .card-img::after{
-  content:"🔍 Ver imagen";
-  position:absolute;
-  inset:0;
-  display:grid;
-  place-items:center;
-  background:rgba(0,0,0,.45);
-  opacity:0;
-  transition:opacity .18s ease;
-  color:#fff;
-  font-weight:700;
-}
-
-.gallery-card:hover .card-img::after{
-  opacity:1;
-}
-
-
-/* =====================================================
-   VISOR DE GALERÍA
-===================================================== */
-
-.lightbox{
-  position:fixed;
-  inset:0;
-  z-index:1000;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
-  background:rgba(0,0,0,.92);
-}
-
-.lightbox.open{
-  display:flex;
-}
-
-.lightbox-content{
-  position:relative;
-  width:min(1100px,100%);
-  max-height:94vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-}
-
-.lightbox-image{
-  max-width:100%;
-  max-height:72vh;
-  object-fit:contain;
-  border-radius:14px;
-  border:1px solid var(--line);
-  box-shadow:0 15px 50px rgba(0,0,0,.65);
-}
-
-.lightbox-info{
-  width:min(850px,100%);
-  margin-top:12px;
-  padding:14px 18px;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:rgba(18,18,22,.97);
-  text-align:center;
-}
-
-.lightbox-info h3{
-  margin:0 0 4px;
-}
-
-.lightbox-info p{
-  margin:7px 0 0;
-  color:#ccc;
-}
-
-.lightbox-close,
-.lightbox-prev,
-.lightbox-next{
-  position:absolute;
-  border:1px solid #666;
-  background:rgba(15,15,18,.9);
-  color:#fff;
-  border-radius:50%;
-  width:46px;
-  height:46px;
-  display:grid;
-  place-items:center;
-  font-size:22px;
-  z-index:2;
-}
-
-.lightbox-close{
-  right:0;
-  top:0;
-}
-
-.lightbox-prev{
-  left:0;
-  top:50%;
-  transform:translateY(-50%);
-}
-
-.lightbox-next{
-  right:0;
-  top:50%;
-  transform:translateY(-50%);
-}
-
-.lightbox-close:hover,
-.lightbox-prev:hover,
-.lightbox-next:hover{
-  background:var(--gold);
-  color:#111;
-  border-color:var(--gold);
-}
-
-.lightbox-counter{
-  margin-top:8px;
-  color:#aaa;
-  font-size:13px;
-}
-
-
-/* =====================================================
-   RADIO
-===================================================== */
+/* RADIO */
 
 #radio{
   display:none;
@@ -445,7 +309,6 @@ h3{
   display:grid;
   grid-template-columns:
     repeat(auto-fit,minmax(220px,1fr));
-
   gap:12px;
 }
 
@@ -486,14 +349,10 @@ h3{
   grid-template-columns:70px 1fr auto;
   gap:14px;
   align-items:center;
-
   padding:12px;
-
   background:#101014;
-
   border:1px solid var(--line);
   border-radius:14px;
-
   margin-bottom:10px;
 }
 
@@ -540,9 +399,7 @@ h3{
 }
 
 
-/* =====================================================
-   ADMINISTRADOR
-===================================================== */
+/* ADMIN */
 
 .admin-wrap{
   background:rgba(12,12,15,.8);
@@ -672,14 +529,10 @@ h3{
   display:grid;
   grid-template-columns:140px 1fr;
   gap:14px;
-
   padding:12px;
-
   border:1px solid var(--line);
   border-radius:14px;
-
   background:#101014;
-
   margin-bottom:12px;
 }
 
@@ -716,9 +569,7 @@ h3{
 }
 
 
-/* =====================================================
-   MÓVIL
-===================================================== */
+/* MÓVIL */
 
 @media(max-width:750px){
 
@@ -752,39 +603,6 @@ h3{
     width:100%;
   }
 
-  .lightbox{
-    padding:10px;
-  }
-
-  .lightbox-image{
-    max-height:62vh;
-  }
-
-  .lightbox-close{
-    right:4px;
-    top:4px;
-  }
-
-  .lightbox-prev,
-  .lightbox-next{
-    top:auto;
-    bottom:105px;
-    transform:none;
-  }
-
-  .lightbox-prev{
-    left:15px;
-  }
-
-  .lightbox-next{
-    right:15px;
-  }
-
-  .lightbox-info{
-    padding:11px 12px;
-    margin-top:8px;
-  }
-
 }
 
 </style>
@@ -792,10 +610,6 @@ h3{
 
 <body>
 
-
-<!-- =====================================================
-     NAV
-===================================================== -->
 
 <header class="top">
 
@@ -838,14 +652,7 @@ Administrador
 </header>
 
 
-<!-- =====================================================
-     INICIO
-===================================================== -->
-
-<section
-id="inicio"
-class="hero"
->
+<section id="inicio" class="hero">
 
 <div class="hero-box">
 
@@ -908,10 +715,6 @@ rel="noopener"
 
 </section>
 
-
-<!-- =====================================================
-     SERVICIOS
-===================================================== -->
 
 <section id="servicios">
 
@@ -1037,10 +840,6 @@ para aprender y crear.
 </section>
 
 
-<!-- =====================================================
-     IDENTIDAD
-===================================================== -->
-
 <section>
 
 <div class="about">
@@ -1080,10 +879,6 @@ y desarrollo artístico.
 </section>
 
 
-<!-- =====================================================
-     GALERÍA
-===================================================== -->
-
 <section id="galeria">
 
 <div class="eyebrow">
@@ -1095,7 +890,7 @@ Galería
 </h2>
 
 <p class="muted">
-Toca una imagen para verla en grande.
+Las imágenes visibles se cargan desde Supabase.
 </p>
 
 <div
@@ -1111,10 +906,6 @@ Cargando galería…
 
 </section>
 
-
-<!-- =====================================================
-     CURSOS
-===================================================== -->
 
 <section id="cursos">
 
@@ -1186,10 +977,6 @@ diseño y fundamentos del tatuaje.
 </section>
 
 
-<!-- =====================================================
-     RADIO
-===================================================== -->
-
 <section id="radio">
 
 <div class="eyebrow">
@@ -1215,69 +1002,22 @@ las emisoras disponibles.
 Elegir estilo musical...
 </option>
 
-<option value="rock">
-🎸 Rock
-</option>
-
-<option value="pop">
-🎤 Pop
-</option>
-
-<option value="electronic">
-🎧 Electrónica
-</option>
-
-<option value="jazz">
-🎷 Jazz
-</option>
-
-<option value="blues">
-🎺 Blues
-</option>
-
-<option value="classical">
-🎻 Clásica
-</option>
-
-<option value="reggae">
-🌴 Reggae
-</option>
-
-<option value="latin">
-💃 Latina
-</option>
-
-<option value="tango">
-🎼 Tango
-</option>
-
-<option value="folk">
-🪕 Folk
-</option>
-
-<option value="metal">
-🤘 Metal
-</option>
-
-<option value="hiphop">
-🎤 Hip-Hop
-</option>
-
-<option value="soul">
-🎙️ Soul
-</option>
-
-<option value="country">
-🤠 Country
-</option>
-
-<option value="ambient">
-🌌 Ambient
-</option>
-
-<option value="world">
-🌎 World
-</option>
+<option value="rock">🎸 Rock</option>
+<option value="pop">🎤 Pop</option>
+<option value="electronic">🎧 Electrónica</option>
+<option value="jazz">🎷 Jazz</option>
+<option value="blues">🎺 Blues</option>
+<option value="classical">🎻 Clásica</option>
+<option value="reggae">🌴 Reggae</option>
+<option value="latin">💃 Latina</option>
+<option value="tango">🎼 Tango</option>
+<option value="folk">🪕 Folk</option>
+<option value="metal">🤘 Metal</option>
+<option value="hiphop">🎤 Hip-Hop</option>
+<option value="soul">🎙️ Soul</option>
+<option value="country">🤠 Country</option>
+<option value="ambient">🌌 Ambient</option>
+<option value="world">🌎 World</option>
 
 </select>
 
@@ -1315,10 +1055,6 @@ preload="none"
 
 </section>
 
-
-<!-- =====================================================
-     CONTACTO
-===================================================== -->
 
 <section id="contacto">
 
@@ -1412,10 +1148,6 @@ Buenos Aires, Argentina
 </section>
 
 
-<!-- =====================================================
-     ADMIN
-===================================================== -->
-
 <section id="admin">
 
 <div class="eyebrow">
@@ -1441,9 +1173,7 @@ class="login"
 
 <label class="field">
 
-<span>
-Email
-</span>
+<span>Email</span>
 
 <input
 id="loginEmail"
@@ -1453,12 +1183,9 @@ autocomplete="username"
 
 </label>
 
-
 <label class="field">
 
-<span>
-Contraseña
-</span>
+<span>Contraseña</span>
 
 <input
 id="loginPassword"
@@ -1528,8 +1255,8 @@ Gestor de imágenes
 </h3>
 
 <p class="muted">
-Selecciona una foto directamente desde
-el teléfono. Se subirá a Supabase Storage
+Seleccioná una foto desde el teléfono.
+La imagen se subirá a Supabase Storage
 y se registrará en la tabla
 <b>images</b>.
 </p>
@@ -1605,11 +1332,14 @@ placeholder="Descripción de la obra"
 
 <div class="filebox">
 
+<!-- IMPORTANTE:
+     SIN capture="environment".
+     Así se abre Galería/Fotos/Archivos. -->
+
 <input
 id="imageFile"
 type="file"
 accept="image/*"
-capture="environment"
 >
 
 <img
@@ -1623,6 +1353,7 @@ alt="Vista previa"
 </div>
 
 </div>
+
 
 <div class="actions">
 
@@ -1642,10 +1373,12 @@ Limpiar
 
 </div>
 
+
 <div
 id="uploadStatus"
 class="status"
 ></div>
+
 
 <div class="manager-tools">
 
@@ -1663,6 +1396,7 @@ oninput="renderImages()"
 >
 
 </div>
+
 
 <div id="imageManager"></div>
 
@@ -1708,73 +1442,6 @@ Tabla utilizada:
 </footer>
 
 
-<!-- =====================================================
-     VISOR DE GALERÍA
-===================================================== -->
-
-<div
-id="galleryLightbox"
-class="lightbox"
-role="dialog"
-aria-modal="true"
-aria-label="Visor de galería"
->
-
-<div class="lightbox-content">
-
-<button
-class="lightbox-close"
-onclick="closeLightbox()"
-aria-label="Cerrar"
->
-✕
-</button>
-
-<button
-class="lightbox-prev"
-onclick="changeLightbox(-1)"
-aria-label="Anterior"
->
-‹
-</button>
-
-<img
-id="lightboxImage"
-class="lightbox-image"
-alt=""
->
-
-<button
-class="lightbox-next"
-onclick="changeLightbox(1)"
-aria-label="Siguiente"
->
-›
-</button>
-
-<div class="lightbox-info">
-
-<h3 id="lightboxTitle"></h3>
-
-<span
-id="lightboxCategory"
-class="badge"
-></span>
-
-<p id="lightboxDescription"></p>
-
-<div
-id="lightboxCounter"
-class="lightbox-counter"
-></div>
-
-</div>
-
-</div>
-
-</div>
-
-
 <script>
 
 /* =====================================================
@@ -1794,15 +1461,17 @@ let sb = null;
 
 let images = [];
 
-let editingId = null;
+let radioStations = [];
+
+let radioApiIndex = 0;
 
 
 /* =====================================================
    UTILIDADES
 ===================================================== */
 
-const $ =
-id => document.getElementById(id);
+const $ = id =>
+  document.getElementById(id);
 
 
 function go(id){
@@ -1818,13 +1487,15 @@ function go(id){
 function openRadio(){
 
   const radio =
-    document.getElementById('radio');
+    $('radio');
 
   if(!radio){
     return;
   }
 
-  radio.classList.add('radio-open');
+  radio.classList.add(
+    'radio-open'
+  );
 
   radio.scrollIntoView({
     behavior:'smooth',
@@ -1840,16 +1511,19 @@ function status(
   type=''
 ){
 
-  const el = $(id);
+  const el =
+    $(id);
 
   if(!el){
     return;
   }
 
-  el.textContent = msg;
+  el.textContent =
+    msg;
 
   el.className =
-    'status show ' + type;
+    'status show ' +
+    type;
 
 }
 
@@ -1891,6 +1565,18 @@ async function init(){
 
   try{
 
+    if(
+      !window.supabase ||
+      !window.supabase.createClient
+    ){
+
+      throw new Error(
+        'No se pudo cargar Supabase.'
+      );
+
+    }
+
+
     sb =
       window.supabase.createClient(
         SUPABASE_URL,
@@ -1905,17 +1591,21 @@ async function init(){
     );
 
 
-    const {
-      data:{
-        session
-      }
-    } =
+    const sessionResult =
       await sb.auth.getSession();
+
+
+    const session =
+      sessionResult
+        ?.data
+        ?.session;
 
 
     if(session){
 
-      showLoggedIn(session);
+      showLoggedIn(
+        session
+      );
 
       await loadImages();
 
@@ -1948,7 +1638,7 @@ async function login(){
 
     if(!sb){
 
-      throw Error(
+      throw new Error(
         'Supabase no está disponible.'
       );
 
@@ -1957,41 +1647,40 @@ async function login(){
 
     const email =
       $('loginEmail')
-      .value
-      .trim();
+        .value
+        .trim();
 
 
     const password =
       $('loginPassword')
-      .value;
+        .value;
 
 
     if(!email || !password){
 
-      throw Error(
+      throw new Error(
         'Introduce email y contraseña.'
       );
 
     }
 
 
-    const {
-      data,
-      error
-    } =
+    const result =
       await sb.auth.signInWithPassword({
         email,
         password
       });
 
 
-    if(error){
-      throw error;
+    if(result.error){
+
+      throw result.error;
+
     }
 
 
     showLoggedIn(
-      data.session
+      result.data.session
     );
 
 
@@ -2008,7 +1697,8 @@ async function login(){
 
     status(
       'loginStatus',
-      '❌ ' + e.message,
+      '❌ ' +
+      (e.message || e),
       'err'
     );
 
@@ -2020,11 +1710,11 @@ async function login(){
 function showLoggedIn(){
 
   $('loginPanel')
-    .classList
+    ?.classList
     .add('hidden');
 
   $('adminPanel')
-    .classList
+    ?.classList
     .remove('hidden');
 
 }
@@ -2035,11 +1725,11 @@ async function logout(){
   await sb?.auth.signOut();
 
   $('adminPanel')
-    .classList
+    ?.classList
     .add('hidden');
 
   $('loginPanel')
-    .classList
+    ?.classList
     .remove('hidden');
 
 }
@@ -2055,10 +1745,14 @@ function showAdmin(
 ){
 
   document
-    .querySelectorAll('.admin-section')
+    .querySelectorAll(
+      '.admin-section'
+    )
     .forEach(
       x =>
-        x.classList.remove('active')
+        x.classList.remove(
+          'active'
+        )
     );
 
 
@@ -2068,14 +1762,20 @@ function showAdmin(
 
 
   document
-    .querySelectorAll('.admin-nav button')
+    .querySelectorAll(
+      '.admin-nav button'
+    )
     .forEach(
       x =>
-        x.classList.remove('active')
+        x.classList.remove(
+          'active'
+        )
     );
 
 
-  btn?.classList.add('active');
+  btn?.classList.add(
+    'active'
+  );
 
 }
 
@@ -2084,63 +1784,99 @@ function showAdmin(
    PREVISUALIZACIÓN
 ===================================================== */
 
-$('imageFile')
-?.addEventListener(
-  'change',
-  e => {
+function setupFilePreview(){
 
-    const f =
-      e.target.files?.[0];
-
-    const img =
-      $('imagePreview');
+  const input =
+    $('imageFile');
 
 
-    if(!f){
-
-      img.style.display =
-        'none';
-
-      return;
-
-    }
+  if(!input){
+    return;
+  }
 
 
-    if(!f.type.startsWith('image/')){
+  input.addEventListener(
+    'change',
+    function(e){
 
-      status(
-        'uploadStatus',
-        '❌ Selecciona una imagen válida.',
-        'err'
-      );
-
-      e.target.value = '';
-
-      return;
-
-    }
+      const file =
+        e.target.files?.[0];
 
 
-    const reader =
-      new FileReader();
+      const img =
+        $('imagePreview');
 
 
-    reader.onload =
-      () => {
-
-        img.src =
-          reader.result;
+      if(!file){
 
         img.style.display =
-          'block';
+          'none';
 
-      };
+        img.removeAttribute(
+          'src'
+        );
+
+        return;
+
+      }
 
 
-    reader.readAsDataURL(f);
+      if(
+        !file.type ||
+        !file.type.startsWith(
+          'image/'
+        )
+      ){
 
-  }
-);
+        status(
+          'uploadStatus',
+          '❌ Selecciona una imagen válida.',
+          'err'
+        );
+
+        input.value = '';
+
+        return;
+
+      }
+
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        function(){
+
+          img.src =
+            reader.result;
+
+          img.style.display =
+            'block';
+
+        };
+
+
+      reader.onerror =
+        function(){
+
+          status(
+            'uploadStatus',
+            '❌ No se pudo leer la imagen.',
+            'err'
+          );
+
+        };
+
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
+
+}
 
 
 /* =====================================================
@@ -2153,25 +1889,27 @@ async function uploadImage(){
 
     if(!sb){
 
-      throw Error(
+      throw new Error(
         'Supabase no está conectado.'
       );
 
     }
 
 
-    const {
-      data:{
-        session
-      }
-    } =
+    const sessionResult =
       await sb.auth.getSession();
+
+
+    const session =
+      sessionResult
+        ?.data
+        ?.session;
 
 
     if(!session){
 
-      throw Error(
-        'Debes iniciar sesión.'
+      throw new Error(
+        'Debes iniciar sesión antes de subir imágenes.'
       );
 
     }
@@ -2179,13 +1917,27 @@ async function uploadImage(){
 
     const file =
       $('imageFile')
-      .files?.[0];
+        ?.files
+        ?. [0];
 
 
     if(!file){
 
-      throw Error(
+      throw new Error(
         'Selecciona una imagen desde el teléfono.'
+      );
+
+    }
+
+
+    if(
+      !file.type.startsWith(
+        'image/'
+      )
+    ){
+
+      throw new Error(
+        'El archivo seleccionado no es una imagen.'
       );
 
     }
@@ -2193,28 +1945,27 @@ async function uploadImage(){
 
     const title =
       $('imageTitle')
-      .value
-      .trim()
+        .value
+        .trim()
       ||
-      file.name
-        .replace(
-          /\.[^.]+$/,
-          ''
-        );
+      file.name.replace(
+        /\.[^.]+$/,
+        ''
+      );
 
 
     const category =
       $('imageCategory')
-      .value;
+        .value;
 
 
     const description =
       $('imageDescription')
-      .value
-      .trim();
+        .value
+        .trim();
 
 
-    const ext =
+    let ext =
       (
         file.name
           .split('.')
@@ -2229,8 +1980,27 @@ async function uploadImage(){
       );
 
 
+    if(!ext){
+
+      ext =
+        'jpg';
+
+    }
+
+
+    const unique =
+      typeof crypto !== 'undefined' &&
+      crypto.randomUUID
+      ?
+      crypto.randomUUID()
+      :
+      Math.random()
+        .toString(36)
+        .substring(2);
+
+
     const path =
-      `${Date.now()}-${crypto.randomUUID()}.${ext}`;
+      `${Date.now()}-${unique}.${ext}`;
 
 
     status(
@@ -2239,7 +2009,7 @@ async function uploadImage(){
     );
 
 
-    const up =
+    const uploadResult =
       await sb
         .storage
         .from(BUCKET)
@@ -2249,36 +2019,57 @@ async function uploadImage(){
           {
             cacheControl:'3600',
             upsert:false,
-            contentType:file.type
+            contentType:
+              file.type
           }
         );
 
 
-    if(up.error){
+    if(uploadResult.error){
 
-      throw up.error;
+      throw uploadResult.error;
 
     }
 
 
-    const pub =
+    const publicResult =
       sb
         .storage
         .from(BUCKET)
-        .getPublicUrl(path);
+        .getPublicUrl(
+          path
+        );
 
 
-    const {
-      data,
-      error
-    } =
+    const publicUrl =
+      publicResult
+        ?.data
+        ?.publicUrl;
+
+
+    if(!publicUrl){
+
+      await sb
+        .storage
+        .from(BUCKET)
+        .remove([
+          path
+        ]);
+
+      throw new Error(
+        'No se pudo obtener la URL pública de la imagen.'
+      );
+
+    }
+
+
+    const insertResult =
       await sb
         .from('images')
         .insert({
           title,
           category,
-          url:
-            pub.data.publicUrl,
+          url:publicUrl,
           description,
           visible:true
         })
@@ -2286,14 +2077,16 @@ async function uploadImage(){
         .single();
 
 
-    if(error){
+    if(insertResult.error){
 
       await sb
         .storage
         .from(BUCKET)
-        .remove([path]);
+        .remove([
+          path
+        ]);
 
-      throw error;
+      throw insertResult.error;
 
     }
 
@@ -2313,10 +2106,19 @@ async function uploadImage(){
 
   }catch(e){
 
+    console.error(
+      'UPLOAD IMAGE:',
+      e
+    );
+
+
     status(
       'uploadStatus',
       '❌ ' +
-      (e.message || e),
+      (
+        e.message ||
+        'No se pudo subir la imagen.'
+      ),
       'err'
     );
 
@@ -2331,21 +2133,21 @@ async function uploadImage(){
 
 function resetForm(){
 
-  editingId =
-    null;
+  $('imageTitle').value =
+    '';
 
-  $('imageTitle')
-    .value = '';
+  $('imageDescription').value =
+    '';
 
-  $('imageDescription')
-    .value = '';
+  $('imageFile').value =
+    '';
 
-  $('imageFile')
-    .value = '';
+  $('imagePreview').style.display =
+    'none';
 
-  $('imagePreview')
-    .style
-    .display = 'none';
+  $('imagePreview').removeAttribute(
+    'src'
+  );
 
 }
 
@@ -2357,14 +2159,13 @@ function resetForm(){
 async function loadImages(){
 
   if(!sb){
+
     return;
+
   }
 
 
-  const {
-    data,
-    error
-  } =
+  const result =
     await sb
       .from('images')
       .select('*')
@@ -2376,14 +2177,32 @@ async function loadImages(){
       );
 
 
-  if(error){
+  if(result.error){
+
+    console.error(
+      'LOAD IMAGES:',
+      result.error
+    );
+
 
     status(
       'uploadStatus',
       '❌ No se pudieron cargar las imágenes: ' +
-      error.message,
+      result.error.message,
       'err'
     );
+
+
+    $('imageManager').innerHTML = `
+      <div class="empty">
+        ⚠️ No se pudieron cargar las imágenes.
+        <br><br>
+        <small>
+        ${esc(result.error.message)}
+        </small>
+      </div>
+    `;
+
 
     return;
 
@@ -2391,7 +2210,9 @@ async function loadImages(){
 
 
   images =
-    data || [];
+    result.data ||
+    [];
+
 
   renderImages();
 
@@ -2407,40 +2228,64 @@ function renderImages(){
   const q =
     (
       $('imageSearch')
-      ?.value ||
+        ?.value ||
       ''
     )
-    .toLowerCase();
+    .toLowerCase()
+    .trim();
 
 
   const list =
     images.filter(
       x =>
-        (x.title || '')
-          .toLowerCase()
-          .includes(q)
+        (
+          x.title ||
+          ''
+        )
+        .toLowerCase()
+        .includes(q)
         ||
-        (x.category || '')
-          .toLowerCase()
-          .includes(q)
+        (
+          x.category ||
+          ''
+        )
+        .toLowerCase()
+        .includes(q)
+        ||
+        (
+          x.description ||
+          ''
+        )
+        .toLowerCase()
+        .includes(q)
     );
 
 
-  $('imageManager')
-    .innerHTML =
+  const manager =
+    $('imageManager');
 
-      list.length
 
-      ?
+  if(!manager){
+    return;
+  }
 
-      list.map(
-        x => `
+
+  manager.innerHTML =
+
+    list.length
+
+    ?
+
+    list.map(
+      x => `
 
 <article class="image-card">
 
 <img
 src="${esc(x.url)}"
-alt="${esc(x.title)}"
+alt="${esc(x.title || 'Imagen')}"
+loading="lazy"
+onerror="this.style.opacity='.4'"
 >
 
 <div class="image-meta">
@@ -2458,7 +2303,10 @@ ${esc(x.description || '')}
 </p>
 
 <p>
-${x.visible ? '🟢 Visible' : '⚪ Oculta'}
+${x.visible
+  ? '🟢 Visible'
+  : '⚪ Oculta'
+}
 </p>
 
 <div class="actions">
@@ -2467,18 +2315,21 @@ ${x.visible ? '🟢 Visible' : '⚪ Oculta'}
 class="btn btn-dark"
 onclick="
 toggleVisible(
-'${x.id}',
+'${esc(x.id)}',
 ${!x.visible}
 )
 "
 >
-${x.visible ? 'Ocultar' : 'Mostrar'}
+${x.visible
+  ? 'Ocultar'
+  : 'Mostrar'
+}
 </button>
 
 <button
 class="btn btn-dark"
 onclick="
-deleteImage('${x.id}')
+deleteImage('${esc(x.id)}')
 "
 >
 🗑️ Eliminar
@@ -2491,15 +2342,15 @@ deleteImage('${x.id}')
 </article>
 
 `
-      ).join('')
+    ).join('')
 
-      :
+    :
 
-      `
-      <div class="empty">
+    `
+    <div class="empty">
       No hay imágenes para mostrar.
-      </div>
-      `;
+    </div>
+    `;
 
 }
 
@@ -2513,9 +2364,12 @@ async function toggleVisible(
   visible
 ){
 
-  const {
-    error
-  } =
+  if(!sb){
+    return;
+  }
+
+
+  const result =
     await sb
       .from('images')
       .update({
@@ -2530,11 +2384,11 @@ async function toggleVisible(
       );
 
 
-  if(error){
+  if(result.error){
 
     alert(
       'Error: ' +
-      error.message
+      result.error.message
     );
 
     return;
@@ -2553,14 +2407,18 @@ async function toggleVisible(
    ELIMINAR
 ===================================================== */
 
-async function deleteImage(id){
+async function deleteImage(
+  id
+){
 
   if(
     !confirm(
       '¿Eliminar esta imagen de la galería?'
     )
   ){
+
     return;
+
   }
 
 
@@ -2572,9 +2430,7 @@ async function deleteImage(id){
     );
 
 
-  const {
-    error
-  } =
+  const result =
     await sb
       .from('images')
       .delete()
@@ -2584,11 +2440,11 @@ async function deleteImage(id){
       );
 
 
-  if(error){
+  if(result.error){
 
     alert(
       'Error: ' +
-      error.message
+      result.error.message
     );
 
     return;
@@ -2598,20 +2454,31 @@ async function deleteImage(id){
 
   if(item?.url){
 
-    const match =
-      item.url.match(
-        /\/storage\/v1\/object\/public\/images\/(.+)$/
+    const marker =
+      '/storage/v1/object/public/images/';
+
+
+    const position =
+      item.url.indexOf(
+        marker
       );
 
 
-    if(match){
+    if(position !== -1){
+
+      const path =
+        item.url.substring(
+          position +
+          marker.length
+        );
+
 
       await sb
         .storage
         .from(BUCKET)
         .remove([
           decodeURIComponent(
-            match[1]
+            path
           )
         ]);
 
@@ -2631,11 +2498,6 @@ async function deleteImage(id){
    GALERÍA PÚBLICA
 ===================================================== */
 
-let imagesForGallery = [];
-
-let lightboxIndex = 0;
-
-
 async function loadPublic(){
 
   const box =
@@ -2647,10 +2509,7 @@ async function loadPublic(){
   }
 
 
-  const {
-    data,
-    error
-  } =
+  const result =
     await sb
       .from('images')
       .select(
@@ -2668,11 +2527,40 @@ async function loadPublic(){
       );
 
 
-  if(error){
+  if(result.error){
+
+    console.error(
+      'PUBLIC GALLERY:',
+      result.error
+    );
+
 
     box.innerHTML = `
       <div class="empty">
-        La galería todavía no está disponible.
+        ⚠️ La galería todavía no está disponible.
+        <br><br>
+        <small>
+        ${esc(result.error.message)}
+        </small>
+      </div>
+    `;
+
+
+    return;
+
+  }
+
+
+  const data =
+    result.data ||
+    [];
+
+
+  if(!data.length){
+
+    box.innerHTML = `
+      <div class="empty">
+        Todavía no hay trabajos publicados.
       </div>
     `;
 
@@ -2681,26 +2569,11 @@ async function loadPublic(){
   }
 
 
-  imagesForGallery =
-    data || [];
-
-
   box.innerHTML =
-
-    data?.length
-
-    ?
-
     data.map(
-      (x,index) => `
+      x => `
 
-<article
-class="card gallery-card"
-onclick="openLightbox(${index})"
-tabindex="0"
-role="button"
-aria-label="Ver ${esc(x.title || 'Obra')}"
->
+<article class="card">
 
 <div
 class="card-img"
@@ -2728,241 +2601,9 @@ ${esc(x.description || '')}
 </article>
 
 `
-    ).join('')
-
-    :
-
-    `
-    <div class="empty">
-      Todavía no hay trabajos publicados.
-    </div>
-    `;
-
-
-  document
-    .querySelectorAll('.gallery-card')
-    .forEach(
-      (card,index) => {
-
-        card.addEventListener(
-          'keydown',
-          e => {
-
-            if(
-              e.key === 'Enter' ||
-              e.key === ' '
-            ){
-
-              e.preventDefault();
-
-              openLightbox(index);
-
-            }
-
-          }
-        );
-
-      }
-    );
+    ).join('');
 
 }
-
-
-/* =====================================================
-   ABRIR GALERÍA
-===================================================== */
-
-function openLightbox(index){
-
-  if(
-    !imagesForGallery.length
-  ){
-    return;
-  }
-
-
-  lightboxIndex =
-    index;
-
-
-  renderLightbox();
-
-
-  $('galleryLightbox')
-    .classList
-    .add('open');
-
-
-  document.body.style.overflow =
-    'hidden';
-
-}
-
-
-/* =====================================================
-   CERRAR GALERÍA
-===================================================== */
-
-function closeLightbox(){
-
-  $('galleryLightbox')
-    .classList
-    .remove('open');
-
-
-  document.body.style.overflow =
-    '';
-
-}
-
-
-/* =====================================================
-   MOSTRAR IMAGEN
-===================================================== */
-
-function renderLightbox(){
-
-  const item =
-    imagesForGallery[
-      lightboxIndex
-    ];
-
-
-  if(!item){
-    return;
-  }
-
-
-  $('lightboxImage')
-    .src =
-    item.url;
-
-
-  $('lightboxImage')
-    .alt =
-    item.title ||
-    'Obra';
-
-
-  $('lightboxTitle')
-    .textContent =
-    item.title ||
-    'Obra';
-
-
-  $('lightboxCategory')
-    .textContent =
-    cat(
-      item.category
-    );
-
-
-  $('lightboxDescription')
-    .textContent =
-    item.description ||
-    '';
-
-
-  $('lightboxCounter')
-    .textContent =
-    `${lightboxIndex + 1} / ${imagesForGallery.length}`;
-
-}
-
-
-/* =====================================================
-   SIGUIENTE / ANTERIOR
-===================================================== */
-
-function changeLightbox(
-  step
-){
-
-  if(
-    !imagesForGallery.length
-  ){
-    return;
-  }
-
-
-  lightboxIndex =
-    (
-      lightboxIndex +
-      step +
-      imagesForGallery.length
-    )
-    %
-    imagesForGallery.length;
-
-
-  renderLightbox();
-
-}
-
-
-/* =====================================================
-   CERRAR TOCANDO FUERA
-===================================================== */
-
-$('galleryLightbox')
-?.addEventListener(
-  'click',
-  e => {
-
-    if(
-      e.target ===
-      $('galleryLightbox')
-    ){
-
-      closeLightbox();
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   TECLADO GALERÍA
-===================================================== */
-
-document.addEventListener(
-  'keydown',
-  e => {
-
-    if(
-      !$('galleryLightbox')
-      ?.classList
-      .contains('open')
-    ){
-
-      return;
-
-    }
-
-
-    if(e.key === 'Escape'){
-
-      closeLightbox();
-
-    }
-
-
-    if(e.key === 'ArrowLeft'){
-
-      changeLightbox(-1);
-
-    }
-
-
-    if(e.key === 'ArrowRight'){
-
-      changeLightbox(1);
-
-    }
-
-  }
-);
 
 
 /* =====================================================
@@ -2972,22 +2613,11 @@ document.addEventListener(
 const RADIO_APIS = [
 
   'https://de1.api.radio-browser.info',
-
   'https://nl1.api.radio-browser.info',
-
   'https://at1.api.radio-browser.info'
 
 ];
 
-
-let radioApiIndex = 0;
-
-let radioStations = [];
-
-
-/* =====================================================
-   RADIO API
-===================================================== */
 
 async function radioFetch(
   path
@@ -3045,7 +2675,6 @@ async function radioFetch(
 
       return await response.json();
 
-
     }catch(error){
 
       lastError =
@@ -3067,7 +2696,7 @@ async function radioFetch(
 
 
 /* =====================================================
-   ELEGIR ESTILO
+   ESTILO MUSICAL
 ===================================================== */
 
 $('radioGenre')
@@ -3081,7 +2710,8 @@ $('radioGenre')
 
     if(!genre){
 
-      radioStations = [];
+      radioStations =
+        [];
 
 
       $('radioStations')
@@ -3093,8 +2723,17 @@ $('radioGenre')
 
 
       $('radioStatus')
+        .className =
+        'radio-status';
+
+
+      $('radioStatus')
         .textContent =
         'Elegí un estilo musical para comenzar.';
+
+
+      $('radioPlayer')
+        .pause();
 
 
       $('radioPlayer')
@@ -3117,7 +2756,7 @@ $('radioGenre')
 
 
 /* =====================================================
-   CARGAR EMISORAS
+   CARGAR RADIO
 ===================================================== */
 
 async function loadRadioStations(
@@ -3188,7 +2827,9 @@ async function loadRadioStations(
     renderRadioStations();
 
 
-    if(radioStations.length){
+    if(
+      radioStations.length
+    ){
 
       radioStatus.className =
         'radio-status ok';
@@ -3202,7 +2843,6 @@ async function loadRadioStations(
         'No se encontraron emisoras para este estilo.';
 
     }
-
 
   }catch(error){
 
@@ -3233,7 +2873,7 @@ async function loadRadioStations(
 
 
 /* =====================================================
-   MOSTRAR EMISORAS
+   MOSTRAR RADIO
 ===================================================== */
 
 function renderRadioStations(){
@@ -3245,7 +2885,7 @@ function renderRadioStations(){
   const search =
     (
       $('radioSearch')
-      ?.value ||
+        ?.value ||
       ''
     )
     .toLowerCase()
@@ -3256,21 +2896,30 @@ function renderRadioStations(){
     radioStations.filter(
       station =>
 
-        (station.name || '')
-          .toLowerCase()
-          .includes(search)
+        (
+          station.name ||
+          ''
+        )
+        .toLowerCase()
+        .includes(search)
 
         ||
 
-        (station.country || '')
-          .toLowerCase()
-          .includes(search)
+        (
+          station.country ||
+          ''
+        )
+        .toLowerCase()
+        .includes(search)
 
         ||
 
-        (station.tags || '')
-          .toLowerCase()
-          .includes(search)
+        (
+          station.tags ||
+          ''
+        )
+        .toLowerCase()
+        .includes(search)
     );
 
 
@@ -3292,7 +2941,8 @@ function renderRadioStations(){
       (station,index) => {
 
         const logo =
-          station.favicon || '';
+          station.favicon ||
+          '';
 
 
         return `
@@ -3313,9 +2963,7 @@ ${
   src="${escapeRadioText(logo)}"
   alt=""
   loading="lazy"
-  onerror="
-  this.style.display='none'
-  "
+  onerror="this.style.display='none'"
   >
   `
 
@@ -3382,7 +3030,7 @@ playRadioStation(${index})
 
 
 /* =====================================================
-   BUSCAR EMISORAS
+   BUSCAR RADIO
 ===================================================== */
 
 $('radioSearch')
@@ -3393,7 +3041,9 @@ $('radioSearch')
     if(
       !$('radioGenre').value
     ){
+
       return;
+
     }
 
 
@@ -3404,7 +3054,7 @@ $('radioSearch')
 
 
 /* =====================================================
-   REPRODUCIR
+   REPRODUCIR RADIO
 ===================================================== */
 
 async function playRadioStation(
@@ -3414,7 +3064,7 @@ async function playRadioStation(
   const search =
     (
       $('radioSearch')
-      ?.value ||
+        ?.value ||
       ''
     )
     .toLowerCase()
@@ -3425,21 +3075,30 @@ async function playRadioStation(
     radioStations.filter(
       station =>
 
-        (station.name || '')
-          .toLowerCase()
-          .includes(search)
+        (
+          station.name ||
+          ''
+        )
+        .toLowerCase()
+        .includes(search)
 
         ||
 
-        (station.country || '')
-          .toLowerCase()
-          .includes(search)
+        (
+          station.country ||
+          ''
+        )
+        .toLowerCase()
+        .includes(search)
 
         ||
 
-        (station.tags || '')
-          .toLowerCase()
-          .includes(search)
+        (
+          station.tags ||
+          ''
+        )
+        .toLowerCase()
+        .includes(search)
     );
 
 
@@ -3478,7 +3137,6 @@ async function playRadioStation(
 
     player.src =
       stream;
-
 
     player.style.display =
       'block';
@@ -3526,7 +3184,6 @@ async function playRadioStation(
         station.name ||
         'Radio'
       );
-
 
   }catch(error){
 
@@ -3601,7 +3258,13 @@ $('radioPlayer')
 
 window.addEventListener(
   'DOMContentLoaded',
-  init
+  function(){
+
+    setupFilePreview();
+
+    init();
+
+  }
 );
 
 </script>
