@@ -106,8 +106,6 @@ section{
   overflow:hidden;
 }
 
-/* LOGO DEL INICIO */
-
 .hero-logo{
   display:block;
   width:auto;
@@ -118,8 +116,6 @@ section{
   margin:auto;
   border:0;
 }
-
-/* BOTONES DEL INICIO */
 
 .hero-buttons{
   width:100%;
@@ -175,8 +171,6 @@ section{
   transform:translateY(-2px);
   filter:brightness(1.1);
 }
-
-/* Se mantienen ocultos estos elementos del inicio */
 
 .hero-box{
   display:none;
@@ -292,7 +286,7 @@ h3{color:var(--gold2)}
   color:#999;
 }
 
-/* GALERIA OCULTA AL INICIO */
+/* GALERIA */
 
 #galeria{
   display:none;
@@ -792,10 +786,8 @@ h3{color:var(--gold2)}
 </div>
 </header>
 
-
 <!-- =====================================================
      INICIO
-     LOGO + GALERÍA + WHATSAPP + INSTAGRAM + FACEBOOK
 ===================================================== -->
 
 <section id="inicio" class="hero">
@@ -806,6 +798,7 @@ h3{color:var(--gold2)}
   alt="RoXThal Art Design"
   onerror="this.style.display='none';"
 >
+
 <div class="hero-buttons">
 
 <button
@@ -841,7 +834,6 @@ h3{color:var(--gold2)}
 </div>
 
 </section>
-
 
 <section id="servicios">
 
@@ -906,7 +898,6 @@ para aprender y crear.
 </div>
 </section>
 
-
 <section>
 
 <div class="about">
@@ -940,7 +931,6 @@ y desarrollo artístico.
 </div>
 </section>
 
-
 <!-- GALERIA -->
 
 <section id="galeria">
@@ -960,7 +950,6 @@ Cargando galería…
 </div>
 
 </section>
-
 
 <section id="cursos">
 
@@ -1002,7 +991,6 @@ diseño y fundamentos del tatuaje.
 
 </div>
 </section>
-
 
 <!-- RADIO -->
 
@@ -1072,7 +1060,6 @@ preload="none">
 </div>
 </section>
 
-
 <!-- CONTACTO -->
 
 <section id="contacto">
@@ -1129,8 +1116,9 @@ Buenos Aires, Argentina
 </div>
 </section>
 
-
-<!-- ADMINISTRADOR -->
+<!-- =====================================================
+     ADMINISTRADOR
+===================================================== -->
 
 <section id="admin">
 
@@ -1178,7 +1166,6 @@ Entrar
 
 </div>
 
-
 <div id="adminPanel" class="hidden">
 
 <div class="admin-nav">
@@ -1204,7 +1191,6 @@ Salir
 </button>
 
 </div>
-
 
 <!-- IMAGENES -->
 
@@ -1305,14 +1291,13 @@ onclick="loadImages()">
 <input
 id="imageSearch"
 placeholder="Buscar imagen…"
-oninput="renderImages">
+oninput="renderImages()">
 
 </div>
 
 <div id="imageManager"></div>
 
 </div>
-
 
 <!-- ALUMNOS -->
 
@@ -1549,7 +1534,6 @@ Cargando alumnos…
 
 </div>
 
-
 <!-- ESTADO -->
 
 <div
@@ -1590,7 +1574,6 @@ Control de pagos:
 </div>
 </section>
 
-
 <!-- VISOR -->
 
 <div
@@ -1617,11 +1600,9 @@ class="image-viewer-title">
 
 </div>
 
-
 <footer class="footer">
 © 2026 RoXThal Art Design
 </footer>
-
 
 <script>
 
@@ -1661,7 +1642,6 @@ function go(id){
   });
 }
 
-
 function status(id,msg,type=''){
 
   const el=$(id);
@@ -1671,7 +1651,6 @@ function status(id,msg,type=''){
   el.textContent=msg;
   el.className='status show '+type;
 }
-
 
 function esc(v=''){
 
@@ -1687,7 +1666,6 @@ function esc(v=''){
   );
 }
 
-
 function cat(v){
 
   return ({
@@ -1698,7 +1676,6 @@ function cat(v){
     otros:'Otros'
   })[v]||v||'Otros';
 }
-
 
 function formatMoney(value){
 
@@ -1844,14 +1821,12 @@ async function login(){
   }
 }
 
-
 function showLoggedIn(){
 
   $('loginPanel').classList.add('hidden');
   $('adminPanel').classList.remove('hidden');
 
 }
-
 
 async function logout(){
 
@@ -1890,49 +1865,71 @@ function showAdmin(id,btn){
    PREVISUALIZAR IMAGEN
 ===================================================== */
 
-$('imageFile')?.addEventListener(
-  'change',
-  e=>{
+document.addEventListener(
+  'DOMContentLoaded',
+  ()=>{
 
-    const f=e.target.files?.[0];
-    const img=$('imagePreview');
+    $('imageFile')?.addEventListener(
+      'change',
+      e=>{
 
-    if(!f){
+        const f=e.target.files?.[0];
+        const img=$('imagePreview');
 
-      img.style.display='none';
-      return;
+        if(!f){
 
-    }
+          img.style.display='none';
+          return;
 
-    if(!f.type.startsWith('image/')){
+        }
 
-      status(
-        'uploadStatus',
-        '❌ Selecciona una imagen válida.',
-        'err'
-      );
+        if(!f.type.startsWith('image/')){
 
-      e.target.value='';
-      return;
-    }
+          status(
+            'uploadStatus',
+            '❌ Selecciona una imagen válida.',
+            'err'
+          );
 
-    const reader=new FileReader();
+          e.target.value='';
+          return;
+        }
 
-    reader.onload=()=>{
+        const maxSize=15*1024*1024;
 
-      img.src=reader.result;
-      img.style.display='block';
+        if(f.size>maxSize){
 
-    };
+          status(
+            'uploadStatus',
+            '❌ La imagen supera los 15 MB.',
+            'err'
+          );
 
-    reader.readAsDataURL(f);
+          e.target.value='';
+          img.style.display='none';
+          return;
+        }
+
+        const reader=new FileReader();
+
+        reader.onload=()=>{
+
+          img.src=reader.result;
+          img.style.display='block';
+
+        };
+
+        reader.readAsDataURL(f);
+
+      }
+    );
 
   }
 );
 
 
 /* =====================================================
-   SUBIR IMAGEN
+   SUBIR IMAGEN — REPARADO
 ===================================================== */
 
 async function uploadImage(){
@@ -1940,43 +1937,140 @@ async function uploadImage(){
   try{
 
     if(!sb)
-      throw Error('Supabase no está conectado.');
+      throw new Error(
+        'Supabase no está conectado.'
+      );
+
+    /* COMPROBAR SESIÓN */
 
     const {
-      data:{session}
+      data:{session},
+      error:sessionError
     }=await sb.auth.getSession();
 
-    if(!session)
-      throw Error('Debes iniciar sesión.');
+    if(sessionError)
+      throw sessionError;
 
-    const file=$('imageFile').files?.[0];
+    if(!session)
+      throw new Error(
+        'Debes iniciar sesión como administrador.'
+      );
+
+    /* OBTENER ARCHIVO */
+
+    const input=$('imageFile');
+
+    if(!input)
+      throw new Error(
+        'No se encontró el selector de imágenes.'
+      );
+
+    const file=input.files?.[0];
 
     if(!file)
-      throw Error('Selecciona una imagen desde el teléfono.');
+      throw new Error(
+        'Selecciona una foto desde el teléfono.'
+      );
+
+    /* VALIDAR IMAGEN */
+
+    if(
+      !file.type ||
+      !file.type.startsWith('image/')
+    ){
+      throw new Error(
+        'El archivo seleccionado no es una imagen válida.'
+      );
+    }
+
+    /* MÁXIMO 15 MB */
+
+    const maxSize=15*1024*1024;
+
+    if(file.size>maxSize){
+
+      throw new Error(
+        'La imagen es demasiado grande. '+
+        'El máximo permitido es 15 MB.'
+      );
+
+    }
+
+    /* DATOS */
 
     const title=
-      $('imageTitle').value.trim()||
+      $('imageTitle')?.value.trim()||
       file.name.replace(/\.[^.]+$/,'');
 
-    const category=$('imageCategory').value;
+    const category=
+      $('imageCategory')?.value||
+      'otros';
 
     const description=
-      $('imageDescription').value.trim();
+      $('imageDescription')?.value.trim()||
+      '';
 
-    const ext=
-      (file.name.split('.').pop()||'jpg')
+    /* EXTENSIÓN */
+
+    let ext=
+      (file.name.split('.').pop()||'')
       .toLowerCase()
       .replace(/[^a-z0-9]/g,'');
 
+    const allowedExtensions=[
+      'jpg',
+      'jpeg',
+      'png',
+      'webp',
+      'gif'
+    ];
+
+    if(!allowedExtensions.includes(ext)){
+
+      if(file.type==='image/jpeg')
+        ext='jpg';
+
+      else if(file.type==='image/png')
+        ext='png';
+
+      else if(file.type==='image/webp')
+        ext='webp';
+
+      else if(file.type==='image/gif')
+        ext='gif';
+
+      else
+        throw new Error(
+          'Formato de imagen no compatible.'
+        );
+    }
+
+    /* NOMBRE ÚNICO */
+
+    const uniqueId=
+      typeof crypto!=='undefined' &&
+      crypto.randomUUID
+      ?crypto.randomUUID()
+      :Date.now()+'-'+Math.random()
+        .toString(36)
+        .substring(2);
+
     const path=
-      `${Date.now()}-${crypto.randomUUID()}.${ext}`;
+      `${category}/${Date.now()}-${uniqueId}.${ext}`;
+
+    /* ESTADO */
 
     status(
       'uploadStatus',
-      '⏳ Subiendo imagen...'
+      '⏳ Subiendo imagen a Supabase...'
     );
 
-    const up=await sb
+    /* SUBIR STORAGE */
+
+    const {
+      data:uploadData,
+      error:uploadError
+    }=await sb
       .storage
       .from(BUCKET)
       .upload(
@@ -1989,44 +2083,106 @@ async function uploadImage(){
         }
       );
 
-    if(up.error)
-      throw up.error;
+    if(uploadError){
 
-    const pub=
-      sb.storage
-        .from(BUCKET)
-        .getPublicUrl(path);
-
-    const {error}=
-      await sb
-        .from('images')
-        .insert({
-          title,
-          category,
-          url:pub.data.publicUrl,
-          description,
-          visible:true
-        });
-
-    if(error){
-
-      await sb.storage
-        .from(BUCKET)
-        .remove([path]);
-
-      throw error;
+      throw new Error(
+        'Error al subir el archivo: '+
+        uploadError.message
+      );
 
     }
 
+    if(!uploadData?.path){
+
+      throw new Error(
+        'Supabase no devolvió la ruta de la imagen.'
+      );
+
+    }
+
+    /* URL PÚBLICA */
+
+    const {
+      data:publicData
+    }=
+      sb
+        .storage
+        .from(BUCKET)
+        .getPublicUrl(path);
+
+    const publicUrl=
+      publicData?.publicUrl;
+
+    if(!publicUrl){
+
+      await sb
+        .storage
+        .from(BUCKET)
+        .remove([path]);
+
+      throw new Error(
+        'No se pudo obtener la URL pública de la imagen.'
+      );
+
+    }
+
+    /* GUARDAR EN images */
+
     status(
       'uploadStatus',
-      '✅ Imagen subida correctamente.',
+      '⏳ Guardando información de la imagen...'
+    );
+
+    const {
+      data:imageRecord,
+      error:databaseError
+    }=await sb
+      .from('images')
+      .insert({
+        title:title,
+        category:category,
+        url:publicUrl,
+        description:description,
+        visible:true
+      })
+      .select()
+      .single();
+
+    /* SI FALLA LA TABLA, BORRAR ARCHIVO */
+
+    if(databaseError){
+
+      await sb
+        .storage
+        .from(BUCKET)
+        .remove([path]);
+
+      throw new Error(
+        'La imagen se subió, pero no pudo guardarse '+
+        'en la tabla images: '+
+        databaseError.message
+      );
+
+    }
+
+    /* ÉXITO */
+
+    status(
+      'uploadStatus',
+      '✅ ¡Imagen guardada correctamente! '+
+      'Categoría: '+cat(category),
       'ok'
     );
 
+    /* LIMPIAR */
+
     resetForm();
 
+    /* ACTUALIZAR ADMIN */
+
     await loadImages();
+
+    /* ACTUALIZAR GALERÍA */
 
     if(
       $('galeria')?.classList.contains('gallery-open')
@@ -2034,11 +2190,20 @@ async function uploadImage(){
       await loadPublic();
     }
 
-  }catch(e){
+  }catch(error){
+
+    console.error(
+      'ERROR AL SUBIR IMAGEN:',
+      error
+    );
 
     status(
       'uploadStatus',
-      '❌ '+(e.message||e),
+      '❌ '+
+      (
+        error?.message||
+        'No se pudo guardar la imagen.'
+      ),
       'err'
     );
 
@@ -2056,6 +2221,7 @@ function resetForm(){
   $('imageDescription').value='';
   $('imageFile').value='';
   $('imagePreview').style.display='none';
+  $('imagePreview').src='';
 
 }
 
@@ -2080,7 +2246,8 @@ async function loadImages(){
 
     status(
       'uploadStatus',
-      '❌ No se pudieron cargar las imágenes: '+error.message,
+      '❌ No se pudieron cargar las imágenes: '+
+      error.message,
       'err'
     );
 
@@ -2162,7 +2329,7 @@ onclick="deleteImage('${x.id}')">
 
 
 /* =====================================================
-   VISIBILIDAD IMAGEN
+   VISIBILIDAD
 ===================================================== */
 
 async function toggleVisible(id,visible){
@@ -2226,7 +2393,8 @@ async function deleteImage(id){
 
     if(match){
 
-      await sb.storage
+      await sb
+        .storage
         .from(BUCKET)
         .remove([
           decodeURIComponent(match[1])
@@ -2268,7 +2436,6 @@ function openImageViewer(url,title=''){
   document.body.style.overflow='hidden';
 }
 
-
 function closeImageViewer(event){
 
   if(
@@ -2287,7 +2454,6 @@ function closeImageViewer(event){
 
   $('imageViewerImg').src='';
 }
-
 
 document.addEventListener(
   'keydown',
@@ -2413,7 +2579,8 @@ async function loadStudents(){
 
     status(
       'studentStatus',
-      '❌ No se pudieron cargar los alumnos: '+error.message,
+      '❌ No se pudieron cargar los alumnos: '+
+      error.message,
       'err'
     );
 
@@ -2954,7 +3121,6 @@ const RADIO_APIS=[
 let radioApiIndex=0;
 let radioStations=[];
 
-
 async function radioFetch(path){
 
   let lastError=null;
@@ -3000,31 +3166,60 @@ async function radioFetch(path){
 }
 
 
-$('radioGenre')?.addEventListener(
-  'change',
-  function(){
+document.addEventListener(
+  'DOMContentLoaded',
+  ()=>{
 
-    const genre=this.value;
+    $('radioGenre')?.addEventListener(
+      'change',
+      function(){
 
-    if(!genre){
+        const genre=this.value;
 
-      radioStations=[];
+        if(!genre){
 
-      $('radioStations').innerHTML=`
-        <div class="empty">
-          🎵 Elegí un estilo para ver las emisoras.
-        </div>
-      `;
+          radioStations=[];
 
-      $('radioStatus').textContent=
-        'Elegí un estilo musical para comenzar.';
+          $('radioStations').innerHTML=`
+            <div class="empty">
+              🎵 Elegí un estilo para ver las emisoras.
+            </div>
+          `;
 
-      $('radioPlayer').style.display='none';
+          $('radioStatus').textContent=
+            'Elegí un estilo musical para comenzar.';
 
-      return;
-    }
+          $('radioPlayer').style.display='none';
 
-    loadRadioStations(genre);
+          return;
+        }
+
+        loadRadioStations(genre);
+      }
+    );
+
+    $('radioSearch')?.addEventListener(
+      'input',
+      function(){
+
+        if(!$('radioGenre').value)return;
+
+        renderRadioStations();
+      }
+    );
+
+    $('radioPlayer')?.addEventListener(
+      'error',
+      function(){
+
+        $('radioStatus').className=
+          'radio-status err';
+
+        $('radioStatus').textContent=
+          '⚠️ Esta emisora dejó de estar disponible.';
+      }
+    );
+
   }
 );
 
@@ -3195,17 +3390,6 @@ onclick="playRadioStation(${index})">
 }
 
 
-$('radioSearch')?.addEventListener(
-  'input',
-  function(){
-
-    if(!$('radioGenre').value)return;
-
-    renderRadioStations();
-  }
-);
-
-
 async function playRadioStation(index){
 
   const search=(
@@ -3302,19 +3486,6 @@ function escapeRadioText(value=''){
     })[char]
   );
 }
-
-
-$('radioPlayer')?.addEventListener(
-  'error',
-  function(){
-
-    $('radioStatus').className=
-      'radio-status err';
-
-    $('radioStatus').textContent=
-      '⚠️ Esta emisora dejó de estar disponible.';
-  }
-);
 
 
 /* =====================================================
