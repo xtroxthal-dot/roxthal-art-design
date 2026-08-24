@@ -88,20 +88,32 @@ section{
   padding:60px 18px;
 }
 
+/* =====================================================
+   INICIO
+===================================================== */
+
 .hero{
   max-width:none;
   min-height:78vh;
   display:grid;
   place-items:center;
   text-align:center;
-  padding:50px 18px;
+  padding:30px 18px;
+
   background:
-    linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.9)),
-    url('https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1800&q=85')
-    center/cover;
+    #000
+    url('https://raw.githubusercontent.com/xtroxthal-dot/roxthal-art-design/main/logo-roxthal.PNG')
+    center center/contain no-repeat;
 }
 
-.hero-box{max-width:900px}
+/* Se mantiene vacío para no mostrar título,
+   enunciado ni botones en la página de inicio */
+
+.hero-box{
+  width:100%;
+  max-width:1200px;
+  min-height:72vh;
+}
 
 .eyebrow{
   color:var(--gold2);
@@ -669,6 +681,15 @@ h3{color:var(--gold2)}
     max-width:98vw;
     max-height:82vh;
   }
+
+  .hero{
+    min-height:70vh;
+    background-size:contain;
+  }
+
+  .hero-box{
+    min-height:64vh;
+  }
 }
 </style>
 </head>
@@ -692,54 +713,14 @@ h3{color:var(--gold2)}
 </header>
 
 
+<!-- =====================================================
+     INICIO — SOLO LA NUEVA IMAGEN
+===================================================== -->
+
 <section id="inicio" class="hero">
-<div class="hero-box">
 
-<div class="eyebrow">
-Arte · Diseño · Inclusión
-</div>
+<div class="hero-box"></div>
 
-<h1>
-RoXThal
-<span class="gold">Art Design</span>
-</h1>
-
-<p>
-Arte, dibujo, pintura, tatuajes,
-fileteado porteño y formación artística
-en San Antonio de Padua.
-</p>
-
-<div class="cta">
-
-<button class="btn btn-gold"
-onclick="openGallery()">
-🖼️ Ver trabajos
-</button>
-
-<a class="btn btn-dark"
-href="https://wa.me/5491169633376"
-target="_blank"
-rel="noopener">
-📱 WhatsApp
-</a>
-
-<a class="btn btn-facebook"
-href="https://www.facebook.com/share/14qh98ko3w2/"
-target="_blank"
-rel="noopener">
-🔵 Facebook
-</a>
-
-<a class="btn btn-instagram"
-href="https://www.instagram.com/roxthalartdesign/"
-target="_blank"
-rel="noopener">
-📸 Instagram
-</a>
-
-</div>
-</div>
 </section>
 
 
