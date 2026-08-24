@@ -1,21 +1,17 @@
 <!doctype html>
 <html lang="es">
 <head>
-
 <meta charset="utf-8">
-
-<meta name="viewport"
-      content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>RoXThal Art Design</title>
 
 <meta name="description"
-      content="RoXThal Art Design — arte, dibujo, pintura, tatuajes, radio y formación artística.">
+content="RoXThal Art Design — arte, dibujo, pintura, tatuajes, radio y formación artística.">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
 :root{
   --bg:#080809;
   --panel:#15151a;
@@ -147,26 +143,10 @@ section{
   text-decoration:none;
 }
 
-.btn-gold{
-  background:var(--gold);
-  color:#111;
-}
-
-.btn-dark{
-  background:#18181d;
-  color:#fff;
-  border:1px solid #555;
-}
-
-.btn-facebook{
-  background:var(--blue);
-  color:#fff;
-}
-
-.btn-instagram{
-  background:#d62976;
-  color:#fff;
-}
+.btn-gold{background:var(--gold);color:#111}
+.btn-dark{background:#18181d;color:#fff;border:1px solid #555}
+.btn-facebook{background:var(--blue);color:#fff}
+.btn-instagram{background:#d62976;color:#fff}
 
 .grid{
   display:grid;
@@ -233,86 +213,16 @@ h3{color:var(--gold2)}
   color:#999;
 }
 
-
-/* =====================================================
-   GALERIA
-===================================================== */
-
-#galleryContent{
+/* GALERIA OCULTA AL INICIO */
+#galeria{
   display:none;
-  margin-top:25px;
 }
 
-#galleryContent.open{
+#galeria.gallery-open{
   display:block;
 }
 
-.gallery-toolbar{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-bottom:20px;
-}
-
-.gallery-filter{
-  background:#18181d;
-  color:#fff;
-  border:1px solid #555;
-  border-radius:10px;
-  padding:10px 14px;
-}
-
-.gallery-filter.active,
-.gallery-filter:hover{
-  background:var(--gold);
-  color:#111;
-}
-
-.gallery-card{
-  cursor:pointer;
-  transition:transform .2s,border-color .2s;
-}
-
-.gallery-card:hover{
-  transform:translateY(-4px);
-  border-color:var(--gold);
-}
-
-.gallery-card .card-img{
-  height:260px;
-}
-
-.gallery-info{
-  padding:17px;
-}
-
-.gallery-info h3{
-  margin:0 0 8px;
-}
-
-.gallery-description{
-  color:#bbb;
-  font-size:14px;
-}
-
-.badge{
-  display:inline-block;
-  padding:4px 8px;
-  border-radius:999px;
-  background:#292930;
-  color:var(--gold2);
-  font-size:12px;
-}
-
-.gallery-count{
-  color:var(--muted);
-  margin-bottom:15px;
-}
-
-
-/* =====================================================
-   VISOR
-===================================================== */
+/* VISOR */
 
 .image-viewer{
   position:fixed;
@@ -322,17 +232,15 @@ h3{color:var(--gold2)}
   align-items:center;
   justify-content:center;
   padding:20px;
-  background:rgba(0,0,0,.96);
+  background:rgba(0,0,0,.95);
   backdrop-filter:blur(8px);
 }
 
-.image-viewer.open{
-  display:flex;
-}
+.image-viewer.open{display:flex}
 
 .image-viewer img{
-  max-width:88vw;
-  max-height:78vh;
+  max-width:96vw;
+  max-height:88vh;
   width:auto;
   height:auto;
   object-fit:contain;
@@ -340,10 +248,12 @@ h3{color:var(--gold2)}
   box-shadow:0 20px 60px rgba(0,0,0,.8);
 }
 
-.image-viewer-close,
-.viewer-prev,
-.viewer-next{
+.image-viewer-close{
   position:absolute;
+  top:15px;
+  right:15px;
+  width:46px;
+  height:46px;
   border-radius:50%;
   border:1px solid #666;
   background:#15151a;
@@ -353,36 +263,16 @@ h3{color:var(--gold2)}
   z-index:2;
 }
 
-.image-viewer-close{
-  top:15px;
-  right:15px;
-  width:46px;
-  height:46px;
-}
-
-.viewer-prev,
-.viewer-next{
-  top:50%;
-  transform:translateY(-50%);
-  width:52px;
-  height:52px;
-}
-
-.viewer-prev{left:18px}
-.viewer-next{right:18px}
-
-.image-viewer-close:hover,
-.viewer-prev:hover,
-.viewer-next:hover{
+.image-viewer-close:hover{
   background:var(--gold);
   color:#111;
 }
 
 .image-viewer-title{
   position:absolute;
-  left:70px;
-  right:70px;
-  bottom:20px;
+  left:20px;
+  right:20px;
+  bottom:15px;
   text-align:center;
   color:#fff;
   font-size:17px;
@@ -390,13 +280,9 @@ h3{color:var(--gold2)}
   text-shadow:0 2px 8px #000;
 }
 
-
-/* =====================================================
-   RADIO
-===================================================== */
+/* RADIO */
 
 #radio{display:none}
-
 #radio.radio-open{display:block}
 
 .radio-main{
@@ -451,9 +337,7 @@ h3{color:var(--gold2)}
   margin-bottom:10px;
 }
 
-.radio-station.radio-playing{
-  border-color:var(--gold);
-}
+.radio-station.radio-playing{border-color:var(--gold)}
 
 .station-logo{
   width:60px;
@@ -491,10 +375,7 @@ h3{color:var(--gold2)}
   color:var(--muted);
 }
 
-
-/* =====================================================
-   ADMIN
-===================================================== */
+/* ADMIN */
 
 .admin-wrap{
   background:rgba(12,12,15,.8);
@@ -630,6 +511,15 @@ h3{color:var(--gold2)}
 
 .image-meta{min-width:0}
 
+.badge{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#292930;
+  color:var(--gold2);
+  font-size:12px;
+}
+
 .empty{
   padding:30px;
   text-align:center;
@@ -640,10 +530,7 @@ h3{color:var(--gold2)}
 
 .hidden{display:none!important}
 
-
-/* =====================================================
-   ALUMNOS
-===================================================== */
+/* ALUMNOS */
 
 .student-card{
   background:#101014;
@@ -687,10 +574,70 @@ h3{color:var(--gold2)}
   margin:10px 0;
 }
 
+/* PAGOS */
 
-/* =====================================================
-   MOVIL
-===================================================== */
+.payment-box{
+  margin-top:14px;
+  padding:14px;
+  border-radius:12px;
+  background:#18181d;
+  border:1px solid var(--line);
+}
+
+.payment-box h4{
+  margin:0 0 10px;
+  color:var(--gold2);
+}
+
+.payment-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:8px;
+}
+
+.payment-grid div{
+  background:#101014;
+  border-radius:8px;
+  padding:9px;
+}
+
+.payment-paid{
+  color:#65d18a;
+  font-weight:700;
+}
+
+.payment-pending{
+  color:#ff7b7b;
+  font-weight:700;
+}
+
+.payment-summary{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:10px;
+  margin:15px 0;
+}
+
+.payment-summary div{
+  background:#101014;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:14px;
+}
+
+.payment-summary strong{
+  display:block;
+  font-size:22px;
+  color:var(--gold2);
+}
+
+.payment-filter{
+  background:#0d0d10;
+  color:#fff;
+  border:1px solid #484850;
+  border-radius:9px;
+  padding:11px;
+}
 
 @media(max-width:750px){
 
@@ -699,8 +646,6 @@ h3{color:var(--gold2)}
   .about{grid-template-columns:1fr}
 
   .card-img{height:180px}
-
-  .gallery-card .card-img{height:210px}
 
   .image-card{grid-template-columns:1fr}
 
@@ -721,75 +666,33 @@ h3{color:var(--gold2)}
   .image-viewer{padding:10px}
 
   .image-viewer img{
-    max-width:94vw;
-    max-height:75vh;
+    max-width:98vw;
+    max-height:82vh;
   }
-
-  .viewer-prev,
-  .viewer-next{
-    width:44px;
-    height:44px;
-    font-size:21px;
-  }
-
-  .viewer-prev{left:8px}
-  .viewer-next{right:8px}
-
-  .image-viewer-title{
-    left:55px;
-    right:55px;
-    bottom:12px;
-    font-size:14px;
-  }
-
 }
-
 </style>
 </head>
 
 <body>
 
-
 <header class="top">
-
 <div class="nav">
 
-<div class="brand">
-RoXThal Art Design
-</div>
+<div class="brand">RoXThal Art Design</div>
 
 <button onclick="go('inicio')">Inicio</button>
 <button onclick="go('servicios')">Servicios</button>
-
-<button onclick="toggleGallery()">
-🖼️ Galería
-</button>
-
+<button onclick="openGallery()">🖼️ Galería</button>
 <button onclick="go('cursos')">Cursos</button>
-
-<button onclick="openRadio()">
-📻 Radio
-</button>
-
-<button onclick="go('contacto')">
-Contacto
-</button>
-
-<button onclick="go('admin')">
-Administrador
-</button>
+<button onclick="openRadio()">📻 Radio</button>
+<button onclick="go('contacto')">Contacto</button>
+<button onclick="go('admin')">Administrador</button>
 
 </div>
-
 </header>
 
 
-<!-- =====================================================
-     INICIO
-===================================================== -->
-
 <section id="inicio" class="hero">
-
 <div class="hero-box">
 
 <div class="eyebrow">
@@ -810,7 +713,7 @@ en San Antonio de Padua.
 <div class="cta">
 
 <button class="btn btn-gold"
-onclick="toggleGallery(true)">
+onclick="openGallery()">
 🖼️ Ver trabajos
 </button>
 
@@ -836,113 +739,73 @@ rel="noopener">
 </a>
 
 </div>
-
 </div>
-
 </section>
 
 
-<!-- =====================================================
-     SERVICIOS
-===================================================== -->
-
 <section id="servicios">
 
-<div class="eyebrow">
-Lo que hacemos
-</div>
+<div class="eyebrow">Lo que hacemos</div>
 
 <h2>Arte que se transforma</h2>
 
 <div class="grid">
 
 <article class="card">
-
 <div class="card-img"
 style="background-image:url('https://images.unsplash.com/photo-1611501275019-9b5c8c7b4a4a?auto=format&fit=crop&w=1000&q=85')">
 </div>
-
 <div class="card-body">
-
 <h3>🎨 Tatuajes</h3>
-
 <p class="muted">
 Diseños personalizados y trabajos
 con identidad propia.
 </p>
-
 </div>
-
 </article>
 
-
 <article class="card">
-
 <div class="card-img"
 style="background-image:url('https://images.unsplash.com/photo-1547891654-e66ed7ebb968?auto=format&fit=crop&w=1000&q=85')">
 </div>
-
 <div class="card-body">
-
 <h3>🖌️ Fileteado Porteño</h3>
-
 <p class="muted">
 Ornamentación, letras, flores
 y composición.
 </p>
-
 </div>
-
 </article>
 
-
 <article class="card">
-
 <div class="card-img"
 style="background-image:url('https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=1000&q=85')">
 </div>
-
 <div class="card-body">
-
 <h3>✏️ Dibujo y Pintura</h3>
-
 <p class="muted">
 Clases y acompañamiento para
 desarrollar técnica y expresión.
 </p>
-
 </div>
-
 </article>
 
-
 <article class="card">
-
 <div class="card-img"
 style="background-image:url('https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&w=1000&q=85')">
 </div>
-
 <div class="card-body">
-
 <h3>👨‍🎨 Atelier de Arte</h3>
-
 <p class="muted">
 Espacio artístico inclusivo
 para aprender y crear.
 </p>
-
 </div>
-
 </article>
 
 </div>
-
 </section>
 
-
-<!-- =====================================================
-     IDENTIDAD
-===================================================== -->
 
 <section>
 
@@ -950,9 +813,7 @@ para aprender y crear.
 
 <div>
 
-<div class="eyebrow">
-Nuestra identidad
-</div>
+<div class="eyebrow">Nuestra identidad</div>
 
 <h2>Del dibujo al soporte final</h2>
 
@@ -977,173 +838,75 @@ y desarrollo artístico.
 <div class="about-img"></div>
 
 </div>
-
 </section>
 
 
-<!-- =====================================================
-     GALERIA
-===================================================== -->
+<!-- GALERIA OCULTA HASTA PULSAR EL BOTON -->
 
 <section id="galeria">
 
-<div class="eyebrow">
-Trabajos
-</div>
+<div class="eyebrow">Trabajos</div>
 
 <h2>Galería</h2>
 
 <p class="muted">
-La galería está cerrada. Pulsa el botón para ver los trabajos.
+Toca una imagen para verla completa.
 </p>
 
-<button
-id="galleryToggleButton"
-class="btn btn-gold"
-onclick="toggleGallery()">
-🖼️ Abrir galería
-</button>
-
-
-<div id="galleryContent">
-
-<div class="gallery-toolbar">
-
-<button
-class="gallery-filter active"
-data-category="todos"
-onclick="filterGallery('todos',this)">
-Todos
-</button>
-
-<button
-class="gallery-filter"
-data-category="obras"
-onclick="filterGallery('obras',this)">
-🎨 Obras
-</button>
-
-<button
-class="gallery-filter"
-data-category="tatuajes"
-onclick="filterGallery('tatuajes',this)">
-🖋️ Tatuajes
-</button>
-
-<button
-class="gallery-filter"
-data-category="dibujos"
-onclick="filterGallery('dibujos',this)">
-✏️ Dibujos
-</button>
-
-<button
-class="gallery-filter"
-data-category="pinturas"
-onclick="filterGallery('pinturas',this)">
-🖌️ Pinturas
-</button>
-
-<button
-class="gallery-filter"
-data-category="otros"
-onclick="filterGallery('otros',this)">
-📁 Otros
-</button>
-
-</div>
-
-<div id="galleryCount"
-class="gallery-count"></div>
-
 <div id="publicGallery" class="grid">
-
 <div class="empty">
 Cargando galería…
 </div>
-
-</div>
-
 </div>
 
 </section>
 
 
-<!-- =====================================================
-     CURSOS
-===================================================== -->
-
 <section id="cursos">
 
-<div class="eyebrow">
-Formación
-</div>
+<div class="eyebrow">Formación</div>
 
 <h2>Cursos y talleres</h2>
 
 <div class="grid">
 
 <article class="card">
-
 <div class="card-body">
-
 <h3>🎨 Dibujo y Pintura Profesional</h3>
-
 <p>
 Clases personalizadas, técnica,
 composición y proyecto artístico.
 </p>
-
 </div>
-
 </article>
 
-
 <article class="card">
-
 <div class="card-body">
-
 <h3>🖌️ Taller infantil</h3>
-
 <p>
 Espacio inclusivo para desarrollar
 creatividad y expresión.
 </p>
-
 </div>
-
 </article>
 
-
 <article class="card">
-
 <div class="card-body">
-
 <h3>🖋️ Iniciación al tatuaje</h3>
-
 <p>
 Formación progresiva sobre dibujo,
 diseño y fundamentos del tatuaje.
 </p>
-
 </div>
-
 </article>
 
 </div>
-
 </section>
 
 
-<!-- =====================================================
-     RADIO
-===================================================== -->
-
 <section id="radio">
 
-<div class="eyebrow">
-Música
-</div>
+<div class="eyebrow">Música</div>
 
 <h2>📻 RoXThal Radio</h2>
 
@@ -1158,10 +921,7 @@ las emisoras disponibles.
 
 <select id="radioGenre">
 
-<option value="">
-Elegir estilo musical...
-</option>
-
+<option value="">Elegir estilo musical...</option>
 <option value="rock">🎸 Rock</option>
 <option value="pop">🎤 Pop</option>
 <option value="electronic">🎧 Electrónica</option>
@@ -1181,8 +941,7 @@ Elegir estilo musical...
 
 </select>
 
-<input
-id="radioSearch"
+<input id="radioSearch"
 type="search"
 placeholder="🔎 Buscar emisora...">
 
@@ -1192,12 +951,10 @@ placeholder="🔎 Buscar emisora...">
 Elegí un estilo musical para comenzar.
 </div>
 
-<audio
-id="radioPlayer"
+<audio id="radioPlayer"
 class="radio-player"
 controls
-preload="none">
-</audio>
+preload="none"></audio>
 
 <div id="radioStations">
 
@@ -1208,96 +965,64 @@ preload="none">
 </div>
 
 </div>
-
 </section>
 
 
-<!-- =====================================================
-     CONTACTO
-===================================================== -->
-
 <section id="contacto">
 
-<div class="eyebrow">
-Contacto
-</div>
+<div class="eyebrow">Contacto</div>
 
 <h2>Hablemos</h2>
 
 <div class="contact">
 
 <div class="card">
-
 <h3>📱 WhatsApp</h3>
-
 <p>
-<a
-href="https://wa.me/5491169633376"
+<a href="https://wa.me/5491169633376"
 target="_blank"
 rel="noopener">
 11 6963-3376
 </a>
 </p>
-
 </div>
 
-
 <div class="card">
-
 <h3>🔵 Facebook</h3>
-
 <p>
-<a
-href="https://www.facebook.com/share/14qh98ko3w2/"
+<a href="https://www.facebook.com/share/14qh98ko3w2/"
 target="_blank"
 rel="noopener">
 RoXThal Art Design
 </a>
 </p>
-
 </div>
 
-
 <div class="card">
-
 <h3>📸 Instagram</h3>
-
 <p>
-<a
-href="https://www.instagram.com/roxthalartdesign/"
+<a href="https://www.instagram.com/roxthalartdesign/"
 target="_blank"
 rel="noopener">
 @roxthalartdesign
 </a>
 </p>
-
 </div>
 
-
 <div class="card">
-
 <h3>📍 San Antonio de Padua</h3>
-
 <p class="muted">
 Buenos Aires, Argentina
 </p>
-
 </div>
 
 </div>
-
 </section>
 
 
-<!-- =====================================================
-     ADMINISTRADOR
-===================================================== -->
-
 <section id="admin">
 
-<div class="eyebrow">
-Gestión
-</div>
+<div class="eyebrow">Gestión</div>
 
 <h2>Administrador</h2>
 
@@ -1310,33 +1035,24 @@ Gestión
 <div class="form-grid">
 
 <label class="field">
-
 <span>Email</span>
-
-<input
-id="loginEmail"
+<input id="loginEmail"
 type="email"
 autocomplete="username">
-
 </label>
 
 <label class="field">
-
 <span>Contraseña</span>
-
-<input
-id="loginPassword"
+<input id="loginPassword"
 type="password"
 autocomplete="current-password">
-
 </label>
 
 </div>
 
 <div class="actions">
 
-<button
-class="btn btn-gold"
+<button class="btn btn-gold"
 onclick="login()">
 Entrar
 </button>
@@ -1352,19 +1068,16 @@ Entrar
 
 <div class="admin-nav">
 
-<button
-class="active"
+<button class="active"
 onclick="showAdmin('imagenes',this)">
 🖼️ Imágenes
 </button>
 
-<button
-onclick="showAdmin('alumnos',this)">
+<button onclick="showAdmin('alumnos',this)">
 👨‍🎓 Alumnos
 </button>
 
-<button
-onclick="showAdmin('estado',this)">
+<button onclick="showAdmin('estado',this)">
 ⚙️ Estado
 </button>
 
@@ -1375,10 +1088,7 @@ Salir
 </div>
 
 
-<!-- IMAGENES -->
-
-<div
-id="admin-imagenes"
+<div id="admin-imagenes"
 class="admin-section active">
 
 <h3>Gestor de imágenes</h3>
@@ -1392,39 +1102,29 @@ registrará en la tabla <b>images</b>.
 <div class="form-grid">
 
 <label class="field">
-
 <span>Título</span>
-
-<input
-id="imageTitle"
+<input id="imageTitle"
 placeholder="Ej.: Retrato en acrílico">
-
 </label>
 
 <label class="field">
-
 <span>Categoría</span>
 
 <select id="imageCategory">
-
 <option value="obras">Obras</option>
 <option value="tatuajes">Tatuajes</option>
 <option value="dibujos">Dibujos</option>
 <option value="pinturas">Pinturas</option>
 <option value="otros">Otros</option>
-
 </select>
 
 </label>
 
 <label class="field full">
-
 <span>Descripción</span>
 
-<textarea
-id="imageDescription"
-placeholder="Descripción de la obra">
-</textarea>
+<textarea id="imageDescription"
+placeholder="Descripción de la obra"></textarea>
 
 </label>
 
@@ -1434,32 +1134,26 @@ placeholder="Descripción de la obra">
 
 <div class="filebox">
 
-<input
-id="imageFile"
+<input id="imageFile"
 type="file"
 accept="image/*">
 
-<img
-id="imagePreview"
+<img id="imagePreview"
 class="preview"
 alt="Vista previa">
 
 </div>
-
 </div>
-
 </div>
 
 <div class="actions">
 
-<button
-class="btn btn-gold"
+<button class="btn btn-gold"
 onclick="uploadImage()">
 ☁️ Subir imagen
 </button>
 
-<button
-class="btn btn-dark"
+<button class="btn btn-dark"
 onclick="resetForm()">
 Limpiar
 </button>
@@ -1470,14 +1164,12 @@ Limpiar
 
 <div class="manager-tools">
 
-<button
-class="btn btn-dark"
+<button class="btn btn-dark"
 onclick="loadImages()">
 🔄 Actualizar
 </button>
 
-<input
-id="imageSearch"
+<input id="imageSearch"
 placeholder="Buscar imagen…"
 oninput="renderImages()">
 
@@ -1488,53 +1180,63 @@ oninput="renderImages()">
 </div>
 
 
-<!-- ALUMNOS -->
+<!-- ALUMNOS Y COBROS -->
 
-<div
-id="admin-alumnos"
+<div id="admin-alumnos"
 class="admin-section">
 
-<h3>👨‍🎓 Control de alumnos</h3>
+<h3>👨‍🎓 Control de alumnos y pagos</h3>
 
 <p class="muted">
-Desde aquí puedes administrar los alumnos
-y su información de formación.
+Administra los alumnos, sus cursos y el estado de sus pagos.
 </p>
 
 <div id="studentStatus" class="status"></div>
 
+<div class="payment-summary">
+
+<div>
+<span class="muted">Alumnos</span>
+<strong id="totalStudents">0</strong>
+</div>
+
+<div>
+<span class="muted">Pagados</span>
+<strong id="paidStudents">0</strong>
+</div>
+
+<div>
+<span class="muted">Pendientes</span>
+<strong id="pendingStudents">0</strong>
+</div>
+
+<div>
+<span class="muted">Total cobrado</span>
+<strong id="totalPaidAmount">$0</strong>
+</div>
+
+</div>
+
 <div class="form-grid">
 
 <label class="field">
-
 <span>Nombre completo *</span>
-
-<input
-id="studentName"
+<input id="studentName"
 placeholder="Nombre y apellido">
-
 </label>
 
 <label class="field">
-
 <span>Email</span>
-
-<input
-id="studentEmail"
+<input id="studentEmail"
 type="email"
 placeholder="correo@ejemplo.com">
-
 </label>
 
 <label class="field">
-
 <span>Teléfono</span>
-
-<input
-id="studentPhone"
+<input id="studentPhone"
 type="tel"
 placeholder="11 1234-5678">
-
 </label>
 
 <label class="field">
@@ -1543,9 +1245,7 @@ placeholder="11 1234-5678">
 
 <select id="studentCourse">
 
-<option value="">
-Seleccionar curso...
-</option>
+<option value="">Seleccionar curso...</option>
 
 <option value="Dibujo y Pintura Profesional">
 Dibujo y Pintura Profesional
@@ -1573,7 +1273,7 @@ Otro
 
 <label class="field">
 
-<span>Estado</span>
+<span>Estado del alumno</span>
 
 <select id="studentStatusSelect">
 
@@ -1584,14 +1284,51 @@ Otro
 
 </label>
 
+<label class="field">
+
+<span>💳 Estado del pago</span>
+
+<select id="studentPaymentStatus">
+
+<option value="pendiente">
+🔴 Pendiente
+</option>
+
+<option value="pagado">
+🟢 Pagado
+</option>
+
+</select>
+
+</label>
+
+<label class="field">
+
+<span>💰 Importe pagado</span>
+
+<input id="studentPaymentAmount"
+type="number"
+min="0"
+step="0.01"
+placeholder="Ej.: 25000">
+
+</label>
+
+<label class="field">
+
+<span>📅 Fecha de pago</span>
+
+<input id="studentPaymentDate"
+type="date">
+
+</label>
+
 <label class="field full">
 
 <span>Notas</span>
 
-<textarea
-id="studentNotes"
-placeholder="Observaciones del alumno...">
-</textarea>
+<textarea id="studentNotes"
+placeholder="Observaciones del alumno..."></textarea>
 
 </label>
 
@@ -1599,15 +1336,13 @@ placeholder="Observaciones del alumno...">
 
 <div class="actions">
 
-<button
-id="studentSaveButton"
+<button id="studentSaveButton"
 class="btn btn-gold"
 onclick="saveStudent()">
 ➕ Añadir alumno
 </button>
 
-<button
-class="btn btn-dark"
+<button class="btn btn-dark"
 onclick="resetStudentForm()">
 Limpiar
 </button>
@@ -1616,22 +1351,37 @@ Limpiar
 
 <div class="manager-tools">
 
-<button
-class="btn btn-dark"
+<button class="btn btn-dark"
 onclick="loadStudents()">
 🔄 Actualizar alumnos
 </button>
 
-<input
-id="studentSearch"
+<input id="studentSearch"
 placeholder="🔎 Buscar alumno..."
 oninput="renderStudents()">
+
+<select id="paymentFilter"
+class="payment-filter"
+onchange="renderStudents()">
+
+<option value="todos">
+💳 Todos los pagos
+</option>
+
+<option value="pagado">
+🟢 Pagados
+</option>
+
+<option value="pendiente">
+🔴 Pendientes
+</option>
+
+</select>
 
 </div>
 
 <div id="studentCount"
-class="student-count">
-</div>
+class="student-count"></div>
 
 <div id="studentManager">
 
@@ -1644,17 +1394,12 @@ Cargando alumnos…
 </div>
 
 
-<!-- ESTADO -->
-
-<div
-id="admin-estado"
+<div id="admin-estado"
 class="admin-section">
 
 <h3>Estado de conexión</h3>
 
-<div
-id="backendStatus"
-class="status show">
+<div id="backendStatus" class="status show">
 Comprobando Supabase…
 </div>
 
@@ -1673,52 +1418,33 @@ Tabla de alumnos:
 <b>students</b>
 </p>
 
-</div>
+<p class="muted">
+Control de pagos:
+<b>payment_status · payment_amount · payment_date</b>
+</p>
 
 </div>
 
 </div>
-
+</div>
 </section>
 
 
-<!-- =====================================================
-     VISOR DE GALERIA
-===================================================== -->
-
-<div
-id="imageViewer"
+<div id="imageViewer"
 class="image-viewer"
 onclick="closeImageViewer(event)">
 
-<button
-class="image-viewer-close"
+<button class="image-viewer-close"
 onclick="closeImageViewer()"
 aria-label="Cerrar">
 ✕
 </button>
 
-<button
-class="viewer-prev"
-onclick="previousGalleryImage(event)"
-aria-label="Anterior">
-‹
-</button>
-
-<img
-id="imageViewerImg"
+<img id="imageViewerImg"
 src=""
 alt="">
 
-<button
-class="viewer-next"
-onclick="nextGalleryImage(event)"
-aria-label="Siguiente">
-›
-</button>
-
-<div
-id="imageViewerTitle"
+<div id="imageViewerTitle"
 class="image-viewer-title">
 </div>
 
@@ -1751,305 +1477,42 @@ let editingStudentId=null;
 
 
 /* =====================================================
-   GALERIA
-===================================================== */
-
-let galleryCategory='todos';
-let galleryVisibleImages=[];
-let galleryViewerIndex=0;
-
-
-function toggleGallery(open){
-
-  const content=$('galleryContent');
-
-  const button=$('galleryToggleButton');
-
-  if(!content)return;
-
-  const shouldOpen=
-    typeof open==='boolean'
-    ?open
-    :!content.classList.contains('open');
-
-  if(shouldOpen){
-
-    content.classList.add('open');
-
-    if(button)
-      button.textContent='✕ Cerrar galería';
-
-    go('galeria');
-
-    loadPublic();
-
-  }else{
-
-    content.classList.remove('open');
-
-    if(button)
-      button.textContent='🖼️ Abrir galería';
-
-  }
-
-}
-
-
-function filterGallery(category,button){
-
-  galleryCategory=category;
-
-  document
-    .querySelectorAll('.gallery-filter')
-    .forEach(x=>x.classList.remove('active'));
-
-  button?.classList.add('active');
-
-  renderPublicGallery();
-
-}
-
-
-function renderPublicGallery(){
-
-  const box=$('publicGallery');
-
-  const count=$('galleryCount');
-
-  if(!box)return;
-
-  const list=
-    galleryCategory==='todos'
-    ?images.filter(x=>x.visible)
-    :images.filter(
-        x=>
-          x.visible &&
-          x.category===galleryCategory
-      );
-
-  galleryVisibleImages=list;
-
-  if(count){
-
-    count.textContent=
-      `${list.length} trabajo${
-        list.length===1?'':'s'
-      } encontrado${
-        list.length===1?'':'s'
-      }.`;
-
-  }
-
-  if(!list.length){
-
-    box.innerHTML=`
-      <div class="empty">
-        No hay trabajos publicados
-        en esta categoría.
-      </div>
-    `;
-
-    return;
-
-  }
-
-  box.innerHTML=list.map((x,index)=>`
-
-<article
-class="card gallery-card"
-onclick="openGalleryImage(${index})">
-
-<div
-class="card-img"
-style="background-image:url('${esc(x.url)}')">
-</div>
-
-<div class="gallery-info">
-
-<h3>
-${esc(x.title||'Obra')}
-</h3>
-
-<span class="badge">
-${esc(cat(x.category))}
-</span>
-
-${
-x.description
-?`
-<p class="gallery-description">
-${esc(x.description)}
-</p>
-`
-:''
-}
-
-<p
-style="font-size:12px;color:#777;margin:10px 0 0">
-👆 Toca para ver completa
-</p>
-
-</div>
-
-</article>
-
-`).join('');
-
-}
-
-
-function openGalleryImage(index){
-
-  if(!galleryVisibleImages.length)return;
-
-  galleryViewerIndex=index;
-
-  const item=
-    galleryVisibleImages[galleryViewerIndex];
-
-  const viewer=$('imageViewer');
-
-  const img=$('imageViewerImg');
-
-  const title=$('imageViewerTitle');
-
-  if(!viewer||!img)return;
-
-  img.src=item.url;
-
-  img.alt=item.title||'Obra';
-
-  if(title){
-
-    title.textContent=
-      `${item.title||'Obra'} · ${cat(item.category)}${
-        item.description
-        ?' — '+item.description
-        :''
-      }`;
-
-  }
-
-  viewer.classList.add('open');
-
-  document.body.style.overflow='hidden';
-
-}
-
-
-function updateGalleryViewer(){
-
-  const item=
-    galleryVisibleImages[galleryViewerIndex];
-
-  if(!item)return;
-
-  $('imageViewerImg').src=item.url;
-
-  $('imageViewerImg').alt=
-    item.title||'Obra';
-
-  $('imageViewerTitle').textContent=
-    `${item.title||'Obra'} · ${cat(item.category)}${
-      item.description
-      ?' — '+item.description
-      :''
-    }`;
-
-}
-
-
-function nextGalleryImage(event){
-
-  event?.stopPropagation();
-
-  if(!galleryVisibleImages.length)return;
-
-  galleryViewerIndex=
-    (galleryViewerIndex+1)
-    %galleryVisibleImages.length;
-
-  updateGalleryViewer();
-
-}
-
-
-function previousGalleryImage(event){
-
-  event?.stopPropagation();
-
-  if(!galleryVisibleImages.length)return;
-
-  galleryViewerIndex=
-    (galleryViewerIndex-1+
-     galleryVisibleImages.length)
-    %galleryVisibleImages.length;
-
-  updateGalleryViewer();
-
-}
-
-
-function closeImageViewer(event){
-
-  if(
-    event &&
-    event.target &&
-    event.target.id!=='imageViewer'
-  ){
-    return;
-  }
-
-  const viewer=$('imageViewer');
-
-  if(!viewer)return;
-
-  viewer.classList.remove('open');
-
-  document.body.style.overflow='';
-
-  $('imageViewerImg').src='';
-
-}
-
-
-document.addEventListener(
-  'keydown',
-  event=>{
-
-    const viewer=$('imageViewer');
-
-    if(
-      !viewer ||
-      !viewer.classList.contains('open')
-    )return;
-
-    if(event.key==='Escape')
-      closeImageViewer();
-
-    if(event.key==='ArrowRight')
-      nextGalleryImage();
-
-    if(event.key==='ArrowLeft')
-      previousGalleryImage();
-
-  }
-);
-
-
-/* =====================================================
    UTILIDADES
 ===================================================== */
 
 const $=id=>document.getElementById(id);
 
-
 function go(id){
 
-  $(id)?.scrollIntoView({
+  const el=$(id);
+
+  if(!el)return;
+
+  el.scrollIntoView({
     behavior:'smooth',
     block:'start'
   });
+}
+
+
+/* =====================================================
+   GALERIA
+===================================================== */
+
+function openGallery(){
+
+  const gallery=$('galeria');
+
+  if(!gallery)return;
+
+  gallery.classList.add('gallery-open');
+
+  gallery.scrollIntoView({
+    behavior:'smooth',
+    block:'start'
+  });
+
+  loadPublic();
 
 }
 
@@ -2061,9 +1524,7 @@ function status(id,msg,type=''){
   if(!el)return;
 
   el.textContent=msg;
-
   el.className='status show '+type;
-
 }
 
 
@@ -2079,7 +1540,6 @@ function esc(v=''){
       '"':'&quot;'
     }[c])
   );
-
 }
 
 
@@ -2092,12 +1552,25 @@ function cat(v){
     pinturas:'Pinturas',
     otros:'Otros'
   })[v]||v||'Otros';
+}
 
+
+function formatMoney(value){
+
+  const number=Number(value||0);
+
+  return '$'+number.toLocaleString(
+    'es-AR',
+    {
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    }
+  );
 }
 
 
 /* =====================================================
-   RADIO ABRIR
+   RADIO
 ===================================================== */
 
 function openRadio(){
@@ -2112,7 +1585,6 @@ function openRadio(){
     behavior:'smooth',
     block:'start'
   });
-
 }
 
 
@@ -2144,12 +1616,7 @@ async function init(){
       showLoggedIn();
 
       await loadImages();
-
       await loadStudents();
-
-    }else{
-
-      await loadPublic();
 
     }
 
@@ -2162,7 +1629,6 @@ async function init(){
     );
 
   }
-
 }
 
 
@@ -2177,16 +1643,11 @@ async function login(){
     if(!sb)
       throw Error('Supabase no está disponible.');
 
-    const email=
-      $('loginEmail').value.trim();
-
-    const password=
-      $('loginPassword').value;
+    const email=$('loginEmail').value.trim();
+    const password=$('loginPassword').value;
 
     if(!email||!password)
-      throw Error(
-        'Introduce email y contraseña.'
-      );
+      throw Error('Introduce email y contraseña.');
 
     const {data,error}=
       await sb.auth.signInWithPassword({
@@ -2205,7 +1666,6 @@ async function login(){
     );
 
     await loadImages();
-
     await loadStudents();
 
   }catch(e){
@@ -2215,16 +1675,13 @@ async function login(){
       '❌ '+e.message,
       'err'
     );
-
   }
-
 }
 
 
 function showLoggedIn(){
 
   $('loginPanel').classList.add('hidden');
-
   $('adminPanel').classList.remove('hidden');
 
 }
@@ -2235,7 +1692,6 @@ async function logout(){
   await sb?.auth.signOut();
 
   $('adminPanel').classList.add('hidden');
-
   $('loginPanel').classList.remove('hidden');
 
 }
@@ -2249,23 +1705,18 @@ function showAdmin(id,btn){
 
   document
     .querySelectorAll('.admin-section')
-    .forEach(
-      x=>x.classList.remove('active')
-    );
+    .forEach(x=>x.classList.remove('active'));
 
   $('admin-'+id)?.classList.add('active');
 
   document
     .querySelectorAll('.admin-nav button')
-    .forEach(
-      x=>x.classList.remove('active')
-    );
+    .forEach(x=>x.classList.remove('active'));
 
   btn?.classList.add('active');
 
   if(id==='alumnos')
     loadStudents();
-
 }
 
 
@@ -2278,13 +1729,11 @@ $('imageFile')?.addEventListener(
   e=>{
 
     const f=e.target.files?.[0];
-
     const img=$('imagePreview');
 
     if(!f){
 
       img.style.display='none';
-
       return;
 
     }
@@ -2298,9 +1747,7 @@ $('imageFile')?.addEventListener(
       );
 
       e.target.value='';
-
       return;
-
     }
 
     const reader=new FileReader();
@@ -2308,7 +1755,6 @@ $('imageFile')?.addEventListener(
     reader.onload=()=>{
 
       img.src=reader.result;
-
       img.style.display='block';
 
     };
@@ -2328,33 +1774,25 @@ async function uploadImage(){
   try{
 
     if(!sb)
-      throw Error(
-        'Supabase no está conectado.'
-      );
+      throw Error('Supabase no está conectado.');
 
     const {
       data:{session}
     }=await sb.auth.getSession();
 
     if(!session)
-      throw Error(
-        'Debes iniciar sesión.'
-      );
+      throw Error('Debes iniciar sesión.');
 
-    const file=
-      $('imageFile').files?.[0];
+    const file=$('imageFile').files?.[0];
 
     if(!file)
-      throw Error(
-        'Selecciona una imagen desde el teléfono.'
-      );
+      throw Error('Selecciona una imagen desde el teléfono.');
 
     const title=
       $('imageTitle').value.trim()||
       file.name.replace(/\.[^.]+$/,'');
 
-    const category=
-      $('imageCategory').value;
+    const category=$('imageCategory').value;
 
     const description=
       $('imageDescription').value.trim();
@@ -2424,7 +1862,11 @@ async function uploadImage(){
 
     await loadImages();
 
-    await loadPublic();
+    if(
+      $('galeria')?.classList.contains('gallery-open')
+    ){
+      await loadPublic();
+    }
 
   }catch(e){
 
@@ -2435,7 +1877,6 @@ async function uploadImage(){
     );
 
   }
-
 }
 
 
@@ -2446,11 +1887,8 @@ async function uploadImage(){
 function resetForm(){
 
   $('imageTitle').value='';
-
   $('imageDescription').value='';
-
   $('imageFile').value='';
-
   $('imagePreview').style.display='none';
 
 }
@@ -2481,20 +1919,16 @@ async function loadImages(){
     );
 
     return;
-
   }
 
   images=data||[];
 
   renderImages();
-
-  renderPublicGallery();
-
 }
 
 
 /* =====================================================
-   RENDER ADMIN IMAGENES
+   RENDER IMAGENES ADMIN
 ===================================================== */
 
 function renderImages(){
@@ -2504,12 +1938,8 @@ function renderImages(){
   ).toLowerCase();
 
   const list=images.filter(x=>
-    (x.title||'')
-      .toLowerCase()
-      .includes(q)||
-    (x.category||'')
-      .toLowerCase()
-      .includes(q)
+    (x.title||'').toLowerCase().includes(q)||
+    (x.category||'').toLowerCase().includes(q)
   );
 
   $('imageManager').innerHTML=list.length
@@ -2518,15 +1948,12 @@ function renderImages(){
 
 <article class="image-card">
 
-<img
-src="${esc(x.url)}"
+<img src="${esc(x.url)}"
 alt="${esc(x.title)}">
 
 <div class="image-meta">
 
-<h3>
-${esc(x.title||'Sin título')}
-</h3>
+<h3>${esc(x.title||'Sin título')}</h3>
 
 <span class="badge">
 ${esc(cat(x.category))}
@@ -2542,14 +1969,12 @@ ${x.visible?'🟢 Visible':'⚪ Oculta'}
 
 <div class="actions">
 
-<button
-class="btn btn-dark"
+<button class="btn btn-dark"
 onclick="toggleVisible('${x.id}',${!x.visible})">
 ${x.visible?'Ocultar':'Mostrar'}
 </button>
 
-<button
-class="btn btn-dark"
+<button class="btn btn-dark"
 onclick="deleteImage('${x.id}')">
 🗑️ Eliminar
 </button>
@@ -2557,17 +1982,13 @@ onclick="deleteImage('${x.id}')">
 </div>
 
 </div>
-
 </article>
 
 `).join('')
 
-    :`
-      <div class="empty">
-      No hay imágenes para mostrar.
-      </div>
-    `;
-
+    :`<div class="empty">
+       No hay imágenes para mostrar.
+      </div>`;
 }
 
 
@@ -2581,23 +2002,24 @@ async function toggleVisible(id,visible){
     .from('images')
     .update({
       visible,
-      updated_at:
-        new Date().toISOString()
+      updated_at:new Date().toISOString()
     })
     .eq('id',id);
 
   if(error){
 
     alert('Error: '+error.message);
-
     return;
 
   }
 
   await loadImages();
 
-  await loadPublic();
-
+  if(
+    $('galeria')?.classList.contains('gallery-open')
+  ){
+    await loadPublic();
+  }
 }
 
 
@@ -2623,7 +2045,6 @@ async function deleteImage(id){
   if(error){
 
     alert('Error: '+error.message);
-
     return;
 
   }
@@ -2643,14 +2064,71 @@ async function deleteImage(id){
         ]);
 
     }
-
   }
 
   await loadImages();
 
-  await loadPublic();
-
+  if(
+    $('galeria')?.classList.contains('gallery-open')
+  ){
+    await loadPublic();
+  }
 }
+
+
+/* =====================================================
+   VISOR
+===================================================== */
+
+function openImageViewer(url,title=''){
+
+  const viewer=$('imageViewer');
+  const img=$('imageViewerImg');
+  const titleBox=$('imageViewerTitle');
+
+  if(!viewer||!img)return;
+
+  img.src=url;
+  img.alt=title||'Imagen';
+
+  if(titleBox)
+    titleBox.textContent=title||'';
+
+  viewer.classList.add('open');
+
+  document.body.style.overflow='hidden';
+}
+
+
+function closeImageViewer(event){
+
+  if(
+    event &&
+    event.target &&
+    event.target.id!=='imageViewer'
+  )return;
+
+  const viewer=$('imageViewer');
+
+  if(!viewer)return;
+
+  viewer.classList.remove('open');
+
+  document.body.style.overflow='';
+
+  $('imageViewerImg').src='';
+}
+
+
+document.addEventListener(
+  'keydown',
+  event=>{
+
+    if(event.key==='Escape')
+      closeImageViewer();
+
+  }
+);
 
 
 /* =====================================================
@@ -2659,7 +2137,9 @@ async function deleteImage(id){
 
 async function loadPublic(){
 
-  if(!sb)return;
+  const box=$('publicGallery');
+
+  if(!sb||!box)return;
 
   const {
     data,
@@ -2677,20 +2157,54 @@ async function loadPublic(){
 
   if(error){
 
-    $('publicGallery').innerHTML=`
+    box.innerHTML=`
       <div class="empty">
         La galería todavía no está disponible.
       </div>
     `;
 
     return;
-
   }
 
-  images=data||images;
+  box.innerHTML=data?.length
 
-  renderPublicGallery();
+    ?data.map(x=>`
 
+<article class="card"
+onclick="openImageViewer(
+'${esc(x.url)}',
+'${esc(x.title||'Obra')}'
+)"
+style="cursor:pointer">
+
+<div class="card-img"
+style="background-image:url('${esc(x.url)}')">
+</div>
+
+<div class="card-body">
+
+<h3>${esc(x.title||'Obra')}</h3>
+
+<span class="badge">
+${esc(cat(x.category))}
+</span>
+
+<p class="muted">
+${esc(x.description||'')}
+</p>
+
+<p style="font-size:12px;color:#777;margin-top:10px">
+👆 Toca para ver completa
+</p>
+
+</div>
+</article>
+
+`).join('')
+
+    :`<div class="empty">
+       Todavía no hay trabajos publicados.
+      </div>`;
 }
 
 
@@ -2702,8 +2216,7 @@ async function loadStudents(){
 
   if(!sb)return;
 
-  const manager=
-    $('studentManager');
+  const manager=$('studentManager');
 
   if(manager){
 
@@ -2712,7 +2225,6 @@ async function loadStudents(){
         ⏳ Cargando alumnos...
       </div>
     `;
-
   }
 
   const {
@@ -2735,24 +2247,62 @@ async function loadStudents(){
     );
 
     return;
-
   }
 
   students=data||[];
 
   renderStudents();
-
 }
 
 
 /* =====================================================
-   ALUMNOS — MOSTRAR
+   RESUMEN PAGOS
+===================================================== */
+
+function renderPaymentSummary(){
+
+  const total=students.length;
+
+  const paid=students.filter(
+    s=>s.payment_status==='pagado'
+  ).length;
+
+  const pending=students.filter(
+    s=>s.payment_status!=='pagado'
+  ).length;
+
+  const amount=students.reduce(
+    (sum,s)=>{
+      return sum+
+        (s.payment_status==='pagado'
+        ?Number(s.payment_amount||0)
+        :0);
+    },
+    0
+  );
+
+  if($('totalStudents'))
+    $('totalStudents').textContent=total;
+
+  if($('paidStudents'))
+    $('paidStudents').textContent=paid;
+
+  if($('pendingStudents'))
+    $('pendingStudents').textContent=pending;
+
+  if($('totalPaidAmount'))
+    $('totalPaidAmount').textContent=
+      formatMoney(amount);
+}
+
+
+/* =====================================================
+   MOSTRAR ALUMNOS
 ===================================================== */
 
 function renderStudents(){
 
-  const box=
-    $('studentManager');
+  const box=$('studentManager');
 
   if(!box)return;
 
@@ -2760,20 +2310,33 @@ function renderStudents(){
     $('studentSearch')?.value||''
   ).toLowerCase().trim();
 
-  const list=students.filter(s=>
-    (s.name||'').toLowerCase().includes(q)||
-    (s.email||'').toLowerCase().includes(q)||
-    (s.phone||'').toLowerCase().includes(q)||
-    (s.course||'').toLowerCase().includes(q)||
-    (s.status||'').toLowerCase().includes(q)
-  );
+  const paymentFilter=
+    $('paymentFilter')?.value||'todos';
+
+  const list=students.filter(s=>{
+
+    const matchesSearch=
+      (s.name||'').toLowerCase().includes(q)||
+      (s.email||'').toLowerCase().includes(q)||
+      (s.phone||'').toLowerCase().includes(q)||
+      (s.course||'').toLowerCase().includes(q)||
+      (s.status||'').toLowerCase().includes(q);
+
+    const matchesPayment=
+      paymentFilter==='todos'||
+      (s.payment_status||'pendiente')===paymentFilter;
+
+    return matchesSearch&&matchesPayment;
+  });
+
+  renderPaymentSummary();
 
   $('studentCount').textContent=
-    `${students.length} alumno${
-      students.length===1?'':'s'
-    } registrado${
-      students.length===1?'':'s'
-    }.`;
+    `${list.length} alumno${
+      list.length===1?'':'s'
+    } mostrado${
+      list.length===1?'':'s'
+    } de ${students.length}.`;
 
   if(!list.length){
 
@@ -2788,10 +2351,26 @@ function renderStudents(){
     `;
 
     return;
-
   }
 
-  box.innerHTML=list.map(s=>`
+  box.innerHTML=list.map(s=>{
+
+    const paymentStatus=
+      s.payment_status==='pagado'
+      ?'pagado'
+      :'pendiente';
+
+    const paymentClass=
+      paymentStatus==='pagado'
+      ?'payment-paid'
+      :'payment-pending';
+
+    const paymentText=
+      paymentStatus==='pagado'
+      ?'🟢 PAGADO'
+      :'🔴 PENDIENTE';
+
+    return`
 
 <article class="student-card">
 
@@ -2824,40 +2403,75 @@ ${esc(s.email||'Sin email')}
 
 </div>
 
-${
-s.notes
-?`
-<div class="student-notes">
-<strong>📝 Notas:</strong><br>
-${esc(s.notes)}
+<div class="payment-box">
+
+<h4>💳 Control de pago</h4>
+
+<div class="payment-grid">
+
+<div>
+<strong>Estado</strong><br>
+<span class="${paymentClass}">
+${paymentText}
+</span>
 </div>
-`
-:''
+
+<div>
+<strong>Importe</strong><br>
+${formatMoney(s.payment_amount)}
+</div>
+
+<div>
+<strong>Fecha</strong><br>
+${s.payment_date
+?esc(s.payment_date)
+:'Sin registrar'}
+</div>
+
+</div>
+</div>
+
+${
+  s.notes
+  ?`
+  <div class="student-notes">
+  <strong>📝 Notas:</strong><br>
+  ${esc(s.notes)}
+  </div>
+  `
+  :''
 }
 
 <div class="student-actions">
 
-<button
-class="btn btn-gold"
+<button class="btn btn-gold"
 onclick="editStudent('${s.id}')">
 ✏️ Editar
 </button>
 
-<button
-class="btn btn-dark"
+<button class="btn btn-dark"
+onclick="changeStudentPayment(
+'${s.id}',
+'${paymentStatus==='pagado'?'pendiente':'pagado'}'
+)">
+${
+paymentStatus==='pagado'
+?'🔴 Marcar pendiente'
+:'🟢 Marcar pagado'
+}
+</button>
+
+<button class="btn btn-dark"
 onclick="changeStudentStatus(
 '${s.id}',
-'${s.status==='activo'
-?'inactivo'
-:'activo'}'
+'${s.status==='activo'?'inactivo':'activo'}'
 )">
 ${s.status==='activo'
 ?'⚪ Marcar inactivo'
 :'🟢 Activar'}
 </button>
 
-<button
-class="btn btn-dark"
+<button class="btn btn-dark"
 onclick="deleteStudent('${s.id}')">
 🗑️ Eliminar
 </button>
@@ -2866,13 +2480,14 @@ onclick="deleteStudent('${s.id}')">
 
 </article>
 
-`).join('');
+`;
 
+  }).join('');
 }
 
 
 /* =====================================================
-   ALUMNOS — GUARDAR
+   GUARDAR ALUMNO
 ===================================================== */
 
 async function saveStudent(){
@@ -2880,39 +2495,33 @@ async function saveStudent(){
   try{
 
     if(!sb)
-      throw Error(
-        'Supabase no está conectado.'
-      );
+      throw Error('Supabase no está conectado.');
 
-    const name=
-      $('studentName')
-        .value.trim();
-
-    const email=
-      $('studentEmail')
-        .value.trim();
-
-    const phone=
-      $('studentPhone')
-        .value.trim();
-
-    const course=
-      $('studentCourse').value;
+    const name=$('studentName').value.trim();
+    const email=$('studentEmail').value.trim();
+    const phone=$('studentPhone').value.trim();
+    const course=$('studentCourse').value;
 
     const statusValue=
       $('studentStatusSelect').value;
 
-    const notes=
-      $('studentNotes')
-        .value.trim();
+    const paymentStatus=
+      $('studentPaymentStatus').value;
 
-    if(!name){
+    const paymentAmount=
+      Number(
+        $('studentPaymentAmount').value||0
+      );
 
+    const paymentDate=
+      $('studentPaymentDate').value||null;
+
+    const notes=$('studentNotes').value.trim();
+
+    if(!name)
       throw Error(
         'El nombre del alumno es obligatorio.'
       );
-
-    }
 
     const record={
       name,
@@ -2920,6 +2529,9 @@ async function saveStudent(){
       phone,
       course,
       status:statusValue,
+      payment_status:paymentStatus,
+      payment_amount:paymentAmount,
+      payment_date:paymentDate,
       notes
     };
 
@@ -2937,7 +2549,6 @@ async function saveStudent(){
       result=await sb
         .from('students')
         .insert(record);
-
     }
 
     if(result.error)
@@ -2946,7 +2557,7 @@ async function saveStudent(){
     status(
       'studentStatus',
       editingStudentId
-      ?'✅ Alumno actualizado correctamente.'
+      ?'✅ Alumno y pago actualizados correctamente.'
       :'✅ Alumno añadido correctamente.',
       'ok'
     );
@@ -2962,14 +2573,12 @@ async function saveStudent(){
       '❌ '+(e.message||e),
       'err'
     );
-
   }
-
 }
 
 
 /* =====================================================
-   ALUMNOS — EDITAR
+   EDITAR ALUMNO
 ===================================================== */
 
 function editStudent(id){
@@ -2997,6 +2606,15 @@ function editStudent(id){
   $('studentStatusSelect').value=
     student.status||'activo';
 
+  $('studentPaymentStatus').value=
+    student.payment_status||'pendiente';
+
+  $('studentPaymentAmount').value=
+    student.payment_amount||'';
+
+  $('studentPaymentDate').value=
+    student.payment_date||'';
+
   $('studentNotes').value=
     student.notes||'';
 
@@ -3009,12 +2627,11 @@ function editStudent(id){
     top:$('admin').offsetTop,
     behavior:'smooth'
   });
-
 }
 
 
 /* =====================================================
-   ALUMNOS — RESET
+   RESET ALUMNO
 ===================================================== */
 
 function resetStudentForm(){
@@ -3022,25 +2639,25 @@ function resetStudentForm(){
   editingStudentId=null;
 
   $('studentName').value='';
-
   $('studentEmail').value='';
-
   $('studentPhone').value='';
-
   $('studentCourse').value='';
 
   $('studentStatusSelect').value='activo';
 
+  $('studentPaymentStatus').value='pendiente';
+
+  $('studentPaymentAmount').value='';
+  $('studentPaymentDate').value='';
   $('studentNotes').value='';
 
   $('studentSaveButton').textContent=
     '➕ Añadir alumno';
-
 }
 
 
 /* =====================================================
-   ALUMNOS — CAMBIAR ESTADO
+   CAMBIAR ESTADO ALUMNO
 ===================================================== */
 
 async function changeStudentStatus(
@@ -3058,18 +2675,59 @@ async function changeStudentStatus(
   if(error){
 
     alert('Error: '+error.message);
-
     return;
-
   }
 
   await loadStudents();
-
 }
 
 
 /* =====================================================
-   ALUMNOS — ELIMINAR
+   CAMBIAR PAGO
+===================================================== */
+
+async function changeStudentPayment(
+  id,
+  newStatus
+){
+
+  const updateData={
+    payment_status:newStatus
+  };
+
+  if(newStatus==='pagado'){
+
+    updateData.payment_date=
+      new Date()
+        .toISOString()
+        .slice(0,10);
+  }
+
+  const {error}=await sb
+    .from('students')
+    .update(updateData)
+    .eq('id',id);
+
+  if(error){
+
+    alert('Error: '+error.message);
+    return;
+  }
+
+  await loadStudents();
+
+  status(
+    'studentStatus',
+    newStatus==='pagado'
+    ?'✅ Pago marcado como pagado.'
+    :'🔴 Pago marcado como pendiente.',
+    newStatus==='pagado'?'ok':'err'
+  );
+}
+
+
+/* =====================================================
+   ELIMINAR ALUMNO
 ===================================================== */
 
 async function deleteStudent(id){
@@ -3092,9 +2750,7 @@ async function deleteStudent(id){
   if(error){
 
     alert('Error: '+error.message);
-
     return;
-
   }
 
   if(String(editingStudentId)===String(id))
@@ -3107,7 +2763,6 @@ async function deleteStudent(id){
     '✅ Alumno eliminado.',
     'ok'
   );
-
 }
 
 
@@ -3133,8 +2788,7 @@ async function radioFetch(path){
 
     const base=
       RADIO_APIS[
-        (radioApiIndex+i)
-        %RADIO_APIS.length
+        (radioApiIndex+i)%RADIO_APIS.length
       ];
 
     try{
@@ -3161,22 +2815,15 @@ async function radioFetch(path){
     }catch(error){
 
       lastError=error;
-
     }
-
   }
 
   throw lastError||
     new Error(
       'No se pudo conectar con las emisoras.'
     );
-
 }
 
-
-/* =====================================================
-   RADIO GENERO
-===================================================== */
 
 $('radioGenre')?.addEventListener(
   'change',
@@ -3200,25 +2847,17 @@ $('radioGenre')?.addEventListener(
       $('radioPlayer').style.display='none';
 
       return;
-
     }
 
     loadRadioStations(genre);
-
   }
 );
 
 
-/* =====================================================
-   CARGAR RADIO
-===================================================== */
-
 async function loadRadioStations(genre){
 
   const box=$('radioStations');
-
-  const radioStatus=
-    $('radioStatus');
+  const radioStatus=$('radioStatus');
 
   box.innerHTML=`
     <div class="radio-loading">
@@ -3226,8 +2865,7 @@ async function loadRadioStations(genre){
     </div>
   `;
 
-  radioStatus.className=
-    'radio-status';
+  radioStatus.className='radio-status';
 
   radioStatus.textContent=
     'Buscando emisoras disponibles...';
@@ -3239,8 +2877,7 @@ async function loadRadioStations(genre){
       encodeURIComponent(genre)+
       '?limit=50&hidebroken=true&order=clickcount&reverse=true';
 
-    const data=
-      await radioFetch(path);
+    const data=await radioFetch(path);
 
     radioStations=
       (Array.isArray(data)?data:[])
@@ -3265,7 +2902,6 @@ async function loadRadioStations(genre){
 
       radioStatus.textContent=
         'No se encontraron emisoras para este estilo.';
-
     }
 
   }catch(error){
@@ -3283,15 +2919,9 @@ async function loadRadioStations(genre){
 
     radioStatus.textContent=
       'No se pudo conectar con el servicio de radio.';
-
   }
-
 }
 
-
-/* =====================================================
-   RENDER RADIO
-===================================================== */
 
 function renderRadioStations(){
 
@@ -3323,34 +2953,29 @@ function renderRadioStations(){
     `;
 
     return;
-
   }
 
   box.innerHTML=list.map(
     (station,index)=>{
 
-      const logo=
-        station.favicon||'';
+      const logo=station.favicon||'';
 
       return`
 
-<div
-class="radio-station"
+<div class="radio-station"
 data-radio-index="${index}">
 
 ${
 logo
 ?`
-<img
-class="station-logo"
+<img class="station-logo"
 src="${escapeRadioText(logo)}"
 alt=""
 loading="lazy"
 onerror="this.style.display='none'">
 `
 :`
-<div
-class="station-logo"
+<div class="station-logo"
 style="display:grid;place-items:center;font-size:25px">
 📻
 </div>
@@ -3379,25 +3004,17 @@ ${escapeRadioText(
 
 </div>
 
-<button
-class="btn btn-gold"
+<button class="btn btn-gold"
 onclick="playRadioStation(${index})">
 ▶️ Escuchar
 </button>
 
 </div>
-
 `;
-
     }
   ).join('');
-
 }
 
-
-/* =====================================================
-   BUSCAR RADIO
-===================================================== */
 
 $('radioSearch')?.addEventListener(
   'input',
@@ -3406,14 +3023,9 @@ $('radioSearch')?.addEventListener(
     if(!$('radioGenre').value)return;
 
     renderRadioStations();
-
   }
 );
 
-
-/* =====================================================
-   REPRODUCIR RADIO
-===================================================== */
 
 async function playRadioStation(index){
 
@@ -3421,19 +3033,18 @@ async function playRadioStation(index){
     $('radioSearch')?.value||''
   ).toLowerCase().trim();
 
-  const filtered=
-    radioStations.filter(
-      station=>
-        (station.name||'')
-          .toLowerCase()
-          .includes(search)||
-        (station.country||'')
-          .toLowerCase()
-          .includes(search)||
-        (station.tags||'')
-          .toLowerCase()
-          .includes(search)
-    );
+  const filtered=radioStations.filter(
+    station=>
+      (station.name||'')
+        .toLowerCase()
+        .includes(search)||
+      (station.country||'')
+        .toLowerCase()
+        .includes(search)||
+      (station.tags||'')
+        .toLowerCase()
+        .includes(search)
+  );
 
   const station=filtered[index];
 
@@ -3450,11 +3061,9 @@ async function playRadioStation(index){
     );
 
     return;
-
   }
 
-  const player=
-    $('radioPlayer');
+  const player=$('radioPlayer');
 
   try{
 
@@ -3475,10 +3084,9 @@ async function playRadioStation(index){
           )
       );
 
-    const selected=
-      document.querySelector(
-        `[data-radio-index="${index}"]`
-      );
+    const selected=document.querySelector(
+      `[data-radio-index="${index}"]`
+    );
 
     selected?.classList.add(
       'radio-playing'
@@ -3498,15 +3106,9 @@ async function playRadioStation(index){
 
     $('radioStatus').textContent=
       '⚠️ Esta emisora no permite reproducción directa. Prueba otra.';
-
   }
-
 }
 
-
-/* =====================================================
-   ESCAPE RADIO
-===================================================== */
 
 function escapeRadioText(value=''){
 
@@ -3520,7 +3122,6 @@ function escapeRadioText(value=''){
       '"':'&quot;'
     })[char]
   );
-
 }
 
 
@@ -3533,7 +3134,6 @@ $('radioPlayer')?.addEventListener(
 
     $('radioStatus').textContent=
       '⚠️ Esta emisora dejó de estar disponible.';
-
   }
 );
 
