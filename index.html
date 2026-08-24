@@ -95,24 +95,91 @@ section{
 .hero{
   max-width:none;
   min-height:78vh;
-  display:grid;
-  place-items:center;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
   text-align:center;
-  padding:30px 18px;
-
-  background:
-    #000
-    url('https://raw.githubusercontent.com/xtroxthal-dot/roxthal-art-design/main/logo-roxthal.PNG')
-    center center/contain no-repeat;
+  padding:25px 18px 35px;
+  background:#000;
+  overflow:hidden;
 }
 
-/* Se mantiene vacío para no mostrar título,
-   enunciado ni botones en la página de inicio */
+/* LOGO DEL INICIO */
+
+.hero-logo{
+  display:block;
+  width:auto;
+  max-width:92vw;
+  max-height:62vh;
+  height:auto;
+  object-fit:contain;
+  margin:auto;
+  border:0;
+}
+
+/* BOTONES DEL INICIO */
+
+.hero-buttons{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:18px;
+  position:relative;
+  z-index:2;
+}
+
+.hero-buttons a,
+.hero-buttons button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:145px;
+  border-radius:10px;
+  padding:12px 17px;
+  font-weight:700;
+  text-decoration:none;
+  border:1px solid #555;
+  transition:.2s;
+}
+
+.hero-gallery{
+  background:var(--gold);
+  color:#111;
+}
+
+.hero-whatsapp{
+  background:#25d366;
+  color:#fff;
+  border-color:#25d366!important;
+}
+
+.hero-instagram{
+  background:#d62976;
+  color:#fff;
+  border-color:#d62976!important;
+}
+
+.hero-facebook{
+  background:var(--blue);
+  color:#fff;
+  border-color:var(--blue)!important;
+}
+
+.hero-buttons a:hover,
+.hero-buttons button:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.1);
+}
+
+/* Se mantienen ocultos estos elementos del inicio */
 
 .hero-box{
-  width:100%;
-  max-width:1200px;
-  min-height:72vh;
+  display:none;
 }
 
 .eyebrow{
@@ -226,6 +293,7 @@ h3{color:var(--gold2)}
 }
 
 /* GALERIA OCULTA AL INICIO */
+
 #galeria{
   display:none;
 }
@@ -684,11 +752,23 @@ h3{color:var(--gold2)}
 
   .hero{
     min-height:70vh;
-    background-size:contain;
+    padding:20px 12px 28px;
   }
 
-  .hero-box{
-    min-height:64vh;
+  .hero-logo{
+    max-width:94vw;
+    max-height:58vh;
+  }
+
+  .hero-buttons{
+    gap:8px;
+    margin-top:14px;
+  }
+
+  .hero-buttons a,
+  .hero-buttons button{
+    min-width:calc(50% - 8px);
+    padding:11px 8px;
   }
 }
 </style>
@@ -714,12 +794,52 @@ h3{color:var(--gold2)}
 
 
 <!-- =====================================================
-     INICIO — SOLO LA NUEVA IMAGEN
+     INICIO
+     LOGO + GALERÍA + WHATSAPP + INSTAGRAM + FACEBOOK
 ===================================================== -->
 
 <section id="inicio" class="hero">
 
-<div class="hero-box"></div>
+<img
+  class="hero-logo"
+  src="./logo-roxthal.PNG"
+  alt="RoXThal Art Design"
+  onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/xtroxthal-dot/roxthal-art-design/main/logo-roxthal.PNG';"
+>
+
+<div class="hero-buttons">
+
+<button
+  class="hero-gallery"
+  onclick="openGallery()">
+  🖼️ Galería
+</button>
+
+<a
+  class="hero-whatsapp"
+  href="https://wa.me/5491169633376"
+  target="_blank"
+  rel="noopener">
+  📱 WhatsApp
+</a>
+
+<a
+  class="hero-instagram"
+  href="https://www.instagram.com/roxthalartdesign/"
+  target="_blank"
+  rel="noopener">
+  📸 Instagram
+</a>
+
+<a
+  class="hero-facebook"
+  href="https://www.facebook.com/share/14qh98ko3w2/"
+  target="_blank"
+  rel="noopener">
+  🔵 Facebook
+</a>
+
+</div>
 
 </section>
 
@@ -822,7 +942,7 @@ y desarrollo artístico.
 </section>
 
 
-<!-- GALERIA OCULTA HASTA PULSAR EL BOTON -->
+<!-- GALERIA -->
 
 <section id="galeria">
 
@@ -885,6 +1005,8 @@ diseño y fundamentos del tatuaje.
 </section>
 
 
+<!-- RADIO -->
+
 <section id="radio">
 
 <div class="eyebrow">Música</div>
@@ -922,7 +1044,8 @@ las emisoras disponibles.
 
 </select>
 
-<input id="radioSearch"
+<input
+id="radioSearch"
 type="search"
 placeholder="🔎 Buscar emisora...">
 
@@ -932,10 +1055,12 @@ placeholder="🔎 Buscar emisora...">
 Elegí un estilo musical para comenzar.
 </div>
 
-<audio id="radioPlayer"
+<audio
+id="radioPlayer"
 class="radio-player"
 controls
-preload="none"></audio>
+preload="none">
+</audio>
 
 <div id="radioStations">
 
@@ -949,6 +1074,8 @@ preload="none"></audio>
 </section>
 
 
+<!-- CONTACTO -->
+
 <section id="contacto">
 
 <div class="eyebrow">Contacto</div>
@@ -960,7 +1087,8 @@ preload="none"></audio>
 <div class="card">
 <h3>📱 WhatsApp</h3>
 <p>
-<a href="https://wa.me/5491169633376"
+<a
+href="https://wa.me/5491169633376"
 target="_blank"
 rel="noopener">
 11 6963-3376
@@ -971,7 +1099,8 @@ rel="noopener">
 <div class="card">
 <h3>🔵 Facebook</h3>
 <p>
-<a href="https://www.facebook.com/share/14qh98ko3w2/"
+<a
+href="https://www.facebook.com/share/14qh98ko3w2/"
 target="_blank"
 rel="noopener">
 RoXThal Art Design
@@ -982,7 +1111,8 @@ RoXThal Art Design
 <div class="card">
 <h3>📸 Instagram</h3>
 <p>
-<a href="https://www.instagram.com/roxthalartdesign/"
+<a
+href="https://www.instagram.com/roxthalartdesign/"
 target="_blank"
 rel="noopener">
 @roxthalartdesign
@@ -1001,6 +1131,8 @@ Buenos Aires, Argentina
 </section>
 
 
+<!-- ADMINISTRADOR -->
+
 <section id="admin">
 
 <div class="eyebrow">Gestión</div>
@@ -1017,14 +1149,16 @@ Buenos Aires, Argentina
 
 <label class="field">
 <span>Email</span>
-<input id="loginEmail"
+<input
+id="loginEmail"
 type="email"
 autocomplete="username">
 </label>
 
 <label class="field">
 <span>Contraseña</span>
-<input id="loginPassword"
+<input
+id="loginPassword"
 type="password"
 autocomplete="current-password">
 </label>
@@ -1033,7 +1167,8 @@ autocomplete="current-password">
 
 <div class="actions">
 
-<button class="btn btn-gold"
+<button
+class="btn btn-gold"
 onclick="login()">
 Entrar
 </button>
@@ -1049,16 +1184,19 @@ Entrar
 
 <div class="admin-nav">
 
-<button class="active"
+<button
+class="active"
 onclick="showAdmin('imagenes',this)">
 🖼️ Imágenes
 </button>
 
-<button onclick="showAdmin('alumnos',this)">
+<button
+onclick="showAdmin('alumnos',this)">
 👨‍🎓 Alumnos
 </button>
 
-<button onclick="showAdmin('estado',this)">
+<button
+onclick="showAdmin('estado',this)">
 ⚙️ Estado
 </button>
 
@@ -1069,7 +1207,10 @@ Salir
 </div>
 
 
-<div id="admin-imagenes"
+<!-- IMAGENES -->
+
+<div
+id="admin-imagenes"
 class="admin-section active">
 
 <h3>Gestor de imágenes</h3>
@@ -1084,28 +1225,35 @@ registrará en la tabla <b>images</b>.
 
 <label class="field">
 <span>Título</span>
-<input id="imageTitle"
+<input
+id="imageTitle"
 placeholder="Ej.: Retrato en acrílico">
 </label>
 
 <label class="field">
+
 <span>Categoría</span>
 
 <select id="imageCategory">
+
 <option value="obras">Obras</option>
 <option value="tatuajes">Tatuajes</option>
 <option value="dibujos">Dibujos</option>
 <option value="pinturas">Pinturas</option>
 <option value="otros">Otros</option>
+
 </select>
 
 </label>
 
 <label class="field full">
+
 <span>Descripción</span>
 
-<textarea id="imageDescription"
-placeholder="Descripción de la obra"></textarea>
+<textarea
+id="imageDescription"
+placeholder="Descripción de la obra">
+</textarea>
 
 </label>
 
@@ -1115,11 +1263,13 @@ placeholder="Descripción de la obra"></textarea>
 
 <div class="filebox">
 
-<input id="imageFile"
+<input
+id="imageFile"
 type="file"
 accept="image/*">
 
-<img id="imagePreview"
+<img
+id="imagePreview"
 class="preview"
 alt="Vista previa">
 
@@ -1129,12 +1279,14 @@ alt="Vista previa">
 
 <div class="actions">
 
-<button class="btn btn-gold"
+<button
+class="btn btn-gold"
 onclick="uploadImage()">
 ☁️ Subir imagen
 </button>
 
-<button class="btn btn-dark"
+<button
+class="btn btn-dark"
 onclick="resetForm()">
 Limpiar
 </button>
@@ -1145,14 +1297,16 @@ Limpiar
 
 <div class="manager-tools">
 
-<button class="btn btn-dark"
+<button
+class="btn btn-dark"
 onclick="loadImages()">
 🔄 Actualizar
 </button>
 
-<input id="imageSearch"
+<input
+id="imageSearch"
 placeholder="Buscar imagen…"
-oninput="renderImages()">
+oninput="renderImages">
 
 </div>
 
@@ -1161,9 +1315,10 @@ oninput="renderImages()">
 </div>
 
 
-<!-- ALUMNOS Y COBROS -->
+<!-- ALUMNOS -->
 
-<div id="admin-alumnos"
+<div
+id="admin-alumnos"
 class="admin-section">
 
 <h3>👨‍🎓 Control de alumnos y pagos</h3>
@@ -1202,20 +1357,23 @@ Administra los alumnos, sus cursos y el estado de sus pagos.
 
 <label class="field">
 <span>Nombre completo *</span>
-<input id="studentName"
+<input
+id="studentName"
 placeholder="Nombre y apellido">
 </label>
 
 <label class="field">
 <span>Email</span>
-<input id="studentEmail"
+<input
+id="studentEmail"
 type="email"
 placeholder="correo@ejemplo.com">
 </label>
 
 <label class="field">
 <span>Teléfono</span>
-<input id="studentPhone"
+<input
+id="studentPhone"
 type="tel"
 placeholder="11 1234-5678">
 </label>
@@ -1226,7 +1384,9 @@ placeholder="11 1234-5678">
 
 <select id="studentCourse">
 
-<option value="">Seleccionar curso...</option>
+<option value="">
+Seleccionar curso...
+</option>
 
 <option value="Dibujo y Pintura Profesional">
 Dibujo y Pintura Profesional
@@ -1258,8 +1418,13 @@ Otro
 
 <select id="studentStatusSelect">
 
-<option value="activo">Activo</option>
-<option value="inactivo">Inactivo</option>
+<option value="activo">
+Activo
+</option>
+
+<option value="inactivo">
+Inactivo
+</option>
 
 </select>
 
@@ -1287,7 +1452,8 @@ Otro
 
 <span>💰 Importe pagado</span>
 
-<input id="studentPaymentAmount"
+<input
+id="studentPaymentAmount"
 type="number"
 min="0"
 step="0.01"
@@ -1299,7 +1465,8 @@ placeholder="Ej.: 25000">
 
 <span>📅 Fecha de pago</span>
 
-<input id="studentPaymentDate"
+<input
+id="studentPaymentDate"
 type="date">
 
 </label>
@@ -1308,8 +1475,10 @@ type="date">
 
 <span>Notas</span>
 
-<textarea id="studentNotes"
-placeholder="Observaciones del alumno..."></textarea>
+<textarea
+id="studentNotes"
+placeholder="Observaciones del alumno...">
+</textarea>
 
 </label>
 
@@ -1317,13 +1486,15 @@ placeholder="Observaciones del alumno..."></textarea>
 
 <div class="actions">
 
-<button id="studentSaveButton"
+<button
+id="studentSaveButton"
 class="btn btn-gold"
 onclick="saveStudent()">
 ➕ Añadir alumno
 </button>
 
-<button class="btn btn-dark"
+<button
+class="btn btn-dark"
 onclick="resetStudentForm()">
 Limpiar
 </button>
@@ -1332,16 +1503,19 @@ Limpiar
 
 <div class="manager-tools">
 
-<button class="btn btn-dark"
+<button
+class="btn btn-dark"
 onclick="loadStudents()">
 🔄 Actualizar alumnos
 </button>
 
-<input id="studentSearch"
+<input
+id="studentSearch"
 placeholder="🔎 Buscar alumno..."
 oninput="renderStudents()">
 
-<select id="paymentFilter"
+<select
+id="paymentFilter"
 class="payment-filter"
 onchange="renderStudents()">
 
@@ -1361,8 +1535,10 @@ onchange="renderStudents()">
 
 </div>
 
-<div id="studentCount"
-class="student-count"></div>
+<div
+id="studentCount"
+class="student-count">
+</div>
 
 <div id="studentManager">
 
@@ -1375,12 +1551,17 @@ Cargando alumnos…
 </div>
 
 
-<div id="admin-estado"
+<!-- ESTADO -->
+
+<div
+id="admin-estado"
 class="admin-section">
 
 <h3>Estado de conexión</h3>
 
-<div id="backendStatus" class="status show">
+<div
+id="backendStatus"
+class="status show">
 Comprobando Supabase…
 </div>
 
@@ -1411,21 +1592,27 @@ Control de pagos:
 </section>
 
 
-<div id="imageViewer"
+<!-- VISOR -->
+
+<div
+id="imageViewer"
 class="image-viewer"
 onclick="closeImageViewer(event)">
 
-<button class="image-viewer-close"
+<button
+class="image-viewer-close"
 onclick="closeImageViewer()"
 aria-label="Cerrar">
 ✕
 </button>
 
-<img id="imageViewerImg"
+<img
+id="imageViewerImg"
 src=""
 alt="">
 
-<div id="imageViewerTitle"
+<div
+id="imageViewerTitle"
 class="image-viewer-title">
 </div>
 
@@ -1473,28 +1660,6 @@ function go(id){
     behavior:'smooth',
     block:'start'
   });
-}
-
-
-/* =====================================================
-   GALERIA
-===================================================== */
-
-function openGallery(){
-
-  const gallery=$('galeria');
-
-  if(!gallery)return;
-
-  gallery.classList.add('gallery-open');
-
-  gallery.scrollIntoView({
-    behavior:'smooth',
-    block:'start'
-  });
-
-  loadPublic();
-
 }
 
 
@@ -1547,6 +1712,27 @@ function formatMoney(value){
       maximumFractionDigits:2
     }
   );
+}
+
+
+/* =====================================================
+   GALERIA
+===================================================== */
+
+function openGallery(){
+
+  const gallery=$('galeria');
+
+  if(!gallery)return;
+
+  gallery.classList.add('gallery-open');
+
+  gallery.scrollIntoView({
+    behavior:'smooth',
+    block:'start'
+  });
+
+  loadPublic();
 }
 
 
@@ -1929,7 +2115,8 @@ function renderImages(){
 
 <article class="image-card">
 
-<img src="${esc(x.url)}"
+<img
+src="${esc(x.url)}"
 alt="${esc(x.title)}">
 
 <div class="image-meta">
@@ -1950,12 +2137,14 @@ ${x.visible?'🟢 Visible':'⚪ Oculta'}
 
 <div class="actions">
 
-<button class="btn btn-dark"
+<button
+class="btn btn-dark"
 onclick="toggleVisible('${x.id}',${!x.visible})">
 ${x.visible?'Ocultar':'Mostrar'}
 </button>
 
-<button class="btn btn-dark"
+<button
+class="btn btn-dark"
 onclick="deleteImage('${x.id}')">
 🗑️ Eliminar
 </button>
@@ -2151,14 +2340,16 @@ async function loadPublic(){
 
     ?data.map(x=>`
 
-<article class="card"
+<article
+class="card"
 onclick="openImageViewer(
 '${esc(x.url)}',
 '${esc(x.title||'Obra')}'
 )"
 style="cursor:pointer">
 
-<div class="card-img"
+<div
+class="card-img"
 style="background-image:url('${esc(x.url)}')">
 </div>
 
@@ -2425,12 +2616,14 @@ ${
 
 <div class="student-actions">
 
-<button class="btn btn-gold"
+<button
+class="btn btn-gold"
 onclick="editStudent('${s.id}')">
 ✏️ Editar
 </button>
 
-<button class="btn btn-dark"
+<button
+class="btn btn-dark"
 onclick="changeStudentPayment(
 '${s.id}',
 '${paymentStatus==='pagado'?'pendiente':'pagado'}'
@@ -2442,7 +2635,8 @@ paymentStatus==='pagado'
 }
 </button>
 
-<button class="btn btn-dark"
+<button
+class="btn btn-dark"
 onclick="changeStudentStatus(
 '${s.id}',
 '${s.status==='activo'?'inactivo':'activo'}'
@@ -2452,7 +2646,8 @@ ${s.status==='activo'
 :'🟢 Activar'}
 </button>
 
-<button class="btn btn-dark"
+<button
+class="btn btn-dark"
 onclick="deleteStudent('${s.id}')">
 🗑️ Eliminar
 </button>
@@ -2943,20 +3138,23 @@ function renderRadioStations(){
 
       return`
 
-<div class="radio-station"
+<div
+class="radio-station"
 data-radio-index="${index}">
 
 ${
 logo
 ?`
-<img class="station-logo"
+<img
+class="station-logo"
 src="${escapeRadioText(logo)}"
 alt=""
 loading="lazy"
 onerror="this.style.display='none'">
 `
 :`
-<div class="station-logo"
+<div
+class="station-logo"
 style="display:grid;place-items:center;font-size:25px">
 📻
 </div>
@@ -2985,7 +3183,8 @@ ${escapeRadioText(
 
 </div>
 
-<button class="btn btn-gold"
+<button
+class="btn btn-gold"
 onclick="playRadioStation(${index})">
 ▶️ Escuchar
 </button>
