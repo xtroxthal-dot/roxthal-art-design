@@ -1,190 +1,199 @@
+Skip to content
+roxthal-art-design
+Repository navigation
+Code
+Issues
+Pull requests
+roxthal-art-design
+/index.html
+xtroxthal-dot
+xtroxthal-dot
+8 hours ago
+1624 lines (1436 loc) · 63.2 KB
+
+Code
+
+Blame
+
+```html
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#080809">
-<title>RoXThal Art Design - Final</title>
 <link rel="manifest" href="manifest.json">
-<style>
-:root{--bg:#080809;--panel:#15151a;--panel2:#1e1e26;--gold:#d7b45a;--gold2:#f2da91;--text:#f5f5f5;--muted:#a0a0ab;--line:#2e2e38;--ok:#2ecc71;--err:#e74c3c}
-*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;color-scheme:dark}
-body{background:radial-gradient(circle at top,#1f1f28 0%,var(--bg) 60%);background-color:var(--bg);color:var(--text);font-family:system-ui,sans-serif;line-height:1.6}
-.top{position:sticky;top:0;z-index:100;background:rgba(8,8,9,.92);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
-.nav{max-width:1200px;margin:auto;padding:12px 16px;display:flex;gap:8px;align-items:center;overflow-x:auto}
-.brand{font-weight:900;font-size:1.3rem;color:var(--gold);margin-right:auto}
-.nav button{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-weight:600;cursor:pointer;white-space:nowrap}
-.nav button.active,.nav button:hover{background:var(--gold);color:#000}
-section{max-width:1200px;margin:auto;padding:50px 16px}
-h2{font-size:2rem;margin-bottom:20px;font-weight:800}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;padding:12px 20px;font-weight:700;cursor:pointer;border:none;text-decoration:none}
-.btn-gold{background:var(--gold);color:#080809}.btn-dark{background:var(--panel2);color:#fff;border:1px solid var(--line)}
-.btn-wsp{background:#25d366;color:#fff}.btn-ig{background:linear-gradient(45deg,#f09433,#bc1888);color:#fff}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:.2s}
-.card:hover{transform:translateY(-3px);border-color:#4e4e5a}
-.card-img{height:240px;background:var(--panel2);display:grid;place-items:center;overflow:hidden;font-size:3rem}
-.card-img img{width:100%;height:100%;object-fit:cover}
-.card-body{padding:18px}
-#galeria,#radio{display:none} #galeria.open,#radio.open{display:block}
-.viewer{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;padding:20px}
-.viewer.open{display:flex}.viewer img{max-width:95vw;max-height:85vh;border-radius:12px}
-.badge{display:inline-block;padding:4px 10px;border-radius:99px;font-size:.7rem;background:var(--panel2);color:var(--gold2);border:1px solid var(--line)}
-input,select{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;color:#fff}
-.status{padding:12px;border-radius:10px;margin:12px 0;display:none;font-weight:600}.status.show{display:block}
-.status.ok{background:rgba(46,204,113,.15);border:1px solid var(--ok);color:var(--ok)}
-.status.err{background:rgba(231,76,60,.15);border:1px solid var(--err);color:var(--err)}
-.status.info{background:rgba(215,180,90,.15);border:1px solid var(--gold);color:var(--gold2)}
-.admin-wrap{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px}
-</style>
-<script type="importmap">{"imports":{"@supabase/supabase-js":"https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.43.4/+esm"}}</script>
-</head>
-<body>
-<header class="top"><div class="nav">
-<div class="brand">RoXThal Art</div>
-<button onclick="go('inicio')" id="b-inicio" class="active">Inicio</button>
-<button onclick="go('servicios')">Servicios</button>
-<button onclick="openGallery()">Galeria</button>
-<button onclick="openRadio()">Radio</button>
-<button onclick="go('admin')">Admin</button>
-</div></header>
+<meta name="theme-color" content="#000000">
+<link rel="apple-touch-icon" href="icon-192.png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  <title>RoXThal Art Design — Tatuajes, Arte y Formación</title>
+  <meta name="description" content="RoXThal Art Design — arte, dibujo, pintura, tatuajes, radio y formación artística en San Antonio de Padua.">
+  
+  <!-- Open Graph para compartir en WhatsApp y Redes -->
+  <meta property="og:title" content="RoXThal Art Design">
+  <meta property="og:description" content="Arte que se transforma: Tatuajes, Fileteado Porteño, Dibujo y Pintura.">
+  <meta property="og:type" content="website">
 
-<section id="inicio" style="min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
-<img src="logo-roxthal.png" alt="RoXThal" style="width:260px;height:260px;border-radius:24px;border:2px solid #d7b45a;object-fit:cover;margin-bottom:20px" onerror="this.src='https://raw.githubusercontent.com/xtroxthal-dot/roxthal-art-design/main/logo-roxthal.png'">
-<h1>RoXThal Art Design</h1>
-<p style="color:#a0a0ab;max-width:600px;margin:12px auto 24px">Tatuajes, Fileteado Porteño, Dibujo y Pintura - San Antonio de Padua</p>
-<div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
-<button class="btn btn-gold" onclick="openGallery()">Ver Galeria Real</button>
-<a class="btn btn-wsp" href="https://wa.me/5491169633376" target="_blank">WhatsApp</a>
-<a class="btn btn-ig" href="https://www.instagram.com/roxthalartdesign/" target="_blank">Instagram</a>
-</div>
-<div id="connStatus" class="status info show">Conectando a Supabase...</div>
-</section>
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<section id="servicios">
-<h2>Arte que se transforma</h2>
-<div class="grid">
-<div class="card"><div class="card-img">🎨</div><div class="card-body"><h3>Tatuajes</h3><p style="color:#a0a0ab">Personalizados con identidad</p></div></div>
-<div class="card"><div class="card-img">🖌️</div><div class="card-body"><h3>Fileteado</h3><p style="color:#a0a0ab">Arte porteño tradicional</p></div></div>
-<div class="card"><div class="card-img">✏️</div><div class="card-body"><h3>Dibujo y Pintura</h3><p style="color:#a0a0ab">Obras por encargo</p></div></div>
-</div>
-</section>
-
-<section id="galeria">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px"><h2>Galeria Real</h2><button class="btn btn-dark" onclick="closeGallery()">Cerrar</button></div>
-<div id="galleryGrid" class="grid"></div>
-</section>
-
-<section id="radio">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px"><h2>Radio</h2><button class="btn btn-dark" onclick="closeRadio()">Cerrar</button></div>
-<audio id="mainAudio" controls style="width:100%;margin-bottom:16px"></audio>
-<div id="stationsList"></div>
-</section>
-
-<section id="admin">
-<h2>Admin Real - Conectado a Supabase</h2>
-<div class="admin-wrap">
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
-<input id="gTitle" placeholder="Titulo del trabajo">
-<select id="gCat"><option>Tatuajes</option><option>Fileteado</option><option>Dibujo</option><option>Pintura</option></select>
-<input type="file" id="gFile" accept="image/*" style="grid-column:1/-1">
-</div>
-<button class="btn btn-gold" onclick="uploadWork()">Subir a Galeria Real</button>
-<div id="upStatus" class="status"></div>
-<hr style="margin:24px 0;border-color:#2e2e38">
-<input id="rName" placeholder="Nombre emisora" style="margin-bottom:8px">
-<input id="rUrl" placeholder="https://.../stream.mp3" style="margin-bottom:8px">
-<button class="btn btn-dark" onclick="addRadio()">Guardar Radio</button>
-<div id="rStatus" class="status"></div>
-</div>
-</section>
-
-<div id="viewer" class="viewer" onclick="this.classList.remove('open')"><img id="viewerImg" src=""></div>
-
-<script type="module">
-import { createClient } from '@supabase/supabase-js';
-const SUPABASE_URL = "https://lvvhpuedktdmfehvhcwk.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2dmhwdWVka3RkbWZlaHZoY3drIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxMDM1ODEsImV4cCI6MjEwMjY3OTU4MX0.Qmhg2Pb6pOKSAoDlBzmfV47smFe5zCMHWpSu6tGOTWw";
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-const $ = (id)=>document.getElementById(id);
-function showStatus(id, type, msg){ const el=$(id); el.className='status show '+type; el.textContent=msg; setTimeout(()=>el.classList.remove('show'),6000); }
-async function checkConnection(){
-  try{
-    const { data, error } = await supabase.from('galeria').select('id').limit(1);
-    if(error) throw error;
-    showStatus('connStatus','ok','✅ Conectado - Base real activa. Galeria lista.');
-  }catch(e){
-    showStatus('connStatus','err','⚠️ Error: '+e.message+' - Ejecuta el SQL en Supabase SQL Editor para crear las tablas');
-    console.error(e);
-  }
-}
-window.go = (id)=>$(id)?.scrollIntoView({behavior:'smooth'});
-window.openGallery = async ()=>{ $('galeria').style.display='block'; $('galeria').classList.add('open'); $('galeria').scrollIntoView({behavior:'smooth'}); await loadGallery(); }
-window.closeGallery = ()=>{ $('galeria').style.display='none'; }
-window.openRadio = async ()=>{ $('radio').style.display='block'; $('radio').classList.add('open'); $('radio').scrollIntoView({behavior:'smooth'}); await loadRadio(); }
-window.closeRadio = ()=>{ $('radio').style.display='none'; $('mainAudio').pause(); }
-async function loadGallery(){
-  const grid=$('galleryGrid');
-  grid.innerHTML='<p style="color:#a0a0ab">Cargando galeria real...</p>';
-  try{
-    const { data, error } = await supabase.from('galeria').select('*').order('created_at',{ascending:false});
-    if(error) throw error;
-    if(!data || data.length===0){ grid.innerHTML='<p style="color:#a0a0ab">Aun no hay trabajos. Subi uno desde Admin abajo.</p>'; return; }
-    grid.innerHTML = data.map(w=>`
-      <div class="card" onclick="openViewer('${w.image_url}')">
-        <div class="card-img">${w.image_url? `<img src="${w.image_url}" loading="lazy">` : '🎨'}</div>
-        <div class="card-body"><p><b>${w.title}</b> <span class="badge">${w.category||'Arte'}</span></p></div>
-      </div>
-    `).join('');
-  }catch(e){ grid.innerHTML='<p style="color:#e74c3c">Error: '+e.message+'</p>'; }
-}
-window.openViewer = (url)=>{ if(!url) return; $('viewerImg').src=url; $('viewer').classList.add('open'); }
-async function loadRadio(){
-  const list=$('stationsList');
-  try{
-    const { data, error } = await supabase.from('radio_stations').select('*').order('id');
-    if(error) throw error;
-    if(!data || data.length===0){
-      list.innerHTML='<p style="color:#a0a0ab">No hay radios. Agrega una desde Admin. Demo:</p><div style="background:#080809;border:1px solid #2e2e38;padding:12px;border-radius:12px;margin-top:8px;display:flex;justify-content:space-between"><span>La 100</span><button class="btn btn-gold" style="padding:6px 12px" onclick="playStation(\'https://playerservices.streamtheworld.com/api/livestream-redirect/LA100.mp3\')">Play</button></div>';
-      return;
+  <style>
+    :root {
+      --bg: #080809;
+      --panel: #15151a;
+      --panel2: #1e1e26;
+      --gold: #d7b45a;
+      --gold2: #f2da91;
+      --text: #f5f5f5;
+      --muted: #a0a0ab;
+      --line: #2e2e38;
+      --blue: #1877f2;
+      --green: #2ecc71;
+      --red: #e74c3c;
     }
-    list.innerHTML = data.map(s=>`<div style="background:#080809;border:1px solid #2e2e38;padding:12px;border-radius:12px;margin-bottom:8px;display:flex;justify-content:space-between"><span>${s.name}</span><button class="btn btn-gold" style="padding:6px 12px" onclick="playStation('${s.url}')">Play</button></div>`).join('');
-  }catch(e){ list.innerHTML='Error: '+e.message; }
-}
-window.playStation = (url)=>{ const a=$('mainAudio'); a.src=url; a.play(); }
-window.uploadWork = async ()=>{
-  const title=$('gTitle').value.trim();
-  const cat=$('gCat').value;
-  const file=$('gFile').files[0];
-  if(!title ||!file){ showStatus('upStatus','err','Falta titulo e imagen'); return; }
-  showStatus('upStatus','info','Subiendo...');
-  try{
-    const fileName = Date.now()+'_'+file.name.replace(/[^a-z0-9.-]/gi,'_');
-    const { error: upError } = await supabase.storage.from('trabajos').upload(fileName, file);
-    if(upError) throw upError;
-    const { data: pub } = supabase.storage.from('trabajos').getPublicUrl(fileName);
-    const imageUrl = pub.publicUrl;
-    const { error: dbError } = await supabase.from('galeria').insert([{title, category:cat, image_url:imageUrl}]);
-    if(dbError) throw dbError;
-    showStatus('upStatus','ok','Subido!');
-    $('gTitle').value=''; $('gFile').value='';
-    await loadGallery();
-  }catch(e){ showStatus('upStatus','err','Error: '+e.message); }
-}
-window.addRadio = async ()=>{
-  const name=$('rName').value.trim();
-  const url=$('rUrl').value.trim();
-  if(!name||!url){ showStatus('rStatus','err','Falta datos'); return; }
-  try{
-    const { error } = await supabase.from('radio_stations').insert([{name, url}]);
-    if(error) throw error;
-    showStatus('rStatus','ok','Guardada!');
-    $('rName').value=''; $('rUrl').value='';
-    await loadRadio();
-  }catch(e){ showStatus('rStatus','err',e.message); }
-}
-checkConnection();
-loadGallery();
-</script>
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; color-scheme: dark; }
+    
+    body {
+      background: radial-gradient(circle at top, #1f1f28 0%, var(--bg) 60%);
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    button, input, select, textarea { font: inherit; color: inherit; }
+    button { cursor: pointer; border: none; background: none; }
+    a { color: var(--gold2); text-decoration: none; transition: 0.2s; }
+    a:hover { color: #fff; }
+
+    /* Accesibilidad Foco */
+    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    /* HEADER & NAV */
+    .top {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(8, 8, 9, 0.92);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: auto;
+      padding: 12px 16px;
+      display: flex;
+      gap: 8px;
+        stationsCache = data.filter(s => s.url_resolved || s.url);
+        renderStations();
+        showStatus('radioStatus', `🎵 ${stationsCache.length} emisoras listas para escuchar. ¡Toca Play!`, 'ok');
+
+      } catch (err) {
+        radioServerIdx++;
+        showStatus('radioStatus', '⚠️ No se pudo conectar al servidor de radio. Intenta elegir el estilo nuevamente.', 'err');
+        list.innerHTML = '';
+      }
+    });
+
+    $('radioSearch')?.addEventListener('input', renderStations);
+
+    function renderStations() {
+      const list = $('radioStationsList');
+      if (!list || stationsCache.length === 0) return;
+
+      const q = ($('radioSearch')?.value || '').toLowerCase().trim();
+      const filtered = stationsCache.filter(s => 
+        (s.name || '').toLowerCase().includes(q) || (s.country || '').toLowerCase().includes(q)
+      );
+
+      if (filtered.length === 0) {
+        list.innerHTML = `<div class="empty-state">No hay emisoras con ese nombre.</div>`;
+        return;
+      }
+
+      list.innerHTML = filtered.map((s, idx) => `
+        <div class="radio-station" id="station_row_${idx}">
+          <div class="station-logo">
+            ${s.favicon ? `<img src="${esc(s.favicon)}" style="width:100%;height:100%;object-fit:cover;border-radius:8px;" onerror="this.parentNode.innerHTML='📻'">` : '📻'}
+          </div>
+          <div class="station-info">
+            <div class="station-name">${esc(s.name.trim())}</div>
+            <div class="station-tags">📍 ${esc(s.country || 'Internacional')} • ${esc(s.bitrate || '128')} kbps</div>
+          </div>
+          <button class="btn btn-gold" style="padding: 10px 16px;" onclick="playStation(${idx})">▶️ Escuchar</button>
+        </div>
+      `).join('');
+    }
+
+    function playStation(idx) {
+      const s = stationsCache[idx];
+      if (!s) return;
+
+      const streamUrl = s.url_resolved || s.url;
+      const player = $('radioPlayer');
+
+      document.querySelectorAll('.radio-station').forEach(el => el.classList.remove('playing'));
+      $(`station_row_${idx}`)?.classList.add('playing');
+
+      showStatus('radioStatus', `🔴 EN VIVO: Escuchando "${s.name.trim()}"`, 'ok');
+      player.src = streamUrl;
+      player.style.display = 'block';
+      player.play().catch(() => {
+        showStatus('radioStatus', `⚠️ El stream de "${s.name.trim()}" requiere abrirse en otra pestaña o falló. Probá con la siguiente emisora.`, 'err');
+      });
+    }
+
+    /* ==================== AUTENTICACIÓN Y NAVEGACIÓN ADMIN ==================== */
+    async function login() {
+      const email = $('loginEmail').value.trim();
+      const password = $('loginPassword').value;
+      if (!email || !password) {
+        showStatus('loginStatus', '⚠️ Ingresa tu correo y contraseña.', 'err');
+        return;
+      }
+
+      showStatus('loginStatus', '⏳ Verificando credenciales...', 'info');
+      const { error } = await sb.auth.signInWithPassword({ email, password });
+      
+      if (error) {
+        showStatus('loginStatus', '❌ Acceso denegado: ' + error.message, 'err');
+      } else {
+        showLoggedIn();
+      }
+    }
+
+    function showLoggedIn() {
+      $('loginPanel').classList.add('hidden');
+      $('adminPanel').classList.remove('hidden');
+      showStatus('systemHealthBox', '✅ Sesión de Administrador activa. Todos los permisos habilitados.', 'ok');
+      
+      // Cargar datos de las pestañas
+      loadAdminGallery();
+      loadStudents();
+      renderAdminSlots();
+    }
+
+    async function logout() {
+      await sb.auth.signOut();
+      $('adminPanel').classList.add('hidden');
+      $('loginPanel').classList.remove('hidden');
+      $('loginPassword').value = '';
+      showStatus('loginStatus', 'Sesión cerrada correctamente.', 'info');
+    }
+
+    function switchAdminTab(tabId, btnEl) {
+      document.querySelectorAll('.admin-section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.admin-nav button').forEach(el => el.classList.remove('active'));
+      
+      $(`tab-${tabId}`)?.classList.add('active');
+      if (btnEl) btnEl.classList.add('active');
+    }
+  </script>
 </body>
 </html>
+`
