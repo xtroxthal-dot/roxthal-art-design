@@ -1615,6 +1615,249 @@
       $(`tab-${tabId}`)?.classList.add('active');
       if (btnEl) btnEl.classList.add('active');
     }
+/* =========================================================
+   REPARACIÓN DEFINITIVA — FOTOS DE DISEÑO PERSISTENTES
+   ========================================================= */
+
+async function loadSiteAssets() {
+  if (!sb) return;
+
+  try {
+    const { data, error } = await sb
+      .from('site_assets')
+      .select('*')
+      .order('updated_at', { ascending: false });
+
+    if (error) throw error;
+
+    const latest = {};
+
+    (data || []).forEach(item => {
+      if (!item || !item.slot) return;
+
+      if (
+        !latest[item.slot] ||
+        new Date(item.updated_at || 0) >
+        new Date(latest[item.slot].updated_at || 0)
+      ) {
+        latest[item.slot] = item;
+      }
+    });
+
+    siteAssetsMap = latest;
+
+    applyAssetsToDOM();
+    renderAdminSlots();
+
+  } catch (error) {
+    console.error('Error cargando fotos del diseño:', error);
+    renderAdminSlots();
+  }
+}
+
+
+function applyAssetsToDOM() {
+
+  /* IMÁGENES NORMALES */
+  document.querySelectorAll('[data-slot-img]').forEach(el => {
+
+    const slot = el.getAttribute('data-slot-img');
+    const asset = siteAssetsMap[slot];
+
+    if (asset && asset.url) {
+
+      const separator =
+        asset.url.includes('?') ? '&' : '?';
+
+      el.src =
+        asset.url +
+        separator +
+        'v=' +
+        encodeURIComponent(
+          asset.updated_at || Date.now()
+        );
+    }
+  });
+
+
+  /* IMÁGENES DE FONDO */
+  document.querySelectorAll('[data-slot-bg]').forEach(el => {
+
+    const slot = el.getAttribute('data-slot-bg');
+    const asset = siteAssetsMap[slot];
+
+    if (asset && asset.url) {
+
+      const separator =
+        asset.url.includes('?') ? '&' : '?';
+
+      const finalUrl =
+        asset.url +
+        separator +
+        'v=' +
+        encodeURIComponent(
+          asset.updated_at || Date.now()
+        );
+
+      el.style.backgroundImage =
+        `url("${finalUrl}")`;
+    }
+  });
+}
+
+
+async function uploadSlotPhoto(slotId, slotName) {
+
+  const fileInput =
+    document.getElementById(`file_slot_${slotId}`);
+
+  const file =
+    fileInput?.files?.[0];
+
+  if (!file || !sb) return;
+
+
+  try {
+
+    showStatus(
+      'siteSlotStatus',
+      `⏳ Guardando nueva foto para "${slotName}"...`,
+      'info'
+    );
+
+
+    /* EXTENSIÓN */
+    let ext =
+      (file.name.split('.').pop() || 'jpg')
+      .toLowerCase();
+
+    if (
+      !['jpg', 'jpeg', 'png', 'webp', 'gif']
+      .includes(ext)
+    ) {
+      ext = 'jpg';
+    }
+
+
+    /* NOMBRE ÚNICO */
+    const path =
+      `site/${slotId}_${Date.now()}_${Math.random()
+        .toString(36)
+        .substring(2, 8)}.${ext}`;
+
+
+    /* SUBIR FOTO */
+    const { error: uploadError } =
+      await sb.storage
+        .from(BUCKET)
+        .upload(
+          path,
+          file,
+          {
+            cacheControl: '0',
+            upsert: false,
+            contentType:
+              file.type || 'image/jpeg'
+          }
+        );
+
+    if (uploadError) {
+      throw uploadError;
+    }
+
+
+    /* URL PÚBLICA */
+    const { data: publicData } =
+      sb.storage
+        .from(BUCKET)
+        .getPublicUrl(path);
+
+    const newUrl =
+      publicData?.publicUrl;
+
+    if (!newUrl) {
+      throw new Error(
+        'No se pudo obtener la URL de la nueva imagen.'
+      );
+    }
+
+
+    /* FECHA ÚNICA */
+    const updatedAt =
+      new Date().toISOString();
+
+
+    /* GUARDAR EN site_assets */
+    const { data: savedData, error: databaseError } =
+      await sb
+        .from('site_assets')
+        .upsert(
+          {
+            slot: slotId,
+            name: slotName,
+            url: newUrl,
+            storage_path: path,
+            updated_at: updatedAt
+          },
+          {
+            onConflict: 'slot'
+          }
+        )
+        .select()
+        .single();
+
+    if (databaseError) {
+      throw databaseError;
+    }
+
+
+    /* ACTUALIZAR MEMORIA */
+    siteAssetsMap[slotId] =
+      savedData || {
+        slot: slotId,
+        name: slotName,
+        url: newUrl,
+        storage_path: path,
+        updated_at: updatedAt
+      };
+
+
+    /* ACTUALIZAR LA PÁGINA INMEDIATAMENTE */
+    applyAssetsToDOM();
+    renderAdminSlots();
+
+
+    showStatus(
+      'siteSlotStatus',
+      `✅ "${slotName}" quedó guardada permanentemente.`,
+      'ok'
+    );
+
+
+    /* VOLVER A LEER DESDE SUPABASE */
+    await loadSiteAssets();
+
+
+  } catch (error) {
+
+    console.error(
+      'Error guardando foto:',
+      error
+    );
+
+    showStatus(
+      'siteSlotStatus',
+      `❌ Error al guardar "${slotName}": ${error.message}`,
+      'err'
+    );
+
+  } finally {
+
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  }
+}
   </script>
 </body>
 </html>
