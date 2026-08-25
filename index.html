@@ -1104,56 +1104,129 @@
       }).join('');
     }
 
-    async function uploadSlotPhoto(slotId, slotName) {
-      const fileInput = $(`file_slot_${slotId}`);
-      const file = fileInput?.files?.[0];
-      if (!file || !sb) return;
+    
+async function uploadSlotPhoto(slotId, slotName) {
+  const fileInput = $(`file_slot_${slotId}`);
+  const file = fileInput?.files?.[0];
 
-      try {
-        showStatus('siteSlotStatus', `⏳ Subiendo nueva foto para "${slotName}"... Por favor espera.`, 'info');
-        window.scrollTo({ top: $('tab-diseno').offsetTop - 80, behavior: 'smooth' });
+  if (!file) return;
 
-        // 1. Extensión limpia
-        let ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
-        if (!['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)) ext = 'jpg';
-        const path = `site/${slotId}_${Date.now()}.${ext}`;
+  if (!sb) {
+    showStatus('siteSlotStatus', '❌ Supabase no está conectado.', 'err');
+    return;
+  }
 
-        // 2. Subir a Supabase Storage
-        const { error: upErr } = await sb.storage.from(BUCKET).upload(path, file, { cacheControl: '3600', upsert: false });
-        if (upErr) throw upErr;
+  try {
+    showStatus(
+      'siteSlotStatus',
+      `⏳ Subiendo nueva foto para "${slotName}"...`,
+      'info'
+    );
 
-        // 3. Obtener URL pública
-        const { data: pub } = sb.storage.from(BUCKET).getPublicUrl(path);
-        const newUrl = pub.publicUrl;
+    // Extensión de archivo
+    let ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
 
-        // 4. Borrar foto anterior del storage para no saturar espacio
-        if (siteAssetsMap[slotId]?.storage_path) {
-          await sb.storage.from(BUCKET).remove([siteAssetsMap[slotId].storage_path]);
-        }
+    if (!['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)) {
+      ext = 'jpg';
+    }
 
-        // 5. Guardar en base de datos
-        const { error: dbErr } = await sb.from('site_assets').upsert({
+    // Nombre único para evitar conflictos de caché
+    const path = `site/${slotId}_${Date.now()}.${ext}`;
+
+    // 1. Subir la nueva imagen
+    const { error: uploadError } = await sb.storage
+      .from(BUCKET)
+      .upload(path, file, {
+        cacheControl: '0',
+        upsert: false
+      });
+
+    if (uploadError) {
+      throw uploadError;
+    }
+
+    // 2. Obtener URL pública
+    const { data: publicData } = sb.storage
+      .from(BUCKET)
+      .getPublicUrl(path);
+
+    if (!publicData?.publicUrl) {
+      throw new Error('No se pudo obtener la URL pública de la imagen.');
+    }
+
+    const newUrl = `${publicData.publicUrl}?v=${Date.now()}`;
+
+    // Guardamos la referencia anterior ANTES de modificar la base de datos
+    const oldStoragePath = siteAssetsMap[slotId]?.storage_path || null;
+
+    // 3. Guardar/actualizar el registro en site_assets
+    const { data: savedData, error: dbError } = await sb
+      .from('site_assets')
+      .upsert(
+        {
           slot: slotId,
           name: slotName,
           url: newUrl,
           storage_path: path,
           updated_at: new Date().toISOString()
-        });
-        if (dbErr) throw dbErr;
+        },
+        {
+          onConflict: 'slot'
+        }
+      )
+      .select()
+      .single();
 
-        showStatus('siteSlotStatus', `✅ ¡Listo! La foto de "${slotName}" ya se actualizó en toda la página.`, 'ok');
-        
-        // Recargar en vivo
-        await loadSiteAssets();
+    if (dbError) {
+      // Si falla la base de datos, eliminamos la imagen recién subida
+      await sb.storage.from(BUCKET).remove([path]);
+      throw dbError;
+    }
 
-      } catch (err) {
-        console.error(err);
-        showStatus('siteSlotStatus', `❌ Error al subir: ${err.message}`, 'err');
-      } finally {
-        fileInput.value = '';
+    // 4. Actualizar inmediatamente la memoria local
+    siteAssetsMap[slotId] = savedData;
+
+    // 5. Aplicar la nueva foto inmediatamente a la página
+    applyAssetsToDOM();
+
+    // 6. Actualizar las miniaturas del administrador
+    renderAdminSlots();
+
+    // 7. Eliminar la imagen anterior SOLO después de guardar correctamente
+    if (oldStoragePath && oldStoragePath !== path) {
+      const { error: removeError } = await sb.storage
+        .from(BUCKET)
+        .remove([oldStoragePath]);
+
+      if (removeError) {
+        console.warn(
+          'La nueva foto se guardó correctamente, pero no se pudo borrar la anterior:',
+          removeError
+        );
       }
     }
 
+    showStatus(
+      'siteSlotStatus',
+      `✅ ¡Listo! "${slotName}" quedó guardada permanentemente.`,
+      'ok'
+    );
+
+  } catch (err) {
+    console.error('Error uploadSlotPhoto:', err);
+
+    showStatus(
+      'siteSlotStatus',
+      `❌ Error al guardar "${slotName}": ${err.message}`,
+      'err'
+    );
+
+  } finally {
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  }
+}
     /* ==================== GALERÍA PÚBLICA Y PRIVADA ==================== */
     function openGallery() {
       const sec = $('galeria');
