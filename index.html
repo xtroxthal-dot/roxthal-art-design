@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="es">
 <head>
+
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#000000">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -827,8 +828,6 @@ footer {
 
 <body>
 
-<!-- ==================== NAVEGACIÓN ==================== -->
-
 <header class="top">
 
   <div class="nav">
@@ -871,8 +870,6 @@ footer {
 
 </header>
 
-
-<!-- ==================== INICIO ==================== -->
 
 <section id="inicio" class="hero">
 
@@ -919,8 +916,6 @@ footer {
 
 </section>
 
-
-<!-- ==================== SERVICIOS ==================== -->
 
 <section id="servicios">
 
@@ -1046,8 +1041,6 @@ footer {
 </section>
 
 
-<!-- ==================== IDENTIDAD ==================== -->
-
 <section>
 
   <div class="about">
@@ -1087,8 +1080,6 @@ footer {
 </section>
 
 
-<!-- ==================== GALERÍA ==================== -->
-
 <section id="galeria">
 
   <div
@@ -1122,8 +1113,6 @@ footer {
 
 </section>
 
-
-<!-- ==================== CURSOS ==================== -->
 
 <section id="cursos">
 
@@ -1264,8 +1253,6 @@ footer {
 </section>
 
 
-<!-- ==================== RADIO ==================== -->
-
 <section id="radio">
 
   <span class="eyebrow">
@@ -1357,8 +1344,6 @@ footer {
 
 </section>
 
-
-<!-- ==================== CONTACTO ==================== -->
 
 <section id="contacto">
 
@@ -1453,8 +1438,6 @@ footer {
 </section>
 
 
-<!-- ==================== ADMIN ==================== -->
-
 <section id="admin">
 
   <span class="eyebrow">
@@ -1466,9 +1449,6 @@ footer {
   </h2>
 
   <div class="admin-wrap">
-
-
-    <!-- LOGIN -->
 
     <div
       id="loginPanel"
@@ -1526,12 +1506,9 @@ footer {
     </div>
 
 
-    <!-- PANEL -->
-
     <div
       id="adminPanel"
       class="hidden">
-
 
       <div class="admin-nav">
 
@@ -1565,8 +1542,6 @@ footer {
 
       </div>
 
-
-      <!-- ==================== TAB GALERIA ==================== -->
 
       <div
         id="tab-galeria"
@@ -1639,7 +1614,7 @@ footer {
             <textarea
               id="galDesc"
               rows="2"
-              placeholder="Detalles de la técnica, tamaño o sesión...">
+              placeholder="Detalles de la técnica, tamaño o sesión.">
             </textarea>
 
           </label>
@@ -1722,8 +1697,6 @@ footer {
       </div>
 
 
-      <!-- ==================== TAB DISEÑO ==================== -->
-
       <div
         id="tab-diseno"
         class="admin-section">
@@ -1762,8 +1735,6 @@ footer {
       </div>
 
 
-      <!-- ==================== TAB ALUMNOS ==================== -->
-
       <div
         id="tab-alumnos"
         class="admin-section">
@@ -1771,7 +1742,6 @@ footer {
         <h3>
           Gestión de Alumnos y Cuotas
         </h3>
-
 
         <div class="summary-grid">
 
@@ -2015,8 +1985,6 @@ footer {
       </div>
 
 
-      <!-- ==================== TAB ESTADO ==================== -->
-
       <div
         id="tab-estado"
         class="admin-section">
@@ -2070,8 +2038,6 @@ footer {
 </section>
 
 
-<!-- ==================== VISOR ==================== -->
-
 <div
   id="imageViewer"
   class="image-viewer"
@@ -2099,8 +2065,6 @@ footer {
 </div>
 
 
-<!-- ==================== FOOTER ==================== -->
-
 <footer>
 
   <p>
@@ -2115,10 +2079,6 @@ footer {
 
 </footer>
 
-
-<!-- ================================================================= -->
-<!-- ==================== JAVASCRIPT ================================ -->
-<!-- ================================================================= -->
 
 <script>
 
@@ -2298,19 +2258,8 @@ window.addEventListener(
       );
 
 
-      /*
-       * IMPORTANTE:
-       * Cargamos primero las fotos guardadas.
-       * Esto permite que al volver a entrar
-       * aparezcan las fotos nuevas.
-       */
-
       await loadSiteAssets();
 
-
-      /*
-       * Comprobar sesión
-       */
 
       const {
         data:{session}
@@ -2409,18 +2358,9 @@ function setupFilePreviews() {
    FOTOS DEL DISEÑO
    ============================================================ */
 
-/*
- * CORRECCIÓN PRINCIPAL:
- *
- * Ahora mostramos cualquier error de Supabase.
- * Antes el error se ocultaba y la página simplemente
- * volvía a utilizar las fotos originales.
- */
-
 async function loadSiteAssets() {
 
   if (!sb) return;
-
 
   try {
 
@@ -2432,7 +2372,6 @@ async function loadSiteAssets() {
         .from('site_assets')
         .select('*');
 
-
     if (error) {
 
       console.error(
@@ -2440,9 +2379,7 @@ async function loadSiteAssets() {
         error
       );
 
-
       siteAssetsMap = {};
-
 
       if ($('siteSlotStatus')) {
 
@@ -2459,9 +2396,7 @@ async function loadSiteAssets() {
 
     }
 
-
     siteAssetsMap = {};
-
 
     if (Array.isArray(data)) {
 
@@ -2481,17 +2416,14 @@ async function loadSiteAssets() {
 
     }
 
-
     console.log(
       'Fotos guardadas cargadas:',
       siteAssetsMap
     );
 
-
     applyAssetsToDOM();
 
     renderAdminSlots();
-
 
   } catch (e) {
 
@@ -2506,17 +2438,12 @@ async function loadSiteAssets() {
 
 
 /*
- * CORRECCIÓN DE CACHÉ:
- *
- * Cada foto guardada recibe una pequeña versión
- * al mostrarse para evitar que el navegador
- * continúe enseñando la foto antigua.
+ * Aplica las imágenes guardadas desde Supabase.
+ * Se añade una versión temporal para evitar
+ * que el navegador reutilice una imagen antigua.
  */
 
 function applyAssetsToDOM() {
-
-
-  /* IMÁGENES */
 
   document
     .querySelectorAll('[data-slot-img]')
@@ -2527,10 +2454,8 @@ function applyAssetsToDOM() {
           'data-slot-img'
         );
 
-
       const asset =
         siteAssetsMap[slot];
-
 
       if (
         asset &&
@@ -2542,13 +2467,14 @@ function applyAssetsToDOM() {
             ? '&'
             : '?';
 
-
         const finalUrl =
           asset.url +
           separator +
-          'cache=' +
-          Date.now();
-
+          'v=' +
+          encodeURIComponent(
+            asset.updated_at ||
+            Date.now()
+          );
 
         el.src =
           finalUrl;
@@ -2557,8 +2483,6 @@ function applyAssetsToDOM() {
 
     });
 
-
-  /* FONDOS */
 
   document
     .querySelectorAll('[data-slot-bg]')
@@ -2569,10 +2493,8 @@ function applyAssetsToDOM() {
           'data-slot-bg'
         );
 
-
       const asset =
         siteAssetsMap[slot];
-
 
       if (
         asset &&
@@ -2584,13 +2506,14 @@ function applyAssetsToDOM() {
             ? '&'
             : '?';
 
-
         const finalUrl =
           asset.url +
           separator +
-          'cache=' +
-          Date.now();
-
+          'v=' +
+          encodeURIComponent(
+            asset.updated_at ||
+            Date.now()
+          );
 
         el.style.backgroundImage =
           `url("${finalUrl}")`;
@@ -2609,9 +2532,7 @@ function renderAdminSlots() {
   const grid =
     $('slotsGrid');
 
-
   if (!grid) return;
-
 
   grid.innerHTML =
     SITE_SLOTS
@@ -2620,10 +2541,8 @@ function renderAdminSlots() {
         const current =
           siteAssetsMap[slot.id];
 
-
         const bgUrl =
           current?.url || '';
-
 
         const bgStyle =
           bgUrl
@@ -2631,7 +2550,6 @@ function renderAdminSlots() {
             ? `background-image:url('${esc(bgUrl)}');`
 
             : `background-color:#111;display:grid;place-items:center;color:#666;font-size:.8rem;`;
-
 
         return `
 
@@ -2692,6 +2610,22 @@ function renderAdminSlots() {
    SUBIR FOTO DE SLOT
    ============================================================ */
 
+/*
+ * SISTEMA DE GUARDADO DEFINITIVO
+ *
+ * No utiliza upsert ni onConflict.
+ *
+ * 1. Sube la imagen.
+ * 2. Obtiene la URL pública.
+ * 3. Busca el slot existente.
+ * 4. Si existe, actualiza por ID.
+ * 5. Si no existe, inserta.
+ * 6. Vuelve a consultar Supabase.
+ * 7. Comprueba que URL y storage_path coinciden.
+ * 8. Actualiza la pantalla.
+ * 9. Solo entonces elimina la foto antigua.
+ */
+
 async function uploadSlotPhoto(
   slotId,
   slotName
@@ -2700,13 +2634,10 @@ async function uploadSlotPhoto(
   const fileInput =
     $(`file_slot_${slotId}`);
 
-
   const file =
     fileInput?.files?.[0];
 
-
   if (!file) return;
-
 
   if (!sb) {
 
@@ -2720,7 +2651,6 @@ async function uploadSlotPhoto(
 
   }
 
-
   try {
 
     showStatus(
@@ -2730,9 +2660,7 @@ async function uploadSlotPhoto(
     );
 
 
-    /*
-     * Comprobar extensión
-     */
+    /* EXTENSIÓN */
 
     let ext =
       (
@@ -2758,12 +2686,7 @@ async function uploadSlotPhoto(
     }
 
 
-    /*
-     * Crear nombre único.
-     *
-     * Esto es importante porque nunca sobrescribimos
-     * el archivo anterior.
-     */
+    /* NOMBRE ÚNICO */
 
     const path =
       `site/${slotId}_${Date.now()}_${Math.random()
@@ -2771,19 +2694,20 @@ async function uploadSlotPhoto(
         .substring(2,8)}.${ext}`;
 
 
-    /*
-     * Guardar referencia anterior
-     * antes de modificar nada.
-     */
+    /* REGISTRO ANTERIOR */
+
+    const oldAsset =
+      siteAssetsMap[slotId] ||
+      null;
 
     const oldStoragePath =
-      siteAssetsMap[slotId]?.storage_path ||
+      oldAsset?.storage_path ||
       null;
 
 
-    /*
-     * 1. SUBIR FOTO
-     */
+    /* ========================================================
+       1. SUBIR NUEVA IMAGEN
+       ======================================================== */
 
     const {
       error:uploadError
@@ -2795,7 +2719,14 @@ async function uploadSlotPhoto(
           file,
           {
             cacheControl:'31536000',
-            upsert:false
+            upsert:false,
+            contentType:
+              file.type ||
+              `image/${
+                ext === 'jpg'
+                  ? 'jpeg'
+                  : ext
+              }`
           }
         );
 
@@ -2807,9 +2738,9 @@ async function uploadSlotPhoto(
     }
 
 
-    /*
-     * 2. URL PÚBLICA
-     */
+    /* ========================================================
+       2. OBTENER URL PÚBLICA
+       ======================================================== */
 
     const {
       data:publicData
@@ -2819,97 +2750,252 @@ async function uploadSlotPhoto(
         .getPublicUrl(path);
 
 
-    if (
-      !publicData?.publicUrl
-    ) {
-
-      throw new Error(
-        'No se pudo obtener la URL pública de la imagen.'
-      );
-
-    }
-
-
     const newUrl =
-      publicData.publicUrl;
+      publicData?.publicUrl;
 
 
-    /*
-     * 3. GUARDAR EN site_assets
-     *
-     * upsert con onConflict slot:
-     * si el slot ya existe, se actualiza.
-     * si no existe, se crea.
-     */
-
-    const {
-      data:savedData,
-      error:dbError
-    } =
-      await sb
-        .from('site_assets')
-        .upsert(
-          {
-            slot:slotId,
-            name:slotName,
-            url:newUrl,
-            storage_path:path,
-            updated_at:new Date().toISOString()
-          },
-          {
-            onConflict:'slot'
-          }
-        )
-        .select()
-        .single();
-
-
-    /*
-     * Si la base de datos falla,
-     * borramos la nueva foto.
-     */
-
-    if (dbError) {
+    if (!newUrl) {
 
       await sb.storage
         .from(BUCKET)
         .remove([path]);
 
-
-      throw dbError;
+      throw new Error(
+        'Supabase no devolvió la URL pública de la nueva imagen.'
+      );
 
     }
 
 
-    /*
-     * 4. ACTUALIZAR MEMORIA LOCAL
-     */
+    console.log(
+      'RoXThal: nueva imagen subida:',
+      path
+    );
+
+    console.log(
+      'RoXThal: URL nueva:',
+      newUrl
+    );
+
+
+    /* ========================================================
+       3. BUSCAR EL REGISTRO ACTUAL DEL SLOT
+       ======================================================== */
+
+    const {
+      data:existingRows,
+      error:findError
+    } =
+      await sb
+        .from('site_assets')
+        .select('*')
+        .eq('slot',slotId)
+        .limit(1);
+
+
+    if (findError) {
+
+      await sb.storage
+        .from(BUCKET)
+        .remove([path]);
+
+      throw findError;
+
+    }
+
+
+    let savedData =
+      null;
+
+
+    /* ========================================================
+       4. ACTUALIZAR O CREAR
+       ======================================================== */
+
+    if (
+      existingRows &&
+      existingRows.length > 0
+    ) {
+
+      const existing =
+        existingRows[0];
+
+
+      console.log(
+        'RoXThal: slot existente encontrado:',
+        existing
+      );
+
+
+      const {
+        data:updateData,
+        error:updateError
+      } =
+        await sb
+          .from('site_assets')
+          .update({
+
+            name:slotName,
+
+            url:newUrl,
+
+            storage_path:path,
+
+            updated_at:
+              new Date()
+                .toISOString()
+
+          })
+          .eq(
+            'id',
+            existing.id
+          )
+          .select()
+          .single();
+
+
+      if (updateError) {
+
+        await sb.storage
+          .from(BUCKET)
+          .remove([path]);
+
+        throw updateError;
+
+      }
+
+
+      savedData =
+        updateData;
+
+
+    } else {
+
+      console.log(
+        'RoXThal: el slot no existía. Creándolo.'
+      );
+
+
+      const {
+        data:insertData,
+        error:insertError
+      } =
+        await sb
+          .from('site_assets')
+          .insert({
+
+            slot:slotId,
+
+            name:slotName,
+
+            url:newUrl,
+
+            storage_path:path,
+
+            updated_at:
+              new Date()
+                .toISOString()
+
+          })
+          .select()
+          .single();
+
+
+      if (insertError) {
+
+        await sb.storage
+          .from(BUCKET)
+          .remove([path]);
+
+        throw insertError;
+
+      }
+
+
+      savedData =
+        insertData;
+
+    }
+
+
+    /* ========================================================
+       5. VERIFICACIÓN REAL EN SUPABASE
+       ======================================================== */
+
+    const {
+      data:verifyRows,
+      error:verifyError
+    } =
+      await sb
+        .from('site_assets')
+        .select('*')
+        .eq('slot',slotId)
+        .limit(1);
+
+
+    if (verifyError) {
+
+      await sb.storage
+        .from(BUCKET)
+        .remove([path]);
+
+      throw verifyError;
+
+    }
+
+
+    const verified =
+      verifyRows?.[0];
+
+
+    if (
+      !verified ||
+      verified.url !== newUrl ||
+      verified.storage_path !== path
+    ) {
+
+      await sb.storage
+        .from(BUCKET)
+        .remove([path]);
+
+      throw new Error(
+        'La imagen se subió, pero Supabase no confirmó correctamente el registro del slot.'
+      );
+
+    }
+
+
+    console.log(
+      'RoXThal: FOTO VERIFICADA EN SUPABASE:',
+      verified
+    );
+
+
+    /* ========================================================
+       6. ACTUALIZAR MEMORIA LOCAL
+       ======================================================== */
 
     siteAssetsMap[slotId] =
-      savedData;
+      verified;
 
 
-    /*
-     * 5. CAMBIAR INMEDIATAMENTE
-     * LA FOTO EN LA PÁGINA
-     */
+    /* ========================================================
+       7. ACTUALIZAR INMEDIATAMENTE LA PÁGINA
+       ======================================================== */
 
     applyAssetsToDOM();
 
 
-    /*
-     * 6. ACTUALIZAR MINIATURAS
-     */
+    /* ========================================================
+       8. ACTUALIZAR MINIATURAS DEL ADMIN
+       ======================================================== */
 
     renderAdminSlots();
 
 
-    /*
-     * 7. BORRAR FOTO ANTIGUA
-     *
-     * Esto ocurre DESPUÉS de que
-     * la nueva foto ya quedó guardada.
-     */
+    /* ========================================================
+       9. ELIMINAR FOTO ANTERIOR
+       ======================================================== */
 
     if (
       oldStoragePath &&
@@ -2933,24 +3019,31 @@ async function uploadSlotPhoto(
           removeError
         );
 
+      } else {
+
+        console.log(
+          'RoXThal: foto anterior eliminada:',
+          oldStoragePath
+        );
+
       }
 
     }
 
 
-    /*
-     * 8. CONFIRMACIÓN
-     */
+    /* ========================================================
+       10. CONFIRMACIÓN
+       ======================================================== */
 
     showStatus(
       'siteSlotStatus',
-      `✅ "${slotName}" fue reemplazada correctamente y quedó guardada.`,
+      `✅ "${slotName}" fue guardada definitivamente y verificada en Supabase.`,
       'ok'
     );
 
 
     console.log(
-      'SLOT GUARDADO CORRECTAMENTE:',
+      'ROXTHAL: SLOT GUARDADO CORRECTAMENTE:',
       savedData
     );
 
@@ -2958,14 +3051,14 @@ async function uploadSlotPhoto(
   } catch (err) {
 
     console.error(
-      'ERROR uploadSlotPhoto:',
+      'ROXTHAL: ERROR uploadSlotPhoto:',
       err
     );
 
 
     showStatus(
       'siteSlotStatus',
-      `❌ Error al guardar "${slotName}": ${err.message}`,
+      `❌ No se pudo guardar "${slotName}": ${err.message}`,
       'err'
     );
 
@@ -2992,12 +3085,9 @@ function openGallery() {
   const sec =
     $('galeria');
 
-
   sec.classList.add('open');
 
-
   go('galeria');
-
 
   loadPublicGallery();
 
@@ -3009,9 +3099,7 @@ async function loadPublicGallery() {
   const grid =
     $('publicGalleryGrid');
 
-
   if (!sb || !grid) return;
-
 
   const {
     data,
@@ -3100,7 +3188,6 @@ async function loadAdminGallery() {
 
   if (!sb) return;
 
-
   const {
     data,
     error
@@ -3136,9 +3223,7 @@ function renderAdminGallery() {
   const list =
     $('adminGalleryList');
 
-
   if (!list) return;
-
 
   const q =
     (
@@ -3269,18 +3354,15 @@ async function uploadGalleryImage() {
   const file =
     $('galFile')?.files?.[0];
 
-
   const title =
     $('galTitle')
       .value
       .trim() ||
     'Obra RoXThal';
 
-
   const category =
     $('galCategory')
       .value;
-
 
   const desc =
     $('galDesc')
@@ -3385,7 +3467,6 @@ async function uploadGalleryImage() {
 
 
     resetGalleryForm();
-
 
     await loadAdminGallery();
 
@@ -3585,7 +3666,6 @@ async function loadStudents() {
 
   if (!sb) return;
 
-
   const {
     data,
     error
@@ -3620,7 +3700,6 @@ function renderStudents() {
 
   const container =
     $('studentsListContainer');
-
 
   if (!container) return;
 
@@ -3976,7 +4055,6 @@ async function saveStudent() {
 
     resetStudentForm();
 
-
     await loadStudents();
 
 
@@ -4191,7 +4269,6 @@ function openRadio() {
     .classList
     .add('open');
 
-
   go('radio');
 
 }
@@ -4204,14 +4281,11 @@ $('radioGenre')?.addEventListener(
     const tag =
       this.value;
 
-
     const list =
       $('radioStationsList');
 
-
     const player =
       $('radioPlayer');
-
 
     player.pause();
 
@@ -4678,8 +4752,6 @@ function switchAdminTab(
 
 </script>
 
-
-<!-- ==================== SERVICE WORKER ==================== -->
 
 <script>
 
