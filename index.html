@@ -1619,6 +1619,15 @@
       if (btnEl) btnEl.classList.add('active');
     }
   </script>
+  <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js")
+      .then(() => console.log("RoXThal: aplicación preparada para instalar"))
+      .catch(error => console.error("Error del Service Worker:", error));
+  });
+}
+</script>
 </body>
 </html>
 `
