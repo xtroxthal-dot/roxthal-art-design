@@ -1,614 +1,241 @@
-<!DOCTYPE html>
+Skip to content
+roxthal-art-design
+Repository navigation
+Code
+Issues
+Pull requests
+roxthal-art-design
+/index.html
+xtroxthal-dot
+xtroxthal-dot
+39 minutes ago
+4791 lines (3353 loc) · 77.9 KB
+
+Code
+
+Blame
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel de Arte & Gestión de Alumnos</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Supabase JS CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    body { background-color: #121212; color: #e0e0e0; font-family: system-ui, -apple-system, sans-serif; }
-    .gold-accent { color: #d4af37; }
-    .bg-gold { background-color: #d4af37; color: #121212; }
-    .bg-gold:hover { background-color: #f1c40f; }
-    .border-gold { border-color: #d4af37; }
-    .nav-btn.active { border-bottom: 2px solid #d4af37; color: #d4af37; }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-    .status-ok { background-color: #064e3b; color: #a7f3d0; border: 1px solid #059669; }
-    .status-err { background-color: #7f1d1d; color: #fca5a5; border: 1px solid #dc2626; }
-    .status-info { background-color: #1e3a8a; color: #bfdbfe; border: 1px solid #2563eb; }
-  </style>
-</head>
-<body class="min-h-screen flex flex-col">
 
-  <!-- ENCABEZADO Y NAVEGACIÓN -->
-  <header class="bg-neutral-900 border-b border-neutral-800 sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
-      <div class="flex items-center gap-2">
-        <span class="text-2xl">🎨</span>
-        <h1 class="text-xl font-bold tracking-wide text-white">Estudio de Arte <span class="gold-accent"> & Gestión</span></h1>
-      </div>
-      <nav class="flex gap-4">
-        <button onclick="go('gallery')" id="nav-gallery" class="nav-btn px-3 py-2 font-medium text-gray-300 hover:text-white transition active">Galería</button>
-        <button onclick="go('radio')" id="nav-radio" class="nav-btn px-3 py-2 font-medium text-gray-300 hover:text-white transition">📻 Radio en Vivo</button>
-        <button onclick="go('admin')" id="nav-admin" class="nav-btn px-3 py-2 font-medium text-gray-300 hover:text-white transition">🔒 Administración</button>
-      </nav>
-    </div>
-  </header>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
+<link rel="apple-touch-icon" href="icon-192.png">
 
-  <!-- CONTENIDO PRINCIPAL -->
-  <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
 
-    <!-- SECCIÓN: GALERÍA -->
-    <section id="sec-gallery" class="space-y-6">
-      <div class="flex justify-between items-center">
-        <h2 class="text-2xl font-bold gold-accent">Galería de Arte</h2>
-      </div>
-      <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        <!-- Se cargan dinámicamente -->
-        <p class="text-neutral-500 col-span-full text-center py-8">Cargando galería...</p>
-      </div>
-    </section>
+<title>RoXThal Art Design — Tatuajes, Arte y Formación</title>
 
-    <!-- SECCIÓN: RADIO EN VIVO -->
-    <section id="sec-radio" class="space-y-6 hidden">
-      <div class="bg-neutral-900 p-6 rounded-xl border border-neutral-800 max-w-2xl mx-auto space-y-4">
-        <h2 class="text-2xl font-bold gold-accent flex items-center gap-2">📻 Radio Online en Vivo</h2>
-        <p class="text-sm text-neutral-400">Selecciona un género para sintonizar emisoras en vivo:</p>
-        
-        <select id="radioGenre" class="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-3 text-white focus:outline-none focus:border-yellow-500">
-          <option value="">-- Selecciona un género --</option>
-          <option value="classical">Música Clásica</option>
-          <option value="jazz">Jazz / Blues</option>
-          <option value="ambient">Ambient / Relajante</option>
-          <option value="rock">Rock</option>
-          <option value="pop">Pop</option>
-          <option value="tango">Tango</option>
-        </select>
+<meta name="description"
+content="RoXThal Art Design — arte, dibujo, pintura, tatuajes, radio y formación artística en San Antonio de Padua.">
 
-        <div id="radioStatusMsg" class="hidden p-3 rounded-lg text-sm"></div>
+<meta property="og:title" content="RoXThal Art Design">
+<meta property="og:description" content="Arte que se transforma: Tatuajes, Fileteado Porteño, Dibujo y Pintura.">
+<meta property="og:type" content="website">
 
-        <audio id="radioPlayer" controls class="w-full mt-4 hidden"></audio>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        <div id="radioStationsList" class="space-y-2 mt-4 max-h-80 overflow-y-auto">
-          <!-- Lista de emisoras -->
-        </div>
-      </div>
-    </section>
+<style>
 
-    <!-- SECCIÓN: PANEL DE ADMINISTRACIÓN -->
-    <section id="sec-admin" class="space-y-6 hidden">
+:root {
+  --bg:#080809;
+  --panel:#15151a;
+  --panel2:#1e1e26;
+  --gold:#d7b45a;
+  --gold2:#f2da91;
+  --text:#f5f5f5;
+  --muted:#a0a0ab;
+  --line:#2e2e38;
+  --blue:#1877f2;
+  --green:#2ecc71;
+  --red:#e74c3c;
+}
 
-      <!-- PANEL DE LOGIN -->
-      <div id="loginPanel" class="max-w-md mx-auto bg-neutral-900 p-6 rounded-xl border border-neutral-800 space-y-4">
-        <h2 class="text-xl font-bold text-white text-center">Acceso Administrativo</h2>
-        <div id="loginStatus" class="hidden p-3 rounded-lg text-sm"></div>
-        <div>
-          <label class="block text-sm text-neutral-400 mb-1">Correo Electrónico</label>
-          <input type="email" id="loginEmail" class="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-yellow-500" placeholder="admin@ejemplo.com">
-        </div>
-        <div>
-          <label class="block text-sm text-neutral-400 mb-1">Contraseña</label>
-          <input type="password" id="loginPassword" class="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-yellow-500" placeholder="••••••••">
-        </div>
-        <button onclick="login()" class="w-full bg-gold font-semibold py-2.5 rounded-lg transition">Iniciar Sesión</button>
-      </div>
+* {
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-      <!-- PANEL DE CONTROL (AUTENTICADO) -->
-      <div id="adminPanel" class="hidden space-y-6">
-        <div class="flex flex-wrap justify-between items-center gap-4 bg-neutral-900 p-4 rounded-xl border border-neutral-800">
-          <div class="flex gap-2">
-            <button onclick="switchAdminTab('students', this)" class="admin-tab-btn active bg-neutral-800 text-white px-4 py-2 rounded-lg text-sm font-medium border border-neutral-700">🎓 Alumnos</button>
-            <button onclick="switchAdminTab('gallery', this)" class="admin-tab-btn bg-neutral-800 text-white px-4 py-2 rounded-lg text-sm font-medium border border-neutral-700">🖼️ Galería</button>
-          </div>
-          <button onclick="logout()" class="text-sm bg-red-900/40 text-red-300 border border-red-800 px-3 py-1.5 rounded-lg hover:bg-red-900/60">Cerrar Sesión</button>
-        </div>
+html {
+  scroll-behavior:smooth;
+  color-scheme:dark;
+}
 
-        <!-- TAB: GESTIÓN DE ALUMNOS -->
-        <div id="tab-students" class="admin-section active space-y-6">
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            
-            <!-- Formulario de Alumno -->
-            <div class="bg-neutral-900 p-6 rounded-xl border border-neutral-800 space-y-4">
-              <h3 id="stuFormTitle" class="text-lg font-bold gold-accent">➕ Registrar Nuevo Alumno</h3>
-              <div id="stuStatusMsg" class="hidden p-3 rounded-lg text-sm"></div>
+body {
+  background:radial-gradient(circle at top,#1f1f28 0%,var(--bg) 60%);
+  background-color:var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.6;
+  min-height:100vh;
+}
 
-              <div>
-                <label class="block text-xs text-neutral-400 mb-1">Nombre Completo *</label>
-                <input type="text" id="stuName" class="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm">
-              </div>
-              <div>
-                <label class="block text-xs text-neutral-400 mb-1">Teléfono / WhatsApp</label>
-                <input type="text" id="stuPhone" class="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm">
-              </div>
-              <div>
-                <label class="block text-xs text-neutral-400 mb-1">Curso</label>
-                <select id="stuCourse" class="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm">
-                  <option value="Dibujo y Pintura Profesional">Dibujo y Pintura Profesional</option>
-                  <option value="Arte Infantil">Arte Infantil</option>
-                  <option value="Taller de Ilustración">Taller de Ilustración</option>
-                  <option value="Pintura al Óleo">Pintura al Óleo</option>
-                </select>
-              </div>
-              <div class="grid grid-cols-2 gap-2">
-                <div>
-                  <label class="block text-xs text-neutral-400 mb-1">Estado de Pago</label>
-                  <select id="stuPayStatus" class="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm">
-                    <option value="pendiente">Pendiente</option>
-                    <option value="pagado">Pagado</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block text-xs text-neutral-400 mb-1">Monto ($)</label>
-                  <input type="number" id="stuAmount" class="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm">
-                </div>
-              </div>
-              <div>
-                <label class="block text-xs text-neutral-400 mb-1">Fecha de Pago</label>
-                <input type="date" id="stuDate" class="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm">
-              </div>
-              <div>
-                <label class="block text-xs text-neutral-400 mb-1">Notas</label>
-                <textarea id="stuNotes" rows="2" class="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm"></textarea>
-              </div>
+button,
+input,
+select,
+textarea {
+  font:inherit;
+  color:inherit;
+}
 
-              <div class="flex gap-2">
-                <button onclick="saveStudent()" id="stuSaveBtn" class="flex-1 bg-gold font-semibold py-2 rounded-lg text-sm">Guardar Alumno</button>
-                <button onclick="resetStudentForm()" class="bg-neutral-800 border border-neutral-700 px-3 py-2 rounded-lg text-sm">Limpiar</button>
-              </div>
-            </div>
+button {
+  cursor:pointer;
+  border:none;
+  background:none;
+}
 
-            <!-- Listado de Alumnos -->
-            <div class="lg:col-span-2 bg-neutral-900 p-6 rounded-xl border border-neutral-800 space-y-4">
-              <div class="flex flex-wrap justify-between items-center gap-2">
-                <h3 class="text-lg font-bold text-white">Listado de Alumnos</h3>
-                <button onclick="exportStudentsCSV()" class="bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 px-3 py-1.5 rounded-lg text-xs font-medium text-gray-300">
-                  📥 Exportar CSV
-                </button>
-              </div>
+a {
+  color:var(--gold2);
+  text-decoration:none;
+    showLoggedIn();
 
-              <div class="overflow-x-auto">
-                <table class="w-full text-left text-xs text-neutral-300">
-                  <thead class="bg-neutral-800 text-neutral-400 uppercase border-b border-neutral-700">
-                    <tr>
-                      <th class="p-3">Alumno</th>
-                      <th class="p-3">Curso</th>
-                      <th class="p-3">Estado</th>
-                      <th class="p-3">Monto</th>
-                      <th class="p-3 text-right">Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody id="studentsTableBody" class="divide-y divide-neutral-800">
-                    <!-- Se carga dinámicamente -->
-                  </tbody>
-                </table>
-              </div>
-            </div>
+  }
 
-          </div>
-        </div>
+}
 
-        <!-- TAB: GESTIÓN DE GALERÍA -->
-        <div id="tab-gallery" class="admin-section tab-content space-y-6">
-          <div class="bg-neutral-900 p-6 rounded-xl border border-neutral-800 space-y-4 max-w-xl">
-            <h3 class="text-lg font-bold gold-accent">🖼️ Agregar Nueva Obra</h3>
-            <div id="galStatusMsg" class="hidden p-3 rounded-lg text-sm"></div>
-            <div>
-              <label class="block text-xs text-neutral-400 mb-1">Título de la Obra</label>
-              <input type="text" id="galTitle" class="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm">
-            </div>
-            <div>
-              <label class="block text-xs text-neutral-400 mb-1">URL de la Imagen</label>
-              <input type="text" id="galImageUrl" class="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm" placeholder="https://...">
-            </div>
-            <div>
-              <label class="block text-xs text-neutral-400 mb-1">Descripción</label>
-              <textarea id="galDesc" rows="2" class="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm"></textarea>
-            </div>
-            <button onclick="saveArtwork()" class="bg-gold font-semibold px-4 py-2 rounded-lg text-sm w-full">Publicar Obra</button>
-          </div>
-        </div>
 
-      </div>
+function showLoggedIn() {
 
-    </section>
+  $('loginPanel')
+    .classList
+    .add('hidden');
 
-  </main>
 
-  <!-- JAVASCRIPT LÓGICO -->
-  <script>
-    /* ============================================================
-       CONFIGURACIÓN DE SUPABASE
-       ============================================================ */
-    const SUPABASE_URL = 'https://TU-PROYECTO.supabase.co'; // Reemplazar con tu URL de Supabase
-    const SUPABASE_KEY = 'TU-ANON-KEY';                   // Reemplazar con tu Anon Key de Supabase
+  $('adminPanel')
+    .classList
+    .remove('hidden');
 
-    const sb = (SUPABASE_URL !== 'https://TU-PROYECTO.supabase.co') 
-      ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY) 
-      : null;
 
-    let studentsList = [];
-    let editingStudentId = null;
+  showStatus(
+    'systemHealthBox',
+    '✅ Sesión de Administrador activa. Todos los permisos habilitados.',
+    'ok'
+  );
 
-    // Helper DOM
-    const $ = id => document.getElementById(id);
 
-    // Escapar caracteres HTML para prevención XSS
-    function esc(str) {
-      if (!str) return '';
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
+  loadAdminGallery();
+
+  loadStudents();
+
+  renderAdminSlots();
+
+}
+
+
+async function logout() {
+
+  await sb.auth.signOut();
+
+
+  $('adminPanel')
+    .classList
+    .add('hidden');
+
+
+  $('loginPanel')
+    .classList
+    .remove('hidden');
+
+
+  $('loginPassword').value =
+    '';
+
+
+  showStatus(
+    'loginStatus',
+    'Sesión cerrada correctamente.',
+    'info'
+  );
+
+}
+
+
+/* ============================================================
+   NAVEGACIÓN ADMIN
+   ============================================================ */
+
+function switchAdminTab(
+  tabId,
+  btnEl
+) {
+
+  document
+    .querySelectorAll(
+      '.admin-section'
+    )
+    .forEach(
+      el =>
+        el.classList.remove(
+          'active'
+        )
+    );
+
+
+  document
+    .querySelectorAll(
+      '.admin-nav button'
+    )
+    .forEach(
+      el =>
+        el.classList.remove(
+          'active'
+        )
+    );
+
+
+  $(`tab-${tabId}`)
+    ?.classList
+    .add('active');
+
+
+  if (btnEl) {
+
+    btnEl.classList
+      .add('active');
+
+  }
+
+}
+
+</script>
+
+
+<script>
+
+if (
+  "serviceWorker" in navigator
+) {
+
+  window.addEventListener(
+    "load",
+    () => {
+
+      navigator.serviceWorker
+        .register("./service-worker.js")
+
+        .then(() =>
+          console.log(
+            "RoXThal: aplicación preparada para instalar"
+          )
+        )
+
+        .catch(
+          error =>
+            console.error(
+              "Error del Service Worker:",
+              error
+            )
+        );
+
     }
+  );
 
-    // Mensajes de Estado
-    function showStatus(elemId, message, type) {
-      const el = $(elemId);
-      if (!el) return;
-      el.textContent = message;
-      el.className = `p-3 rounded-lg text-sm ${
-        type === 'ok' ? 'status-ok' : type === 'err' ? 'status-err' : 'status-info'
-      }`;
-      el.classList.remove('hidden');
-    }
+}
 
-    // Navegación de pestañas principales
-    function go(section) {
-      ['gallery', 'radio', 'admin'].forEach(s => {
-        $(`sec-${s}`)?.classList.add('hidden');
-        $(`nav-${s}`)?.classList.remove('active');
-      });
-      $(`sec-${section}`)?.classList.remove('hidden');
-      $(`nav-${section}`)?.classList.add('active');
+</script>
 
-      if (section === 'gallery') loadPublicGallery();
-    }
-
-    /* ============================================================
-       GESTIÓN DE ALUMNOS (CRUD)
-       ============================================================ */
-
-    async function loadStudents() {
-      if (!sb) {
-        renderDemoStudents();
-        return;
-      }
-
-      try {
-        const { data, error } = await sb
-          .from('students')
-          .select('*')
-          .order('id', { ascending: false });
-
-        if (error) throw error;
-        studentsList = data || [];
-        renderStudentsTable(studentsList);
-      } catch (err) {
-        console.error('Error cargando alumnos:', err);
-      }
-    }
-
-    function renderStudentsTable(students) {
-      const tbody = $('studentsTableBody');
-      if (!students || students.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-neutral-500">No hay alumnos registrados.</td></tr>`;
-        return;
-      }
-
-      tbody.innerHTML = students.map(s => `
-        <tr class="hover:bg-neutral-800/50">
-          <td class="p-3">
-            <div class="font-medium text-white">${esc(s.name)}</div>
-            <div class="text-neutral-500 text-xs">${esc(s.phone || 'Sin tel')}</div>
-          </td>
-          <td class="p-3">${esc(s.course)}</td>
-          <td class="p-3">
-            <span class="cursor-pointer px-2 py-0.5 rounded text-[10px] uppercase font-bold ${
-              s.payment_status === 'pagado' ? 'bg-emerald-900/60 text-emerald-300 border border-emerald-700' : 'bg-amber-900/60 text-amber-300 border border-amber-700'
-            }" onclick="toggleStudentPay(${s.id}, '${s.payment_status === 'pagado' ? 'pendiente' : 'pagado'}')">
-              ${esc(s.payment_status)}
-            </span>
-          </td>
-          <td class="p-3 font-mono">${s.payment_amount ? '$' + s.payment_amount : '-'}</td>
-          <td class="p-3 text-right space-x-1">
-            <button onclick="editStudent(${s.id})" class="text-blue-400 hover:text-blue-300 px-1.5 py-1">✏️</button>
-            <button onclick="deleteStudent(${s.id}, '${esc(s.name)}')" class="text-red-400 hover:text-red-300 px-1.5 py-1">🗑️</button>
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    async function saveStudent() {
-      const name = $('stuName').value.trim();
-      if (!name) {
-        showStatus('stuStatusMsg', '⚠️ El nombre del alumno es obligatorio.', 'err');
-        return;
-      }
-
-      const payload = {
-        name: name,
-        phone: $('stuPhone').value.trim(),
-        course: $('stuCourse').value,
-        payment_status: $('stuPayStatus').value,
-        payment_amount: $('stuAmount').value ? parseFloat($('stuAmount').value) : null,
-        payment_date: $('stuDate').value || null,
-        notes: $('stuNotes').value.trim()
-      };
-
-      showStatus('stuStatusMsg', '⏳ Guardando...', 'info');
-
-      try {
-        if (!sb) throw new Error('Supabase no está configurado. Revisa tus credenciales.');
-
-        let res;
-        if (editingStudentId) {
-          res = await sb.from('students').update(payload).eq('id', editingStudentId);
-        } else {
-          res = await sb.from('students').insert([payload]);
-        }
-
-        if (res.error) throw res.error;
-
-        showStatus('stuStatusMsg', editingStudentId ? '✅ Alumno actualizado.' : '✅ Alumno registrado.', 'ok');
-        resetStudentForm();
-        await loadStudents();
-      } catch (err) {
-        showStatus('stuStatusMsg', '❌ Error: ' + err.message, 'err');
-      }
-    }
-
-    function resetStudentForm() {
-      editingStudentId = null;
-      $('stuName').value = '';
-      $('stuPhone').value = '';
-      $('stuCourse').value = 'Dibujo y Pintura Profesional';
-      $('stuPayStatus').value = 'pendiente';
-      $('stuAmount').value = '';
-      $('stuDate').value = '';
-      $('stuNotes').value = '';
-
-      $('stuFormTitle').textContent = '➕ Registrar Nuevo Alumno';
-      $('stuSaveBtn').textContent = 'Guardar Alumno';
-    }
-
-    function editStudent(id) {
-      const student = studentsList.find(s => s.id === id);
-      if (!student) return;
-
-      editingStudentId = id;
-      $('stuName').value = student.name || '';
-      $('stuPhone').value = student.phone || '';
-      $('stuCourse').value = student.course || 'Dibujo y Pintura Profesional';
-      $('stuPayStatus').value = student.payment_status || 'pendiente';
-      $('stuAmount').value = student.payment_amount || '';
-      $('stuDate').value = student.payment_date || '';
-      $('stuNotes').value = student.notes || '';
-
-      $('stuFormTitle').textContent = '✏️ Editar Alumno';
-      $('stuSaveBtn').textContent = 'Actualizar Alumno';
-    }
-
-    async function toggleStudentPay(id, newStatus) {
-      try {
-        if (sb) {
-          const { error } = await sb.from('students').update({ payment_status: newStatus }).eq('id', id);
-          if (error) throw error;
-        }
-        await loadStudents();
-      } catch (err) {
-        alert('Error actualizando pago: ' + err.message);
-      }
-    }
-
-    async function deleteStudent(id, name) {
-      if (!confirm(`¿Seguro que deseas eliminar a ${name}?`)) return;
-      try {
-        if (sb) {
-          const { error } = await sb.from('students').delete().eq('id', id);
-          if (error) throw error;
-        }
-        await loadStudents();
-      } catch (err) {
-        alert('Error eliminando alumno: ' + err.message);
-      }
-    }
-
-    function exportStudentsCSV() {
-      if (studentsList.length === 0) {
-        alert('No hay alumnos para exportar.');
-        return;
-      }
-      const headers = ['Nombre', 'Telefono', 'Curso', 'Estado Pago', 'Monto', 'Fecha Pago', 'Notas'];
-      const rows = studentsList.map(s => [
-        `"${s.name || ''}"`,
-        `"${s.phone || ''}"`,
-        `"${s.course || ''}"`,
-        `"${s.payment_status || ''}"`,
-        `"${s.payment_amount || 0}"`,
-        `"${s.payment_date || ''}"`,
-        `"${s.notes || ''}"`
-      ]);
-
-      const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement('a');
-      link.setAttribute('href', encodedUri);
-      link.setAttribute('download', `alumnos_arte_${new Date().toISOString().slice(0, 10)}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-
-    /* ============================================================
-       GALERÍA
-       ============================================================ */
-
-    async function loadPublicGallery() {
-      const grid = $('galleryGrid');
-      if (!sb) {
-        grid.innerHTML = `
-          <div class="bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden">
-            <div class="h-48 bg-neutral-800 flex items-center justify-center text-4xl">🎨</div>
-            <div class="p-4 space-y-1">
-              <h4 class="font-bold text-white">Obra de Ejemplo</h4>
-              <p class="text-xs text-neutral-400">Configura Supabase para cargar obras dinámicas.</p>
-            </div>
-          </div>
-        `;
-        return;
-      }
-
-      try {
-        const { data, error } = await sb.from('gallery').select('*').order('id', { ascending: false });
-        if (error) throw error;
-
-        if (!data || data.length === 0) {
-          grid.innerHTML = `<p class="text-neutral-500 col-span-full text-center py-8">Aún no hay obras publicadas.</p>`;
-          return;
-        }
-
-        grid.innerHTML = data.map(item => `
-          <div class="bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden hover:border-yellow-500/50 transition">
-            <img src="${esc(item.image_url)}" alt="${esc(item.title)}" class="w-full h-56 object-cover bg-neutral-800">
-            <div class="p-4 space-y-1">
-              <h4 class="font-bold text-white">${esc(item.title)}</h4>
-              <p class="text-xs text-neutral-400">${esc(item.description)}</p>
-            </div>
-          </div>
-        `).join('');
-      } catch (err) {
-        grid.innerHTML = `<p class="text-red-400 col-span-full text-center">Error al cargar galería.</p>`;
-      }
-    }
-
-    async function saveArtwork() {
-      const title = $('galTitle').value.trim();
-      const imageUrl = $('galImageUrl').value.trim();
-      const description = $('galDesc').value.trim();
-
-      if (!title || !imageUrl) {
-        showStatus('galStatusMsg', '⚠️ Título e imagen son requeridos.', 'err');
-        return;
-      }
-
-      try {
-        if (!sb) throw new Error('Supabase no está configurado.');
-        const { error } = await sb.from('gallery').insert([{ title, image_url: imageUrl, description }]);
-        if (error) throw error;
-
-        showStatus('galStatusMsg', '✅ Obra publicada con éxito.', 'ok');
-        $('galTitle').value = '';
-        $('galImageUrl').value = '';
-        $('galDesc').value = '';
-      } catch (err) {
-        showStatus('galStatusMsg', '❌ Error: ' + err.message, 'err');
-      }
-    }
-
-    /* ============================================================
-       AUTENTICACIÓN Y PESTAÑAS ADMIN
-       ============================================================ */
-
-    async function login() {
-      const email = $('loginEmail')?.value.trim();
-      const password = $('loginPassword')?.value;
-
-      if (!email || !password) {
-        showStatus('loginStatus', '⚠️ Ingresa email y contraseña.', 'err');
-        return;
-      }
-
-      showStatus('loginStatus', '⏳ Autenticando...', 'info');
-
-      if (!sb) {
-        // Modo demo local
-        showLoggedIn();
-        return;
-      }
-
-      const { error } = await sb.auth.signInWithPassword({ email, password });
-      if (error) {
-        showStatus('loginStatus', '❌ ' + error.message, 'err');
-      } else {
-        showLoggedIn();
-      }
-    }
-
-    function showLoggedIn() {
-      $('loginPanel')?.classList.add('hidden');
-      $('adminPanel')?.classList.remove('hidden');
-      loadStudents();
-    }
-
-    async function logout() {
-      if (sb) await sb.auth.signOut();
-      $('adminPanel')?.classList.add('hidden');
-      $('loginPanel')?.classList.remove('hidden');
-    }
-
-    function switchAdminTab(tabId, btn) {
-      document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('border-yellow-500', 'text-yellow-500'));
-      document.querySelectorAll('.admin-section').forEach(s => s.classList.add('hidden'));
-
-      btn.classList.add('border-yellow-500', 'text-yellow-500');
-      $(`tab-${tabId}`)?.classList.remove('hidden');
-    }
-
-    /* ============================================================
-       RADIO EN VIVO
-       ============================================================ */
-
-    $('radioGenre')?.addEventListener('change', async (e) => {
-      const genre = e.target.value;
-      if (!genre) return;
-
-      showStatus('radioStatusMsg', '⏳ Buscando emisoras...', 'info');
-
-      try {
-        const res = await fetch(`https://de1.api.radio-browser.info/json/stations/bytag/${genre}?limit=10`);
-        const stations = await res.json();
-        renderRadioList(stations);
-        showStatus('radioStatusMsg', `📻 ${stations.length} emisoras encontradas.`, 'ok');
-      } catch (err) {
-        showStatus('radioStatusMsg', '❌ No se pudieron obtener emisoras.', 'err');
-      }
-    });
-
-    function renderRadioList(stations) {
-      const list = $('radioStationsList');
-      if (!stations || stations.length === 0) {
-        list.innerHTML = '<p class="text-xs text-neutral-500">Sin emisoras disponibles.</p>';
-        return;
-      }
-
-      list.innerHTML = stations.map(st => `
-        <div class="flex items-center justify-between p-3 bg-neutral-800 rounded-lg border border-neutral-700">
-          <div>
-            <div class="font-bold text-sm text-white">${esc(st.name)}</div>
-            <div class="text-xs text-neutral-400">${esc(st.country || 'Online')}</div>
-          </div>
-          <button onclick="playRadio('${esc(st.url_resolved || st.url)}', '${esc(st.name)}')" class="bg-gold text-xs px-3 py-1.5 rounded font-semibold">
-            ▶️ Escuchar
-          </button>
-        </div>
-      `).join('');
-    }
-
-    function playRadio(url, name) {
-      const player = $('radioPlayer');
-      player.src = url;
-      player.classList.remove('hidden');
-      player.play();
-      showStatus('radioStatusMsg', `🔊 Reproduciendo: ${name}`, 'ok');
-    }
-
-    // Inicialización por defecto
-    loadPublicGallery();
-  </script>
 </body>
 </html>
+ 
