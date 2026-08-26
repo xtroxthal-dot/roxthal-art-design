@@ -2,289 +2,232 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#080809">
-<meta name="description" content="RoXThal Art Design — arte, dibujo, pintura, tatuajes, radio y formación artística en San Antonio de Padua.">
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon-192.png">
-<link rel="preconnect" href="https://lvvhpuedktdmfehvhcwk.supabase.co">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
 <title>RoXThal Art Design — Tatuajes, Arte y Formación</title>
+<meta name="description" content="RoXThal Art Design — arte, dibujo, pintura, tatuajes, radio y formación artística en San Antonio de Padua.">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--bg:#080809;--panel:#15151a;--panel2:#1e1e26;--gold:#d7b45a;--gold2:#f2da91;--text:#f5f5f5;--muted:#a0a0ab;--line:#2e2e38;--ok:#2ecc71;--err:#e74c3c;--blue:#1877f2;--radius:16px}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:radial-gradient(1200px 600px at 50% -10%,#1f1f28 0%,var(--bg) 55%);background-color:var(--bg);color:var(--text);font-family:system-ui,sans-serif;line-height:1.6}
-a{color:var(--gold2);text-decoration:none}
-button{cursor:pointer;border:0;background:none;font:inherit}
-.top{position:sticky;top:0;z-index:100;background:rgba(8,8,9,.86);border-bottom:1px solid var(--line);backdrop-filter:blur(16px)}
-.nav{max-width:1200px;margin:auto;padding:10px 14px;display:flex;gap:8px;align-items:center;overflow-x:auto}
-.brand{font-weight:900;color:var(--gold);margin-right:auto;white-space:nowrap}
-.nav button{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-weight:600;color:var(--text);white-space:nowrap}
-.nav button:hover,.nav button.active{background:var(--gold);color:#000}
-section{max-width:1200px;margin:auto;padding:56px 16px}
-.eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:3px;font-size:.72rem;font-weight:800;margin-bottom:8px;display:block}
-h2{font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:22px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:.2s}
-.card:hover{transform:translateY(-4px);border-color:#555}
-.card-img{height:210px;background:#1a1a22 center/cover no-repeat}
-.btn{display:inline-flex;justify-content:center;align-items:center;gap:8px;border-radius:12px;padding:12px 20px;font-weight:700}
-.btn-gold{background:var(--gold);color:#000}.btn-dark{background:var(--panel2);border:1px solid var(--line);color:#fff}
-.hero{min-height:78vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.hero-logo{width:min(520px,88vw);aspect-ratio:1;object-fit:contain;margin-bottom:22px}
-.hero-buttons{display:flex;gap:10px;flex-wrap:wrap;max-width:640px;width:100%}.hero-buttons>*{flex:1 1 150px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
-.about{display:grid;grid-template-columns:1.1fr.9fr;gap:32px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:30px}
-.about-img{min-height:360px;border-radius:14px;background:var(--panel2) center/cover no-repeat}
+:root{--bg:#080809;--panel:#15151a;--panel2:#1e1e26;--gold:#d7b45a;--gold2:#f2da91;--text:#f5f5f5;--muted:#a0a0ab;--line:#2e2e38;--blue:#1877f2;--green:#2ecc71;--red:#e74c3c}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;color-scheme:dark}
+body{background:radial-gradient(circle at top,#1f1f28 0%,var(--bg) 60%);background-color:var(--bg);color:var(--text);font-family:system-ui;line-height:1.6;min-height:100vh}
+button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer;border:none;background:none}
+a{color:var(--gold2);text-decoration:none}a:hover{color:#fff}
+.top{position:sticky;top:0;z-index:100;background:rgba(8,8,9,.92);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.nav{max-width:1200px;margin:auto;padding:12px 16px;display:flex;gap:8px;align-items:center;overflow-x:auto}
+.brand{font-weight:800;font-size:1.25rem;color:var(--gold);margin-right:auto;white-space:nowrap}
+.nav button{background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-weight:600;white-space:nowrap}
+.nav button:hover,.nav button.active{background:var(--gold);color:#000;border-color:var(--gold)}
+section{max-width:1200px;margin:auto;padding:60px 16px}
+.eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:3px;font-size:.75rem;font-weight:800;margin-bottom:8px;display:block}
+h2{font-size:clamp(1.8rem,4vw,2.5rem);line-height:1.2;margin-bottom:24px;font-weight:800}
+h3{color:var(--gold2);font-size:1.2rem;margin-bottom:8px}.muted{color:var(--muted);font-size:.95rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;padding:12px 20px;font-weight:700;transition:.15s}
+.btn-gold{background:var(--gold);color:#080809}.btn-dark{background:var(--panel2);color:#fff;border:1px solid var(--line)}
+.hero{min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 16px}
+.hero-logo{max-width:90vw;max-height:55vh;object-fit:contain;margin-bottom:24px}
+.hero-buttons{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;width:100%;max-width:650px}
+.hero-buttons a,.hero-buttons button{flex:1 1 140px;padding:14px 16px;border-radius:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent}
+.btn-wsp{background:#25d366;color:#fff}.btn-ig{background:linear-gradient(45deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);color:#fff}.btn-fb{background:var(--blue);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.card-body{padding:20px;flex-grow:1;display:flex;flex-direction:column;justify-content:space-between}
+.card-img{height:220px;background-color:var(--panel2);background-size:cover;background-position:center}
+.about{display:grid;grid-template-columns:1.1fr 0.9fr;gap:36px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:36px}
+.about-img{min-height:380px;border-radius:14px;background-size:cover;background-position:center;border:1px solid var(--line)}
 #galeria,#radio{display:none}#galeria.open,#radio.open{display:block}
-.viewer{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.92);padding:20px}
-.viewer.open{display:flex}.viewer img{max-width:95vw;max-height:84vh;border-radius:10px}
-.admin-wrap{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px}
-.status{padding:10px 14px;border-radius:10px;margin:12px 0;display:none}.status.show{display:block}
-.status.ok{background:rgba(46,204,113,.13);border:1px solid var(--ok);color:var(--ok)}
-.status.err{background:rgba(231,76,60,.13);border:1px solid var(--err);color:var(--err)}
-.status.info{background:rgba(24,119,242,.13);border:1px solid var(--blue);color:#7ab0ff}
-input,select,textarea{width:100%;background:#0c0c0e;border:1px solid var(--line);border-radius:10px;padding:11px 13px;color:var(--text)}
-.filebox{border:2px dashed var(--line);border-radius:12px;padding:18px;text-align:center;background:var(--bg);position:relative}
-.filebox input{position:absolute;inset:0;opacity:0;cursor:pointer}
-.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(100px);background:#1c1c22;border:1px solid var(--line);padding:12px 18px;border-radius:999px;opacity:0;transition:.35s;z-index:2000}
-.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-.offline{position:fixed;top:56px;left:0;right:0;background:var(--err);color:#fff;text-align:center;padding:6px;font-weight:700;display:none;z-index:99}.offline.show{display:block}
-.hidden{display:none!important}.empty{padding:36px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:14px}
-@media(max-width:768px){.about{grid-template-columns:1fr}}
+.image-viewer{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.92)}
+.image-viewer.open{display:flex}.image-viewer img{max-width:95vw;max-height:85vh;border-radius:8px}
+.image-viewer-close{position:absolute;top:20px;right:20px;width:48px;height:48px;border-radius:50%;background:var(--panel);border:1px solid var(--line);color:#fff;font-size:24px;display:grid;place-items:center}
+.radio-box{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px}
+.radio-station{display:grid;grid-template-columns:56px 1fr auto;gap:14px;align-items:center;padding:12px;background:var(--bg);border:1px solid var(--line);border-radius:12px;margin-bottom:10px}
+.admin-wrap{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px}
+.admin-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;border-bottom:1px solid var(--line);padding-bottom:16px}
+.admin-nav button{background:var(--bg);border:1px solid var(--line);padding:10px 16px;border-radius:10px;font-weight:600}
+.admin-nav button.active{background:var(--gold);color:#000;border-color:var(--gold)}
+.admin-section{display:none}.admin-section.active{display:block}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:20px}
+.field{display:flex;flex-direction:column;gap:6px;font-size:.9rem;font-weight:600;color:#ccc}.field.full{grid-column:1/-1}
+.filebox{border:2px dashed var(--line);border-radius:12px;padding:20px;text-align:center;background:var(--bg);cursor:pointer;position:relative}
+.filebox input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.status-box{padding:12px 16px;border-radius:10px;margin:16px 0;font-weight:600;display:none}.status-box.show{display:block}
+.status-box.ok{background:rgba(46,204,113,.15);border:1px solid var(--green);color:var(--green)}
+.status-box.err{background:rgba(231,76,60,.15);border:1px solid var(--red);color:var(--red)}
+.status-box.info{background:rgba(24,119,242,.15);border:1px solid var(--blue);color:#69a6ff}
+.badge{display:inline-block;padding:4px 10px;border-radius:99px;font-size:.75rem;font-weight:700;background:var(--panel2);color:var(--gold2);border:1px solid var(--line)}
+.hidden{display:none!important}footer{text-align:center;padding:40px 16px;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem;margin-top:40px}
+@media(max-width:768px){.about{grid-template-columns:1fr}.hero{min-height:70vh}section{padding:40px 14px}}
 </style>
 </head>
 <body>
-<div id="offlineBar" class="offline">⚠️ Sin conexión — modo offline</div>
-<div id="toast" class="toast"></div>
-
-<header class="top"><div class="nav">
-<div class="brand">RoXThal Art</div>
-<button data-go="inicio">Inicio</button>
-<button data-go="servicios">Servicios</button>
-<button id="btnGallery">🖼️ Galería</button>
-<button data-go="cursos">Cursos</button>
-<button id="btnRadio">📻 Radio</button>
-<button data-go="contacto">Contacto</button>
-<button data-go="admin" style="color:var(--gold2);border-color:var(--gold)">⚙️ Admin</button>
-</div></header>
+<header class="top"><div class="nav"><div class="brand">RoXThal Art</div>
+<button onclick="go('inicio')">Inicio</button><button onclick="go('servicios')">Servicios</button>
+<button onclick="openGallery()">🖼️ Galería</button><button onclick="go('cursos')">Cursos</button>
+<button onclick="openRadio()">📻 Radio</button><button onclick="go('contacto')">Contacto</button>
+<button onclick="go('admin')" style="border-color:var(--gold);color:var(--gold2)">⚙️ Admin</button></div></header>
 
 <section id="inicio" class="hero">
 <img class="hero-logo" data-slot-img="hero_logo" src="https://raw.githubusercontent.com/xtroxthal-dot/roxthal-art-design/main/logo-roxthal.png" alt="Logo">
 <div class="hero-buttons">
-<button class="btn btn-gold" id="heroGallery">🖼️ Ver Galería</button>
-<a class="btn" style="background:#25d366;color:#fff" href="https://wa.me/5491169633376" target="_blank">WhatsApp</a>
-<a class="btn" style="background:#1877f2;color:#fff" href="https://www.instagram.com/roxthalartdesign/" target="_blank">Instagram</a>
-</div>
-</section>
+<button class="btn btn-gold" onclick="openGallery()">🖼️ Ver Galería</button>
+<a class="btn-wsp" href="https://wa.me/5491169633376" target="_blank">📱 WhatsApp</a>
+<a class="btn-ig" href="https://www.instagram.com/roxthalartdesign/" target="_blank">📸 Instagram</a>
+<a class="btn-fb" href="https://www.facebook.com/share/14qh98ko3w2/" target="_blank">🔵 Facebook</a>
+</div></section>
 
 <section id="servicios"><span class="eyebrow">Lo que hacemos</span><h2>Arte que se transforma</h2>
 <div class="grid">
-<article class="card"><div class="card-img" data-slot-bg="srv_tatuajes" style="background-image:url('https://images.unsplash.com/photo-1611501275019-9b5c8c7b4a4a?w=800')"></div><div style="padding:16px"><h3>🎨 Tatuajes</h3><p style="color:var(--muted)">Diseños personalizados con identidad propia.</p></div></article>
-<article class="card"><div class="card-img" data-slot-bg="srv_fileteado"></div><div style="padding:16px"><h3>🖌️ Fileteado</h3><p style="color:var(--muted)">Arte tradicional argentino.</p></div></article>
-<article class="card"><div class="card-img" data-slot-bg="srv_dibujo"></div><div style="padding:16px"><h3>✏️ Dibujo y Pintura</h3><p style="color:var(--muted)">Obras por encargo.</p></div></article>
-<article class="card"><div class="card-img" data-slot-bg="srv_atelier"></div><div style="padding:16px"><h3>👨‍🎨 Atelier</h3><p style="color:var(--muted)">Espacio creativo e inclusivo.</p></div></article>
+<article class="card"><div class="card-img" data-slot-bg="srv_tatuajes" style="background-image:url('https://images.unsplash.com/photo-1611501275019-9b5c8c7b4a4a?w=800')"></div><div class="card-body"><h3>🎨 Tatuajes</h3><p class="muted">Diseños personalizados.</p></div></article>
+<article class="card"><div class="card-img" data-slot-bg="srv_fileteado"></div><div class="card-body"><h3>🖌️ Fileteado</h3><p class="muted">Arte tradicional argentino.</p></div></article>
+<article class="card"><div class="card-img" data-slot-bg="srv_dibujo"></div><div class="card-body"><h3>✏️ Dibujo y Pintura</h3><p class="muted">Obras por encargo.</p></div></article>
+<article class="card"><div class="card-img" data-slot-bg="srv_atelier"></div><div class="card-body"><h3>👨‍🎨 Atelier</h3><p class="muted">Espacio creativo.</p></div></article>
 </div></section>
 
-<section><div class="about"><div><span class="eyebrow">Identidad</span><h2>Del boceto al soporte final</h2><p>Unimos dibujo tradicional, pintura y tatuaje.</p><div style="border-left:4px solid var(--gold);padding-left:14px;margin:18px 0;font-style:italic">"El arte no es solo lo que ves, sino lo que haces sentir."</div></div><div class="about-img" data-slot-bg="about_img"></div></div></section>
+<section><div class="about"><div><span class="eyebrow">Nuestra identidad</span><h2>Del boceto al soporte final</h2><p>En <strong>RoXThal Art Design</strong> unimos dibujo, pintura y tatuaje.</p><div style="border-left:4px solid var(--gold);padding-left:16px;margin:20px 0;font-style:italic">"El arte no es solo lo que ves, sino lo que haces sentir."</div></div><div class="about-img" data-slot-bg="about_img" style="background-image:url('https://images.unsplash.com/photo-1577083288073-40892c0860a4?w=900')"></div></div></section>
 
-<section id="galeria"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:18px"><h2 style="margin:0">Galería</h2><span style="color:var(--muted)">Scroll infinito • Toca para ampliar</span></div><div id="publicGalleryGrid" class="grid"></div><div id="gallerySentinel" style="height:1px"></div></section>
+<section id="galeria"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:24px"><h2 style="margin:0">Galería</h2><span class="muted">Toca para ver en grande</span></div><div id="publicGalleryGrid" class="grid"></div></section>
 
-<section id="radio"><h2>📻 Radio</h2><div class="admin-wrap"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><select id="radioGenre"><option value="">Elegir estilo...</option><option value="rock">Rock</option><option value="metal">Metal</option><option value="jazz">Jazz</option><option value="tango">Tango</option><option value="ambient">Ambient</option></select><input id="radioSearch" placeholder="Filtrar..."></div><div id="radioStatus" class="status info show">Seleccioná un estilo</div><audio id="radioPlayer" controls style="display:none;width:100%;margin-top:10px"></audio><div id="radioStationsList" style="margin-top:12px"></div></div></section>
+<section id="cursos"><span class="eyebrow">Formación</span><h2>Cursos y Talleres</h2><div class="grid">
+<article class="card"><div class="card-img" data-slot-bg="cur_dibujo"></div><div class="card-body"><span class="badge">Jóvenes y Adultos</span><h3>🎨 Dibujo y Pintura</h3><a href="https://wa.me/5491169633376" target="_blank" class="btn btn-dark" style="margin-top:16px;width:100%">Consultar</a></div></article>
+<article class="card"><div class="card-img" data-slot-bg="cur_infantil"></div><div class="card-body"><span class="badge">Niños</span><h3>🖌️ Taller Infantil</h3><a href="https://wa.me/5491169633376" target="_blank" class="btn btn-dark" style="margin-top:16px;width:100%">Consultar</a></div></article>
+<article class="card"><div class="card-img" data-slot-bg="cur_tatuaje"></div><div class="card-body"><span class="badge">Inicial</span><h3>🖋️ Tatuaje</h3><a href="https://wa.me/5491169633376" target="_blank" class="btn btn-dark" style="margin-top:16px;width:100%">Consultar</a></div></article>
+</div></section>
 
-<section id="contacto"><h2>Contacto</h2><div class="grid"><div class="card" style="padding:20px"><h3>📍 Estudio</h3><p style="color:var(--muted)">Lisandro de la Torre 880<br>San Antonio de Padua, BA</p></div><div class="card" style="padding:20px"><h3>📱 WhatsApp</h3><a class="btn" style="background:#25d366;color:#fff" href="https://wa.me/5491169633376" target="_blank">Enviar mensaje</a></div></div></section>
+<section id="radio"><span class="eyebrow">Música</span><h2>📻 RoXThal Radio</h2><div class="radio-box"><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><select id="radioGenre"><option value="">Elegir estilo...</option><option value="rock">Rock</option><option value="metal">Metal</option><option value="jazz">Jazz</option><option value="tango">Tango</option><option value="ambient">Ambient</option></select><input id="radioSearch" placeholder="Filtrar..."></div><div id="radioStatus" class="status-box info show">Seleccioná un estilo</div><audio id="radioPlayer" controls preload="none" style="display:none;width:100%;margin:16px 0"></audio><div id="radioStationsList"></div></div></section>
 
-<section id="admin"><h2>Admin</h2><div class="admin-wrap">
-<div id="loginPanel" style="max-width:400px;margin:auto"><input id="loginEmail" placeholder="Email" type="email"><input id="loginPassword" placeholder="Contraseña" type="password" style="margin-top:8px"><button id="loginBtn" class="btn btn-gold" style="width:100%;margin-top:10px">Ingresar</button><div id="loginStatus" class="status"></div></div>
+<section id="contacto"><span class="eyebrow">Conectemos</span><h2>Contacto</h2><div class="grid">
+<div class="card" style="padding:24px"><h3>📱 WhatsApp</h3><a href="https://wa.me/5491169633376" target="_blank" class="btn btn-wsp">Enviar Mensaje</a></div>
+<div class="card" style="padding:24px"><h3>📍 Estudio</h3><p class="muted"><strong>San Antonio de Padua</strong><br>Lisandro de la Torre 880<br>Con turno previo</p></div>
+<div class="card" style="padding:24px"><h3>🌐 Redes</h3><div style="display:flex;gap:10px"><a href="https://www.instagram.com/roxthalartdesign/" target="_blank" class="btn btn-ig" style="flex:1">IG</a><a href="https://www.facebook.com/share/14qh98ko3w2/" target="_blank" class="btn btn-fb" style="flex:1">FB</a></div></div>
+</div></section>
+
+<section id="admin"><span class="eyebrow">Privado</span><h2>Administración</h2><div class="admin-wrap">
+<div id="loginPanel" style="max-width:420px;margin:auto"><h3 style="text-align:center;margin-bottom:20px">🔐 Acceso</h3><div style="display:grid;gap:16px"><label> Email <input id="loginEmail" type="email"></label><label> Contraseña <input id="loginPassword" type="password"></label></div><button class="btn btn-gold" style="width:100%;margin-top:10px" onclick="login()">Ingresar</button><div id="loginStatus" class="status-box"></div></div>
 <div id="adminPanel" class="hidden">
-<div id="siteSlotStatus" class="status"></div><div id="slotsGrid" class="grid"></div>
-<hr style="border:0;border-top:1px solid var(--line);margin:24px 0">
-<h3>Subir obra</h3>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0"><input id="galTitle" placeholder="Título"><select id="galCategory"><option value="tatuajes">Tatuajes</option><option value="pinturas">Pinturas</option><option value="dibujos">Dibujos</option><option value="fileteado">Fileteado</option></select></div>
-<label class="filebox"><span id="galFileLabel">📁 Elegí foto (se comprime auto)</span><input id="galFile" type="file" accept="image/*"><img id="galPreview" style="max-height:180px;display:none;margin:10px auto;border-radius:8px"></label>
-<div style="display:flex;gap:8px;margin-top:10px"><button id="btnUploadGallery" class="btn btn-gold">☁️ Publicar</button><button id="btnResetGallery" class="btn btn-dark">Limpiar</button></div>
-<div id="galUploadStatus" class="status"></div>
-<input id="galSearchAdmin" placeholder="🔎 Buscar obra..." style="margin-top:16px">
-<div id="adminGalleryList" style="margin-top:12px"></div>
+<div class="admin-nav"><button class="active" onclick="switchAdminTab('galeria',this)">🖼️ Galería</button><button onclick="switchAdminTab('diseno',this)">🎨 Diseño</button><button onclick="switchAdminTab('alumnos',this)">👨‍🎓 Alumnos</button><button onclick="logout()" style="margin-left:auto;color:var(--red)">🚪 Salir</button></div>
+<div id="tab-galeria" class="admin-section active"><h3>Subir obra</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0"><input id="galTitle" placeholder="Título"><select id="galCategory"><option value="tatuajes">Tatuajes</option><option value="pinturas">Pinturas</option><option value="dibujos">Dibujos</option><option value="fileteado">Fileteado</option></select></div><label class="filebox"><span id="galFileLabel">📁 Elegí foto</span><input id="galFile" type="file" accept="image/*"></label><button class="btn btn-gold" style="margin-top:12px" onclick="uploadGalleryImage()">Publicar</button><div id="galUploadStatus" class="status-box"></div><div id="adminGalleryList" style="margin-top:20px"></div></div>
+<div id="tab-diseno" class="admin-section"><div id="siteSlotStatus" class="status-box"></div><div id="slotsGrid" class="grid"></div></div>
+<div id="tab-alumnos" class="admin-section"><div id="studentsListContainer"></div></div>
 </div></div></section>
 
-<div id="imageViewer" class="viewer"><img id="imageViewerImg" src=""><button id="viewerClose" style="position:absolute;top:20px;right:20px;color:#fff;font-size:28px">✕</button><div id="imageViewerTitle" style="position:absolute;bottom:20px;left:0;right:0;text-align:center;text-shadow:0 2px 8px #000"></div></div>
+<div id="imageViewer" class="image-viewer"><button class="image-viewer-close" onclick="closeImageViewer()">✕</button><img id="imageViewerImg" src=""><div id="imageViewerTitle" style="position:absolute;bottom:20px;left:0;right:0;text-align:center"></div></div>
 
-<footer style="text-align:center;padding:30px;color:#666;border-top:1px solid var(--line)">© <span id="yearSpan"></span> RoXThal Art Design</footer>
+<footer>© <span id="yearSpan"></span> RoXThal Art Design — San Antonio de Padua</footer>
 
 <script>
-/* ===== CONFIG ===== */
-const CONFIG = {
-  URL: 'https://lvvhpuedktdmfehvhcwk.supabase.co',
-  KEY: 'sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp',
-  BUCKET: 'images',
-  SLOTS: [
-    {id:'hero_logo',name:'Logo Principal'},
-    {id:'about_img',name:'Nuestra Identidad'},
-    {id:'srv_tatuajes',name:'Servicio Tatuajes'},
-    {id:'srv_fileteado',name:'Fileteado'},
-    {id:'srv_dibujo',name:'Dibujo'},
-    {id:'srv_atelier',name:'Atelier'},
-  ],
-  PAGE: 18,
-  MAX_MB: 8,
-  MAX_W: 1400,
-  QUAL: 0.82
-};
-const $ = id => document.getElementById(id);
-const esc = s => String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-const debounce = (fn,ms=300)=>{let t;return(...a)=>{clearTimeout(t);t=setTimeout(()=>fn(...a),ms)}};
-const toast = msg => {const el=$('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2800)};
-const showStatus = (id,msg,type='info')=>{const el=$(id);if(!el)return;el.textContent=msg;el.className=`status show ${type}`; if(type==='ok') setTimeout(()=>el.className='status',4000)};
-let sb, assets={}, gallery=[], page=0, allGallery=[];
+const SUPABASE_URL='https://lvvhpuedktdmfehvhcwk.supabase.co';
+const SUPABASE_KEY='sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp';
+const BUCKET='images';
+let sb=null,galleryImages=[],studentsList=[],siteAssetsMap={};
+const SITE_SLOTS=[{id:'hero_logo',name:'Logo Principal'},{id:'about_img',name:'Nuestra Identidad'},{id:'srv_tatuajes',name:'Tatuajes'},{id:'srv_fileteado',name:'Fileteado'},{id:'srv_dibujo',name:'Dibujo'},{id:'srv_atelier',name:'Atelier'},{id:'cur_dibujo',name:'Curso Dibujo'},{id:'cur_infantil',name:'Infantil'},{id:'cur_tatuaje',name:'Tatuaje'}];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+function go(id){const el=$(id); if(el) el.scrollIntoView({behavior:'smooth'});}
+function showStatus(id,msg,type){const el=$(id); if(!el) return; el.textContent=msg; el.className=`status-box show ${type}`;}
+document.getElementById('yearSpan').textContent=new Date().getFullYear();
 
-/* Compresión real */
-async function compressImage(file){
-  if(!file.type.startsWith('image/')) return file;
-  if(file.size < 450*1024) return file;
-  const bmp = await createImageBitmap(file);
-  const scale = Math.min(1, CONFIG.MAX_W / Math.max(bmp.width,bmp.height));
-  const canvas = document.createElement('canvas');
-  canvas.width = Math.round(bmp.width*scale);
-  canvas.height = Math.round(bmp.height*scale);
-  canvas.getContext('2d').drawImage(bmp,0,0,canvas.width,canvas.height);
-  const blob = await new Promise(r=>canvas.toBlob(r,'image/jpeg',CONFIG.QUAL));
-  const newSize = (blob.size/1024).toFixed(0);
-  toast(`📦 Comprimido: ${(file.size/1024/1024).toFixed(2)}MB → ${newSize}KB`);
-  return new File([blob], file.name.replace(/\.[^.]+$/,'')+'.jpg', {type:'image/jpeg'});
-}
-
-async function initSB(){
-  let tries=0;
-  while(!window.supabase && tries<30){await new Promise(r=>setTimeout(r,120));tries++}
-  sb = window.supabase.createClient(CONFIG.URL, CONFIG.KEY);
+window.addEventListener('DOMContentLoaded', async()=>{
+  sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+  await loadSiteAssets();
   const {data:{session}} = await sb.auth.getSession();
-  if(session){$('loginPanel').classList.add('hidden');$('adminPanel').classList.remove('hidden'); showStatus('galUploadStatus','✅ Sesión admin activa','ok');}
-  await loadAssets();
-  await loadPublicGallery(true);
-  await loadAdminGallery();
-}
+  if(session) showLoggedIn();
+});
 
-async function loadAssets(){
+async function loadSiteAssets(){
   try{
-    const {data,error} = await sb.from('site_assets').select('*').order('updated_at',{ascending:false});
-    if(error) throw error;
-    const map={};
-    for(const row of data||[]){ if(!map[row.slot]) map[row.slot]=row; }
-    assets=map;
-    localStorage.setItem('roxthal_assets_v2', JSON.stringify(map));
-  }catch(e){
-    assets = JSON.parse(localStorage.getItem('roxthal_assets_v2')||'{}');
-  }
+    const {data}=await sb.from('site_assets').select('*').order('updated_at',{ascending:false});
+    const map={}; (data||[]).forEach(r=>{if(!map[r.slot]) map[r.slot]=r;});
+    siteAssetsMap=Object.keys(map).length?map:JSON.parse(localStorage.getItem('roxthal_assets_v2')||'{}');
+    if(Object.keys(map).length) localStorage.setItem('roxthal_assets_v2',JSON.stringify(map));
+  }catch(e){ siteAssetsMap=JSON.parse(localStorage.getItem('roxthal_assets_v2')||'{}'); }
   applyAssets(); renderSlots();
 }
 function applyAssets(){
-  document.querySelectorAll('[data-slot-img]').forEach(el=>{const a=assets[el.dataset.slotImg]; if(a?.url) el.src=a.url});
-  document.querySelectorAll('[data-slot-bg]').forEach(el=>{const a=assets[el.dataset.slotBg]; if(a?.url) el.style.backgroundImage=`url("${a.url}")`});
+  document.querySelectorAll('[data-slot-img]').forEach(el=>{const a=siteAssetsMap[el.dataset.slotImg]; if(a?.url) el.src=a.url;});
+  document.querySelectorAll('[data-slot-bg]').forEach(el=>{const a=siteAssetsMap[el.dataset.slotBg]; if(a?.url) el.style.backgroundImage=`url("${a.url}")`;});
 }
 function renderSlots(){
-  $('slotsGrid').innerHTML = CONFIG.SLOTS.map(s=>{
-    const cur=assets[s.id];
-    return `<div style="background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px"><div style="font-weight:700;color:var(--gold2);font-size:.9rem;margin-bottom:8px">${esc(s.name)}</div><div style="height:140px;border-radius:8px;background:${cur?.url?`url(${JSON.stringify(cur.url)}) center/contain no-repeat, #111`:'#111'};border:1px solid var(--line);display:grid;place-items:center;color:#666">${cur?.url?'':'Sin foto'}</div><input type="file" id="file_${s.id}" accept="image/*" style="display:none"><button class="btn btn-gold" style="width:100%;margin-top:8px" onclick="document.getElementById('file_${s.id}').click()">📱 Cambiar</button></div>`;
+  const g=$('slotsGrid'); if(!g) return;
+  g.innerHTML=SITE_SLOTS.map(s=>{
+    const cur=siteAssetsMap[s.id];
+    return `<div style="background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px"><div style="font-weight:700;color:var(--gold2)">${esc(s.name)}</div><div style="height:140px;border-radius:8px;background:${cur?.url?`url(${JSON.stringify(cur.url)}) center/contain no-repeat, #111`:'#111'};border:1px solid var(--line);margin:8px 0"></div><input type="file" id="file_${s.id}" accept="image/*" style="display:none"><button class="btn btn-gold" style="width:100%" onclick="document.getElementById('file_${s.id}').click()">Cambiar</button></div>`;
   }).join('');
-  CONFIG.SLOTS.forEach(s=>{
-    $(`file_${s.id}`)?.addEventListener('change', async e=>{
-      const file=e.target.files[0]; if(!file) return;
-      await uploadSlot(s.id,file);
-    });
-  });
+  SITE_SLOTS.forEach(s=>{$(`file_${s.id}`)?.addEventListener('change',e=>{const f=e.target.files[0]; if(f) uploadSlotPhoto(s.id,f);});});
 }
-async function uploadSlot(slotId,file){
-  if(file.size/1024/1024 > CONFIG.MAX_MB){toast('❌ Máx 8MB'); return;}
-  const old=assets[slotId];
+async function uploadSlotPhoto(slotId,file){
+  const old=siteAssetsMap[slotId]; const path=`site/${slotId}_${Date.now()}.jpg`;
   try{
-    showStatus('siteSlotStatus','⏳ Comprimiendo y subiendo...','info');
-    const comp = await compressImage(file);
-    const path=`site/${slotId}_${Date.now()}_${Math.random().toString(36).slice(2,7)}.jpg`;
-    const {error:upErr}=await sb.storage.from(CONFIG.BUCKET).upload(path,comp,{cacheControl:'31536000',upsert:false});
+    showStatus('siteSlotStatus','Subiendo...','info');
+    const {error:upErr}=await sb.storage.from(BUCKET).upload(path,file,{cacheControl:'31536000',upsert:false});
     if(upErr) throw upErr;
-    const {data:pub}=sb.storage.from(CONFIG.BUCKET).getPublicUrl(path);
-    const payload={slot:slotId,name:CONFIG.SLOTS.find(x=>x.id===slotId)?.name||slotId,url:pub.publicUrl,storage_path:path,updated_at:new Date().toISOString()};
+    const {data:pub}=sb.storage.from(BUCKET).getPublicUrl(path);
+    const payload={slot:slotId,name:SITE_SLOTS.find(x=>x.id===slotId)?.name||slotId,url:pub.publicUrl,storage_path:path,updated_at:new Date().toISOString()};
     const {data:upd}=await sb.from('site_assets').update(payload).eq('slot',slotId).select();
-    if(!upd||upd.length===0){await sb.from('site_assets').insert(payload);}
+    if(!upd||!upd.length) await sb.from('site_assets').insert(payload);
     const {data:ver}=await sb.from('site_assets').select('*').eq('slot',slotId).order('updated_at',{ascending:false}).limit(1);
-    assets[slotId]=ver[0]; localStorage.setItem('roxthal_assets_v2', JSON.stringify(assets));
+    siteAssetsMap[slotId]=ver[0]; localStorage.setItem('roxthal_assets_v2',JSON.stringify(siteAssetsMap));
     applyAssets(); renderSlots();
-    if(old?.storage_path) sb.storage.from(CONFIG.BUCKET).remove([old.storage_path]).catch(()=>{});
-    showStatus('siteSlotStatus','✅ Guardado permanente','ok'); toast('✅ Foto actualizada');
-  }catch(err){showStatus('siteSlotStatus','❌ '+err.message,'err');}
+    if(old?.storage_path) sb.storage.from(BUCKET).remove([old.storage_path]);
+    showStatus('siteSlotStatus','✅ Guardado','ok');
+  }catch(err){ showStatus('siteSlotStatus','❌ '+err.message,'err'); }
 }
 
-async function loadPublicGallery(reset=true){
-  if(reset){page=0;gallery=[]}
-  const from=page*CONFIG.PAGE, to=from+CONFIG.PAGE-1;
-  const {data,error}=await sb.from('images').select('*').eq('visible',true).order('created_at',{ascending:false}).range(from,to);
-  if(error){$('publicGalleryGrid').innerHTML=`<div class="empty">Error: ${esc(error.message)}</div>`;return;}
-  if(reset) gallery=data||[]; else gallery.push(...(data||[]));
-  renderGallery();
-  if((data||[]).length===CONFIG.PAGE) observeGallery();
+function openGallery(){ $('galeria').classList.add('open'); go('galeria'); loadPublicGallery(); }
+async function loadPublicGallery(){
+  const {data}=await sb.from('images').select('*').eq('visible',true).order('created_at',{ascending:false});
+  const grid=$('publicGalleryGrid');
+  if(!data||!data.length){ grid.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted)">Sin obras</div>'; return; }
+  grid.innerHTML=data.map(i=>`<article class="card" style="cursor:pointer" onclick="openImageViewer('${esc(i.url)}','${esc(i.title||'')}')"><img src="${esc(i.url)}" style="height:220px;object-fit:cover;width:100%" loading="lazy"><div style="padding:12px"><strong>${esc(i.title||'')}</strong> <span style="font-size:.7rem;color:var(--muted)">${esc(i.category||'')}</span></div></article>`).join('');
 }
-function renderGallery(){
-  if(gallery.length===0){$('publicGalleryGrid').innerHTML='<div class="empty">Aún no hay trabajos</div>';return;}
-  $('publicGalleryGrid').innerHTML=gallery.map(i=>`<article class="card" style="cursor:pointer" data-url="${esc(i.url)}" data-title="${esc(i.title||'') }"><img src="${esc(i.url)}" alt="${esc(i.title||'')}" loading="lazy" style="height:220px;object-fit:cover;width:100%"><div style="padding:12px;display:flex;justify-content:space-between"><strong style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(i.title||'Sin título')}</strong><span style="font-size:.7rem;background:#1e1e26;border:1px solid #2e2e38;padding:3px 8px;border-radius:999px">${esc(i.category||'')}</span></div></article>`).join('');
-  $('publicGalleryGrid').querySelectorAll('.card').forEach(c=>c.addEventListener('click',()=>openViewer(c.dataset.url,c.dataset.title)));
-}
-function observeGallery(){
-  const s=$('gallerySentinel'); const io=new IntersectionObserver(async e=>{if(e[0].isIntersecting){io.disconnect();page++;await loadPublicGallery(false)}},{rootMargin:'400px'}); io.observe(s);
-}
-function openViewer(url,title){$('imageViewerImg').src=url;$('imageViewerTitle').textContent=title||'';$('imageViewer').classList.add('open');document.body.style.overflow='hidden'}
-function closeViewer(){ $('imageViewer').classList.remove('open');document.body.style.overflow='';}
-
 async function loadAdminGallery(){
+  const {data:{session}} = await sb.auth.getSession(); if(!session) return;
   const {data}=await sb.from('images').select('*').order('created_at',{ascending:false});
-  allGallery=data||[]; renderAdminGallery();
+  galleryImages=data||[]; $('adminGalleryList').innerHTML=galleryImages.map(x=>`<div style="display:grid;grid-template-columns:80px 1fr auto;gap:10px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px"><img src="${esc(x.url)}" style="width:80px;height:60px;object-fit:cover;border-radius:6px"><div><strong>${esc(x.title||'')}</strong><br><small>${esc(x.category||'')}</small></div><button style="color:var(--red)" onclick="deleteGalleryImage('${x.id}','${esc(x.storage_path||'')}')">🗑️</button></div>`).join('');
 }
-function renderAdminGallery(){
-  const q=($('galSearchAdmin')?.value||'').toLowerCase();
-  const filtered=allGallery.filter(x=>(x.title||'').toLowerCase().includes(q));
-  $('adminGalleryList').innerHTML=filtered.map(x=>`<div style="display:grid;grid-template-columns:80px 1fr auto;gap:10px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px"><img src="${esc(x.url)}" style="width:80px;height:60px;object-fit:cover;border-radius:8px"><div style="min-width:0"><strong style="color:var(--gold2)">${esc(x.title||'')}</strong><div style="font-size:.8rem;color:var(--muted)">${esc(x.category||'')}</div></div><button class="btn" style="background:rgba(231,76,60,.15);color:#e74c3c;padding:6px 10px" onclick="deleteImg('${x.id}','${esc(x.storage_path||'')}')">🗑️</button></div>`).join('') || '<div class="empty">Sin obras</div>';
+async function uploadGalleryImage(){
+  const file=$('galFile').files[0]; if(!file){ showStatus('galUploadStatus','Elegí foto','err'); return; }
+  const title=$('galTitle').value||'Obra'; const cat=$('galCategory').value;
+  showStatus('galUploadStatus','Subiendo...','info');
+  const path=`obras/${cat}/${Date.now()}.jpg`;
+  const {error:upErr}=await sb.storage.from(BUCKET).upload(path,file);
+  if(upErr){ showStatus('galUploadStatus',upErr.message,'err'); return; }
+  const {data:pub}=sb.storage.from(BUCKET).getPublicUrl(path);
+  const {error:dbErr}=await sb.from('images').insert({title,category:cat,url:pub.publicUrl,storage_path:path,visible:true});
+  if(dbErr){ showStatus('galUploadStatus',dbErr.message,'err'); await sb.storage.from(BUCKET).remove([path]); return; }
+  showStatus('galUploadStatus','Publicada','ok'); $('galFile').value=''; loadPublicGallery(); loadAdminGallery();
 }
-window.deleteImg=async(id,path)=>{if(!confirm('¿Borrar?'))return; if(path) await sb.storage.from(CONFIG.BUCKET).remove([path]); await sb.from('images').delete().eq('id',id); await loadAdminGallery(); await loadPublicGallery(true); toast('Eliminado');}
+async function deleteGalleryImage(id,path){ if(!confirm('¿Borrar?')) return; if(path) await sb.storage.from(BUCKET).remove([path]); await sb.from('images').delete().eq('id',id); loadPublicGallery(); loadAdminGallery(); }
 
-/* INIT EVENTS */
-document.addEventListener('DOMContentLoaded', ()=>{
-  $('yearSpan').textContent=new Date().getFullYear();
-  initSB();
-  document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>document.getElementById(b.dataset.go).scrollIntoView({behavior:'smooth'})));
-  $('btnGallery').onclick=$('heroGallery').onclick=()=>{$('galeria').classList.add('open');$('galeria').scrollIntoView({behavior:'smooth'}); loadPublicGallery(true);};
-  $('btnRadio').onclick=()=>{$('radio').classList.add('open');$('radio').scrollIntoView({behavior:'smooth'});};
-  $('viewerClose').onclick=closeViewer; $('imageViewer').addEventListener('click',e=>{if(e.target===$('imageViewer')) closeViewer();});
-  window.addEventListener('keydown',e=>{if(e.key==='Escape') closeViewer();});
-  window.addEventListener('online',()=>{$('offlineBar').classList.remove('show');toast('✅ Online')});
-  window.addEventListener('offline',()=>{$('offlineBar').classList.add('show')});
-  $('galFile').addEventListener('change',e=>{const f=e.target.files[0]; if(!f)return; $('galFileLabel').textContent=`📷 ${f.name} (${(f.size/1024/1024).toFixed(2)}MB)`; const r=new FileReader(); r.onload=()=>{$('galPreview').src=r.result;$('galPreview').style.display='block'}; r.readAsDataURL(f);});
-  $('btnResetGallery').onclick=()=>{$('galTitle').value='';$('galFile').value='';$('galPreview').style.display='none';$('galFileLabel').textContent='📁 Elegí foto (se comprime auto)';};
-  $('galSearchAdmin').addEventListener('input', debounce(renderAdminGallery,250));
-  $('btnUploadGallery').onclick=async()=>{
-    const file=$('galFile').files[0]; if(!file){showStatus('galUploadStatus','⚠️ Elegí foto','err');return;}
-    const title=$('galTitle').value.trim()||'Obra RoXThal'; const cat=$('galCategory').value;
-    try{
-      showStatus('galUploadStatus','⏳ Comprimiendo...','info');
-      const comp=await compressImage(file);
-      const path=`obras/${cat}/${Date.now()}.jpg`;
-      const {error:upErr}=await sb.storage.from(CONFIG.BUCKET).upload(path,comp);
-      if(upErr) throw upErr;
-      const {data:pub}=sb.storage.from(CONFIG.BUCKET).getPublicUrl(path);
-      const {error:dbErr}=await sb.from('images').insert({title,category:cat,url:pub.publicUrl,storage_path:path,visible:true});
-      if(dbErr){await sb.storage.from(CONFIG.BUCKET).remove([path]); throw dbErr;}
-      showStatus('galUploadStatus','✅ Publicada','ok'); toast('✅ Obra publicada');
-      $('btnResetGallery').click(); await loadAdminGallery(); await loadPublicGallery(true);
-    }catch(err){showStatus('galUploadStatus','❌ '+err.message,'err');}
-  };
-  $('loginBtn').onclick=async()=>{
-    const email=$('loginEmail').value.trim(), pass=$('loginPassword').value;
-    if(!email||!pass){showStatus('loginStatus','Faltan datos','err');return;}
-    showStatus('loginStatus','Verificando...','info');
-    const {error}=await sb.auth.signInWithPassword({email,password:pass});
-    if(error) showStatus('loginStatus','❌ '+error.message,'err');
-    else {showStatus('loginStatus','✅ OK','ok'); $('loginPanel').classList.add('hidden');$('adminPanel').classList.remove('hidden');}
-  };
+function openImageViewer(url,title){ $('imageViewerImg').src=url; $('imageViewerTitle').textContent=title||''; $('imageViewer').classList.add('open'); }
+function closeImageViewer(){ $('imageViewer').classList.remove('open'); }
+
+async function loadStudents(){
+  const {data:{session}} = await sb.auth.getSession();
+  if(!session){ console.log('No logueado, no cargo alumnos - SEGURIDAD'); return; }
+  const {data,error}=await sb.from('students').select('*').order('created_at',{ascending:false});
+  if(error){ $('studentsListContainer').innerHTML='Error: '+esc(error.message); return; }
+  studentsList=data||[];
+  $('studentsListContainer').innerHTML=studentsList.map(s=>`<div style="border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:8px;background:var(--bg)"><strong>${esc(s.name)}</strong> - ${esc(s.course||'')} - ${s.payment_status==='pagado'?'🟢':'🔴'} $${s.payment_amount||0}</div>`).join('') || 'Sin alumnos';
+}
+function switchAdminTab(id,btn){ document.querySelectorAll('.admin-section').forEach(el=>el.classList.remove('active')); document.querySelectorAll('.admin-nav button').forEach(el=>el.classList.remove('active')); $('tab-'+id).classList.add('active'); if(btn) btn.classList.add('active'); if(id==='alumnos') loadStudents(); }
+async function login(){
+  const email=$('loginEmail').value.trim(), password=$('loginPassword').value;
+  const {error}=await sb.auth.signInWithPassword({email,password});
+  if(error){ showStatus('loginStatus',error.message,'err'); } else showLoggedIn();
+}
+function showLoggedIn(){ $('loginPanel').classList.add('hidden'); $('adminPanel').classList.remove('hidden'); loadSiteAssets(); loadAdminGallery(); loadStudents(); }
+async function logout(){ await sb.auth.signOut(); location.reload(); }
+function openRadio(){ $('radio').classList.add('open'); go('radio'); }
+$('radioGenre')?.addEventListener('change', async function(){
+  const tag=this.value; if(!tag) return;
+  showStatus('radioStatus','Buscando...','info');
+  try{
+    const res=await fetch(`https://de1.api.radio-browser.info/json/stations/bytag/${tag}?limit=30&hidebroken=true`);
+    const data=await res.json();
+    $('radioStationsList').innerHTML=data.slice(0,15).map((s,i)=>`<div class="radio-station"><div>📻</div><div><strong>${esc(s.name.slice(0,30))}</strong><br><small>${esc(s.country||'')}</small></div><button class="btn btn-gold" style="padding:6px 10px" onclick="playStation('${esc(s.url_resolved||s.url)}')">▶️</button></div>`).join('');
+    showStatus('radioStatus',`${data.length} emisoras`,'ok');
+  }catch(e){ showStatus('radioStatus','Error radio','err'); }
 });
+function playStation(url){ const p=$('radioPlayer'); p.src=url; p.style.display='block'; p.play(); }
 </script>
 </body>
 </html>
