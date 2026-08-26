@@ -5400,5 +5400,38 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
+  <script>
+/* =========================================================
+   ACTUALIZAR FOTOS NUEVAS - EVITAR CACHÉ
+   ========================================================= */
+
+(function () {
+
+  function actualizarFotos() {
+
+    document.querySelectorAll('img').forEach(function (img) {
+
+      const src = img.getAttribute('src');
+
+      if (!src) return;
+
+      if (src.includes('supabase.co/storage')) {
+
+        const separador = src.includes('?') ? '&' : '?';
+
+        img.src = src.split('&cache=')[0] +
+          separador + 'cache=' + Date.now();
+      }
+
+    });
+
+  }
+
+  window.addEventListener('load', function () {
+    setTimeout(actualizarFotos, 500);
+  });
+
+})();
+</script>
 </body>
 </html>
