@@ -5260,6 +5260,132 @@ if (
 }
 
 </script>
+<!-- =========================================================
+     LOCALIZADOR / UBICACIÓN ROXTHAL ART DESIGN
+     ========================================================= -->
 
+<style>
+  .roxthal-location {
+    width: 100%;
+    margin: 50px auto 30px;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
+
+  .roxthal-location-box {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 25px;
+    border-radius: 18px;
+    background: #111;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .roxthal-location-title {
+    margin: 0 0 10px;
+    color: #fff;
+    font-size: 28px;
+    font-weight: 700;
+  }
+
+  .roxthal-location-address {
+    margin: 0 0 20px;
+    color: #ddd;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  .roxthal-location-map {
+    width: 100%;
+    height: 420px;
+    border: 0;
+    border-radius: 14px;
+    display: block;
+    margin: 0 auto 20px;
+  }
+
+  .roxthal-location-button {
+    display: inline-block;
+    padding: 13px 24px;
+    border-radius: 10px;
+    background: #fff;
+    color: #000;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .roxthal-location-button:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+  }
+
+  @media (max-width: 600px) {
+    .roxthal-location {
+      margin-top: 35px;
+      padding: 0 10px;
+    }
+
+    .roxthal-location-box {
+      padding: 18px;
+      border-radius: 14px;
+    }
+
+    .roxthal-location-title {
+      font-size: 23px;
+    }
+
+    .roxthal-location-address {
+      font-size: 15px;
+    }
+
+    .roxthal-location-map {
+      height: 320px;
+      border-radius: 10px;
+    }
+
+    .roxthal-location-button {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+</style>
+
+<section class="roxthal-location" id="ubicacion">
+  <div class="roxthal-location-box">
+
+    <h2 class="roxthal-location-title">
+      📍 Visítanos
+    </h2>
+
+    <p class="roxthal-location-address">
+      <strong>RoXThal Art Design</strong><br>
+      Lisandro de la Torre 880<br>
+      San Antonio de Padua, Buenos Aires<br>
+      Argentina
+    </p>
+
+    <iframe
+      class="roxthal-location-map"
+      src="https://www.google.com/maps?q=Lisandro%20de%20la%20Torre%20880%2C%20San%20Antonio%20de%20Padua%2C%20Buenos%20Aires%2C%20Argentina&output=embed"
+      loading="lazy"
+      allowfullscreen
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+
+    <a
+      class="roxthal-location-button"
+      href="https://www.google.com/maps/search/?api=1&query=Lisandro%20de%20la%20Torre%20880%2C%20San%20Antonio%20de%20Padua%2C%20Buenos%20Aires%2C%20Argentina"
+      target="_blank"
+      rel="noopener noreferrer">
+      🧭 Cómo llegar
+    </a>
+
+  </div>
+</section>
 </body>
 </html>
