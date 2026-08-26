@@ -17,9 +17,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    /* ============================================================
-       VARIABLES Y RESET
-    ============================================================ */
     :root {
       --bg: #080809;
       --panel: #15151a;
@@ -674,7 +671,7 @@
       width: 100%;
       height: 160px;
       border-radius: 8px;
-      background: var(--panel) center/contain no-repeat;
+      background: var(--panel) center/cover no-repeat;
       border: 1px solid var(--line);
       position: relative;
       overflow: hidden;
@@ -740,7 +737,7 @@
     }
 
     /* ============================================================
-       UBICACIÓN (Integrado del final del HTML)
+       UBICACIÓN
     ============================================================ */
     .roxthal-location {
       width: 100%;
@@ -817,7 +814,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* --- NUEVAS ANIMACIONES Y TOASTS FLOTANTES --- */
+    /* --- TOASTS Y ANIMACIONES --- */
     .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
     .toast { padding: 14px 20px; border-radius: 12px; background: rgba(21, 21, 26, 0.95); backdrop-filter: blur(12px); border: 1px solid var(--line); color: var(--text); display: flex; align-items: center; justify-content: space-between; gap: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; min-width: 280px; max-width: 90vw; font-weight: 500; font-size: 0.95rem; }
     .toast-ok { border-left: 4px solid var(--green); }
@@ -1157,9 +1154,9 @@
         <!-- TAB: SLOTS DE DISEÑO -->
         <div id="tab-diseno" class="admin-section">
           <div style="background:rgba(215,180,90,0.1);border:1px solid var(--gold);padding:16px;border-radius:12px;margin-bottom:24px;">
-            <h4 style="color:var(--gold2);margin-bottom:6px;">✨ ¿Cómo funciona esto?</h4>
+            <h4 style="color:var(--gold2);margin-bottom:6px;">✨ Sincronización Global Cloud</h4>
             <p class="muted" style="font-size:0.9rem;margin:0;">
-              Aquí puedes cambiar las fotos fijas de la página: el logo del inicio, las portadas de los servicios, cursos, etc. Toca <strong>"📱 Cambiar Foto"</strong>, elige una imagen de tu celular y la web guardará el cambio permanentemente.
+              Al cambiar una foto aquí, se guarda automáticamente en la base de datos pública en la nube de Supabase para que <strong>todos los dispositivos y celulares del mundo</strong> vean las nuevas fotos instantáneamente.
             </p>
           </div>
           <div id="siteSlotStatus" class="status-box"></div>
@@ -1225,12 +1222,12 @@
         <!-- TAB: ESTADO DB -->
         <div id="tab-estado" class="admin-section">
           <h3>Diagnóstico del Sistema</h3>
-          <div id="systemHealthBox" class="status-box show info">Verificando conexión con Supabase...</div>
+          <div id="systemHealthBox" class="status-box show info">Verificando conexión con Supabase Cloud...</div>
           <div style="background:var(--bg);padding:20px;border-radius:12px;border:1px solid var(--line);font-family:monospace;font-size:0.9rem;line-height:1.8;">
             <p><strong>Proyecto Supabase:</strong> lvvhpuedktdmfehvhcwk</p>
-            <p><strong>Bucket de Almacenamiento:</strong> images (Carpeta raíz y /site)</p>
+            <p><strong>Bucket de Almacenamiento:</strong> images (Cloud Storage)</p>
             <p><strong>Tabla Galería:</strong> public.images</p>
-            <p><strong>Tabla Slots Diseño:</strong> public.site_assets</p>
+            <p><strong>Tabla Slots Diseño Global:</strong> public.site_assets</p>
             <p><strong>Tabla Alumnos:</strong> public.students</p>
           </div>
         </div>
@@ -1254,9 +1251,6 @@
   </footer>
 
   <script>
-    /* ============================================================
-       CONFIGURACIÓN SUPABASE Y ESTADO
-    ============================================================ */
     const SUPABASE_URL = 'https://lvvhpuedktdmfehvhcwk.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp';
     const BUCKET = 'images';
@@ -1298,13 +1292,11 @@
       toast.className = `toast toast-${type}`;
       toast.innerHTML = `<span>${msg}</span><button onclick="this.parentElement.remove()">✕</button>`;
       container.appendChild(toast);
-      // Auto-ocultar después de 5 segundos
       setTimeout(() => { if (toast.parentElement) toast.remove(); }, 5000);
     }
 
     function showStatus(elId, msg, type = 'info') {
-      showToast(msg, type); // Mostrar siempre como Notificación flotante
-      
+      showToast(msg, type);
       const el = $(elId);
       if (!el) return;
       el.textContent = msg;
@@ -1319,39 +1311,12 @@
       return '$' + Number(num || 0).toLocaleString('es-AR', { minimumFractionDigits: 0 });
     }
 
-    function safeStorageSet(key, value) {
-      try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { console.warn('Local storage error', e); }
-    }
-
-    function safeStorageGet(key) {
-      try { return JSON.parse(localStorage.getItem(key)) || null; } catch (e) { return null; }
-    }
-
-    function getLocalSiteAssets() {
-      return safeStorageGet('roxthal_site_assets_v2') || {};
-    }
-
-    function saveLocalSiteAssets() {
-      safeStorageSet('roxthal_site_assets_v2', siteAssetsMap);
-    }
-
-    function applyCacheBusterToImages() {
-      document.querySelectorAll('img').forEach(img => {
-        const src = img.getAttribute('src');
-        if (src && src.includes('supabase.co/storage')) {
-          const sep = src.includes('?') ? '&' : '?';
-          img.src = src.split('&cache=')[0] + sep + 'cache=' + Date.now();
-        }
-      });
-    }
-
     document.getElementById('yearSpan').textContent = new Date().getFullYear();
 
     /* ============================================================
-       INICIALIZACIÓN
+       INICIALIZACIÓN Y CARGA DESDE LA NUBE (SOLUCIÓN MULTI-DISPOSITIVO)
     ============================================================ */
     window.addEventListener('DOMContentLoaded', async () => {
-      // Activar animaciones de scroll (Reveal)
       document.querySelectorAll('section').forEach(sec => sec.classList.add('reveal'));
       const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
@@ -1360,38 +1325,35 @@
 
       try {
         sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        await loadSiteAssets();
         
+        // Cargar slots de diseño global desde Supabase Cloud (para todos los celulares)
+        await loadSiteAssetsFromCloud();
+
         const { data: { session } } = await sb.auth.getSession();
         if (session) {
           showLoggedIn();
         } else {
-          showStatus('systemHealthBox', 'Conectado a Supabase (Modo Público). Inicia sesión para administrar.', 'ok');
+          showStatus('systemHealthBox', 'Conectado a Supabase Cloud. Inicia sesión para administrar.', 'ok');
         }
         setupFilePreviews();
       } catch (err) {
         console.error('Error init:', err);
-        siteAssetsMap = getLocalSiteAssets();
-        applyAssetsToDOM();
-        renderAdminSlots();
+        showStatus('systemHealthBox', 'Error al conectar con la nube.', 'err');
       }
     });
 
     window.addEventListener('load', () => {
-      setTimeout(applyCacheBusterToImages, 500);
       initServiceWorker();
     });
 
     function initServiceWorker() {
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js')
-          .then(reg => console.log('Service Worker activo:', reg.scope))
-          .catch(err => console.warn('Service Worker error:', err));
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
       }
     }
 
     /* ============================================================
-       PREVISUALIZACIÓN DE IMÁGENES
+       PREVISUALIZACIÓN DE ARCHIVOS
     ============================================================ */
     function setupFilePreviews() {
       $('galFile')?.addEventListener('change', e => {
@@ -1415,66 +1377,50 @@
     }
 
     /* ============================================================
-       SLOTS DE FOTOS (CARGA Y APLICACIÓN)
+       SLOTS DE FOTOS (SINCRONIZACIÓN NUBE COMPARTIDA PARA TODOS LOS CELULARES)
     ============================================================ */
-    async function loadSiteAssets() {
+    async function loadSiteAssetsFromCloud() {
       if (!sb) return;
       
       try {
-        // SOLUCIÓN RLS: Intentar leer el archivo JSON público primero.
-        // Esto garantiza que cualquier usuario pueda ver las imágenes sin importar las políticas de seguridad de la base de datos.
-        const publicJsonUrl = sb.storage.from(BUCKET).getPublicUrl('site/settings.json').data?.publicUrl;
-        if (publicJsonUrl) {
-          const res = await fetch(publicJsonUrl + '?t=' + Date.now()); // Evitar caché
-          if (res.ok) {
-            const data = await res.json();
-            if (data && Object.keys(data).length > 0) {
-              siteAssetsMap = data;
-              saveLocalSiteAssets();
-              applyAssetsToDOM();
-              renderAdminSlots();
-              return; // Si el JSON funcionó perfectamente, no consultamos la BD.
+        // Consulta directa a la tabla cloud `site_assets` compartida
+        const { data, error } = await sb.from('site_assets').select('*');
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          siteAssetsMap = {};
+          for (const item of data) {
+            if (item && item.slot) {
+              siteAssetsMap[item.slot] = item;
             }
           }
+          applyAssetsToDOM();
+          renderAdminSlots();
         }
-      } catch (jsonErr) {
-        console.warn('No se pudo cargar JSON público, intentando BD...', jsonErr);
-      }
-
-      // Respaldo: Intentar leer de la base de datos
-      try {
-        const { data, error } = await sb.from('site_assets').select('*').order('updated_at', { ascending: false });
-        if (error) throw error;
-        
-        const cleanMap = {};
-        for (const item of (data || [])) {
-          if (item?.slot && !cleanMap[item.slot]) cleanMap[item.slot] = item;
-        }
-
-        if (Object.keys(cleanMap).length > 0) {
-          siteAssetsMap = cleanMap;
-          saveLocalSiteAssets();
-        } else {
-          siteAssetsMap = getLocalSiteAssets();
-        }
-      } catch (e) {
-        console.warn('Error site_assets:', e);
-        siteAssetsMap = getLocalSiteAssets();
-      } finally {
-        applyAssetsToDOM();
-        renderAdminSlots();
+      } catch (err) {
+        console.warn('Error cargando slots desde la nube:', err);
       }
     }
 
     function applyAssetsToDOM() {
+      const cacheBust = '?t=' + Date.now();
+      
       document.querySelectorAll('[data-slot-img]').forEach(el => {
-        const asset = siteAssetsMap[el.getAttribute('data-slot-img')];
-        if (asset?.url) el.src = asset.url;
+        const slotKey = el.getAttribute('data-slot-img');
+        const asset = siteAssetsMap[slotKey];
+        if (asset && asset.url) {
+          const cleanUrl = asset.url.split('?')[0];
+          el.src = cleanUrl + cacheBust;
+        }
       });
 
       document.querySelectorAll('[data-slot-bg]').forEach(el => {
-        const asset = siteAssetsMap[el.getAttribute('data-slot-bg')];
-        if (asset?.url) el.style.backgroundImage = `url("${asset.url}")`;
+        const slotKey = el.getAttribute('data-slot-bg');
+        const asset = siteAssetsMap[slotKey];
+        if (asset && asset.url) {
+          const cleanUrl = asset.url.split('?')[0];
+          el.style.backgroundImage = `url("${cleanUrl}${cacheBust}")`;
+        }
       });
     }
 
@@ -1482,7 +1428,8 @@
       const grid = $('slotsGrid');
       if (!grid) return;
       grid.innerHTML = SITE_SLOTS.map(slot => {
-        const bgUrl = siteAssetsMap[slot.id]?.url || '';
+        const asset = siteAssetsMap[slot.id];
+        const bgUrl = asset?.url || '';
         const bgStyle = bgUrl ? `background-image:url("${esc(bgUrl)}");` : `background-color:#111; display:grid; place-items:center; color:#666; font-size:0.8rem;`;
         return `
           <div class="slot-card">
@@ -1492,7 +1439,7 @@
             </div>
             <div>
               <input type="file" id="file_slot_${slot.id}" accept="image/*" style="display:none" onchange="uploadSlotPhoto('${slot.id}')">
-              <button class="btn btn-gold" style="width:100%;padding:10px;" onclick="document.getElementById('file_slot_${slot.id}').click()">📱 Cambiar Foto</button>
+              <button class="btn btn-gold" style="width:100%;padding:10px;" onclick="document.getElementById('file_slot_${slot.id}').click()">📱 Cambiar Foto Cloud</button>
             </div>
           </div>`;
       }).join('');
@@ -1507,52 +1454,54 @@
       let newPath = null;
 
       try {
-        showStatus('siteSlotStatus', `⏳ Subiendo nueva foto para "${slotName}"...`, 'info');
-        if (!file.type.startsWith('image/')) throw new Error('Archivo inválido.');
+        showStatus('siteSlotStatus', `⏳ Subiendo foto para "${slotName}" a la nube pública...`, 'info');
+        if (!file.type.startsWith('image/')) throw new Error('El archivo debe ser una imagen válida.');
 
         const ext = file.name.split('.').pop().toLowerCase() || 'jpg';
         newPath = `site/${slotId}_${Date.now()}_${Math.random().toString(36).substring(2, 9)}.${ext}`;
-        const oldPath = siteAssetsMap[slotId]?.storage_path;
+        const oldAsset = siteAssetsMap[slotId];
 
-        // Subir a Storage
-        const { error: upErr } = await sb.storage.from(BUCKET).upload(newPath, file, { cacheControl: '31536000', upsert: false });
+        // 1. Subir archivo al bucket de almacenamiento público
+        const { error: upErr } = await sb.storage.from(BUCKET).upload(newPath, file, { cacheControl: '3600', upsert: true });
         if (upErr) throw upErr;
 
-        // Obtener URL
-        const newUrl = sb.storage.from(BUCKET).getPublicUrl(newPath).data?.publicUrl;
-        if (!newUrl) throw new Error('No se obtuvo URL pública.');
+        // 2. Obtener la URL pública permanente
+        const { data: pubData } = sb.storage.from(BUCKET).getPublicUrl(newPath);
+        const newUrl = pubData?.publicUrl;
+        if (!newUrl) throw new Error('No se pudo generar la URL pública.');
 
-        const payload = { slot: slotId, name: slotName, url: newUrl, storage_path: newPath, updated_at: new Date().toISOString() };
+        const payload = { 
+          slot: slotId, 
+          name: slotName, 
+          url: newUrl, 
+          storage_path: newPath, 
+          updated_at: new Date().toISOString() 
+        };
 
-        // Intentar actualizar o insertar
-        let { data: resData, error: dbErr } = await sb.from('site_assets').update(payload).eq('slot', slotId).select();
-        if (dbErr) throw dbErr;
+        // 3. Actualizar o insertar registro en la tabla global `site_assets`
+        const { data: existing } = await sb.from('site_assets').select('id').eq('slot', slotId).maybeSingle();
 
-        if (!resData || resData.length === 0) {
-          const { error: insErr } = await sb.from('site_assets').insert(payload);
-          if (insErr) throw insErr;
+        let dbError = null;
+        if (existing) {
+          const { error } = await sb.from('site_assets').update(payload).eq('slot', slotId);
+          dbError = error;
+        } else {
+          const { error } = await sb.from('site_assets').insert(payload);
+          dbError = error;
         }
 
-        // Limpiar anterior si existe
-        if (oldPath && oldPath !== newPath) {
-          await sb.storage.from(BUCKET).remove([oldPath]).catch(e => console.warn(e));
+        if (dbError) throw dbError;
+
+        // 4. Borrar archivo antiguo del storage si existía para ahorrar espacio
+        if (oldAsset && oldAsset.storage_path && oldAsset.storage_path !== newPath) {
+          await sb.storage.from(BUCKET).remove([oldAsset.storage_path]).catch(() => {});
         }
 
-        siteAssetsMap[slotId] = { ...payload };
-        saveLocalSiteAssets();
-        
-        // SOLUCIÓN RLS: Guardar copia de la configuración en un JSON en el bucket público
-        try {
-          const jsonStr = JSON.stringify(siteAssetsMap);
-          const jsonBlob = new Blob([jsonStr], { type: 'application/json' });
-          await sb.storage.from(BUCKET).upload('site/settings.json', jsonBlob, { cacheControl: '0', upsert: true });
-        } catch(jsonErr) {
-          console.warn("No se pudo actualizar settings.json en el storage", jsonErr);
-        }
-
+        // 5. Actualizar estado local y aplicar a la vista
+        siteAssetsMap[slotId] = payload;
         applyAssetsToDOM();
         renderAdminSlots();
-        showStatus('siteSlotStatus', `✅ ¡Foto "${slotName}" actualizada para todos!`, 'ok');
+        showStatus('siteSlotStatus', `✅ ¡Foto "${slotName}" actualizada globalmente para todos los visitantes!`, 'ok');
 
       } catch (err) {
         if (newPath) await sb.storage.from(BUCKET).remove([newPath]).catch(() => {});
@@ -1860,7 +1809,6 @@
     });
 
     $('radioSearch')?.addEventListener('input', () => {
-      // Simple debounce de UI
       clearTimeout(window.radioDebounce);
       window.radioDebounce = setTimeout(renderStations, 300);
     });
@@ -1918,17 +1866,16 @@
       $('loginPanel').classList.add('hidden');
       $('adminPanel').classList.remove('hidden');
       showStatus('systemHealthBox', '✅ Sesión activa.', 'ok');
-      loadSiteAssets(); loadAdminGallery(); loadStudents(); renderAdminSlots();
+      loadSiteAssetsFromCloud(); loadAdminGallery(); loadStudents();
     }
 
     async function logout() {
       await sb.auth.signOut();
-      applyAssetsToDOM();
+      await loadSiteAssetsFromCloud();
       $('adminPanel').classList.add('hidden');
       $('loginPanel').classList.remove('hidden');
       $('loginPassword').value = '';
       showStatus('loginStatus', 'Sesión cerrada.', 'info');
-      await loadSiteAssets();
     }
 
     function switchAdminTab(tabId, btnEl) {
@@ -1938,7 +1885,7 @@
       if (btnEl) btnEl.classList.add('active');
     }
 
-    window.addEventListener('pageshow', async () => { if (sb) await loadSiteAssets(); });
+    window.addEventListener('pageshow', async () => { if (sb) await loadSiteAssetsFromCloud(); });
   </script>
 </body>
 </html>
