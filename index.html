@@ -817,6 +817,23 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* --- NUEVAS ANIMACIONES Y TOASTS FLOTANTES --- */
+    .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+    .toast { padding: 14px 20px; border-radius: 12px; background: rgba(21, 21, 26, 0.95); backdrop-filter: blur(12px); border: 1px solid var(--line); color: var(--text); display: flex; align-items: center; justify-content: space-between; gap: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; min-width: 280px; max-width: 90vw; font-weight: 500; font-size: 0.95rem; }
+    .toast-ok { border-left: 4px solid var(--green); }
+    .toast-err { border-left: 4px solid var(--red); }
+    .toast-info { border-left: 4px solid var(--blue); }
+    .toast button { font-size: 1.2rem; color: var(--muted); background: none; border: none; cursor: pointer; transition: color 0.2s; }
+    .toast button:hover { color: #fff; }
+    
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    @keyframes slideInRight {
+      from { transform: translateX(120%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
     /* RESPONSIVE */
     @media (max-width: 768px) {
       .about { grid-template-columns: 1fr; padding: 24px 16px; }
@@ -1228,6 +1245,9 @@
     <div id="imageViewerTitle" class="image-viewer-title"></div>
   </div>
 
+  <!-- CONTENEDOR DE TOASTS -->
+  <div id="toastContainer" class="toast-container"></div>
+
   <footer>
     <p>© <span id="yearSpan">2026</span> RoXThal Art Design — Tatuajes, Arte y Formación Artística.</p>
     <p style="margin-top:6px;font-size:0.8rem;color:#666;">San Antonio de Padua, Buenos Aires.</p>
@@ -1271,7 +1291,20 @@
       }
     }
 
+    function showToast(msg, type = 'info') {
+      const container = $('toastContainer');
+      if (!container) return;
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.innerHTML = `<span>${msg}</span><button onclick="this.parentElement.remove()">✕</button>`;
+      container.appendChild(toast);
+      // Auto-ocultar después de 5 segundos
+      setTimeout(() => { if (toast.parentElement) toast.remove(); }, 5000);
+    }
+
     function showStatus(elId, msg, type = 'info') {
+      showToast(msg, type); // Mostrar siempre como Notificación flotante
+      
       const el = $(elId);
       if (!el) return;
       el.textContent = msg;
@@ -1318,6 +1351,13 @@
        INICIALIZACIÓN
     ============================================================ */
     window.addEventListener('DOMContentLoaded', async () => {
+      // Activar animaciones de scroll (Reveal)
+      document.querySelectorAll('section').forEach(sec => sec.classList.add('reveal'));
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+      }, { threshold: 0.05 });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
       try {
         sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         await loadSiteAssets();
@@ -1379,6 +1419,29 @@
     ============================================================ */
     async function loadSiteAssets() {
       if (!sb) return;
+      
+      try {
+        // SOLUCIÓN RLS: Intentar leer el archivo JSON público primero.
+        // Esto garantiza que cualquier usuario pueda ver las imágenes sin importar las políticas de seguridad de la base de datos.
+        const publicJsonUrl = sb.storage.from(BUCKET).getPublicUrl('site/settings.json').data?.publicUrl;
+        if (publicJsonUrl) {
+          const res = await fetch(publicJsonUrl + '?t=' + Date.now()); // Evitar caché
+          if (res.ok) {
+            const data = await res.json();
+            if (data && Object.keys(data).length > 0) {
+              siteAssetsMap = data;
+              saveLocalSiteAssets();
+              applyAssetsToDOM();
+              renderAdminSlots();
+              return; // Si el JSON funcionó perfectamente, no consultamos la BD.
+            }
+          }
+        }
+      } catch (jsonErr) {
+        console.warn('No se pudo cargar JSON público, intentando BD...', jsonErr);
+      }
+
+      // Respaldo: Intentar leer de la base de datos
       try {
         const { data, error } = await sb.from('site_assets').select('*').order('updated_at', { ascending: false });
         if (error) throw error;
@@ -1477,9 +1540,19 @@
 
         siteAssetsMap[slotId] = { ...payload };
         saveLocalSiteAssets();
+        
+        // SOLUCIÓN RLS: Guardar copia de la configuración en un JSON en el bucket público
+        try {
+          const jsonStr = JSON.stringify(siteAssetsMap);
+          const jsonBlob = new Blob([jsonStr], { type: 'application/json' });
+          await sb.storage.from(BUCKET).upload('site/settings.json', jsonBlob, { cacheControl: '0', upsert: true });
+        } catch(jsonErr) {
+          console.warn("No se pudo actualizar settings.json en el storage", jsonErr);
+        }
+
         applyAssetsToDOM();
         renderAdminSlots();
-        showStatus('siteSlotStatus', `✅ ¡Foto "${slotName}" actualizada!`, 'ok');
+        showStatus('siteSlotStatus', `✅ ¡Foto "${slotName}" actualizada para todos!`, 'ok');
 
       } catch (err) {
         if (newPath) await sb.storage.from(BUCKET).remove([newPath]).catch(() => {});
