@@ -1470,6 +1470,7 @@
         const newUrl = pubData?.publicUrl;
         if (!newUrl) throw new Error('No se pudo generar la URL pública.');
 
+        // 3. Usar upsert con onConflict en la columna 'slot' para evitar duplicados de primary key
         const payload = { 
           slot: slotId, 
           name: slotName, 
@@ -1478,18 +1479,7 @@
           updated_at: new Date().toISOString() 
         };
 
-        // 3. Actualizar o insertar registro en la tabla global `site_assets`
-        const { data: existing } = await sb.from('site_assets').select('id').eq('slot', slotId).maybeSingle();
-
-        let dbError = null;
-        if (existing) {
-          const { error } = await sb.from('site_assets').update(payload).eq('slot', slotId);
-          dbError = error;
-        } else {
-          const { error } = await sb.from('site_assets').insert(payload);
-          dbError = error;
-        }
-
+        const { error: dbError } = await sb.from('site_assets').upsert(payload, { onConflict: 'slot' });
         if (dbError) throw dbError;
 
         // 4. Borrar archivo antiguo del storage si existía para ahorrar espacio
