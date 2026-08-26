@@ -1732,5 +1732,116 @@
       if (btnEl) btnEl.classList.add('active');
     }
   </script>
+  <!-- =========================================================
+     CONTADOR GLOBAL DE VISITAS
+     RoXThal Art Design
+     ========================================================= -->
+
+<div id="contador-visitas" style="
+  width:100%;
+  box-sizing:border-box;
+  padding:20px 10px;
+  margin:30px 0 0 0;
+  text-align:center;
+  background:#000000;
+  color:#ffffff;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:16px;
+  font-weight:600;
+  letter-spacing:0.3px;
+  border-top:1px solid rgba(255,255,255,0.15);
+">
+
+  👁️ Visitas totales:
+  <span id="numero-visitas">...</span>
+
+</div>
+
+<script>
+/* =========================================================
+   CONTADOR GLOBAL DE VISITAS
+   ========================================================= */
+
+(function () {
+
+  const SUPABASE_URL =
+    'https://lvvhpuedktdmfehvhcwk.supabase.co';
+
+  const SUPABASE_ANON_KEY =
+    'sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp';
+
+  const numeroVisitas =
+    document.getElementById('numero-visitas');
+
+  if (!numeroVisitas) {
+    return;
+  }
+
+  async function registrarVisita() {
+
+    try {
+
+      const respuesta = await fetch(
+        SUPABASE_URL +
+        '/rest/v1/rpc/incrementar_visita',
+        {
+          method: 'POST',
+
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization':
+              'Bearer ' + SUPABASE_ANON_KEY,
+            'Content-Type':
+              'application/json'
+          },
+
+          body: JSON.stringify({})
+        }
+      );
+
+      if (!respuesta.ok) {
+        throw new Error(
+          'Error HTTP ' + respuesta.status
+        );
+      }
+
+      const resultado =
+        await respuesta.json();
+
+      /*
+       * Supabase devuelve el número directamente
+       * porque la función retorna bigint.
+       */
+
+      const total = Number(resultado);
+
+      if (Number.isFinite(total)) {
+
+        numeroVisitas.textContent =
+          total.toLocaleString('es-AR');
+
+      } else {
+
+        numeroVisitas.textContent = '—';
+
+      }
+
+    } catch (error) {
+
+      console.error(
+        'Error en contador de visitas:',
+        error
+      );
+
+      numeroVisitas.textContent = '—';
+
+    }
+
+  }
+
+  registrarVisita();
+
+})();
+</script>
 </body>
 </html>
