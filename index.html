@@ -1314,7 +1314,7 @@
     document.getElementById('yearSpan').textContent = new Date().getFullYear();
 
     /* ============================================================
-       INICIALIZACIÓN Y CARGA DESDE LA NUBE (SOLUCIÓN MULTI-DISPOSITIVO)
+       INICIALIZACIÓN Y CARGA NUBE
     ============================================================ */
     window.addEventListener('DOMContentLoaded', async () => {
       document.querySelectorAll('section').forEach(sec => sec.classList.add('reveal'));
@@ -1326,7 +1326,6 @@
       try {
         sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
-        // Cargar slots de diseño global desde Supabase Cloud (para todos los celulares)
         await loadSiteAssetsFromCloud();
 
         const { data: { session } } = await sb.auth.getSession();
@@ -1341,16 +1340,6 @@
         showStatus('systemHealthBox', 'Error al conectar con la nube.', 'err');
       }
     });
-
-    window.addEventListener('load', () => {
-      initServiceWorker();
-    });
-
-    function initServiceWorker() {
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js').catch(() => {});
-      }
-    }
 
     /* ============================================================
        PREVISUALIZACIÓN DE ARCHIVOS
@@ -1377,13 +1366,12 @@
     }
 
     /* ============================================================
-       SLOTS DE FOTOS (SINCRONIZACIÓN NUBE COMPARTIDA PARA TODOS LOS CELULARES)
+       SLOTS DE FOTOS (CORREGIDO UPSERT Y MANEJO DE STORAGE)
     ============================================================ */
     async function loadSiteAssetsFromCloud() {
       if (!sb) return;
       
       try {
-        // Consulta directa a la tabla cloud `site_assets` compartida
         const { data, error } = await sb.from('site_assets').select('*');
         if (error) throw error;
 
@@ -1398,7 +1386,7 @@
           renderAdminSlots();
         }
       } catch (err) {
-        console.warn('Error cargando slots desde la nube:', err);
+        console.warn('Aviso cargando slots:', err);
       }
     }
 
@@ -1454,23 +1442,23 @@
       let newPath = null;
 
       try {
-        showStatus('siteSlotStatus', `⏳ Subiendo foto para "${slotName}" a la nube pública...`, 'info');
-        if (!file.type.startsWith('image/')) throw new Error('El archivo debe ser una imagen válida.');
+        showStatus('siteSlotStatus', `⏳ Subiendo foto para "${slotName}" a la nube...`, 'info');
+        if (!file.type.startsWith('image/')) throw new Error('El archivo seleccionado debe ser una imagen válida.');
 
         const ext = file.name.split('.').pop().toLowerCase() || 'jpg';
         newPath = `site/${slotId}_${Date.now()}_${Math.random().toString(36).substring(2, 9)}.${ext}`;
         const oldAsset = siteAssetsMap[slotId];
 
-        // 1. Subir archivo al bucket de almacenamiento público
+        // 1. Subir archivo al Storage
         const { error: upErr } = await sb.storage.from(BUCKET).upload(newPath, file, { cacheControl: '3600', upsert: true });
         if (upErr) throw upErr;
 
-        // 2. Obtener la URL pública permanente
+        // 2. Obtener URL pública
         const { data: pubData } = sb.storage.from(BUCKET).getPublicUrl(newPath);
         const newUrl = pubData?.publicUrl;
-        if (!newUrl) throw new Error('No se pudo generar la URL pública.');
+        if (!newUrl) throw new Error('No se pudo generar la URL pública de la imagen.');
 
-        // 3. Usar upsert con onConflict en la columna 'slot' para evitar duplicados de primary key
+        // 3. Guardar en base de datos usando upsert (reemplazando o insertando según la clave 'slot')
         const payload = { 
           slot: slotId, 
           name: slotName, 
@@ -1482,27 +1470,26 @@
         const { error: dbError } = await sb.from('site_assets').upsert(payload, { onConflict: 'slot' });
         if (dbError) throw dbError;
 
-        // 4. Borrar archivo antiguo del storage si existía para ahorrar espacio
+        // 4. Intentar borrar archivo viejo si existía para optimizar espacio
         if (oldAsset && oldAsset.storage_path && oldAsset.storage_path !== newPath) {
           await sb.storage.from(BUCKET).remove([oldAsset.storage_path]).catch(() => {});
         }
 
-        // 5. Actualizar estado local y aplicar a la vista
         siteAssetsMap[slotId] = payload;
         applyAssetsToDOM();
         renderAdminSlots();
-        showStatus('siteSlotStatus', `✅ ¡Foto "${slotName}" actualizada globalmente para todos los visitantes!`, 'ok');
+        showStatus('siteSlotStatus', `✅ ¡Foto "${slotName}" actualizada con éxito en todos los dispositivos!`, 'ok');
 
       } catch (err) {
         if (newPath) await sb.storage.from(BUCKET).remove([newPath]).catch(() => {});
-        showStatus('siteSlotStatus', `❌ Error: ${err.message}`, 'err');
+        showStatus('siteSlotStatus', `❌ No se pudo subir: ${err.message}`, 'err');
       } finally {
         if (fileInput) fileInput.value = '';
       }
     }
 
     /* ============================================================
-       GALERÍA (PÚBLICA Y ADMIN)
+       GALERÍA (CORREGIDO Y OPTIMIZADO)
     ============================================================ */
     function openGallery() {
       $('galeria')?.classList.add('open');
@@ -1517,7 +1504,7 @@
       const { data, error } = await sb.from('images').select('*').eq('visible', true).order('created_at', { ascending: false });
       
       if (error || !data || data.length === 0) {
-        grid.innerHTML = `<div class="empty-state">Aún no hay trabajos en la galería. ¡Pronto subiremos nuevas obras!</div>`;
+        grid.innerHTML = `<div class="empty-state">Aún no hay obras publicadas en la galería. ¡Pronto subiremos nuevas fotos!</div>`;
         return;
       }
 
@@ -1549,7 +1536,7 @@
       const filtered = galleryImages.filter(x => (x.title || '').toLowerCase().includes(q) || (x.category || '').toLowerCase().includes(q));
 
       if (filtered.length === 0) {
-        list.innerHTML = `<div class="empty-state">No se encontraron imágenes en la galería.</div>`;
+        list.innerHTML = `<div class="empty-state">No se encontraron imágenes registradas.</div>`;
         return;
       }
 
@@ -1578,10 +1565,10 @@
       const category = $('galCategory').value;
       const desc = $('galDesc').value.trim();
 
-      if (!file) return showStatus('galUploadStatus', '⚠️ Selecciona una foto.', 'err');
+      if (!file) return showStatus('galUploadStatus', '⚠️ Debes seleccionar una foto para la galería.', 'err');
 
       try {
-        showStatus('galUploadStatus', '⏳ Subiendo obra a la galería...', 'info');
+        showStatus('galUploadStatus', '⏳ Subiendo nueva obra...', 'info');
         const ext = file.name.split('.').pop().toLowerCase() || 'jpg';
         const path = `obras/${category}/${Date.now()}_${Math.random().toString(36).substring(2,7)}.${ext}`;
 
@@ -1601,7 +1588,7 @@
         await loadAdminGallery();
         if ($('galeria').classList.contains('open')) loadPublicGallery();
       } catch (err) {
-        showStatus('galUploadStatus', '❌ Error: ' + err.message, 'err');
+        showStatus('galUploadStatus', '❌ Error al subir: ' + err.message, 'err');
       }
     }
 
@@ -1617,7 +1604,7 @@
     }
 
     async function deleteGalleryImage(id, storagePath) {
-      if (!confirm('¿Eliminar esta obra de la galería permanentemente?')) return;
+      if (!confirm('¿Seguro que deseas eliminar esta obra permanentemente?')) return;
       if (storagePath) await sb.storage.from(BUCKET).remove([storagePath]);
       await sb.from('images').delete().eq('id', id);
       await loadAdminGallery();
@@ -1667,7 +1654,7 @@
       });
 
       if (list.length === 0) {
-        container.innerHTML = `<div class="empty-state">No se encontraron alumnos con esos filtros.</div>`;
+        container.innerHTML = `<div class="empty-state">No se encontraron alumnos con los filtros seleccionados.</div>`;
         return;
       }
 
@@ -1706,7 +1693,7 @@
 
     async function saveStudent() {
       const name = $('stuName').value.trim();
-      if (!name) return showStatus('stuStatusMsg', '⚠️ El nombre es obligatorio.', 'err');
+      if (!name) return showStatus('stuStatusMsg', '⚠️ El nombre del alumno es obligatorio.', 'err');
 
       const payload = {
         name, phone: $('stuPhone').value.trim(), course: $('stuCourse').value, payment_status: $('stuPayStatus').value,
@@ -1718,7 +1705,7 @@
         const res = editingStudentId ? await sb.from('students').update(payload).eq('id', editingStudentId) : await sb.from('students').insert(payload);
         if (res.error) throw res.error;
 
-        showStatus('stuStatusMsg', editingStudentId ? '✅ Datos actualizados.' : '✅ Alumno registrado.', 'ok');
+        showStatus('stuStatusMsg', editingStudentId ? '✅ Datos actualizados correctamente.' : '✅ Alumno registrado con éxito.', 'ok');
         resetStudentForm();
         await loadStudents();
       } catch (err) {
@@ -1753,7 +1740,7 @@
     }
 
     async function deleteStudent(id, name) {
-      if (!confirm(`¿Eliminar al alumno "${name}"?`)) return;
+      if (!confirm(`¿Estás seguro de eliminar al alumno "${name}"?`)) return;
       await sb.from('students').delete().eq('id', id);
       if (editingStudentId === id) resetStudentForm();
       await loadStudents();
@@ -1811,7 +1798,7 @@
       const filtered = stationsCache.filter(s => (s.name || '').toLowerCase().includes(q) || (s.country || '').toLowerCase().includes(q));
 
       if (filtered.length === 0) {
-        list.innerHTML = `<div class="empty-state">No hay emisoras...</div>`; return;
+        list.innerHTML = `<div class="empty-state">No hay emisoras que coincidan...</div>`; return;
       }
 
       list.innerHTML = filtered.map((s, idx) => `
@@ -1835,7 +1822,7 @@
       showStatus('radioStatus', `🔴 EN VIVO: "${s.name.trim()}"`, 'ok');
       player.src = s.url_resolved || s.url;
       player.style.display = 'block';
-      player.play().catch(() => showStatus('radioStatus', `⚠️ Falló la emisora. Probá otra.`, 'err'));
+      player.play().catch(() => showStatus('radioStatus', `⚠️ No se pudo reproducir la emisora. Probá con otra.`, 'err'));
     }
 
     /* ============================================================
@@ -1843,19 +1830,19 @@
     ============================================================ */
     async function login() {
       const email = $('loginEmail').value.trim(), password = $('loginPassword').value;
-      if (!email || !password) return showStatus('loginStatus', '⚠️ Ingresa credenciales.', 'err');
+      if (!email || !password) return showStatus('loginStatus', '⚠️ Ingresa correo y contraseña.', 'err');
       
-      showStatus('loginStatus', '⏳ Verificando...', 'info');
+      showStatus('loginStatus', '⏳ Verificando credenciales...', 'info');
       const { error } = await sb.auth.signInWithPassword({ email, password });
       
-      if (error) showStatus('loginStatus', '❌ Acceso denegado.', 'err');
+      if (error) showStatus('loginStatus', '❌ Acceso denegado. Verificá tus datos.', 'err');
       else showLoggedIn();
     }
 
     function showLoggedIn() {
       $('loginPanel').classList.add('hidden');
       $('adminPanel').classList.remove('hidden');
-      showStatus('systemHealthBox', '✅ Sesión activa.', 'ok');
+      showStatus('systemHealthBox', '✅ Sesión iniciada correctamente.', 'ok');
       loadSiteAssetsFromCloud(); loadAdminGallery(); loadStudents();
     }
 
@@ -1874,8 +1861,6 @@
       $(`tab-${tabId}`)?.classList.add('active');
       if (btnEl) btnEl.classList.add('active');
     }
-
-    window.addEventListener('pageshow', async () => { if (sb) await loadSiteAssetsFromCloud(); });
   </script>
 </body>
 </html>
