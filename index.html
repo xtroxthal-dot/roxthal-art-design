@@ -1014,7 +1014,7 @@
           <div style="background:rgba(215,180,90,0.1);border:1px solid var(--gold);padding:16px;border-radius:12px;margin-bottom:24px;">
             <h4 style="color:var(--gold2);margin-bottom:6px;">✨ Sincronización Global Cloud</h4>
             <p class="muted" style="font-size:0.9rem;margin:0;">
-              Al cambiar una foto aquí, se guarda automáticamente en la base de datos pública en la nube de Supabase para que <strong>todos los dispositivos y celulares del mundo</strong> vean las nuevas fotos instantáneamente.
+              Al cambiar una foto aquí, se guarda automáticamente en la base de datos pública en la nube de Supabase para que <strong>todos los dispositivos y celulares del mundo</strong> vean las nuevas fotos instantáneamente sin problemas de caché.
             </p>
           </div>
           <div id="siteSlotStatus" class="status-box"></div>
@@ -1172,7 +1172,7 @@
     document.getElementById('yearSpan').textContent = new Date().getFullYear();
 
     /* ============================================================
-       INICIALIZACIÓN Y CARGA NUBE
+       INICIALIZACIÓN Y CARGA NUBE Y REALTIME
     ============================================================ */
     window.addEventListener('DOMContentLoaded', async () => {
       document.querySelectorAll('section').forEach(sec => sec.classList.add('reveal'));
@@ -1187,11 +1187,21 @@
         await loadSiteAssetsFromCloud();
         loadPublicGallery();
 
+        sb.channel('public:site_assets')
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'site_assets' }, payload => {
+            if (payload && payload.new && payload.new.slot) {
+              siteAssetsMap[payload.new.slot] = payload.new;
+              applyAssetsToDOM();
+              renderAdminSlots();
+            }
+          })
+          .subscribe();
+
         const { data: { session } } = await sb.auth.getSession();
         if (session) {
           showLoggedIn();
         } else {
-          showStatus('systemHealthBox', 'Conectado a Supabase Cloud. Inicia sesión para administrar.', 'ok');
+          showStatus('systemHealthBox', 'Conectado a Supabase Cloud con Sincronización en Tiempo Real.', 'ok');
         }
         setupFilePreviews();
       } catch (err) {
@@ -1225,7 +1235,7 @@
     }
 
     /* ============================================================
-       SLOTS DE DISEÑO
+       SLOTS DE DISEÑO CON ANTICACHÉ ROBUSTO
     ============================================================ */
     async function loadSiteAssetsFromCloud() {
       if (!sb) return;
@@ -1250,14 +1260,15 @@
     }
 
     function applyAssetsToDOM() {
-      const cacheBust = '?t=' + Date.now();
+      // Usamos tanto la fecha de actualización como un token aleatorio único por renderizado para evitar cualquier caché agresiva del navegador o Progressive Web App.
       
       document.querySelectorAll('[data-slot-img]').forEach(el => {
         const slotKey = el.getAttribute('data-slot-img');
         const asset = siteAssetsMap[slotKey];
         if (asset && asset.url) {
           const cleanUrl = asset.url.split('?')[0];
-          el.src = cleanUrl + cacheBust;
+          const timeVersion = asset.updated_at ? new Date(asset.updated_at).getTime() : Date.now();
+          el.src = `${cleanUrl}?v=${timeVersion}_${Math.random().toString(36).substring(2,7)}`;
         }
       });
 
@@ -1266,7 +1277,8 @@
         const asset = siteAssetsMap[slotKey];
         if (asset && asset.url) {
           const cleanUrl = asset.url.split('?')[0];
-          el.style.backgroundImage = `url("${cleanUrl}${cacheBust}")`;
+          const timeVersion = asset.updated_at ? new Date(asset.updated_at).getTime() : Date.now();
+          el.style.backgroundImage = `url("${cleanUrl}?v=${timeVersion}_${Math.random().toString(36).substring(2,7)}")`;
         }
       });
     }
@@ -1276,7 +1288,8 @@
       if (!grid) return;
       grid.innerHTML = SITE_SLOTS.map(slot => {
         const asset = siteAssetsMap[slot.id];
-        const bgUrl = asset?.url ? asset.url.split('?')[0] + '?t=' + Date.now() : '';
+        const timeVersion = asset?.updated_at ? new Date(asset.updated_at).getTime() : Date.now();
+        const bgUrl = asset?.url ? asset.url.split('?')[0] + `?v=${timeVersion}_${Math.random().toString(36).substring(2,7)}` : '';
         const bgStyle = bgUrl ? `background-image: url('${bgUrl}');` : '';
         return `
           <div class="slot-card">
@@ -1310,7 +1323,7 @@
         newPath = `site/${slotId}_${Date.now()}_${Math.random().toString(36).substring(2, 9)}.${ext}`;
         const oldAsset = siteAssetsMap[slotId];
 
-        const { error: upErr } = await sb.storage.from(BUCKET).upload(newPath, file, { cacheControl: '3600', upsert: true });
+        const { error: upErr } = await sb.storage.from(BUCKET).upload(newPath, file, { cacheControl: '0', upsert: true });
         if (upErr) throw upErr;
 
         const { data: pubData } = sb.storage.from(BUCKET).getPublicUrl(newPath);
@@ -1335,7 +1348,7 @@
         siteAssetsMap[slotId] = payload;
         applyAssetsToDOM();
         renderAdminSlots();
-        showStatus('siteSlotStatus', `✅ ¡Foto "${slotName}" actualizada con éxito en todos los dispositivos!`, 'ok');
+        showStatus('siteSlotStatus', `✅ ¡Foto "${slotName}" actualizada con éxito en todos los celulares del mundo!`, 'ok');
 
       } catch (err) {
         if (newPath) await sb.storage.from(BUCKET).remove([newPath]).catch(() => {});
@@ -1367,7 +1380,7 @@
 
       grid.innerHTML = data.map(item => `
         <article class="card gallery-card" onclick="openImageViewer('${esc(item.url)}', '${esc(item.title || 'Obra RoXThal')}')">
-          <img src="${esc(item.url)}" alt="${esc(item.title)}" loading="lazy">
+          <img src="${esc(item.url)}?v=${Date.now()}" alt="${esc(item.title)}" loading="lazy">
           <div class="card-body" style="padding:14px;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <h3 style="margin:0; font-size:1.05rem;">${esc(item.title || 'Sin título')}</h3>
@@ -1399,7 +1412,7 @@
 
       list.innerHTML = filtered.map(x => `
         <div class="student-item" style="display:grid; grid-template-columns:100px 1fr auto; gap:16px; align-items:center;">
-          <img src="${esc(x.url)}" alt="" style="width:100px; height:80px; object-fit:cover; border-radius:8px; background:#000;">
+          <img src="${esc(x.url)}?v=${Date.now()}" alt="" style="width:100px; height:80px; object-fit:cover; border-radius:8px; background:#000;">
           <div style="min-width:0;">
             <div style="display:flex; gap:8px; align-items:center;">
               <h4 style="color:var(--gold2); margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${esc(x.title || 'Sin título')}</h4>
@@ -1429,7 +1442,7 @@
         const ext = file.name.split('.').pop().toLowerCase() || 'jpg';
         const path = `obras/${category}/${Date.now()}_${Math.random().toString(36).substring(2,7)}.${ext}`;
 
-        const { error: upErr } = await sb.storage.from(BUCKET).upload(path, file, { cacheControl: '31536000' });
+        const { error: upErr } = await sb.storage.from(BUCKET).upload(path, file, { cacheControl: '0' });
         if (upErr) throw upErr;
 
         const { data: pub } = sb.storage.from(BUCKET).getPublicUrl(path);
