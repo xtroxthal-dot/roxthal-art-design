@@ -5798,6 +5798,267 @@ document.addEventListener('DOMContentLoaded', function() {
 })();
 </script>
   <script>
+<!-- =========================================================
+     ROXTHAL ART DESIGN
+     MÓDULO TRABAJOS DE ALUMNOS Y TALLERES
+     ========================================================= -->
 
+<style>
+#roxthal-alumnos-modulo-nuevo{
+  display:block !important;
+  width:100%;
+  margin:30px auto;
+  padding:0 10px;
+  position:relative;
+  z-index:9999;
+}
+
+#roxthal-alumnos-boton-nuevo{
+  display:block !important;
+  width:100%;
+  min-height:60px;
+  padding:18px 12px;
+  border:2px solid #555;
+  border-radius:16px;
+  background:#111 !important;
+  color:#fff !important;
+  font-size:17px;
+  font-weight:bold;
+  text-align:center;
+  cursor:pointer;
+}
+
+#roxthal-alumnos-ventana-nueva{
+  display:none;
+  margin-top:15px;
+  padding:18px;
+  border-radius:18px;
+  background:#111;
+  color:#fff;
+  border:1px solid #444;
+}
+
+#roxthal-alumnos-ventana-nueva.abierta{
+  display:block !important;
+}
+
+.roxthal-alumnos-titulo-nuevo{
+  text-align:center;
+  font-size:24px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.roxthal-alumnos-texto-nuevo{
+  text-align:center;
+  color:#bbb;
+  margin-bottom:20px;
+}
+
+#roxthal-alumnos-cerrar-nuevo{
+  width:100%;
+  padding:12px;
+  margin-top:20px;
+  border:1px solid #555;
+  border-radius:10px;
+  background:#222;
+  color:#fff;
+  font-weight:bold;
+}
+
+#roxthal-alumnos-admin-nuevo{
+  width:100%;
+  padding:12px;
+  margin-bottom:20px;
+  border-radius:10px;
+  background:#222;
+  color:#fff;
+  border:1px solid #444;
+}
+
+#roxthal-alumnos-lista-nueva{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+}
+
+.roxthal-alumno-item-nuevo{
+  overflow:hidden;
+  border-radius:14px;
+  background:#1d1d1d;
+  border:1px solid #333;
+}
+
+.roxthal-alumno-item-nuevo img,
+.roxthal-alumno-item-nuevo video{
+  display:block;
+  width:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  background:#000;
+}
+
+.roxthal-alumno-info-nuevo{
+  padding:12px;
+}
+
+.roxthal-alumno-info-nuevo h3{
+  margin:0 0 6px;
+}
+
+.roxthal-alumno-info-nuevo p{
+  margin:0;
+  color:#ccc;
+}
+</style>
+
+
+<div id="roxthal-alumnos-modulo-nuevo">
+
+  <button
+    id="roxthal-alumnos-boton-nuevo"
+    type="button">
+
+    📸 TRABAJOS DE NUESTROS ALUMNOS Y TALLERES
+
+  </button>
+
+
+  <div id="roxthal-alumnos-ventana-nueva">
+
+    <div class="roxthal-alumnos-titulo-nuevo">
+      🎨 Trabajos de nuestros alumnos
+    </div>
+
+    <div class="roxthal-alumnos-texto-nuevo">
+      Fotos y videos de nuestros trabajos y talleres
+    </div>
+
+
+    <div id="roxthal-alumnos-admin-nuevo">
+
+      🔐 <strong>Administrador</strong>
+
+      <br><br>
+
+      <input
+        id="roxthal-alumnos-clave-nueva"
+        type="password"
+        placeholder="Contraseña"
+        style="
+          width:100%;
+          padding:12px;
+          border-radius:8px;
+          border:1px solid #555;
+          background:#111;
+          color:#fff;
+        ">
+
+      <br><br>
+
+      <button
+        id="roxthal-alumnos-entrar-nuevo"
+        type="button"
+        style="
+          width:100%;
+          padding:12px;
+          border:0;
+          border-radius:8px;
+          background:#fff;
+          color:#111;
+          font-weight:bold;
+        ">
+
+        ENTRAR
+
+      </button>
+
+    </div>
+
+
+    <div
+      id="roxthal-alumnos-lista-nueva">
+
+      <div
+        style="
+          grid-column:1/-1;
+          text-align:center;
+          padding:20px;
+          color:#aaa;
+        ">
+
+        Próximamente aquí aparecerán
+        las fotos y videos de nuestros alumnos.
+
+      </div>
+
+    </div>
+
+
+    <button
+      id="roxthal-alumnos-cerrar-nuevo"
+      type="button">
+
+      ✕ CERRAR
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+(function(){
+
+  const boton =
+    document.getElementById(
+      "roxthal-alumnos-boton-nuevo"
+    );
+
+  const ventana =
+    document.getElementById(
+      "roxthal-alumnos-ventana-nueva"
+    );
+
+  const cerrar =
+    document.getElementById(
+      "roxthal-alumnos-cerrar-nuevo"
+    );
+
+  if(!boton || !ventana){
+    return;
+  }
+
+  boton.addEventListener(
+    "click",
+    function(){
+
+      ventana.classList.toggle(
+        "abierta"
+      );
+
+    }
+  );
+
+  cerrar.addEventListener(
+    "click",
+    function(){
+
+      ventana.classList.remove(
+        "abierta"
+      );
+
+    }
+  );
+
+})();
+
+</script>
+
+<!-- =========================================================
+     FIN MÓDULO
+     ========================================================= -->
 </body>
 </html>
