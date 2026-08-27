@@ -8082,5 +8082,1563 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- ============================================================
      FIN MÓDULO ALUMNOS Y TALLERES
      ============================================================ -->
+  <!-- =========================================================
+     ROXTHAL ART DESIGN
+     GALERÍA DE ALUMNOS Y TALLERES
+     Fotos + Videos / Administración privada
+     ========================================================= -->
+
+<section id="roxthal-media-module">
+
+  <div class="rox-media-header">
+    <div class="rox-media-icon">🎨</div>
+    <h2>Trabajos y Talleres</h2>
+    <p>Conocé los trabajos de nuestros alumnos y lo que hacemos en nuestros talleres.</p>
+  </div>
+
+  <div class="rox-media-tabs">
+    <button class="rox-media-tab active" data-cat="todos">
+      Todo
+    </button>
+
+    <button class="rox-media-tab" data-cat="alumnos">
+      👨‍🎨 Alumnos
+    </button>
+
+    <button class="rox-media-tab" data-cat="talleres">
+      🎨 Talleres
+    </button>
+  </div>
+
+  <div id="rox-media-loading">
+    Cargando galería...
+  </div>
+
+  <div id="rox-media-gallery"></div>
+
+  <div id="rox-media-empty" style="display:none;">
+    <div>📷</div>
+    <p>Todavía no hay publicaciones.</p>
+  </div>
+
+  <!-- BOTÓN ADMINISTRADOR -->
+  <button id="rox-media-admin-btn" type="button">
+    🔐 Administrar galería
+  </button>
+
+  <!-- PANEL ADMINISTRADOR -->
+  <div id="rox-media-admin" style="display:none;">
+
+    <div class="rox-admin-box">
+
+      <button id="rox-media-close-admin" type="button">
+        ✕
+      </button>
+
+      <h3>🔐 Administración</h3>
+
+      <!-- LOGIN -->
+      <div id="rox-media-login">
+
+        <p class="rox-admin-info">
+          Acceso exclusivo del administrador.
+        </p>
+
+        <input
+          type="email"
+          id="rox-media-email"
+          placeholder="Correo de administrador"
+          autocomplete="email"
+        >
+
+        <input
+          type="password"
+          id="rox-media-password"
+          placeholder="Contraseña"
+          autocomplete="current-password"
+        >
+
+        <button id="rox-media-login-btn" type="button">
+          🔑 Ingresar
+        </button>
+
+        <div id="rox-media-login-message"></div>
+
+      </div>
+
+      <!-- ADMIN LOGUEADO -->
+      <div id="rox-media-dashboard" style="display:none;">
+
+        <div class="rox-admin-user">
+          👤 Administrador:
+          <strong id="rox-media-admin-email"></strong>
+        </div>
+
+        <h4>📤 Nueva publicación</h4>
+
+        <label>Título</label>
+
+        <input
+          type="text"
+          id="rox-media-title"
+          placeholder="Ej.: Trabajo de Juan"
+        >
+
+        <label>Descripción</label>
+
+        <textarea
+          id="rox-media-description"
+          placeholder="Descripción del trabajo o taller..."
+        ></textarea>
+
+        <label>Categoría</label>
+
+        <select id="rox-media-category">
+          <option value="alumnos">
+            👨‍🎨 Trabajos de alumnos
+          </option>
+
+          <option value="talleres">
+            🎨 Talleres
+          </option>
+        </select>
+
+        <label>Foto o video</label>
+
+        <input
+          type="file"
+          id="rox-media-file"
+          accept="image/*,video/*"
+        >
+
+        <div id="rox-media-preview"></div>
+
+        <button id="rox-media-upload-btn" type="button">
+          📤 Publicar
+        </button>
+
+        <div id="rox-media-upload-message"></div>
+
+        <hr>
+
+        <h4>🗑️ Administrar publicaciones</h4>
+
+        <div id="rox-media-admin-list"></div>
+
+        <button id="rox-media-logout" type="button">
+          🚪 Cerrar sesión
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<style>
+
+#roxthal-media-module {
+  width:100%;
+  max-width:1200px;
+  margin:50px auto;
+  padding:25px 15px;
+  box-sizing:border-box;
+  font-family:inherit;
+}
+
+.rox-media-header {
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.rox-media-icon {
+  font-size:45px;
+}
+
+.rox-media-header h2 {
+  margin:8px 0;
+  font-size:32px;
+}
+
+.rox-media-header p {
+  opacity:.8;
+  margin:0 auto;
+  max-width:650px;
+}
+
+.rox-media-tabs {
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:25px 0;
+}
+
+.rox-media-tab {
+  border:1px solid rgba(128,128,128,.4);
+  background:transparent;
+  padding:11px 18px;
+  border-radius:25px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.rox-media-tab.active {
+  background:#000;
+  color:#fff;
+}
+
+#rox-media-gallery {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:18px;
+}
+
+.rox-media-card {
+  border-radius:15px;
+  overflow:hidden;
+  background:rgba(128,128,128,.10);
+  box-shadow:0 4px 18px rgba(0,0,0,.12);
+}
+
+.rox-media-card-media {
+  width:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  display:block;
+  background:#111;
+}
+
+.rox-media-card-content {
+  padding:14px;
+}
+
+.rox-media-card-content h3 {
+  margin:0 0 7px;
+}
+
+.rox-media-card-content p {
+  margin:0;
+  opacity:.75;
+  font-size:14px;
+}
+
+.rox-media-date {
+  margin-top:10px;
+  font-size:12px;
+  opacity:.55;
+}
+
+#rox-media-loading,
+#rox-media-empty {
+  text-align:center;
+  padding:35px;
+}
+
+#rox-media-empty div {
+  font-size:45px;
+}
+
+#rox-media-admin-btn {
+  display:block;
+  margin:35px auto 0;
+  padding:12px 20px;
+  border:1px solid #777;
+  border-radius:25px;
+  background:transparent;
+  cursor:pointer;
+}
+
+#rox-media-admin {
+  position:fixed;
+  inset:0;
+  z-index:999999;
+  background:rgba(0,0,0,.75);
+  padding:20px;
+  overflow-y:auto;
+}
+
+.rox-admin-box {
+  position:relative;
+  width:100%;
+  max-width:600px;
+  margin:30px auto;
+  padding:25px;
+  box-sizing:border-box;
+  background:#fff;
+  color:#111;
+  border-radius:18px;
+  box-shadow:0 15px 50px rgba(0,0,0,.4);
+}
+
+.rox-admin-box h3 {
+  margin-top:0;
+}
+
+#rox-media-close-admin {
+  position:absolute;
+  right:15px;
+  top:15px;
+  border:0;
+  background:transparent;
+  font-size:22px;
+  cursor:pointer;
+}
+
+.rox-admin-box input,
+.rox-admin-box textarea,
+.rox-admin-box select {
+  width:100%;
+  box-sizing:border-box;
+  margin:7px 0 15px;
+  padding:12px;
+  border:1px solid #ccc;
+  border-radius:9px;
+  font-size:15px;
+}
+
+.rox-admin-box textarea {
+  min-height:90px;
+  resize:vertical;
+}
+
+.rox-admin-box label {
+  display:block;
+  font-weight:bold;
+  font-size:14px;
+}
+
+.rox-admin-box button {
+  cursor:pointer;
+}
+
+#rox-media-login-btn,
+#rox-media-upload-btn,
+#rox-media-logout {
+  width:100%;
+  padding:13px;
+  border:0;
+  border-radius:10px;
+  background:#111;
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+#rox-media-upload-btn {
+  margin-top:5px;
+}
+
+#rox-media-logout {
+  margin-top:20px;
+  background:#777;
+}
+
+.rox-admin-info {
+  background:#f1f1f1;
+  padding:12px;
+  border-radius:8px;
+  font-size:14px;
+}
+
+#rox-media-preview {
+  margin:10px 0;
+}
+
+#rox-media-preview img,
+#rox-media-preview video {
+  width:100%;
+  max-height:300px;
+  object-fit:contain;
+  border-radius:10px;
+  background:#111;
+}
+
+.rox-admin-item {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 0;
+  border-bottom:1px solid #ddd;
+}
+
+.rox-admin-thumb {
+  width:65px;
+  height:65px;
+  object-fit:cover;
+  border-radius:8px;
+  background:#111;
+  flex-shrink:0;
+}
+
+.rox-admin-item-info {
+  flex:1;
+  min-width:0;
+}
+
+.rox-admin-item-info strong {
+  display:block;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.rox-delete-btn {
+  border:0;
+  background:#d22;
+  color:#fff;
+  padding:8px 10px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+#rox-media-login-message,
+#rox-media-upload-message {
+  margin-top:12px;
+  font-size:14px;
+}
+
+@media(max-width:600px) {
+
+  #rox-media-gallery {
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+  }
+
+  .rox-media-card-content {
+    padding:10px;
+  }
+
+  .rox-media-card-content h3 {
+    font-size:15px;
+  }
+
+  .rox-media-header h2 {
+    font-size:25px;
+  }
+
+  .rox-admin-box {
+    margin:10px auto;
+    padding:20px;
+  }
+
+}
+
+</style>
+
+
+<script>
+
+(function () {
+
+  "use strict";
+
+  /* =====================================================
+     CONFIGURACIÓN SUPABASE
+     ===================================================== */
+
+  const ROX_SUPABASE_URL =
+    "https://lvvhpuedktdmfehvhcwk.supabase.co";
+
+  const ROX_SUPABASE_KEY =
+    "sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp";
+
+  const ROX_ADMIN_EMAIL =
+    "xtroxthal@gmail.com";
+
+  const ROX_BUCKET =
+    "roxthal-talleres";
+
+  const ROX_TABLE =
+    "roxthal_talleres_media";
+
+
+  /* =====================================================
+     VARIABLES
+     ===================================================== */
+
+  let roxClient = null;
+  let roxAllMedia = [];
+  let roxCurrentCategory = "todos";
+
+
+  /* =====================================================
+     CARGAR SUPABASE JS
+     ===================================================== */
+
+  function roxLoadSupabase() {
+
+    return new Promise(function(resolve, reject) {
+
+      if (
+        window.supabase &&
+        typeof window.supabase.createClient === "function"
+      ) {
+        resolve();
+        return;
+      }
+
+      const script = document.createElement("script");
+
+      script.src =
+        "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+
+      script.onload = function() {
+        resolve();
+      };
+
+      script.onerror = function() {
+        reject(
+          new Error("No se pudo cargar Supabase.")
+        );
+      };
+
+      document.head.appendChild(script);
+
+    });
+
+  }
+
+
+  /* =====================================================
+     INICIAR
+     ===================================================== */
+
+  async function roxInit() {
+
+    try {
+
+      await roxLoadSupabase();
+
+      roxClient =
+        window.supabase.createClient(
+          ROX_SUPABASE_URL,
+          ROX_SUPABASE_KEY
+        );
+
+      await roxLoadGallery();
+
+      await roxCheckSession();
+
+    } catch(error) {
+
+      console.error(error);
+
+      document.getElementById(
+        "rox-media-loading"
+      ).textContent =
+        "No se pudo cargar la galería.";
+
+    }
+
+  }
+
+
+  /* =====================================================
+     CARGAR GALERÍA
+     ===================================================== */
+
+  async function roxLoadGallery() {
+
+    const loading =
+      document.getElementById(
+        "rox-media-loading"
+      );
+
+    loading.style.display = "block";
+
+    const result =
+      await roxClient
+        .from(ROX_TABLE)
+        .select("*")
+        .order(
+          "created_at",
+          {
+            ascending:false
+          }
+        );
+
+    if (result.error) {
+
+      console.error(result.error);
+
+      loading.textContent =
+        "No se pudo cargar la galería.";
+
+      return;
+
+    }
+
+    roxAllMedia =
+      result.data || [];
+
+    loading.style.display = "none";
+
+    roxRenderGallery();
+
+  }
+
+
+  /* =====================================================
+     MOSTRAR GALERÍA
+     ===================================================== */
+
+  function roxRenderGallery() {
+
+    const gallery =
+      document.getElementById(
+        "rox-media-gallery"
+      );
+
+    const empty =
+      document.getElementById(
+        "rox-media-empty"
+      );
+
+    gallery.innerHTML = "";
+
+    let list =
+      roxAllMedia.filter(function(item) {
+
+        if (
+          roxCurrentCategory === "todos"
+        ) {
+          return true;
+        }
+
+        return (
+          item.categoria ===
+          roxCurrentCategory
+        );
+
+      });
+
+    if (!list.length) {
+
+      empty.style.display = "block";
+
+      return;
+
+    }
+
+    empty.style.display = "none";
+
+
+    list.forEach(function(item) {
+
+      const card =
+        document.createElement("article");
+
+      card.className =
+        "rox-media-card";
+
+
+      let mediaHTML = "";
+
+      if (item.tipo === "video") {
+
+        mediaHTML =
+          '<video class="rox-media-card-media" ' +
+          'controls preload="metadata">' +
+          '<source src="' +
+          escapeHTML(item.url) +
+          '">' +
+          '</video>';
+
+      } else {
+
+        mediaHTML =
+          '<img class="rox-media-card-media" ' +
+          'src="' +
+          escapeHTML(item.url) +
+          '" loading="lazy" alt="' +
+          escapeHTML(item.titulo || "") +
+          '">';
+
+      }
+
+
+      card.innerHTML =
+        mediaHTML +
+
+        '<div class="rox-media-card-content">' +
+
+        '<h3>' +
+        escapeHTML(
+          item.titulo || "RoXThal Art Design"
+        ) +
+        '</h3>' +
+
+        '<p>' +
+        escapeHTML(
+          item.descripcion || ""
+        ) +
+        '</p>' +
+
+        '<div class="rox-media-date">' +
+        formatDate(item.created_at) +
+        '</div>' +
+
+        '</div>';
+
+
+      gallery.appendChild(card);
+
+    });
+
+  }
+
+
+  /* =====================================================
+     FILTROS
+     ===================================================== */
+
+  document
+    .querySelectorAll(".rox-media-tab")
+    .forEach(function(button) {
+
+      button.addEventListener(
+        "click",
+        function() {
+
+          document
+            .querySelectorAll(
+              ".rox-media-tab"
+            )
+            .forEach(function(btn) {
+              btn.classList.remove("active");
+            });
+
+          button.classList.add("active");
+
+          roxCurrentCategory =
+            button.dataset.cat;
+
+          roxRenderGallery();
+
+        }
+      );
+
+    });
+
+
+  /* =====================================================
+     ABRIR ADMINISTRADOR
+     ===================================================== */
+
+  document
+    .getElementById("rox-media-admin-btn")
+    .addEventListener(
+      "click",
+      function() {
+
+        document.getElementById(
+          "rox-media-admin"
+        ).style.display = "block";
+
+      }
+    );
+
+
+  /* =====================================================
+     CERRAR ADMINISTRADOR
+     ===================================================== */
+
+  document
+    .getElementById("rox-media-close-admin")
+    .addEventListener(
+      "click",
+      function() {
+
+        document.getElementById(
+          "rox-media-admin"
+        ).style.display = "none";
+
+      }
+    );
+
+
+  /* =====================================================
+     COMPROBAR SESIÓN
+     ===================================================== */
+
+  async function roxCheckSession() {
+
+    const result =
+      await roxClient.auth.getSession();
+
+    if (
+      result.data &&
+      result.data.session
+    ) {
+
+      const email =
+        result.data.session.user.email;
+
+      if (
+        email.toLowerCase() ===
+        ROX_ADMIN_EMAIL.toLowerCase()
+      ) {
+
+        roxShowDashboard(
+          email
+        );
+
+      } else {
+
+        await roxClient.auth.signOut();
+
+      }
+
+    }
+
+  }
+
+
+  /* =====================================================
+     LOGIN
+     ===================================================== */
+
+  document
+    .getElementById("rox-media-login-btn")
+    .addEventListener(
+      "click",
+      async function() {
+
+        const email =
+          document.getElementById(
+            "rox-media-email"
+          ).value.trim();
+
+        const password =
+          document.getElementById(
+            "rox-media-password"
+          ).value;
+
+
+        const message =
+          document.getElementById(
+            "rox-media-login-message"
+          );
+
+
+        if (
+          email.toLowerCase() !==
+          ROX_ADMIN_EMAIL.toLowerCase()
+        ) {
+
+          message.textContent =
+            "⛔ Este acceso es solamente para el administrador.";
+
+          return;
+
+        }
+
+
+        if (!password) {
+
+          message.textContent =
+            "Ingresá tu contraseña.";
+
+          return;
+
+        }
+
+
+        message.textContent =
+          "Ingresando...";
+
+
+        const result =
+          await roxClient.auth.signInWithPassword({
+
+            email:email,
+
+            password:password
+
+          });
+
+
+        if (result.error) {
+
+          message.textContent =
+            "❌ Correo o contraseña incorrectos.";
+
+          console.error(
+            result.error
+          );
+
+          return;
+
+        }
+
+
+        if (
+          result.data &&
+          result.data.user &&
+          result.data.user.email.toLowerCase() ===
+          ROX_ADMIN_EMAIL.toLowerCase()
+        ) {
+
+          message.textContent =
+            "";
+
+          roxShowDashboard(
+            result.data.user.email
+          );
+
+        } else {
+
+          await roxClient.auth.signOut();
+
+          message.textContent =
+            "⛔ Usuario no autorizado.";
+
+        }
+
+      }
+    );
+
+
+  /* =====================================================
+     MOSTRAR PANEL
+     ===================================================== */
+
+  function roxShowDashboard(email) {
+
+    document.getElementById(
+      "rox-media-login"
+    ).style.display = "none";
+
+    document.getElementById(
+      "rox-media-dashboard"
+    ).style.display = "block";
+
+    document.getElementById(
+      "rox-media-admin-email"
+    ).textContent =
+      email;
+
+    roxLoadAdminList();
+
+  }
+
+
+  /* =====================================================
+     PREVISUALIZACIÓN
+     ===================================================== */
+
+  document
+    .getElementById("rox-media-file")
+    .addEventListener(
+      "change",
+      function() {
+
+        const file =
+          this.files[0];
+
+        const preview =
+          document.getElementById(
+            "rox-media-preview"
+          );
+
+        preview.innerHTML = "";
+
+        if (!file) {
+          return;
+        }
+
+        const url =
+          URL.createObjectURL(file);
+
+
+        if (
+          file.type.startsWith("video/")
+        ) {
+
+          preview.innerHTML =
+            '<video controls src="' +
+            url +
+            '"></video>';
+
+        } else {
+
+          preview.innerHTML =
+            '<img src="' +
+            url +
+            '" alt="Vista previa">';
+
+        }
+
+      }
+    );
+
+
+  /* =====================================================
+     SUBIR ARCHIVO
+     ===================================================== */
+
+  document
+    .getElementById("rox-media-upload-btn")
+    .addEventListener(
+      "click",
+      roxUpload
+    );
+
+
+  async function roxUpload() {
+
+    const fileInput =
+      document.getElementById(
+        "rox-media-file"
+      );
+
+    const file =
+      fileInput.files[0];
+
+
+    const title =
+      document.getElementById(
+        "rox-media-title"
+      ).value.trim();
+
+
+    const description =
+      document.getElementById(
+        "rox-media-description"
+      ).value.trim();
+
+
+    const category =
+      document.getElementById(
+        "rox-media-category"
+      ).value;
+
+
+    const message =
+      document.getElementById(
+        "rox-media-upload-message"
+      );
+
+
+    if (!file) {
+
+      message.textContent =
+        "📷 Seleccioná una foto o video.";
+
+      return;
+
+    }
+
+
+    if (!file.type.startsWith("image/") &&
+        !file.type.startsWith("video/")) {
+
+      message.textContent =
+        "❌ El archivo debe ser una foto o video.";
+
+      return;
+
+    }
+
+
+    message.textContent =
+      "⏳ Subiendo archivo...";
+
+
+    const sessionResult =
+      await roxClient.auth.getSession();
+
+
+    const session =
+      sessionResult.data.session;
+
+
+    if (!session ||
+        !session.user ||
+        session.user.email.toLowerCase() !==
+        ROX_ADMIN_EMAIL.toLowerCase()) {
+
+      message.textContent =
+        "⛔ No tenés autorización.";
+
+      return;
+
+    }
+
+
+    const extension =
+      (
+        file.name.split(".").pop() ||
+        "bin"
+      ).toLowerCase();
+
+
+    const safeName =
+      file.name
+        .replace(
+          /[^a-zA-Z0-9._-]/g,
+          "_"
+        );
+
+
+    const path =
+      category +
+      "/" +
+      Date.now() +
+      "_" +
+      safeName;
+
+
+    const upload =
+      await roxClient.storage
+        .from(ROX_BUCKET)
+        .upload(
+          path,
+          file,
+          {
+            cacheControl:"3600",
+            upsert:false,
+            contentType:file.type
+          }
+        );
+
+
+    if (upload.error) {
+
+      console.error(
+        upload.error
+      );
+
+      message.textContent =
+        "❌ No se pudo subir el archivo: " +
+        upload.error.message;
+
+      return;
+
+    }
+
+
+    const publicResult =
+      roxClient.storage
+        .from(ROX_BUCKET)
+        .getPublicUrl(path);
+
+
+    const publicUrl =
+      publicResult.data.publicUrl;
+
+
+    const tipo =
+      file.type.startsWith("video/")
+        ? "video"
+        : "foto";
+
+
+    const insert =
+      await roxClient
+        .from(ROX_TABLE)
+        .insert({
+
+          titulo:
+            title ||
+            "RoXThal Art Design",
+
+          descripcion:
+            description,
+
+          categoria:
+            category,
+
+          tipo:
+            tipo,
+
+          storage_path:
+            path,
+
+          url:
+            publicUrl
+
+        })
+        .select()
+        .single();
+
+
+    if (insert.error) {
+
+      console.error(
+        insert.error
+      );
+
+
+      /*
+       * Si falla el registro,
+       * intentamos borrar el archivo
+       * para no dejar basura.
+       */
+
+      await roxClient.storage
+        .from(ROX_BUCKET)
+        .remove([path]);
+
+
+      message.textContent =
+        "❌ El archivo se subió pero no pudo registrarse.";
+
+      return;
+
+    }
+
+
+    message.textContent =
+      "✅ Publicado correctamente.";
+
+
+    document.getElementById(
+      "rox-media-title"
+    ).value = "";
+
+    document.getElementById(
+      "rox-media-description"
+    ).value = "";
+
+    document.getElementById(
+      "rox-media-file"
+    ).value = "";
+
+    document.getElementById(
+      "rox-media-preview"
+    ).innerHTML = "";
+
+
+    await roxLoadGallery();
+
+    await roxLoadAdminList();
+
+  }
+
+
+  /* =====================================================
+     LISTA ADMINISTRADOR
+     ===================================================== */
+
+  async function roxLoadAdminList() {
+
+    const container =
+      document.getElementById(
+        "rox-media-admin-list"
+      );
+
+
+    const result =
+      await roxClient
+        .from(ROX_TABLE)
+        .select("*")
+        .order(
+          "created_at",
+          {
+            ascending:false
+          }
+        );
+
+
+    if (result.error) {
+
+      container.textContent =
+        "No se pudo cargar.";
+
+      return;
+
+    }
+
+
+    const list =
+      result.data || [];
+
+
+    if (!list.length) {
+
+      container.innerHTML =
+        "<p>No hay publicaciones.</p>";
+
+      return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    list.forEach(function(item) {
+
+      const row =
+        document.createElement("div");
+
+      row.className =
+        "rox-admin-item";
+
+
+      let thumb = "";
+
+      if (item.tipo === "video") {
+
+        thumb =
+          '<video class="rox-admin-thumb" ' +
+          'src="' +
+          escapeHTML(item.url) +
+          '" muted></video>';
+
+      } else {
+
+        thumb =
+          '<img class="rox-admin-thumb" ' +
+          'src="' +
+          escapeHTML(item.url) +
+          '">';
+
+      }
+
+
+      row.innerHTML =
+
+        thumb +
+
+        '<div class="rox-admin-item-info">' +
+
+        '<strong>' +
+        escapeHTML(
+          item.titulo || "Sin título"
+        ) +
+        '</strong>' +
+
+        '<small>' +
+        (
+          item.categoria === "alumnos"
+            ? "👨‍🎨 Alumno"
+            : "🎨 Taller"
+        ) +
+        '</small>' +
+
+        '</div>' +
+
+        '<button ' +
+        'class="rox-delete-btn" ' +
+        'data-id="' +
+        item.id +
+        '">' +
+        '🗑️' +
+        '</button>';
+
+
+      row
+        .querySelector(
+          ".rox-delete-btn"
+        )
+        .addEventListener(
+          "click",
+          function() {
+
+            roxDeleteItem(
+              item
+            );
+
+          }
+        );
+
+
+      container.appendChild(row);
+
+    });
+
+  }
+
+
+  /* =====================================================
+     ELIMINAR
+     ===================================================== */
+
+  async function roxDeleteItem(item) {
+
+    if (
+      !confirm(
+        "¿Eliminar esta publicación?"
+      )
+    ) {
+
+      return;
+
+    }
+
+
+    const sessionResult =
+      await roxClient.auth.getSession();
+
+
+    const session =
+      sessionResult.data.session;
+
+
+    if (!session ||
+        !session.user ||
+        session.user.email.toLowerCase() !==
+        ROX_ADMIN_EMAIL.toLowerCase()) {
+
+      alert(
+        "No tenés autorización."
+      );
+
+      return;
+
+    }
+
+
+    if (item.storage_path) {
+
+      await roxClient.storage
+        .from(ROX_BUCKET)
+        .remove([
+          item.storage_path
+        ]);
+
+    }
+
+
+    const result =
+      await roxClient
+        .from(ROX_TABLE)
+        .delete()
+        .eq(
+          "id",
+          item.id
+        );
+
+
+    if (result.error) {
+
+      alert(
+        "No se pudo eliminar."
+      );
+
+      console.error(
+        result.error
+      );
+
+      return;
+
+    }
+
+
+    await roxLoadGallery();
+
+    await roxLoadAdminList();
+
+  }
+
+
+  /* =====================================================
+     CERRAR SESIÓN
+     ===================================================== */
+
+  document
+    .getElementById("rox-media-logout")
+    .addEventListener(
+      "click",
+      async function() {
+
+        await roxClient.auth.signOut();
+
+        document.getElementById(
+          "rox-media-dashboard"
+        ).style.display = "none";
+
+        document.getElementById(
+          "rox-media-login"
+        ).style.display = "block";
+
+        document.getElementById(
+          "rox-media-email"
+        ).value = "";
+
+        document.getElementById(
+          "rox-media-password"
+        ).value = "";
+
+      }
+    );
+
+
+  /* =====================================================
+     FUNCIONES AUXILIARES
+     ===================================================== */
+
+  function escapeHTML(value) {
+
+    return String(value || "")
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+      .replace(
+        /</g,
+        "&lt;"
+      )
+      .replace(
+        />/g,
+        "&gt;"
+      )
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+      .replace(
+        /'/g,
+        "&#039;"
+      );
+
+  }
+
+
+  function formatDate(value) {
+
+    if (!value) {
+      return "";
+    }
+
+    try {
+
+      return new Date(value)
+        .toLocaleDateString(
+          "es-AR",
+          {
+            day:"2-digit",
+            month:"2-digit",
+            year:"numeric"
+          }
+        );
+
+    } catch(e) {
+
+      return "";
+
+    }
+
+  }
+
+
+  /* =====================================================
+     ARRANCAR
+     ===================================================== */
+
+  roxInit();
+
+})();
+
+</script>
+
+<!-- =========================================================
+     FIN MÓDULO ROXTHAL
+     ========================================================= -->
 </body>
 </html>
