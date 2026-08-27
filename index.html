@@ -5729,18 +5729,72 @@ document.addEventListener('DOMContentLoaded', function() {
      FIN SORTEO ROXTHAL ART DESIGN
      ========================================================= -->
   <script>
-/* CORRECCIÓN FOTOS SITE_ASSETS — RoXThal Art Design */
-(function(){
-  const ROXTHAL_SLOT_MAP = {
-    hero_logo: 'hero_logo',
-    srv_tatuajes: 'srv_tatuajes',
-    srv_fileteado: 'srv_fileteado',
-    srv_dibujo: 'srv_dibujo',
-    srv_atelier: 'srv_atelier',
-    about_img: 'about_img'
+<script>
+/* CORRECCIÓN REAL DE FOTOS — RoXThal Art Design */
+(function () {
+  const SLOT_MAP = {
+    hero: 'hero_logo',
+    tatuajes: 'srv_tatuajes',
+    fileteado: 'srv_fileteado',
+    dibujo: 'srv_dibujo',
+    atelier: 'srv_atelier',
+    identidad: 'about_img'
   };
 
-  window.ROXTHAL_SLOT_MAP = ROXTHAL_SLOT_MAP;
+  /* Hace que las imágenes de la página usen los slots reales de Supabase */
+  async function corregirFotosGuardadas() {
+    if (!window.sb) return;
+
+    try {
+      const { data, error } = await sb
+        .from('site_assets')
+        .select('slot,name,url,storage_path,updated_at')
+        .order('updated_at', { ascending: false });
+
+      if (error) {
+        console.warn('No se pudieron leer site_assets:', error);
+        return;
+      }
+
+      const assets = {};
+      (data || []).forEach(item => {
+        if (item && item.slot && item.url && !assets[item.slot]) {
+          assets[item.slot] = item;
+        }
+      });
+
+      Object.keys(SLOT_MAP).forEach(oldSlot => {
+        const realSlot = SLOT_MAP[oldSlot];
+        const asset = assets[realSlot];
+
+        if (!asset || !asset.url) return;
+
+        const url = asset.url +
+          (asset.url.includes('?') ? '&' : '?') +
+          'v=' + encodeURIComponent(asset.updated_at || Date.now());
+
+        document
+          .querySelectorAll('[data-slot-bg="' + oldSlot + '"]')
+          .forEach(el => {
+            el.style.backgroundImage = 'url("' + url + '")';
+          });
+
+        document
+          .querySelectorAll('[data-slot-img="' + oldSlot + '"]')
+          .forEach(el => {
+            el.src = url;
+          });
+      });
+
+      console.log('✅ Fotos de site_assets aplicadas correctamente');
+    } catch (e) {
+      console.warn('Error corrigiendo fotos:', e);
+    }
+  }
+
+  window.addEventListener('load', function () {
+    setTimeout(corregirFotosGuardadas, 1200);
+  });
 })();
 </script>
 </body>
