@@ -3482,6 +3482,192 @@
    */
 
 })();
+<!-- =========================================================
+     BUSCADOR DE TATUAJES
+     RoXThal Art Design
+     ========================================================= -->
+
+<section id="buscador-tatuajes">
+
+  <div class="eyebrow">Inspiración · Diseños · Estilos</div>
+
+  <h2>🔎 Buscador de Tatuajes</h2>
+
+  <p class="muted">
+    Encontrá ideas y referencias de tatuajes directamente en Internet.
+  </p>
+
+  <div class="card" style="
+    max-width:900px;
+    margin:25px auto 0;
+    padding:25px;
+  ">
+
+    <div style="
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:stretch;
+    ">
+
+      <input
+        id="tattooSearch"
+        type="search"
+        placeholder="Ej.: dragón japonés, león, tribal, realista..."
+        autocomplete="off"
+        aria-label="Buscar tatuajes"
+        style="
+          flex:1;
+          min-width:220px;
+          padding:14px 16px;
+          border-radius:10px;
+          border:1px solid var(--line);
+          background:var(--panel2);
+          color:var(--text);
+          outline:none;
+        "
+      >
+
+      <button
+        class="btn btn-gold"
+        type="button"
+        onclick="buscarTatuajes()"
+      >
+        🔍 BUSCAR TATUAJES
+      </button>
+
+    </div>
+
+    <div style="margin-top:24px;">
+
+      <p style="
+        margin:0 0 12px;
+        color:var(--gold2);
+        font-weight:700;
+      ">
+        🖋️ Buscar por estilo
+      </p>
+
+      <div style="
+        display:flex;
+        gap:8px;
+        flex-wrap:wrap;
+      ">
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarCategoria('Black & Grey')">
+          🖤 Black & Grey
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarCategoria('Old School')">
+          🔥 Old School
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarCategoria('Realista')">
+          🎨 Realista
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarCategoria('Fine Line')">
+          ✒️ Fine Line
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarCategoria('Japonés')">
+          🐉 Japonés
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarCategoria('Chicano')">
+          💀 Chicano
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarCategoria('Blackwork')">
+          🌑 Blackwork
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarCategoria('Minimalista')">
+          ✨ Minimalista
+        </button>
+
+      </div>
+
+    </div>
+
+    <p style="
+      margin:20px 0 0;
+      font-size:13px;
+      color:var(--muted);
+    ">
+      ℹ️ Las búsquedas se realizan en Google Imágenes.
+      Los resultados se abrirán en una nueva pestaña.
+    </p>
+
+  </div>
+
+</section>
+
+<script>
+function buscarTatuajes() {
+
+  const campo = document.getElementById('tattooSearch');
+
+  if (!campo) return;
+
+  const texto = campo.value.trim();
+
+  if (!texto) {
+    campo.focus();
+    return;
+  }
+
+  const busqueda = 'tatuajes ' + texto;
+
+  const url =
+    'https://www.google.com/search?tbm=isch&q=' +
+    encodeURIComponent(busqueda);
+
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
+
+function buscarCategoria(categoria) {
+
+  const campo = document.getElementById('tattooSearch');
+
+  if (campo) {
+    campo.value = categoria;
+  }
+
+  const busqueda = 'tatuajes ' + categoria;
+
+  const url =
+    'https://www.google.com/search?tbm=isch&q=' +
+    encodeURIComponent(busqueda);
+
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+
+  const campo = document.getElementById('tattooSearch');
+
+  if (!campo) return;
+
+  campo.addEventListener('keydown', function(event) {
+
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      buscarTatuajes();
+    }
+
+  });
+
+});
 </script>
+
 </body>
 </html>
