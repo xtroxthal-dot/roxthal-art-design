@@ -7219,6 +7219,1848 @@ async function eliminarPublicacion(
 
 })();
 </script>
+<!-- =========================================================
+     🎓 ACADEMIA + 📸 FOTOS Y 🎥 VIDEOS
+     ROXTHAL ART DESIGN
+     VERSIÓN SIMPLE PARA ADMINISTRAR TODO DESDE LA APP
+     ========================================================= -->
 
+<style>
+#rox-academia-boton{
+  width:100%;padding:18px;margin:20px 0;
+  border:1px solid #d7b45a;border-radius:14px;
+  background:#111;color:#d7b45a;font-weight:900;
+  font-size:18px;cursor:pointer
+}
+#rox-academia-modal{
+  display:none;position:fixed;inset:0;z-index:999999;
+  background:#080809;color:#fff;overflow:auto
+}
+#rox-academia-modal.activo{display:block}
+.rox-academia-app{max-width:950px;margin:auto;padding:15px}
+.rox-academia-top{
+  position:sticky;top:0;z-index:10;background:#080809;
+  padding:12px 0;border-bottom:1px solid #333;
+  display:flex;justify-content:space-between;align-items:center
+}
+.rox-academia-top strong{color:#d7b45a}
+.rox-academia-cerrar{
+  background:#222;color:#fff;border:1px solid #444;
+  border-radius:8px;padding:10px 14px;font-weight:800
+}
+.rox-caja{
+  background:#15151a;border:1px solid #2e2e38;
+  border-radius:16px;padding:20px;margin:18px 0
+}
+.rox-caja h2{color:#d7b45a;margin-top:0}
+.rox-input,.rox-select,.rox-textarea{
+  width:100%;box-sizing:border-box;background:#080809;
+  color:#fff;border:1px solid #3a3a44;border-radius:9px;
+  padding:13px;margin:6px 0
+}
+.rox-textarea{min-height:120px}
+.rox-btn{
+  width:100%;padding:13px;margin:7px 0;border:0;
+  border-radius:9px;background:#d7b45a;color:#000;
+  font-weight:900;cursor:pointer
+}
+.rox-btn.dark{background:#25252b;color:#fff;border:1px solid #444}
+.rox-btn.red{background:#8b1d1d;color:#fff}
+.rox-btn.green{background:#176b3a;color:#fff}
+.rox-msg{padding:12px;border-radius:9px;margin-top:8px}
+.rox-ok{background:#123d25;color:#7dff9a}
+.rox-error{background:#451515;color:#ff9999}
+.rox-info{background:#17283e;color:#a9cfff}
+.rox-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px
+}
+.rox-card{
+  background:#101014;border:1px solid #303038;
+  border-radius:12px;padding:15px
+}
+.rox-card h3{color:#d7b45a;margin-top:0}
+.rox-media{
+  width:100%;max-height:260px;object-fit:cover;
+  border-radius:10px;margin-top:10px
+}
+.rox-video{width:100%;border-radius:10px;margin-top:10px}
+.rox-tabs{
+  display:flex;gap:8px;overflow:auto;margin-bottom:15px
+}
+.rox-tabs button{
+  white-space:nowrap;padding:10px 14px;border-radius:9px;
+  border:1px solid #333;background:#17171b;color:#aaa;
+  font-weight:800
+}
+.rox-tabs button.activo{background:#d7b45a;color:#000}
+.rox-seccion{display:none}
+.rox-seccion.activo{display:block}
+.rox-leccion{
+  background:#101014;border:1px solid #303038;
+  border-radius:12px;padding:15px;margin:10px 0
+}
+.rox-progreso{
+  height:14px;background:#29292e;border-radius:20px;overflow:hidden
+}
+.rox-progreso div{
+  height:100%;width:0;background:#d7b45a
+}
+.rox-oculto{display:none!important}
+.rox-centro{text-align:center}
+.rox-codigo{
+  font-size:25px;font-weight:900;letter-spacing:3px;
+  color:#d7b45a;background:#080809;padding:15px;
+  border-radius:10px;text-align:center
+}
+@media(max-width:600px){
+ .rox-academia-app{padding:10px}
+}
+</style>
+
+<button id="rox-academia-boton" type="button">
+🎓 ACADEMIA ROXTHAL ART DESIGN
+</button>
+
+<div id="rox-academia-modal">
+
+<div class="rox-academia-app">
+
+<div class="rox-academia-top">
+<strong>🎓 ROXTHAL ART DESIGN</strong>
+<button class="rox-academia-cerrar" id="rox-cerrar-academia">
+✕ CERRAR
+</button>
+</div>
+
+<!-- =======================================================
+     INICIO
+     ======================================================= -->
+
+<div id="rox-inicio">
+
+<div class="rox-caja rox-centro">
+
+<h2>🎓 ACADEMIA ROXTHAL</h2>
+
+<p>
+Cursos, clases, material, fotografías y videos.
+</p>
+
+<button class="rox-btn" id="rox-btn-alumno">
+👨‍🎓 SOY ALUMNO
+</button>
+
+<button class="rox-btn dark" id="rox-btn-admin">
+👑 ADMINISTRADOR
+</button>
+
+</div>
+
+</div>
+
+<!-- =======================================================
+     ACCESO ALUMNO
+     ======================================================= -->
+
+<div id="rox-login-alumno" class="rox-oculto">
+
+<div class="rox-caja">
+
+<h2>👨‍🎓 Acceso del alumno</h2>
+
+<input id="rox-alumno-codigo"
+class="rox-input"
+placeholder="Código de acceso">
+
+<button id="rox-entrar-alumno" class="rox-btn">
+🔓 ENTRAR
+</button>
+
+<div id="rox-msg-alumno"></div>
+
+<button class="rox-btn dark rox-volver">
+← VOLVER
+</button>
+
+</div>
+
+</div>
+
+<!-- =======================================================
+     ACCESO ADMIN
+     ======================================================= -->
+
+<div id="rox-login-admin" class="rox-oculto">
+
+<div class="rox-caja">
+
+<h2>👑 Administrador</h2>
+
+<input id="rox-admin-clave"
+class="rox-input"
+type="password"
+placeholder="Contraseña de administrador">
+
+<button id="rox-entrar-admin" class="rox-btn">
+🔐 ENTRAR
+</button>
+
+<div id="rox-msg-admin"></div>
+
+<button class="rox-btn dark rox-volver">
+← VOLVER
+</button>
+
+</div>
+
+</div>
+
+<!-- =======================================================
+     PANEL ALUMNO
+     ======================================================= -->
+
+<div id="rox-panel-alumno" class="rox-oculto">
+
+<div class="rox-caja">
+
+<h2>👨‍🎓 Mi Academia</h2>
+
+<div id="rox-datos-alumno"></div>
+
+<div style="margin-top:15px">
+<div class="rox-progreso">
+<div id="rox-barra-progreso"></div>
+</div>
+<p id="rox-texto-progreso" class="rox-centro">0%</p>
+</div>
+
+</div>
+
+<div class="rox-caja">
+
+<h2>📚 Mi curso</h2>
+
+<div id="rox-curso-alumno">
+Cargando...
+</div>
+
+</div>
+
+<button id="rox-salir-alumno" class="rox-btn red">
+🚪 CERRAR SESIÓN
+</button>
+
+</div>
+
+<!-- =======================================================
+     PANEL ADMIN
+     ======================================================= -->
+
+<div id="rox-panel-admin" class="rox-oculto">
+
+<div class="rox-caja">
+
+<h2>👑 PANEL DE ADMINISTRADOR</h2>
+
+<p>
+Desde aquí puedes administrar la Academia sin entrar
+nuevamente en Supabase.
+</p>
+
+</div>
+
+<div class="rox-tabs">
+
+<button class="rox-tab activo" data-tab="alumnos">
+👨‍🎓 Alumnos
+</button>
+
+<button class="rox-tab" data-tab="cursos">
+📚 Cursos
+</button>
+
+<button class="rox-tab" data-tab="lecciones">
+📖 Lecciones
+</button>
+
+<button class="rox-tab" data-tab="media">
+📸 Fotos / 🎥 Videos
+</button>
+
+</div>
+
+<!-- ===================================================
+     ALUMNOS
+     =================================================== -->
+
+<div id="rox-tab-alumnos" class="rox-seccion activo">
+
+<div class="rox-caja">
+
+<h2>➕ Crear alumno</h2>
+
+<input id="rox-nuevo-nombre"
+class="rox-input"
+placeholder="Nombre y apellido">
+
+<input id="rox-nuevo-email"
+class="rox-input"
+type="email"
+placeholder="Email">
+
+<select id="rox-nuevo-curso" class="rox-select">
+<option value="">Seleccionar curso</option>
+</select>
+
+<button id="rox-crear-alumno" class="rox-btn">
+➕ CREAR ALUMNO
+</button>
+
+<div id="rox-msg-crear-alumno"></div>
+
+</div>
+
+<div class="rox-caja">
+
+<h2>👨‍🎓 Alumnos registrados</h2>
+
+<div id="rox-lista-alumnos">
+Cargando...
+</div>
+
+</div>
+
+</div>
+
+<!-- ===================================================
+     CURSOS
+     =================================================== -->
+
+<div id="rox-tab-cursos" class="rox-seccion">
+
+<div class="rox-caja">
+
+<h2>➕ Crear curso</h2>
+
+<input id="rox-nuevo-curso-nombre"
+class="rox-input"
+placeholder="Nombre del curso">
+
+<textarea id="rox-nuevo-curso-desc"
+class="rox-textarea"
+placeholder="Descripción del curso"></textarea>
+
+<button id="rox-crear-curso" class="rox-btn">
+💾 CREAR CURSO
+</button>
+
+<div id="rox-msg-curso"></div>
+
+</div>
+
+<div class="rox-caja">
+
+<h2>📚 Cursos existentes</h2>
+
+<div id="rox-lista-cursos">
+Cargando...
+</div>
+
+</div>
+
+</div>
+
+<!-- ===================================================
+     LECCIONES
+     =================================================== -->
+
+<div id="rox-tab-lecciones" class="rox-seccion">
+
+<div class="rox-caja">
+
+<h2>📖 Nueva lección</h2>
+
+<select id="rox-leccion-curso" class="rox-select">
+<option value="">Seleccionar curso</option>
+</select>
+
+<input id="rox-leccion-numero"
+class="rox-input"
+type="number"
+placeholder="Número de lección">
+
+<input id="rox-leccion-titulo"
+class="rox-input"
+placeholder="Título">
+
+<textarea id="rox-leccion-contenido"
+class="rox-textarea"
+placeholder="Contenido de la lección"></textarea>
+
+<label>📷 Imagen de la lección</label>
+
+<input id="rox-leccion-imagen"
+class="rox-input"
+type="file"
+accept="image/*">
+
+<label>🎥 Video de la lección</label>
+
+<input id="rox-leccion-video"
+class="rox-input"
+type="file"
+accept="video/*">
+
+<button id="rox-crear-leccion" class="rox-btn">
+💾 GUARDAR LECCIÓN
+</button>
+
+<div id="rox-msg-leccion"></div>
+
+</div>
+
+<div class="rox-caja">
+
+<h2>📖 Lecciones</h2>
+
+<div id="rox-lista-lecciones">
+Cargando...
+</div>
+
+</div>
+
+</div>
+
+<!-- ===================================================
+     FOTOS Y VIDEOS
+     =================================================== -->
+
+<div id="rox-tab-media" class="rox-seccion">
+
+<div class="rox-caja">
+
+<h2>📸 Publicar foto de alumno</h2>
+
+<select id="rox-foto-alumno" class="rox-select">
+<option value="">Seleccionar alumno</option>
+</select>
+
+<input id="rox-foto-titulo"
+class="rox-input"
+placeholder="Título o descripción">
+
+<input id="rox-foto-archivo"
+class="rox-input"
+type="file"
+accept="image/*">
+
+<button id="rox-subir-foto" class="rox-btn">
+📸 SUBIR Y PUBLICAR FOTO
+</button>
+
+<div id="rox-msg-foto"></div>
+
+</div>
+
+<div class="rox-caja">
+
+<h2>🎥 Publicar video de alumno</h2>
+
+<select id="rox-video-alumno" class="rox-select">
+<option value="">Seleccionar alumno</option>
+</select>
+
+<input id="rox-video-titulo"
+class="rox-input"
+placeholder="Título o descripción">
+
+<input id="rox-video-archivo"
+class="rox-input"
+type="file"
+accept="video/*">
+
+<button id="rox-subir-video" class="rox-btn">
+🎥 SUBIR Y PUBLICAR VIDEO
+</button>
+
+<div id="rox-msg-video"></div>
+
+</div>
+
+<div class="rox-caja">
+
+<h2>🖼️ Contenido publicado</h2>
+
+<div id="rox-lista-media">
+Cargando...
+</div>
+
+</div>
+
+</div>
+
+<button id="rox-salir-admin" class="rox-btn red">
+🚪 CERRAR ADMINISTRADOR
+</button>
+
+</div>
+
+</div>
+</div>
+
+<script>
+(function(){
+
+"use strict";
+
+/* =========================================================
+   CONFIGURACIÓN
+   ========================================================= */
+
+const SB_URL =
+'https://lvvhpuedktdmfehvhcwk.supabase.co';
+
+const SB_KEY =
+'sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp';
+
+/*
+   CONTRASEÑA DEL ADMINISTRADOR
+
+   Puedes cambiarla aquí.
+   Ejemplo:
+   const ADMIN_CLAVE = 'roxthal2026';
+*/
+const ADMIN_CLAVE = 'roxthal2026';
+
+/*
+   BUCKET PARA FOTOS Y VIDEOS
+
+   El módulo intenta utilizar "academia".
+*/
+const BUCKET = 'academia';
+
+let sb = null;
+let alumnoActual = null;
+let adminActivo = false;
+
+
+/* =========================================================
+   CONEXIÓN
+   ========================================================= */
+
+function conectar(){
+
+  if(sb) return true;
+
+  if(window.supabase &&
+     typeof window.supabase.createClient === 'function'){
+
+    sb = window.supabase.createClient(
+      SB_URL,
+      SB_KEY
+    );
+
+    return true;
+  }
+
+  return false;
+}
+
+
+/* =========================================================
+   ELEMENTOS
+   ========================================================= */
+
+const modal =
+document.getElementById('rox-academia-modal');
+
+document
+.getElementById('rox-academia-boton')
+.addEventListener('click',function(){
+
+  modal.classList.add('activo');
+  inicio();
+
+});
+
+document
+.getElementById('rox-cerrar-academia')
+.addEventListener('click',function(){
+
+  modal.classList.remove('activo');
+
+});
+
+
+/* =========================================================
+   NAVEGACIÓN
+   ========================================================= */
+
+function ocultar(){
+
+  [
+    'rox-inicio',
+    'rox-login-alumno',
+    'rox-login-admin',
+    'rox-panel-alumno',
+    'rox-panel-admin'
+  ].forEach(function(id){
+
+    document
+    .getElementById(id)
+    .classList.add('rox-oculto');
+
+  });
+
+}
+
+function inicio(){
+
+  ocultar();
+
+  document
+  .getElementById('rox-inicio')
+  .classList.remove('rox-oculto');
+
+}
+
+function mostrar(id){
+
+  ocultar();
+
+  document
+  .getElementById(id)
+  .classList.remove('rox-oculto');
+
+}
+
+
+/* =========================================================
+   BOTONES INICIALES
+   ========================================================= */
+
+document
+.getElementById('rox-btn-alumno')
+.addEventListener('click',function(){
+
+  mostrar('rox-login-alumno');
+
+});
+
+document
+.getElementById('rox-btn-admin')
+.addEventListener('click',function(){
+
+  mostrar('rox-login-admin');
+
+});
+
+document
+.querySelectorAll('.rox-volver')
+.forEach(function(btn){
+
+  btn.addEventListener('click',inicio);
+
+});
+
+
+/* =========================================================
+   ADMIN
+   ========================================================= */
+
+document
+.getElementById('rox-entrar-admin')
+.addEventListener('click',async function(){
+
+  const clave =
+  document.getElementById('rox-admin-clave').value;
+
+  const msg =
+  document.getElementById('rox-msg-admin');
+
+  if(clave !== ADMIN_CLAVE){
+
+    msg.innerHTML =
+    '<div class="rox-msg rox-error">❌ Contraseña incorrecta.</div>';
+
+    return;
+  }
+
+  if(!conectar()){
+
+    msg.innerHTML =
+    '<div class="rox-msg rox-error">❌ Supabase no está disponible.</div>';
+
+    return;
+  }
+
+  adminActivo = true;
+
+  mostrar('rox-panel-admin');
+
+  await cargarTodoAdmin();
+
+});
+
+
+/* =========================================================
+   PESTAÑAS ADMIN
+   ========================================================= */
+
+document
+.querySelectorAll('.rox-tab')
+.forEach(function(tab){
+
+  tab.addEventListener('click',function(){
+
+    document
+    .querySelectorAll('.rox-tab')
+    .forEach(x=>x.classList.remove('activo'));
+
+    document
+    .querySelectorAll('.rox-seccion')
+    .forEach(x=>x.classList.remove('activo'));
+
+    tab.classList.add('activo');
+
+    document
+    .getElementById(
+      'rox-tab-' + tab.dataset.tab
+    )
+    .classList.add('activo');
+
+  });
+
+});
+
+
+/* =========================================================
+   CARGAR TODO ADMIN
+   ========================================================= */
+
+async function cargarTodoAdmin(){
+
+  await cargarCursos();
+  await cargarAlumnos();
+  await cargarLecciones();
+  await cargarSelects();
+  await cargarMedia();
+
+}
+
+
+/* =========================================================
+   CURSOS
+   ========================================================= */
+
+async function cargarCursos(){
+
+  const lista =
+  document.getElementById('rox-lista-cursos');
+
+  const r =
+  await sb
+  .from('academia_cursos')
+  .select('*')
+  .order('id',{ascending:true});
+
+  if(r.error){
+
+    lista.innerHTML =
+    '<div class="rox-msg rox-error">❌ No se pudieron cargar los cursos.</div>';
+
+    return;
+  }
+
+  lista.innerHTML = '';
+
+  if(!r.data.length){
+
+    lista.innerHTML =
+    '<p>No hay cursos todavía.</p>';
+
+    return;
+  }
+
+  r.data.forEach(function(c){
+
+    lista.innerHTML +=
+    '<div class="rox-card">' +
+    '<h3>' + esc(c.nombre) + '</h3>' +
+    '<p>' + esc(c.descripcion || '') + '</p>' +
+    '</div>';
+
+  });
+
+}
+
+
+document
+.getElementById('rox-crear-curso')
+.addEventListener('click',async function(){
+
+  const nombre =
+  document.getElementById('rox-nuevo-curso-nombre')
+  .value.trim();
+
+  const descripcion =
+  document.getElementById('rox-nuevo-curso-desc')
+  .value.trim();
+
+  const msg =
+  document.getElementById('rox-msg-curso');
+
+  if(!nombre){
+
+    msg.innerHTML =
+    '<div class="rox-msg rox-error">❌ Escribe el nombre del curso.</div>';
+
+    return;
+  }
+
+  const r =
+  await sb
+  .from('academia_cursos')
+  .insert({
+    nombre:nombre,
+    descripcion:descripcion
+  });
+
+  if(r.error){
+
+    msg.innerHTML =
+    '<div class="rox-msg rox-error">❌ ' +
+    esc(r.error.message) +
+    '</div>';
+
+    return;
+  }
+
+  msg.innerHTML =
+  '<div class="rox-msg rox-ok">✅ Curso creado.</div>';
+
+  document.getElementById('rox-nuevo-curso-nombre').value='';
+  document.getElementById('rox-nuevo-curso-desc').value='';
+
+  await cargarCursos();
+  await cargarSelects();
+
+});
+
+
+/* =========================================================
+   ALUMNOS
+   ========================================================= */
+
+async function cargarAlumnos(){
+
+  const lista =
+  document.getElementById('rox-lista-alumnos');
+
+  const r =
+  await sb
+  .from('academia_alumnos')
+  .select('*')
+  .order('fecha_ingreso',{ascending:false});
+
+  if(r.error){
+
+    lista.innerHTML =
+    '<div class="rox-msg rox-error">❌ No se pudieron cargar los alumnos.</div>';
+
+    return;
+  }
+
+  lista.innerHTML='';
+
+  if(!r.data.length){
+
+    lista.innerHTML='<p>No hay alumnos.</p>';
+    return;
+  }
+
+  const cursos =
+  await sb
+  .from('academia_cursos')
+  .select('id,nombre');
+
+  const mapa={};
+
+  if(!cursos.error){
+
+    cursos.data.forEach(function(c){
+      mapa[c.id]=c.nombre;
+    });
+
+  }
+
+  r.data.forEach(function(a){
+
+    lista.innerHTML +=
+    '<div class="rox-card">' +
+
+    '<h3>👨‍🎓 ' +
+    esc(a.nombre) +
+    '</h3>' +
+
+    '<p>📧 ' +
+    esc(a.email || '') +
+    '</p>' +
+
+    '<p>📚 ' +
+    esc(mapa[a.curso_id] || 'Sin curso') +
+    '</p>' +
+
+    '<div class="rox-codigo">' +
+    esc(a.codigo || '') +
+    '</div>' +
+
+    '<button class="rox-btn red" ' +
+    'data-eliminar-alumno="' +
+    esc(a.id) +
+    '">' +
+    '🗑️ ELIMINAR' +
+    '</button>' +
+
+    '</div>';
+
+  });
+
+  lista
+  .querySelectorAll('[data-eliminar-alumno]')
+  .forEach(function(btn){
+
+    btn.addEventListener('click',async function(){
+
+      if(!confirm('¿Eliminar este alumno?')) return;
+
+      const r =
+      await sb
+      .from('academia_alumnos')
+      .delete()
+      .eq('id',this.dataset.eliminarAlumno);
+
+      if(r.error){
+
+        alert('No se pudo eliminar el alumno.');
+        return;
+
+      }
+
+      await cargarAlumnos();
+      await cargarSelects();
+
+    });
+
+  });
+
+}
+
+
+/* =========================================================
+   CREAR ALUMNO
+   ========================================================= */
+
+document
+.getElementById('rox-crear-alumno')
+.addEventListener('click',async function(){
+
+  const nombre =
+  document.getElementById('rox-nuevo-nombre')
+  .value.trim();
+
+  const email =
+  document.getElementById('rox-nuevo-email')
+  .value.trim();
+
+  const curso =
+  document.getElementById('rox-nuevo-curso')
+  .value;
+
+  const msg =
+  document.getElementById('rox-msg-crear-alumno');
+
+  if(!nombre || !curso){
+
+    msg.innerHTML =
+    '<div class="rox-msg rox-error">❌ Completa nombre y curso.</div>';
+
+    return;
+  }
+
+  /*
+     Código automático.
+     El alumno NO necesita UUID.
+  */
+
+  const codigo =
+  'RX' +
+  Math.random()
+  .toString(36)
+  .substring(2,8)
+  .toUpperCase();
+
+  const r =
+  await sb
+  .from('academia_alumnos')
+  .insert({
+
+    nombre:nombre,
+    email:email,
+    curso_id:Number(curso),
+    codigo:codigo,
+    activo:true
+
+  })
+  .select('*')
+  .single();
+
+  if(r.error){
+
+    msg.innerHTML =
+    '<div class="rox-msg rox-error">❌ ' +
+    esc(r.error.message) +
+    '</div>';
+
+    return;
+  }
+
+  msg.innerHTML =
+  '<div class="rox-msg rox-ok">' +
+  '✅ Alumno creado.<br><br>' +
+  'Código de acceso:<br>' +
+  '<strong style="font-size:24px">' +
+  esc(codigo) +
+  '</strong>' +
+  '</div>';
+
+  document.getElementById('rox-nuevo-nombre').value='';
+  document.getElementById('rox-nuevo-email').value='';
+
+  await cargarAlumnos();
+  await cargarSelects();
+
+});
+
+
+/* =========================================================
+   SELECTS
+   ========================================================= */
+
+async function cargarSelects(){
+
+  const cursos =
+  await sb
+  .from('academia_cursos')
+  .select('id,nombre')
+  .order('id');
+
+  const alumnos =
+  await sb
+  .from('academia_alumnos')
+  .select('id,nombre')
+  .order('nombre');
+
+  if(!cursos.error){
+
+    [
+      'rox-nuevo-curso',
+      'rox-leccion-curso'
+    ].forEach(function(id){
+
+      const select =
+      document.getElementById(id);
+
+      select.innerHTML =
+      '<option value="">Seleccionar curso</option>';
+
+      cursos.data.forEach(function(c){
+
+        select.innerHTML +=
+        '<option value="' +
+        c.id +
+        '">' +
+        esc(c.nombre) +
+        '</option>';
+
+      });
+
+    });
+
+  }
+
+  if(!alumnos.error){
+
+    [
+      'rox-foto-alumno',
+      'rox-video-alumno'
+    ].forEach(function(id){
+
+      const select =
+      document.getElementById(id);
+
+      select.innerHTML =
+      '<option value="">Seleccionar alumno</option>';
+
+      alumnos.data.forEach(function(a){
+
+        select.innerHTML +=
+        '<option value="' +
+        a.id +
+        '">' +
+        esc(a.nombre) +
+        '</option>';
+
+      });
+
+    });
+
+  }
+
+}
+
+
+/* =========================================================
+   LECCIONES
+   ========================================================= */
+
+async function cargarLecciones(){
+
+  const lista =
+  document.getElementById('rox-lista-lecciones');
+
+  const r =
+  await sb
+  .from('academia_lecciones')
+  .select('*')
+  .order('numero',{ascending:true});
+
+  if(r.error){
+
+    lista.innerHTML =
+    '<div class="rox-msg rox-error">❌ No se pudieron cargar las lecciones.</div>';
+
+    return;
+  }
+
+  lista.innerHTML='';
+
+  r.data.forEach(function(l){
+
+    lista.innerHTML +=
+    '<div class="rox-leccion">' +
+
+    '<h3>📖 Lección ' +
+    esc(l.numero) +
+    ' — ' +
+    esc(l.titulo) +
+    '</h3>' +
+
+    '<p>' +
+    esc(l.contenido || '') +
+    '</p>' +
+
+    (l.imagen_url ?
+      '<img class="rox-media" src="' +
+      esc(l.imagen_url) +
+      '">' : '') +
+
+    (l.video_url ?
+      '<video class="rox-video" controls src="' +
+      esc(l.video_url) +
+      '"></video>' : '') +
+
+    '</div>';
+
+  });
+
+}
+
+
+async function subirArchivo(file,carpeta){
+
+  if(!file) return null;
+
+  const extension =
+  file.name.split('.').pop();
+
+  const nombre =
+  carpeta +
+  '/' +
+  Date.now() +
+  '-' +
+  Math.random()
+  .toString(36)
+  .substring(2) +
+  '.' +
+  extension;
+
+  const r =
+  await sb
+  .storage
+  .from(BUCKET)
+  .upload(
+    nombre,
+    file,
+    {
+      upsert:false,
+      contentType:file.type
+    }
+  );
+
+  if(r.error){
+
+    throw r.error;
+
+  }
+
+  const url =
+  sb
+  .storage
+  .from(BUCKET)
+  .getPublicUrl(nombre)
+  .data
+  .publicUrl;
+
+  return url;
+
+}
+
+
+/* =========================================================
+   CREAR LECCIÓN
+   ========================================================= */
+
+document
+.getElementById('rox-crear-leccion')
+.addEventListener('click',async function(){
+
+  const msg =
+  document.getElementById('rox-msg-leccion');
+
+  const curso =
+  document.getElementById('rox-leccion-curso').value;
+
+  const numero =
+  document.getElementById('rox-leccion-numero').value;
+
+  const titulo =
+  document.getElementById('rox-leccion-titulo').value.trim();
+
+  const contenido =
+  document.getElementById('rox-leccion-contenido').value.trim();
+
+  const imagen =
+  document.getElementById('rox-leccion-imagen').files[0];
+
+  const video =
+  document.getElementById('rox-leccion-video').files[0];
+
+  if(!curso || !numero || !titulo){
+
+    msg.innerHTML =
+    '<div class="rox-msg rox-error">❌ Completa curso, número y título.</div>';
+
+    return;
+  }
+
+  msg.innerHTML =
+  '<div class="rox-msg rox-info">⏳ Guardando lección y archivos...</div>';
+
+  try{
+
+    let imagenUrl=null;
+    let videoUrl=null;
+
+    if(imagen){
+
+      imagenUrl =
+      await subirArchivo(
+        imagen,
+        'lecciones/imagenes'
+      );
+
+    }
+
+    if(video){
+
+      videoUrl =
+      await subirArchivo(
+        video,
+        'lecciones/videos'
+      );
+
+    }
+
+    const r =
+    await sb
+    .from('academia_lecciones')
+    .insert({
+
+      curso_id:Number(curso),
+      numero:Number(numero),
+      titulo:titulo,
+      contenido:contenido,
+      imagen_url:imagenUrl,
+      video_url:videoUrl
+
+    });
+
+    if(r.error) throw r.error;
+
+    msg.innerHTML =
+    '<div class="rox-msg rox-ok">✅ Lección guardada correctamente.</div>';
+
+    document.getElementById('rox-leccion-numero').value='';
+    document.getElementById('rox-leccion-titulo').value='';
+    document.getElementById('rox-leccion-contenido').value='';
+    document.getElementById('rox-leccion-imagen').value='';
+    document.getElementById('rox-leccion-video').value='';
+
+    await cargarLecciones();
+
+  }catch(e){
+
+    msg.innerHTML =
+    '<div class="rox-msg rox-error">❌ ' +
+    esc(e.message) +
+    '</div>';
+
+  }
+
+});
+
+
+/* =========================================================
+   FOTOS
+   ========================================================= */
+
+document
+.getElementById('rox-subir-foto')
+.addEventListener('click',async function(){
+
+  const msg =
+  document.getElementById('rox-msg-foto');
+
+  const alumno =
+  document.getElementById('rox-foto-alumno').value;
+
+  const titulo =
+  document.getElementById('rox-foto-titulo').value.trim();
+
+  const file =
+  document.getElementById('rox-foto-archivo').files[0];
+
+  if(!alumno || !file){
+
+    msg.innerHTML =
+    '<div class="rox-msg rox-error">❌ Selecciona alumno y foto.</div>';
+
+    return;
+  }
+
+  msg.innerHTML =
+  '<div class="rox-msg rox-info">⏳ Subiendo foto...</div>';
+
+  try{
+
+    const url =
+    await subirArchivo(
+      file,
+      'fotos'
+    );
+
+    const r =
+    await sb
+    .from('academia_media')
+    .insert({
+
+      alumno_id:alumno,
+      tipo:'foto',
+      titulo:titulo,
+      url:url,
+      publicado:true
+
+    });
+
+    if(r.error) throw r.error;
+
+    msg.innerHTML =
+    '<div class="rox-msg rox-ok">✅ Foto publicada.</div>';
+
+    document.getElementById('rox-foto-titulo').value='';
+    document.getElementById('rox-foto-archivo').value='';
+
+    await cargarMedia();
+
+  }catch(e){
+
+    msg.innerHTML =
+    '<div class="rox-msg rox-error">❌ ' +
+    esc(e.message) +
+    '</div>';
+
+  }
+
+});
+
+
+/* =========================================================
+   VIDEOS
+   ========================================================= */
+
+document
+.getElementById('rox-subir-video')
+.addEventListener('click',async function(){
+
+  const msg =
+  document.getElementById('rox-msg-video');
+
+  const alumno =
+  document.getElementById('rox-video-alumno').value;
+
+  const titulo =
+  document.getElementById('rox-video-titulo').value.trim();
+
+  const file =
+  document.getElementById('rox-video-archivo').files[0];
+
+  if(!alumno || !file){
+
+    msg.innerHTML =
+    '<div class="rox-msg rox-error">❌ Selecciona alumno y video.</div>';
+
+    return;
+  }
+
+  msg.innerHTML =
+  '<div class="rox-msg rox-info">⏳ Subiendo video...</div>';
+
+  try{
+
+    const url =
+    await subirArchivo(
+      file,
+      'videos'
+    );
+
+    const r =
+    await sb
+    .from('academia_media')
+    .insert({
+
+      alumno_id:alumno,
+      tipo:'video',
+      titulo:titulo,
+      url:url,
+      publicado:true
+
+    });
+
+    if(r.error) throw r.error;
+
+    msg.innerHTML =
+    '<div class="rox-msg rox-ok">✅ Video publicado.</div>';
+
+    document.getElementById('rox-video-titulo').value='';
+    document.getElementById('rox-video-archivo').value='';
+
+    await cargarMedia();
+
+  }catch(e){
+
+    msg.innerHTML =
+    '<div class="rox-msg rox-error">❌ ' +
+    esc(e.message) +
+    '</div>';
+
+  }
+
+});
+
+
+/* =========================================================
+   MEDIA
+   ========================================================= */
+
+async function cargarMedia(){
+
+  const lista =
+  document.getElementById('rox-lista-media');
+
+  const r =
+  await sb
+  .from('academia_media')
+  .select('*')
+  .eq('publicado',true)
+  .order('id',{ascending:false});
+
+  if(r.error){
+
+    lista.innerHTML =
+    '<div class="rox-msg rox-error">❌ No se pudo cargar el contenido.</div>';
+
+    return;
+  }
+
+  lista.innerHTML='';
+
+  if(!r.data.length){
+
+    lista.innerHTML='<p>No hay contenido publicado.</p>';
+    return;
+  }
+
+  r.data.forEach(function(m){
+
+    let contenido='';
+
+    if(m.tipo === 'foto'){
+
+      contenido =
+      '<img class="rox-media" src="' +
+      esc(m.url) +
+      '">';
+
+    }else{
+
+      contenido =
+      '<video class="rox-video" controls src="' +
+      esc(m.url) +
+      '"></video>';
+
+    }
+
+    lista.innerHTML +=
+    '<div class="rox-card">' +
+
+    '<h3>' +
+    (m.tipo === 'foto' ? '📸' : '🎥') +
+    ' ' +
+    esc(m.titulo || '') +
+    '</h3>' +
+
+    contenido +
+
+    '<button class="rox-btn red" ' +
+    'data-eliminar-media="' +
+    esc(m.id) +
+    '">' +
+    '🗑️ ELIMINAR' +
+    '</button>' +
+
+    '</div>';
+
+  });
+
+  lista
+  .querySelectorAll('[data-eliminar-media]')
+  .forEach(function(btn){
+
+    btn.addEventListener('click',async function(){
+
+      if(!confirm('¿Eliminar esta publicación?')) return;
+
+      const r =
+      await sb
+      .from('academia_media')
+      .delete()
+      .eq('id',this.dataset.eliminarMedia);
+
+      if(r.error){
+
+        alert('No se pudo eliminar.');
+        return;
+
+      }
+
+      await cargarMedia();
+
+    });
+
+  });
+
+}
+
+
+/* =========================================================
+   LOGIN ALUMNO
+   ========================================================= */
+
+document
+.getElementById('rox-entrar-alumno')
+.addEventListener('click',async function(){
+
+  const codigo =
+  document
+  .getElementById('rox-alumno-codigo')
+  .value
+  .trim()
+  .toUpperCase();
+
+  const msg =
+  document.getElementById('rox-msg-alumno');
+
+  if(!codigo){
+
+    msg.innerHTML =
+    '<div class="rox-msg rox-error">❌ Introduce tu código.</div>';
+
+    return;
+  }
+
+  if(!conectar()){
+
+    msg.innerHTML =
+    '<div class="rox-msg rox-error">❌ Supabase no está disponible.</div>';
+
+    return;
+  }
+
+  const r =
+  await sb
+  .from('academia_alumnos')
+  .select('*')
+  .eq('codigo',codigo)
+  .eq('activo',true)
+  .maybeSingle();
+
+  if(r.error || !r.data){
+
+    msg.innerHTML =
+    '<div class="rox-msg rox-error">❌ Código incorrecto o alumno inactivo.</div>';
+
+    return;
+  }
+
+  alumnoActual = r.data;
+
+  await cargarPanelAlumno();
+
+});
+
+
+/* =========================================================
+   PANEL ALUMNO
+   ========================================================= */
+
+async function cargarPanelAlumno(){
+
+  mostrar('rox-panel-alumno');
+
+  const datos =
+  document.getElementById('rox-datos-alumno');
+
+  datos.innerHTML =
+  '<h3>👨‍🎓 ' +
+  esc(alumnoActual.nombre) +
+  '</h3>' +
+
+  '<p>📧 ' +
+  esc(alumnoActual.email || '') +
+  '</p>';
+
+  const curso =
+  await sb
+  .from('academia_cursos')
+  .select('*')
+  .eq('id',alumnoActual.curso_id)
+  .maybeSingle();
+
+  if(curso.error || !curso.data){
+
+    document.getElementById('rox-curso-alumno').innerHTML =
+    '<div class="rox-msg rox-error">❌ No tienes un curso asignado.</div>';
+
+    return;
+  }
+
+  const lecciones =
+  await sb
+  .from('academia_lecciones')
+  .select('*')
+  .eq('curso_id',curso.data.id)
+  .order('numero',{ascending:true});
+
+  let html =
+  '<h3>📚 ' +
+  esc(curso.data.nombre) +
+  '</h3>' +
+
+  '<p>' +
+  esc(curso.data.descripcion || '') +
+  '</p>';
+
+  let completas=0;
+
+  if(!lecciones.error){
+
+    for(const l of lecciones.data){
+
+      html +=
+      '<div class="rox-leccion">' +
+
+      '<h3>Lección ' +
+      esc(l.numero) +
+      ' — ' +
+      esc(l.titulo) +
+      '</h3>' +
+
+      '<p>' +
+      esc(l.contenido || '') +
+      '</p>';
+
+      if(l.imagen_url){
+
+        html +=
+        '<img class="rox-media" src="' +
+        esc(l.imagen_url) +
+        '">';
+
+      }
+
+      if(l.video_url){
+
+        html +=
+        '<video class="rox-video" controls src="' +
+        esc(l.video_url) +
+        '"></video>';
+
+      }
+
+      html +=
+      '<button class="rox-btn" ' +
+      'data-completar="' +
+      esc(l.id) +
+      '">' +
+      '☑️ MARCAR COMO COMPLETADA' +
+      '</button>' +
+
+      '</div>';
+
+    }
+
+    document
+    .getElementById('rox-curso-alumno')
+    .innerHTML=html;
+
+    document
+    .querySelectorAll('[data-completar]')
+    .forEach(function(btn){
+
+      btn.addEventListener('click',async function(){
+
+        const r =
+        await sb
+        .from('academia_progreso')
+        .upsert({
+
+          alumno_id:alumnoActual.id,
+          leccion_id:this.dataset.completar,
+          completada:true
+
+        });
+
+        if(r.error){
+
+          alert('No se pudo guardar el progreso.');
+
+        }else{
+
+          alert('✅ Lección completada.');
+
+        }
+
+      });
+
+    });
+
+    const progreso =
+    await sb
+    .from('academia_progreso')
+    .select('leccion_id')
+    .eq('alumno_id',alumnoActual.id)
+    .eq('completada',true);
+
+    if(!progreso.error){
+
+      completas=progreso.data.length;
+
+    }
+
+    const total=lecciones.data.length;
+
+    const porcentaje =
+    total ?
+    Math.round(completas/total*100) :
+    0;
+
+    document
+    .getElementById('rox-barra-progreso')
+    .style.width =
+    porcentaje+'%';
+
+    document
+    .getElementById('rox-texto-progreso')
+    .textContent =
+    porcentaje+'% completado';
+
+  }
+
+}
+
+
+/* =========================================================
+   SALIR
+   ========================================================= */
+
+document
+.getElementById('rox-salir-alumno')
+.addEventListener('click',function(){
+
+  alumnoActual=null;
+  inicio();
+
+});
+
+document
+.getElementById('rox-salir-admin')
+.addEventListener('click',function(){
+
+  adminActivo=false;
+  inicio();
+
+});
+
+
+/* =========================================================
+   SEGURIDAD HTML
+   ========================================================= */
+
+function esc(v){
+
+  return String(v == null ? '' : v)
+  .replace(/&/g,'&amp;')
+  .replace(/</g,'&lt;')
+  .replace(/>/g,'&gt;')
+  .replace(/"/g,'&quot;')
+  .replace(/'/g,'&#039;');
+
+}
+
+
+/* =========================================================
+   INICIO
+   ========================================================= */
+
+conectar();
+
+})();
+</script>
+
+<!-- =========================================================
+     FIN MÓDULO ROXTHAL ACADEMIA
+     ========================================================= -->
 </body>
 </html>
