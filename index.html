@@ -5798,1959 +5798,2289 @@ document.addEventListener('DOMContentLoaded', function() {
 })();
 </script>
   <script>
-<!-- =========================================================
- 🎓 ACADEMIA ROXTHAL ART DESIGN
- MÓDULO DEFINITIVO
- ========================================================= -->
+<!-- ============================================================
+     ROXTHAL ART DESIGN
+     MÓDULO INDEPENDIENTE:
+     TRABAJOS DE NUESTROS ALUMNOS Y FOTOS DE NUESTROS TALLERES
+     ============================================================ -->
 
 <style>
-#rox-academia-boton{
-width:100%;margin:25px 0 10px;padding:18px 15px;
-border:1px solid rgba(255,215,0,.45);border-radius:14px;
-background:linear-gradient(135deg,#111,#050505);color:#ffd700;
-font-size:18px;font-weight:800;cursor:pointer;
-box-shadow:0 5px 25px rgba(0,0,0,.35)
+
+/* ============================================================
+   CONTENEDOR PRINCIPAL
+   ============================================================ */
+
+#roxthal-alumnos-talleres-module{
+  max-width:1200px;
+  margin:0 auto;
+  padding:45px 13px;
 }
-#rox-academia-overlay{
-display:none;position:fixed;inset:0;z-index:999999;
-background:#050505;color:#fff;overflow-y:auto
+
+
+/* ============================================================
+   BOTÓN CERRADO
+   ============================================================ */
+
+#roxthal-at-open-button{
+  width:100%;
+  border:1px solid var(--gold,#d7b45a);
+  background:var(--panel,#15151a);
+  color:var(--gold2,#f2da91);
+  border-radius:14px;
+  padding:18px;
+  font-size:17px;
+  font-weight:700;
+  cursor:pointer;
+  text-align:left;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
 }
-#rox-academia-overlay.activo{display:block}
-#rox-academia-app{max-width:950px;margin:auto;min-height:100vh;padding:12px}
-.rox-academia-header{text-align:center;padding:20px 10px;border-bottom:1px solid #292929}
-.rox-logo{font-size:38px}.rox-titulo{font-size:25px;font-weight:900;color:#ffd700}
-.rox-subtitulo{color:#aaa}
-.rox-caja{background:#111;border:1px solid #292929;border-radius:16px;padding:18px;margin-top:16px}
-.rox-caja h2{color:#ffd700;margin-top:0}
-.rox-input,.rox-select,.rox-textarea{
-width:100%;box-sizing:border-box;padding:13px;margin:6px 0;
-border-radius:9px;border:1px solid #333;background:#080808;color:#fff
+
+#roxthal-at-open-button:hover{
+  background:var(--panel2,#202026);
 }
-.rox-textarea{min-height:120px}
-.rox-btn{
-width:100%;padding:13px;margin-top:8px;border:0;border-radius:9px;
-background:#ffd700;color:#000;font-weight:800;cursor:pointer
+
+#roxthal-at-arrow{
+  font-size:24px;
+  flex:0 0 auto;
 }
-.rox-btn.sec{background:#252525;color:#fff;border:1px solid #444}
-.rox-btn.red{background:#8b0000;color:#fff}
-.rox-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.rox-card{
-background:#151515;border:1px solid #303030;border-radius:12px;padding:15px;margin-top:10px
+
+
+/* ============================================================
+   CONTENIDO PÚBLICO
+   ============================================================ */
+
+#roxthal-at-content{
+  display:none;
+  margin-top:15px;
+  background:var(--panel,#15151a);
+  border:1px solid var(--line,#383840);
+  border-radius:16px;
+  padding:20px;
 }
-.rox-card h3{color:#ffd700;margin-top:0}
-.rox-msg{padding:10px;border-radius:9px;margin-top:10px}
-.rox-ok{background:#123d1d;color:#7dff9a}
-.rox-error{background:#441313;color:#ff8585}
-.rox-info{background:#16263d;color:#9ecaff}
-.rox-cerrar{
-position:sticky;top:0;z-index:20;width:100%;padding:13px;
-background:#000;color:#fff;border:0;border-bottom:1px solid #333;font-weight:800
+
+#roxthal-at-content.open{
+  display:block;
 }
-.rox-oculto{display:none!important}
-.rox-nav{display:flex;gap:7px;overflow-x:auto;padding:10px 0}
-.rox-nav button{
-white-space:nowrap;padding:10px 14px;border-radius:9px;
-background:#222;color:#fff;border:1px solid #444;font-weight:700
+
+.roxthal-at-title{
+  text-align:center;
+  margin-bottom:25px;
 }
-.rox-nav button.activo{background:#ffd700;color:#000}
-.rox-leccion{background:#0d0d0d;border:1px solid #292929;border-radius:12px;padding:15px;margin:10px 0}
-.rox-leccion img{width:100%;border-radius:10px;margin-top:10px}
-.rox-progreso{height:15px;background:#292929;border-radius:20px;overflow:hidden}
-.rox-progreso div{height:100%;background:#ffd700;width:0}
-.rox-pregunta{background:#0c0c0c;border:1px solid #292929;padding:14px;border-radius:10px;margin:10px 0}
-.rox-opcion{display:block;padding:8px;margin:4px 0;background:#171717;border-radius:7px}
-.rox-diploma{
-background:#f5f5f5;color:#111;padding:30px;text-align:center;
-border:10px double #222;margin-top:15px
+
+.roxthal-at-title h2{
+  margin:0 0 8px;
 }
-.rox-diploma h1{font-size:28px}
-.rox-file{padding:12px;background:#171717;border:1px dashed #555;border-radius:9px;margin:6px 0}
-@media(max-width:600px){
-.rox-titulo{font-size:21px}.rox-logo{font-size:30px}
+
+.roxthal-at-title p{
+  margin:0;
+  color:var(--muted,#aaa);
 }
+
+
+/* ============================================================
+   GALERÍA
+   ============================================================ */
+
+#roxthal-at-gallery{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.roxthal-at-photo{
+  overflow:hidden;
+  border:1px solid var(--line,#383840);
+  border-radius:14px;
+  background:#101014;
+}
+
+.roxthal-at-photo img{
+  display:block;
+  width:100%;
+  height:260px;
+  object-fit:cover;
+  cursor:pointer;
+  transition:transform .25s ease;
+}
+
+.roxthal-at-photo img:hover{
+  transform:scale(1.03);
+}
+
+.roxthal-at-photo-info{
+  padding:12px;
+}
+
+.roxthal-at-photo-info h3{
+  margin:0 0 6px;
+  font-size:17px;
+  color:var(--gold2,#f2da91);
+}
+
+.roxthal-at-photo-info p{
+  margin:0;
+  color:var(--muted,#aaa);
+  font-size:14px;
+}
+
+.roxthal-at-type{
+  display:inline-block;
+  margin-bottom:8px;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#292930;
+  color:var(--gold2,#f2da91);
+  font-size:12px;
+}
+
+.roxthal-at-empty{
+  grid-column:1/-1;
+  padding:35px 15px;
+  text-align:center;
+  color:var(--muted,#aaa);
+  border:1px dashed #444;
+  border-radius:12px;
+}
+
+
+/* ============================================================
+   ADMINISTRADOR PROPIO DEL MÓDULO
+   ============================================================ */
+
+#roxthal-at-admin-button{
+  width:100%;
+  margin-top:25px;
+  border:1px solid #484850;
+  background:#101014;
+  color:#fff;
+  border-radius:12px;
+  padding:14px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+#roxthal-at-admin-button:hover{
+  border-color:var(--gold,#d7b45a);
+  color:var(--gold2,#f2da91);
+}
+
+#roxthal-at-admin{
+  display:none;
+  margin-top:15px;
+  padding:18px;
+  background:#101014;
+  border:1px solid var(--line,#383840);
+  border-radius:14px;
+}
+
+#roxthal-at-admin.open{
+  display:block;
+}
+
+.roxthal-at-admin-login{
+  max-width:480px;
+  margin:0 auto;
+}
+
+.roxthal-at-admin-box{
+  margin-top:15px;
+  padding:16px;
+  background:#15151a;
+  border:1px solid var(--line,#383840);
+  border-radius:12px;
+}
+
+.roxthal-at-field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-bottom:12px;
+}
+
+.roxthal-at-field label{
+  color:#ddd;
+  font-weight:600;
+}
+
+.roxthal-at-field input,
+.roxthal-at-field select,
+.roxthal-at-field textarea{
+  width:100%;
+  box-sizing:border-box;
+  background:#0d0d10;
+  color:#fff;
+  border:1px solid #484850;
+  border-radius:9px;
+  padding:11px;
+}
+
+.roxthal-at-field textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+.roxthal-at-file{
+  border:1px dashed #666;
+  border-radius:12px;
+  padding:14px;
+  background:#101014;
+}
+
+#roxthal-at-preview{
+  display:none;
+  width:100%;
+  max-height:300px;
+  object-fit:contain;
+  margin-top:12px;
+  border-radius:12px;
+  border:1px solid var(--line,#383840);
+}
+
+.roxthal-at-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
+.roxthal-at-btn{
+  border:1px solid #484850;
+  background:#1a1a20;
+  color:#fff;
+  border-radius:9px;
+  padding:11px 14px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.roxthal-at-btn-gold{
+  background:var(--gold,#d7b45a);
+  color:#111;
+  border-color:var(--gold,#d7b45a);
+}
+
+.roxthal-at-btn-red{
+  background:#8a3b3b;
+  color:#fff;
+  border-color:#8a3b3b;
+}
+
+.roxthal-at-status{
+  display:none;
+  margin-top:12px;
+  padding:11px 13px;
+  border-radius:10px;
+  background:#15151a;
+  border:1px solid var(--line,#383840);
+}
+
+.roxthal-at-status.show{
+  display:block;
+}
+
+.roxthal-at-status.ok{
+  border-color:#2f8a58;
+}
+
+.roxthal-at-status.err{
+  border-color:#8a3b3b;
+}
+
+
+/* ============================================================
+   LISTA DEL ADMINISTRADOR
+   ============================================================ */
+
+#roxthal-at-admin-list{
+  margin-top:25px;
+}
+
+.roxthal-at-admin-photo{
+  display:grid;
+  grid-template-columns:140px 1fr;
+  gap:14px;
+  padding:12px;
+  margin-bottom:12px;
+  border:1px solid var(--line,#383840);
+  border-radius:14px;
+  background:#15151a;
+}
+
+.roxthal-at-admin-photo img{
+  width:140px;
+  height:110px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.roxthal-at-admin-info{
+  min-width:0;
+}
+
+.roxthal-at-admin-info h4{
+  margin:0 0 7px;
+  color:var(--gold2,#f2da91);
+}
+
+.roxthal-at-admin-info p{
+  margin:4px 0;
+  color:var(--muted,#aaa);
+}
+
+.roxthal-at-admin-buttons{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+
+/* ============================================================
+   VISOR
+   ============================================================ */
+
+#roxthal-at-lightbox{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:999999;
+  background:rgba(0,0,0,.94);
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+#roxthal-at-lightbox.open{
+  display:flex;
+}
+
+#roxthal-at-lightbox img{
+  max-width:95vw;
+  max-height:90vh;
+  object-fit:contain;
+  border-radius:12px;
+}
+
+#roxthal-at-lightbox-close{
+  position:fixed;
+  top:15px;
+  right:18px;
+  width:45px;
+  height:45px;
+  border:0;
+  border-radius:50%;
+  background:rgba(255,255,255,.15);
+  color:#fff;
+  font-size:30px;
+  cursor:pointer;
+}
+
+
+/* ============================================================
+   MÓVIL
+   ============================================================ */
+
+@media(max-width:750px){
+
+  #roxthal-at-content{
+    padding:13px;
+  }
+
+  #roxthal-at-gallery{
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+  }
+
+  .roxthal-at-photo img{
+    height:190px;
+  }
+
+  .roxthal-at-photo-info{
+    padding:9px;
+  }
+
+  .roxthal-at-photo-info h3{
+    font-size:14px;
+  }
+
+  .roxthal-at-admin-photo{
+    grid-template-columns:1fr;
+  }
+
+  .roxthal-at-admin-photo img{
+    width:100%;
+    height:210px;
+  }
+
+}
+
+@media(max-width:420px){
+
+  #roxthal-at-gallery{
+    grid-template-columns:1fr;
+  }
+
+  .roxthal-at-photo img{
+    height:250px;
+  }
+
+}
+
 </style>
 
-<button id="rox-academia-boton" type="button">
-🎓 ACADEMIA ROXTHAL ART DESIGN
-</button>
 
-<div id="rox-academia-overlay">
+<section
+  id="roxthal-alumnos-talleres-module"
+>
 
-<button id="rox-academia-cerrar" class="rox-cerrar">
-✕ CERRAR ACADEMIA
-</button>
+  <button
+    type="button"
+    id="roxthal-at-open-button"
+  >
 
-<div id="rox-academia-app">
+    <span>
+      🎨 Trabajos de nuestros alumnos y fotos de nuestros talleres
+    </span>
 
-<div class="rox-academia-header">
-<div class="rox-logo">🎓</div>
-<div class="rox-titulo">ACADEMIA ROXTHAL ART DESIGN</div>
-<div class="rox-subtitulo">Formación artística y profesional</div>
+    <span id="roxthal-at-arrow">
+      ＋
+    </span>
+
+  </button>
+
+
+  <div id="roxthal-at-content">
+
+    <div class="roxthal-at-title">
+
+      <h2>
+        🎨 Trabajos de nuestros alumnos y fotos de nuestros talleres
+      </h2>
+
+      <p>
+        Conocé los trabajos realizados por nuestros alumnos
+        y algunos momentos de nuestros talleres.
+      </p>
+
+    </div>
+
+
+    <div id="roxthal-at-gallery">
+
+      <div class="roxthal-at-empty">
+        ⏳ Cargando...
+      </div>
+
+    </div>
+
+
+    <!-- ========================================================
+         ADMINISTRADOR PROPIO
+         ======================================================== -->
+
+    <button
+      type="button"
+      id="roxthal-at-admin-button"
+    >
+      🔐 Administrar trabajos y fotos de talleres
+    </button>
+
+
+    <div id="roxthal-at-admin">
+
+
+      <!-- LOGIN -->
+
+      <div
+        id="roxthal-at-login"
+        class="roxthal-at-admin-login"
+      >
+
+        <h3>
+          🔐 Administrador del módulo
+        </h3>
+
+        <p class="muted">
+          Iniciá sesión para administrar exclusivamente
+          los trabajos de alumnos y las fotos de talleres.
+        </p>
+
+
+        <div class="roxthal-at-admin-box">
+
+          <div class="roxthal-at-field">
+
+            <label>
+              Email
+            </label>
+
+            <input
+              id="roxthalAtAdminEmail"
+              type="email"
+              autocomplete="username"
+              placeholder="Email del administrador"
+            >
+
+          </div>
+
+
+          <div class="roxthal-at-field">
+
+            <label>
+              Contraseña
+            </label>
+
+            <input
+              id="roxthalAtAdminPassword"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Contraseña"
+            >
+
+          </div>
+
+
+          <div class="roxthal-at-actions">
+
+            <button
+              type="button"
+              class="roxthal-at-btn roxthal-at-btn-gold"
+              id="roxthalAtLoginButton"
+            >
+              🔓 Entrar
+            </button>
+
+          </div>
+
+
+          <div
+            id="roxthalAtLoginStatus"
+            class="roxthal-at-status"
+          ></div>
+
+        </div>
+
+      </div>
+
+
+      <!-- PANEL ADMINISTRADOR -->
+
+      <div
+        id="roxthal-at-panel"
+        style="display:none;"
+      >
+
+        <h3>
+          🎓 Administrar alumnos y talleres
+        </h3>
+
+        <p class="muted">
+          Desde aquí podés subir y administrar todas las fotos
+          de este módulo desde el celular.
+        </p>
+
+
+        <!-- SUBIR -->
+
+        <div class="roxthal-at-admin-box">
+
+          <h4>
+            📷 Nueva foto
+          </h4>
+
+
+          <div class="roxthal-at-field">
+
+            <label>
+              Tipo
+            </label>
+
+            <select
+              id="roxthalAtType"
+            >
+
+              <option value="Trabajo de alumno">
+                🎨 Trabajo de alumno
+              </option>
+
+              <option value="Foto de taller">
+                🏫 Foto de taller
+              </option>
+
+              <option value="Actividad">
+                ✏️ Actividad
+              </option>
+
+              <option value="Otro">
+                📷 Otro
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="roxthal-at-field">
+
+            <label>
+              Título
+            </label>
+
+            <input
+              id="roxthalAtTitle"
+              type="text"
+              placeholder="Ej.: Trabajo de Juan"
+            >
+
+          </div>
+
+
+          <div class="roxthal-at-field">
+
+            <label>
+              Descripción
+            </label>
+
+            <textarea
+              id="roxthalAtDescription"
+              placeholder="Descripción opcional..."
+            ></textarea>
+
+          </div>
+
+
+          <div class="roxthal-at-field">
+
+            <label>
+              📱 Seleccionar foto desde el celular
+            </label>
+
+            <div class="roxthal-at-file">
+
+              <input
+                id="roxthalAtFile"
+                type="file"
+                accept="image/*"
+              >
+
+
+              <img
+                id="roxthal-at-preview"
+                alt="Vista previa"
+              >
+
+            </div>
+
+          </div>
+
+
+          <div class="roxthal-at-actions">
+
+            <button
+              type="button"
+              class="roxthal-at-btn roxthal-at-btn-gold"
+              id="roxthalAtUploadButton"
+            >
+              ☁️ Subir foto
+            </button>
+
+
+            <button
+              type="button"
+              class="roxthal-at-btn"
+              id="roxthalAtClearButton"
+            >
+              Limpiar
+            </button>
+
+
+            <button
+              type="button"
+              class="roxthal-at-btn"
+              id="roxthalAtLogoutButton"
+            >
+              🔒 Cerrar administrador
+            </button>
+
+          </div>
+
+
+          <div
+            id="roxthalAtUploadStatus"
+            class="roxthal-at-status"
+          ></div>
+
+        </div>
+
+
+        <!-- LISTA -->
+
+        <div id="roxthal-at-admin-list">
+
+          <h4>
+            📚 Fotos de este módulo
+          </h4>
+
+          <div
+            id="roxthalAtAdminPhotos"
+          >
+
+            <div class="roxthal-at-empty">
+              Cargando...
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ============================================================
+     VISOR
+     ============================================================ -->
+
+<div
+  id="roxthal-at-lightbox"
+>
+
+  <button
+    type="button"
+    id="roxthal-at-lightbox-close"
+  >
+    ×
+  </button>
+
+  <img
+    id="roxthalAtLightboxImage"
+    alt="Imagen ampliada"
+  >
+
 </div>
 
-<!-- ================= INICIO ================= -->
-
-<div id="rox-inicio">
-
-<div class="rox-caja">
-<h2>🎓 Academia</h2>
-
-<p>Acceso privado a los cursos de RoXThal Art Design.</p>
-
-<button id="rox-login-alumno" class="rox-btn">
-👨‍🎓 ACCESO ALUMNOS
-</button>
-
-<button id="rox-login-admin" class="rox-btn sec">
-👑 ACCESO ADMINISTRADOR
-</button>
-</div>
-
-</div>
-
-<!-- ================= LOGIN ================= -->
-
-<div id="rox-login" class="rox-caja rox-oculto">
-
-<h2>🔐 Acceso</h2>
-
-<input id="rox-email" class="rox-input"
-type="email" placeholder="Email">
-
-<input id="rox-password" class="rox-input"
-type="password" placeholder="Contraseña">
-
-<button id="rox-entrar" class="rox-btn">
-🔓 ENTRAR
-</button>
-
-<div id="rox-login-msg"></div>
-
-<button id="rox-volver" class="rox-btn sec">
-← VOLVER
-</button>
-
-</div>
-
-<!-- ================= ALUMNO ================= -->
-
-<div id="rox-alumno" class="rox-oculto">
-
-<div class="rox-caja">
-<h2>👨‍🎓 Mi Academia</h2>
-<div id="rox-datos-alumno"></div>
-
-<div class="rox-progreso">
-<div id="rox-barra"></div>
-</div>
-
-<div id="rox-porcentaje" style="text-align:center;color:#aaa">
-0%
-</div>
-</div>
-
-<div id="rox-curso" class="rox-caja"></div>
-<div id="rox-actividades" class="rox-caja"></div>
-<div id="rox-examen" class="rox-caja"></div>
-<div id="rox-diploma" class="rox-caja"></div>
-
-<button id="rox-salir-alumno" class="rox-btn red">
-🚪 CERRAR SESIÓN
-</button>
-
-</div>
-
-<!-- ================= ADMIN ================= -->
-
-<div id="rox-admin" class="rox-oculto">
-
-<div class="rox-caja">
-<h2>👑 Panel de Administrador</h2>
-
-<div class="rox-nav">
-
-<button data-admin="alumnos" class="activo">
-👨‍🎓 Alumnos
-</button>
-
-<button data-admin="lecciones">
-📚 Lecciones
-</button>
-
-<button data-admin="actividades">
-✏️ Actividades
-</button>
-
-<button data-admin="examenes">
-📝 Exámenes
-</button>
-
-</div>
-</div>
-
-<!-- ========== ALUMNOS ========== -->
-
-<div id="admin-alumnos" class="admin-pagina">
-
-<div class="rox-caja">
-<h2>➕ Crear alumno</h2>
-
-<input id="admin-nombre" class="rox-input"
-placeholder="Nombre y apellido">
-
-<input id="admin-email" class="rox-input"
-type="email" placeholder="Email del alumno">
-
-<input id="admin-password" class="rox-input"
-type="password" placeholder="Contraseña">
-
-<select id="admin-curso" class="rox-select">
-<option value="">Seleccionar curso...</option>
-</select>
-
-<button id="admin-crear-alumno" class="rox-btn">
-➕ CREAR ALUMNO
-</button>
-
-<div id="admin-alumno-msg"></div>
-
-</div>
-
-<div class="rox-caja">
-<h2>👨‍🎓 Alumnos registrados</h2>
-<div id="admin-lista-alumnos">Cargando...</div>
-</div>
-
-</div>
-
-<!-- ========== LECCIONES ========== -->
-
-<div id="admin-lecciones" class="admin-pagina rox-oculto">
-
-<div class="rox-caja">
-
-<h2>📚 Nueva lección</h2>
-
-<select id="admin-leccion-curso" class="rox-select"></select>
-
-<input id="admin-leccion-numero"
-class="rox-input" type="number"
-placeholder="Número de lección">
-
-<input id="admin-leccion-titulo"
-class="rox-input"
-placeholder="Título">
-
-<textarea id="admin-leccion-contenido"
-class="rox-textarea"
-placeholder="Contenido completo de la lección"></textarea>
-
-<div class="rox-file">
-🖼️ Imagen de la lección
-<input id="admin-imagen" type="file" accept="image/*">
-</div>
-
-<div class="rox-file">
-🎥 Vídeo de la lección
-<input id="admin-video" type="file" accept="video/*">
-</div>
-
-<p style="color:#888;font-size:13px">
-También puedes dejar los archivos vacíos y utilizar enlaces.
-</p>
-
-<input id="admin-imagen-url"
-class="rox-input"
-placeholder="URL de imagen opcional">
-
-<input id="admin-video-url"
-class="rox-input"
-placeholder="URL de vídeo opcional">
-
-<button id="admin-crear-leccion" class="rox-btn">
-💾 GUARDAR LECCIÓN
-</button>
-
-<div id="admin-leccion-msg"></div>
-
-</div>
-
-<div class="rox-caja">
-<h2>📖 Lecciones existentes</h2>
-<div id="admin-lista-lecciones"></div>
-</div>
-
-</div>
-
-<!-- ========== ACTIVIDADES ========== -->
-
-<div id="admin-actividades" class="admin-pagina rox-oculto">
-
-<div class="rox-caja">
-
-<h2>✏️ Nueva actividad</h2>
-
-<select id="admin-actividad-leccion" class="rox-select"></select>
-
-<input id="admin-actividad-titulo"
-class="rox-input"
-placeholder="Título de la actividad">
-
-<textarea id="admin-actividad-instrucciones"
-class="rox-textarea"
-placeholder="Instrucciones del ejercicio"></textarea>
-
-<button id="admin-crear-actividad" class="rox-btn">
-💾 CREAR ACTIVIDAD
-</button>
-
-<div id="admin-actividad-msg"></div>
-
-</div>
-
-<div class="rox-caja">
-<h2>✏️ Actividades existentes</h2>
-<div id="admin-lista-actividades"></div>
-</div>
-
-</div>
-
-<!-- ========== EXÁMENES ========== -->
-
-<div id="admin-examenes" class="admin-pagina rox-oculto">
-
-<div class="rox-caja">
-
-<h2>📝 Crear examen</h2>
-
-<select id="admin-examen-curso" class="rox-select"></select>
-
-<input id="admin-examen-titulo"
-class="rox-input"
-placeholder="Título del examen">
-
-<input id="admin-examen-aprobacion"
-class="rox-input"
-type="number"
-value="70"
-placeholder="Porcentaje mínimo">
-
-<button id="admin-crear-examen" class="rox-btn">
-💾 CREAR EXAMEN
-</button>
-
-<div id="admin-examen-msg"></div>
-
-</div>
-
-<div class="rox-caja">
-
-<h2>❓ Agregar pregunta</h2>
-
-<select id="admin-pregunta-examen" class="rox-select"></select>
-
-<textarea id="admin-pregunta"
-class="rox-textarea"
-placeholder="Pregunta"></textarea>
-
-<input id="opcion-a" class="rox-input"
-placeholder="Respuesta A">
-
-<input id="opcion-b" class="rox-input"
-placeholder="Respuesta B">
-
-<input id="opcion-c" class="rox-input"
-placeholder="Respuesta C">
-
-<input id="opcion-d" class="rox-input"
-placeholder="Respuesta D">
-
-<select id="respuesta-correcta" class="rox-select">
-<option value="A">Correcta: A</option>
-<option value="B">Correcta: B</option>
-<option value="C">Correcta: C</option>
-<option value="D">Correcta: D</option>
-</select>
-
-<button id="admin-crear-pregunta" class="rox-btn">
-➕ GUARDAR PREGUNTA
-</button>
-
-<div id="admin-pregunta-msg"></div>
-
-</div>
-
-<div class="rox-caja">
-<h2>📝 Exámenes existentes</h2>
-<div id="admin-lista-examenes"></div>
-</div>
-
-</div>
-
-<button id="rox-salir-admin" class="rox-btn red">
-🚪 CERRAR SESIÓN
-</button>
-
-</div>
-
-</div>
-</div>
 
 <script>
+
+/* ============================================================
+   ROXTHAL - MÓDULO ALUMNOS Y TALLERES
+   COMPLETAMENTE INDEPENDIENTE
+   ============================================================ */
+
 (function(){
 
-"use strict";
+  "use strict";
 
-/* =========================================================
-   CONFIGURACIÓN
-   ========================================================= */
 
-const SB_URL =
-'https://lvvhpuedktdmfehvhcwk.supabase.co';
+  /* ==========================================================
+     CONFIGURACIÓN SUPABASE
+     ========================================================== */
 
-const SB_KEY =
-'sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp';
+  const AT_SUPABASE_URL =
+    "https://lvvhpuedktdmfehvhcwk.supabase.co";
 
-const ADMIN_EMAIL =
-'xtroxthal@gmail.com';
+  const AT_SUPABASE_KEY =
+    "sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp";
 
-const CREAR_ALUMNO_FUNCTION =
-'academia-crear-alumno';
+  const AT_BUCKET =
+    "images";
 
-let sb=null;
-let usuario=null;
-let alumno=null;
-let curso=null;
+  const AT_CATEGORY =
+    "alumnos_talleres";
 
 
-/* =========================================================
-   CONEXIÓN
-   ========================================================= */
+  let atClient = null;
 
-function conectar(){
+  let atSession = null;
 
-if(sb)return true;
 
-if(!window.supabase)return false;
+  /* ==========================================================
+     UTILIDADES
+     ========================================================== */
 
-sb=window.supabase.createClient(
-SB_URL,
-SB_KEY
-);
+  const at$ = function(id){
+    return document.getElementById(id);
+  };
 
-return true;
-}
 
+  function atEscape(value){
 
-/* =========================================================
-   ELEMENTOS
-   ========================================================= */
+    return String(value ?? "")
+      .replace(
+        /[&<>'"]/g,
+        function(c){
 
-const overlay=
-document.getElementById('rox-academia-overlay');
+          return {
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            "'":"&#39;",
+            '"':"&quot;"
 
-function ocultar(){
+          }[c];
 
-[
-'rox-inicio',
-'rox-login',
-'rox-alumno',
-'rox-admin'
-].forEach(id=>{
-document.getElementById(id)
-.classList.add('rox-oculto');
-});
+        }
+      );
 
-}
+  }
 
-function inicio(){
 
-ocultar();
+  function atStatus(
+    id,
+    message,
+    type
+  ){
 
-document.getElementById('rox-inicio')
-.classList.remove('rox-oculto');
+    const element =
+      at$(id);
 
-}
+    if(!element) return;
 
 
-/* =========================================================
-   ABRIR
-   ========================================================= */
+    element.textContent =
+      message;
 
-document.getElementById('rox-academia-boton')
-.onclick=function(){
 
-overlay.classList.add('activo');
-inicio();
+    element.className =
+      "roxthal-at-status show " +
+      (type || "");
 
-};
+  }
 
-document.getElementById('rox-academia-cerrar')
-.onclick=function(){
 
-overlay.classList.remove('activo');
+  /* ==========================================================
+     INICIALIZAR SUPABASE
+     ========================================================== */
 
-};
+  function atInit(){
 
+    if(
+      !window.supabase
+    ){
 
-/* =========================================================
-   LOGIN
-   ========================================================= */
+      atStatus(
+        "roxthalAtLoginStatus",
+        "❌ No se encontró Supabase.",
+        "err"
+      );
 
-function mostrarLogin(){
+      return;
 
-ocultar();
+    }
 
-document.getElementById('rox-login')
-.classList.remove('rox-oculto');
 
-}
+    atClient =
+      window.supabase.createClient(
+        AT_SUPABASE_URL,
+        AT_SUPABASE_KEY
+      );
 
-document.getElementById('rox-login-alumno')
-.onclick=mostrarLogin;
 
-document.getElementById('rox-login-admin')
-.onclick=mostrarLogin;
+    atClient.auth
+      .getSession()
+      .then(function(result){
 
-document.getElementById('rox-volver')
-.onclick=inicio;
+        atSession =
+          result?.data?.session ||
+          null;
 
+      });
 
-/* =========================================================
-   ENTRAR
-   ========================================================= */
+  }
 
-document.getElementById('rox-entrar')
-.onclick=async function(){
 
-const msg=
-document.getElementById('rox-login-msg');
+  /* ==========================================================
+     ABRIR / CERRAR MÓDULO
+     ========================================================== */
 
-msg.innerHTML=
-'<div class="rox-msg rox-info">⏳ Comprobando acceso...</div>';
+  at$(
+    "roxthal-at-open-button"
+  ).addEventListener(
+    "click",
+    async function(){
 
-if(!conectar()){
+      const content =
+        at$("roxthal-at-content");
 
-msg.innerHTML=
-'<div class="rox-msg rox-error">❌ No se pudo conectar.</div>';
+      const arrow =
+        at$("roxthal-at-arrow");
 
-return;
-}
 
-const email=
-document.getElementById('rox-email')
-.value.trim().toLowerCase();
+      const opened =
+        content.classList.toggle(
+          "open"
+        );
 
-const password=
-document.getElementById('rox-password')
-.value;
 
-if(!email||!password){
+      arrow.textContent =
+        opened ? "−" : "＋";
 
-msg.innerHTML=
-'<div class="rox-msg rox-error">❌ Completa email y contraseña.</div>';
 
-return;
-}
+      if(opened){
 
-const r=
-await sb.auth.signInWithPassword({
-email,
-password
-});
+        await atLoadPublic();
 
-if(r.error){
+      }
 
-msg.innerHTML=
-'<div class="rox-msg rox-error">❌ '+
-esc(r.error.message)+
-'</div>';
+    }
+  );
 
-return;
-}
 
-usuario=r.data.user;
+  /* ==========================================================
+     CARGAR GALERÍA PÚBLICA
+     ========================================================== */
 
-const admin=
-await sb
-.from('academia_administradores')
-.select('usuario_id')
-.eq('usuario_id',usuario.id)
-.maybeSingle();
+  async function atLoadPublic(){
 
-if(
-usuario.email &&
-usuario.email.toLowerCase()===
-ADMIN_EMAIL.toLowerCase() &&
-admin.data
-){
+    const gallery =
+      at$("roxthal-at-gallery");
 
-await cargarAdmin();
 
-}else{
+    if(!gallery) return;
 
-await cargarAlumno();
 
-}
+    gallery.innerHTML =
+      '<div class="roxthal-at-empty">' +
+      '⏳ Cargando fotos...' +
+      '</div>';
 
-};
 
+    try{
 
-/* =========================================================
-   ALUMNO
-   ========================================================= */
+      if(!atClient){
 
-async function cargarAlumno(){
+        atInit();
 
-ocultar();
+      }
 
-document.getElementById('rox-alumno')
-.classList.remove('rox-oculto');
 
-const datos=
-document.getElementById('rox-datos-alumno');
+      const result =
+        await atClient
+          .from("images")
+          .select(
+            "id,title,category,url,description,visible,created_at"
+          )
+          .eq(
+            "category",
+            AT_CATEGORY
+          )
+          .eq(
+            "visible",
+            true
+          )
+          .order(
+            "created_at",
+            {
+              ascending:false
+            }
+          );
 
-const r=
-await sb
-.from('academia_alumnos')
-.select('*')
-.eq('id',usuario.id)
-.maybeSingle();
 
-if(r.error||!r.data){
+      if(result.error){
 
-datos.innerHTML=
-'<div class="rox-msg rox-error">'+
-'❌ Esta cuenta todavía no tiene un curso asignado.'+
-'</div>';
+        throw result.error;
 
-return;
-}
+      }
 
-alumno=r.data;
 
-if(!alumno.activo){
+      const photos =
+        result.data || [];
 
-datos.innerHTML=
-'<div class="rox-msg rox-error">'+
-'❌ Tu acceso está desactivado.'+
-'</div>';
 
-return;
-}
+      if(!photos.length){
 
-datos.innerHTML=
-'<strong>Alumno:</strong> '+
-esc(alumno.nombre)+
-'<br><strong>Email:</strong> '+
-esc(alumno.email||usuario.email||'');
+        gallery.innerHTML =
+          '<div class="roxthal-at-empty">' +
+          '🎨 Todavía no hay trabajos publicados.' +
+          '</div>';
 
-await cargarCursoAlumno();
+        return;
 
-}
+      }
 
 
-/* =========================================================
-   CURSO ALUMNO
-   ========================================================= */
+      gallery.innerHTML =
+        photos
+          .map(function(photo){
 
-async function cargarCursoAlumno(){
+            return `
 
-const caja=
-document.getElementById('rox-curso');
+              <article
+                class="roxthal-at-photo"
+              >
 
-const r=
-await sb
-.from('academia_cursos')
-.select('*')
-.eq('id',alumno.curso_id)
-.maybeSingle();
+                <img
+                  src="${atEscape(photo.url)}"
+                  alt="${atEscape(
+                    photo.title ||
+                    "Trabajo de alumno"
+                  )}"
+                  loading="lazy"
+                  data-at-image="${atEscape(
+                    photo.url
+                  )}"
+                >
 
-if(r.error||!r.data){
 
-caja.innerHTML=
-'<div class="rox-msg rox-error">❌ No se pudo cargar el curso.</div>';
+                <div
+                  class="roxthal-at-photo-info"
+                >
 
-return;
-}
+                  <span
+                    class="roxthal-at-type"
+                  >
+                    ${atEscape(
+                      photo.description
+                        ?.split(" — ")[0] ||
+                      "Trabajo"
+                    )}
+                  </span>
 
-curso=r.data;
 
-const lecciones=
-await sb
-.from('academia_lecciones')
-.select('*')
-.eq('curso_id',curso.id)
-.order('numero',{ascending:true});
+                  <h3>
+                    ${atEscape(
+                      photo.title ||
+                      "Trabajo de alumno"
+                    )}
+                  </h3>
 
-if(lecciones.error){
 
-caja.innerHTML=
-'<div class="rox-msg rox-error">❌ No se pudieron cargar las lecciones.</div>';
+                  ${
+                    photo.description &&
+                    photo.description.includes(" — ")
+                      ?
+                      `<p>${atEscape(
+                        photo.description
+                          .split(" — ")
+                          .slice(1)
+                          .join(" — ")
+                      )}</p>`
+                      :
+                      ""
+                  }
 
-return;
-}
+                </div>
 
-const progreso=
-await sb
-.from('academia_progreso')
-.select('*')
-.eq('alumno_id',usuario.id);
+              </article>
 
-const mapa={};
+            `;
 
-if(!progreso.error){
+          })
+          .join("");
 
-progreso.data.forEach(x=>{
-mapa[x.leccion_id]=x;
-});
 
-}
+      gallery
+        .querySelectorAll(
+          "[data-at-image]"
+        )
+        .forEach(function(image){
 
-let completas=0;
+          image.addEventListener(
+            "click",
+            function(){
 
-let html=
-'<h2>📚 '+esc(curso.nombre)+'</h2>'+
-'<p>'+esc(curso.descripcion||'')+'</p>';
+              atOpenLightbox(
+                image.dataset.atImage
+              );
 
-lecciones.data.forEach(l=>{
+            }
+          );
 
-const p=mapa[l.id];
+        });
 
-const hecha=p&&p.completada;
 
-if(hecha)completas++;
+    }catch(error){
 
-html+=
-'<div class="rox-leccion">'+
+      console.error(
+        "RoXThal alumnos/talleres:",
+        error
+      );
 
-'<small style="color:#888">LECCIÓN '+l.numero+'</small>'+
 
-'<h3>'+esc(l.titulo)+'</h3>'+
+      gallery.innerHTML =
+        '<div class="roxthal-at-empty">' +
+        '❌ No se pudieron cargar las fotos.<br><br>' +
+        atEscape(
+          error?.message || error
+        ) +
+        '</div>';
 
-'<div style="white-space:pre-wrap;color:#ccc">'+
-esc(l.contenido||'')+
-'</div>';
+    }
 
-if(l.imagen_url){
+  }
 
-html+=
-'<img src="'+
-attr(l.imagen_url)+
-'" loading="lazy">';
 
-}
+  /* ==========================================================
+     ABRIR ADMINISTRADOR
+     ========================================================== */
 
-if(l.video_url){
+  at$(
+    "roxthal-at-admin-button"
+  ).addEventListener(
+    "click",
+    async function(){
 
-html+=
-'<div style="margin-top:10px">'+
-'<a href="'+attr(l.video_url)+'" target="_blank" '+
-'rel="noopener" style="color:#ffd700">'+
-'🎥 VER VÍDEO'+
-'</a></div>';
+      const admin =
+        at$("roxthal-at-admin");
 
-}
 
-html+=
-'<button class="rox-btn '+
-(hecha?'sec':'')+
-'" data-leccion="'+l.id+'">'+
-(hecha?'✅ COMPLETADA':'☑️ MARCAR COMO COMPLETADA')+
-'</button>'+
+      admin.classList.toggle(
+        "open"
+      );
 
-'</div>';
 
-});
+      if(
+        admin.classList.contains("open")
+      ){
 
-caja.innerHTML=html;
+        await atCheckSession();
 
-const porcentaje=
-lecciones.data.length?
-Math.round(completas/lecciones.data.length*100):0;
+      }
 
-document.getElementById('rox-barra')
-.style.width=porcentaje+'%';
+    }
+  );
 
-document.getElementById('rox-porcentaje')
-.textContent=porcentaje+'% completado';
 
-caja.querySelectorAll('[data-leccion]')
-.forEach(btn=>{
+  /* ==========================================================
+     COMPROBAR SESIÓN
+     ========================================================== */
 
-btn.onclick=async function(){
+  async function atCheckSession(){
 
-const id=Number(this.dataset.leccion);
+    try{
 
-const existe=
-await sb
-.from('academia_progreso')
-.select('id')
-.eq('alumno_id',usuario.id)
-.eq('leccion_id',id)
-.maybeSingle();
+      if(!atClient){
 
-let r;
+        atInit();
 
-if(existe.data){
+      }
 
-r=await sb
-.from('academia_progreso')
-.update({
-completada:true,
-updated_at:new Date().toISOString()
-})
-.eq('id',existe.data.id);
 
-}else{
+      const result =
+        await atClient.auth.getSession();
 
-r=await sb
-.from('academia_progreso')
-.insert({
-alumno_id:usuario.id,
-leccion_id:id,
-completada:true
-});
 
-}
+      atSession =
+        result?.data?.session ||
+        null;
 
-if(r.error){
 
-alert('❌ No se pudo guardar el progreso.');
+      if(atSession){
 
-return;
-}
+        atShowAdminPanel();
 
-await cargarCursoAlumno();
+      }else{
 
-};
+        atShowLogin();
 
-});
+      }
 
-await cargarActividadesAlumno();
-await cargarExamenAlumno();
+    }catch(error){
 
-}
+      atShowLogin();
 
+    }
 
-/* =========================================================
-   ACTIVIDADES ALUMNO
-   ========================================================= */
+  }
 
-async function cargarActividadesAlumno(){
 
-const caja=
-document.getElementById('rox-actividades');
+  function atShowLogin(){
 
-const ls=
-await sb
-.from('academia_lecciones')
-.select('id')
-.eq('curso_id',curso.id);
+    at$("roxthal-at-login")
+      .style.display =
+      "block";
 
-if(ls.error){
 
-caja.innerHTML=
-'<h2>✏️ Actividades</h2>'+
-'<div class="rox-msg rox-error">No se pudieron cargar.</div>';
+    at$("roxthal-at-panel")
+      .style.display =
+      "none";
 
-return;
-}
+  }
 
-const ids=ls.data.map(x=>x.id);
 
-if(!ids.length){
+  function atShowAdminPanel(){
 
-caja.innerHTML=
-'<h2>✏️ Actividades</h2>'+
-'<p>No hay actividades todavía.</p>';
+    at$("roxthal-at-login")
+      .style.display =
+      "none";
 
-return;
-}
 
-const r=
-await sb
-.from('academia_actividades')
-.select('*')
-.in('leccion_id',ids);
+    at$("roxthal-at-panel")
+      .style.display =
+      "block";
 
-if(r.error){
 
-caja.innerHTML=
-'<h2>✏️ Actividades</h2>'+
-'<div class="rox-msg rox-error">No se pudieron cargar.</div>';
+    atLoadAdminPhotos();
 
-return;
-}
+  }
 
-let html='<h2>✏️ Actividades</h2>';
 
-r.data.forEach(a=>{
+  /* ==========================================================
+     LOGIN
+     ========================================================== */
 
-html+=
-'<div class="rox-card">'+
-'<h3>'+esc(a.titulo)+'</h3>'+
-'<p>'+esc(a.instrucciones||'')+'</p>'+
+  at$(
+    "roxthalAtLoginButton"
+  ).addEventListener(
+    "click",
+    async function(){
 
-'<textarea class="rox-textarea" '+
-'id="entrega-'+a.id+'" '+
-'placeholder="Escribe tu respuesta..."></textarea>'+
+      try{
 
-'<button class="rox-btn" data-entrega="'+a.id+'">'+
-'📤 ENTREGAR'+
-'</button>'+
+        if(!atClient){
 
-'<div id="entrega-msg-'+a.id+'"></div>'+
-'</div>';
+          atInit();
 
-});
+        }
 
-caja.innerHTML=html;
 
-caja.querySelectorAll('[data-entrega]')
-.forEach(btn=>{
+        const email =
+          at$("roxthalAtAdminEmail")
+            .value
+            .trim();
 
-btn.onclick=async function(){
 
-const id=Number(this.dataset.entrega);
+        const password =
+          at$("roxthalAtAdminPassword")
+            .value;
 
-const textarea=
-document.getElementById('entrega-'+id);
 
-if(!textarea.value.trim())return;
+        if(!email || !password){
 
-const existente=
-await sb
-.from('academia_entregas')
-.select('id')
-.eq('actividad_id',id)
-.eq('alumno_id',usuario.id)
-.maybeSingle();
+          throw new Error(
+            "Introduce email y contraseña."
+          );
 
-let r;
+        }
 
-if(existente.data){
 
-r=await sb
-.from('academia_entregas')
-.update({
-respuesta:textarea.value.trim()
-})
-.eq('id',existente.data.id);
+        atStatus(
+          "roxthalAtLoginStatus",
+          "⏳ Iniciando sesión...",
+          ""
+        );
 
-}else{
 
-r=await sb
-.from('academia_entregas')
-.insert({
-actividad_id:id,
-alumno_id:usuario.id,
-respuesta:textarea.value.trim()
-});
+        const result =
+          await atClient.auth
+            .signInWithPassword({
+              email:email,
+              password:password
+            });
 
-}
 
-const msg=
-document.getElementById('entrega-msg-'+id);
+        if(result.error){
 
-msg.innerHTML=r.error?
-'<div class="rox-msg rox-error">❌ Error al entregar.</div>':
-'<div class="rox-msg rox-ok">✅ Actividad entregada.</div>';
+          throw result.error;
 
-};
+        }
 
-});
 
-}
+        atSession =
+          result.data.session;
 
 
-/* =========================================================
-   EXAMEN ALUMNO
-   ========================================================= */
+        atStatus(
+          "roxthalAtLoginStatus",
+          "✅ Sesión iniciada.",
+          "ok"
+        );
 
-async function cargarExamenAlumno(){
 
-const caja=
-document.getElementById('rox-examen');
+        atShowAdminPanel();
 
-const r=
-await sb
-.from('academia_examenes')
-.select('*')
-.eq('curso_id',curso.id)
-.eq('activo',true)
-.maybeSingle();
 
-if(r.error||!r.data){
+      }catch(error){
 
-caja.innerHTML=
-'<h2>📝 Examen</h2>'+
-'<p>El examen todavía no está disponible.</p>';
+        atStatus(
+          "roxthalAtLoginStatus",
+          "❌ " +
+          (
+            error?.message ||
+            error
+          ),
+          "err"
+        );
 
-return;
-}
+      }
 
-const examen=r.data;
+    }
+  );
 
-const preguntas=
-await sb
-.from('academia_preguntas')
-.select('*')
-.eq('examen_id',examen.id);
 
-if(preguntas.error||!preguntas.data.length){
+  /* ==========================================================
+     PREVISUALIZACIÓN
+     ========================================================== */
 
-caja.innerHTML=
-'<h2>📝 Examen</h2>'+
-'<p>El examen todavía no tiene preguntas.</p>';
+  at$(
+    "roxthalAtFile"
+  ).addEventListener(
+    "change",
+    function(){
 
-return;
-}
+      const file =
+        this.files?.[0];
 
-let html=
-'<h2>📝 '+esc(examen.titulo)+'</h2>'+
-'<p>Necesitas '+examen.porcentaje_aprobacion+
-'% para aprobar.</p>';
 
-preguntas.data.forEach((p,i)=>{
+      const preview =
+        at$("roxthal-at-preview");
 
-html+=
-'<div class="rox-pregunta">'+
-'<strong>'+(i+1)+'. '+esc(p.pregunta)+'</strong>'+
 
-'<label class="rox-opcion">'+
-'<input type="radio" name="p'+p.id+'" value="A"> '+
-esc(p.opcion_a)+'</label>'+
+      if(!file){
 
-'<label class="rox-opcion">'+
-'<input type="radio" name="p'+p.id+'" value="B"> '+
-esc(p.opcion_b)+'</label>'+
+        preview.src = "";
 
-'<label class="rox-opcion">'+
-'<input type="radio" name="p'+p.id+'" value="C"> '+
-esc(p.opcion_c)+'</label>'+
+        preview.style.display =
+          "none";
 
-'<label class="rox-opcion">'+
-'<input type="radio" name="p'+p.id+'" value="D"> '+
-esc(p.opcion_d)+'</label>'+
+        return;
 
-'</div>';
+      }
 
-});
 
-html+=
-'<button id="enviar-examen" class="rox-btn">'+
-'📝 ENVIAR EXAMEN'+
-'</button>'+
-'<div id="resultado-examen"></div>';
+      if(
+        !file.type.startsWith(
+          "image/"
+        )
+      ){
 
-caja.innerHTML=html;
+        this.value = "";
 
-document.getElementById('enviar-examen')
-.onclick=async function(){
+        preview.src = "";
 
-let correctas=0;
+        preview.style.display =
+          "none";
 
-preguntas.data.forEach(p=>{
 
-const seleccionado=
-document.querySelector(
-'input[name="p'+p.id+'"]:checked'
-);
+        atStatus(
+          "roxthalAtUploadStatus",
+          "❌ Seleccioná una imagen válida.",
+          "err"
+        );
 
-if(
-seleccionado &&
-seleccionado.value===p.respuesta_correcta
-)correctas++;
+        return;
 
-});
+      }
 
-const nota=Math.round(
-correctas/preguntas.data.length*100
-);
 
-const aprobado=
-nota>=examen.porcentaje_aprobacion;
+      const reader =
+        new FileReader();
 
-const guardar=
-await sb
-.from('academia_intentos')
-.insert({
-examen_id:examen.id,
-alumno_id:usuario.id,
-nota:nota,
-aprobado:aprobado
-});
 
-const resultado=
-document.getElementById('resultado-examen');
+      reader.onload =
+        function(){
 
-if(guardar.error){
+          preview.src =
+            reader.result;
 
-resultado.innerHTML=
-'<div class="rox-msg rox-error">❌ No se pudo guardar el examen.</div>';
+          preview.style.display =
+            "block";
 
-return;
-}
+        };
 
-resultado.innerHTML=
-'<div class="rox-msg '+
-(aprobado?'rox-ok':'rox-error')+
-'">'+
-(aprobado?
-'🏆 ¡EXAMEN APROBADO!':
-'❌ EXAMEN NO APROBADO')+
-' — Nota: '+nota+'%'+
-'</div>';
 
-if(aprobado){
+      reader.readAsDataURL(
+        file
+      );
 
-await generarDiploma(nota);
+    }
+  );
 
-}
 
-};
+  /* ==========================================================
+     SUBIR FOTO
+     ========================================================== */
 
-}
+  at$(
+    "roxthalAtUploadButton"
+  ).addEventListener(
+    "click",
+    atUploadPhoto
+  );
 
 
-/* =========================================================
-   DIPLOMA
-   ========================================================= */
+  async function atUploadPhoto(){
 
-async function generarDiploma(nota){
+    try{
 
-const existente=
-await sb
-.from('academia_diplomas')
-.select('*')
-.eq('alumno_id',usuario.id)
-.eq('curso_id',curso.id)
-.maybeSingle();
+      if(!atClient){
 
-let diploma=existente.data;
+        atInit();
 
-if(!diploma){
+      }
 
-const numero=
-'RX-'+
-Date.now()+
-'-'+
-Math.floor(Math.random()*9999);
 
-const r=
-await sb
-.from('academia_diplomas')
-.insert({
-alumno_id:usuario.id,
-curso_id:curso.id,
-numero:numero,
-nota_final:nota
-})
-.select('*')
-.single();
+      const sessionResult =
+        await atClient.auth
+          .getSession();
 
-if(r.error)return;
 
-diploma=r.data;
+      atSession =
+        sessionResult
+          ?.data
+          ?.session ||
+        null;
 
-}
 
-mostrarDiploma(diploma);
+      if(!atSession){
 
-}
+        throw new Error(
+          "La sesión del administrador no está iniciada."
+        );
 
-function mostrarDiploma(d){
+      }
 
-const caja=
-document.getElementById('rox-diploma');
 
-caja.innerHTML=
-'<h2>🏆 Diploma</h2>'+
+      const file =
+        at$("roxthalAtFile")
+          ?.files?.[0];
 
-'<div class="rox-diploma">'+
-'<strong>ROXTHAL ART DESIGN</strong>'+
-'<h1>DIPLOMA DE APROVECHAMIENTO</h1>'+
-'<p>Se certifica que</p>'+
-'<div style="font-size:26px;font-weight:900;margin:20px 0">'+
-esc(alumno.nombre)+
-'</div>'+
-'<p>ha completado y aprobado</p>'+
-'<h2>'+esc(curso.nombre)+'</h2>'+
-'<p>Calificación: <strong>'+
-d.nota_final+'%</strong></p>'+
-'<p>Fecha: '+
-new Date(d.fecha_emision).toLocaleDateString('es-AR')+
-'</p>'+
-'<small>Diploma Nº '+esc(d.numero)+'</small>'+
-'</div>'+
 
-'<button id="imprimir-diploma" class="rox-btn">'+
-'🖨️ IMPRIMIR / GUARDAR'+
-'</button>';
+      if(!file){
 
-document.getElementById('imprimir-diploma')
-.onclick=()=>window.print();
+        throw new Error(
+          "Seleccioná una foto desde el celular."
+        );
 
-}
+      }
 
 
-/* =========================================================
-   ADMIN
-   ========================================================= */
+      if(
+        !file.type.startsWith("image/")
+      ){
 
-async function cargarAdmin(){
+        throw new Error(
+          "El archivo debe ser una imagen."
+        );
 
-ocultar();
+      }
 
-document.getElementById('rox-admin')
-.classList.remove('rox-oculto');
 
-await cargarCursosAdmin();
-await cargarAlumnosAdmin();
-await cargarLeccionesAdmin();
-await cargarActividadesAdmin();
-await cargarExamenesAdmin();
+      const type =
+        at$("roxthalAtType")
+          .value;
 
-}
 
+      const title =
+        at$("roxthalAtTitle")
+          .value
+          .trim();
 
-/* =========================================================
-   CURSOS
-   ========================================================= */
 
-async function cargarCursosAdmin(){
+      const description =
+        at$("roxthalAtDescription")
+          .value
+          .trim();
 
-const r=
-await sb
-.from('academia_cursos')
-.select('*')
-.order('id');
 
-if(r.error)return;
+      if(!title){
 
-const selects=[
-'admin-curso',
-'admin-leccion-curso',
-'admin-examen-curso'
-];
+        throw new Error(
+          "Escribí un título para la foto."
+        );
 
-selects.forEach(id=>{
+      }
 
-const s=document.getElementById(id);
 
-if(!s)return;
+      /*
+       * Nombre único para Storage.
+       */
 
-s.innerHTML=
-'<option value="">Seleccionar curso...</option>';
+      let extension =
+        (
+          file.name
+            .split(".")
+            .pop() ||
+          "jpg"
+        )
+          .toLowerCase();
 
-r.data.forEach(c=>{
 
-s.innerHTML+=
-'<option value="'+c.id+'">'+
-esc(c.nombre)+
-'</option>';
+      if(
+        ![
+          "jpg",
+          "jpeg",
+          "png",
+          "webp",
+          "gif"
+        ].includes(extension)
+      ){
 
-});
+        extension =
+          "jpg";
 
-});
+      }
 
-}
 
+      const storagePath =
+        "alumnos-talleres/" +
+        Date.now() +
+        "_" +
+        Math.random()
+          .toString(36)
+          .substring(2,10) +
+        "." +
+        extension;
 
-/* =========================================================
-   CREAR ALUMNO
-   ========================================================= */
 
-document.getElementById('admin-crear-alumno')
-.onclick=async function(){
+      atStatus(
+        "roxthalAtUploadStatus",
+        "⏳ Subiendo foto al servidor...",
+        ""
+      );
 
-const msg=
-document.getElementById('admin-alumno-msg');
 
-const nombre=
-document.getElementById('admin-nombre').value.trim();
+      /*
+       * 1. SUBIR ARCHIVO
+       */
 
-const email=
-document.getElementById('admin-email').value.trim();
+      const upload =
+        await atClient.storage
+          .from(AT_BUCKET)
+          .upload(
+            storagePath,
+            file,
+            {
+              cacheControl:"3600",
+              upsert:false,
+              contentType:
+                file.type
+            }
+          );
 
-const password=
-document.getElementById('admin-password').value;
 
-const curso=
-document.getElementById('admin-curso').value;
+      if(upload.error){
 
-if(!nombre||!email||password.length<6||!curso){
+        throw upload.error;
 
-msg.innerHTML=
-'<div class="rox-msg rox-error">'+
-'❌ Completa nombre, email, contraseña de mínimo 6 caracteres y curso.'+
-'</div>';
+      }
 
-return;
-}
 
-msg.innerHTML=
-'<div class="rox-msg rox-info">⏳ Creando alumno...</div>';
+      /*
+       * 2. OBTENER URL PÚBLICA
+       */
 
-const r=
-await sb.functions.invoke(
-CREAR_ALUMNO_FUNCTION,
-{
-body:{
-nombre:nombre,
-email:email,
-password:password,
-curso_id:Number(curso)
-}
-});
+      const publicResult =
+        atClient.storage
+          .from(AT_BUCKET)
+          .getPublicUrl(
+            storagePath
+          );
 
-if(r.error){
 
-msg.innerHTML=
-'<div class="rox-msg rox-error">❌ '+
-esc(r.error.message)+
-'</div>';
+      const publicUrl =
+        publicResult
+          ?.data
+          ?.publicUrl;
 
-return;
-}
 
-if(r.data&&r.data.error){
+      if(!publicUrl){
 
-msg.innerHTML=
-'<div class="rox-msg rox-error">❌ '+
-esc(r.data.error)+
-'</div>';
+        await atClient.storage
+          .from(AT_BUCKET)
+          .remove([
+            storagePath
+          ]);
 
-return;
-}
 
-msg.innerHTML=
-'<div class="rox-msg rox-ok">'+
-'✅ Alumno creado correctamente.'+
-'</div>';
+        throw new Error(
+          "No se pudo obtener la URL pública."
+        );
 
-document.getElementById('admin-nombre').value='';
-document.getElementById('admin-email').value='';
-document.getElementById('admin-password').value='';
+      }
 
-await cargarAlumnosAdmin();
 
-};
+      /*
+       * 3. GUARDAR REFERENCIA EN images
+       */
 
+      const insert =
+        await atClient
+          .from("images")
+          .insert({
 
-/* =========================================================
-   LISTA ALUMNOS
-   ========================================================= */
+            title:title,
 
-async function cargarAlumnosAdmin(){
+            category:
+              AT_CATEGORY,
 
-const lista=
-document.getElementById('admin-lista-alumnos');
+            url:publicUrl,
 
-const r=
-await sb
-.from('academia_alumnos')
-.select('id,nombre,email,curso_id,activo')
-.order('nombre');
+            description:
+              description
+                ?
+                type +
+                " — " +
+                description
+                :
+                type,
 
-if(r.error){
+            visible:true
 
-lista.innerHTML=
-'<div class="rox-msg rox-error">❌ No se pudieron cargar.</div>';
+          })
+          .select()
+          .single();
 
-return;
-}
 
-if(!r.data.length){
+      if(insert.error){
 
-lista.innerHTML='<p>No hay alumnos todavía.</p>';
+        /*
+         * Si la tabla falla,
+         * eliminamos el archivo que acabamos
+         * de subir para no dejar basura.
+         */
 
-return;
-}
+        await atClient.storage
+          .from(AT_BUCKET)
+          .remove([
+            storagePath
+          ]);
 
-const cursos=
-await sb
-.from('academia_cursos')
-.select('id,nombre');
 
-const mapa={};
+        throw insert.error;
 
-if(!cursos.error){
+      }
 
-cursos.data.forEach(c=>{
-mapa[c.id]=c.nombre;
-});
 
-}
+      atStatus(
+        "roxthalAtUploadStatus",
+        "✅ Foto subida y publicada correctamente.",
+        "ok"
+      );
 
-lista.innerHTML='';
 
-r.data.forEach(a=>{
+      atClearForm();
 
-const div=document.createElement('div');
 
-div.className='rox-card';
+      await atLoadAdminPhotos();
 
-div.innerHTML=
-'<h3>'+esc(a.nombre)+'</h3>'+
-'<p>📧 '+esc(a.email||'')+'</p>'+
-'<p>📚 '+esc(mapa[a.curso_id]||'Sin curso')+'</p>'+
-'<p>Estado: '+(a.activo?'🟢 Activo':'🔴 Inactivo')+'</p>'+
+      await atLoadPublic();
 
-'<button class="rox-btn sec" data-toggle="'+
-a.id+'">'+
-(a.activo?'🚫 DESACTIVAR':'✅ ACTIVAR')+
-'</button>';
 
-lista.appendChild(div);
+    }catch(error){
 
-div.querySelector('[data-toggle]')
-.onclick=async function(){
+      console.error(
+        "RoXThal upload:",
+        error
+      );
 
-await sb
-.from('academia_alumnos')
-.update({activo:!a.activo})
-.eq('id',a.id);
 
-await cargarAlumnosAdmin();
+      atStatus(
+        "roxthalAtUploadStatus",
+        "❌ " +
+        (
+          error?.message ||
+          error
+        ),
+        "err"
+      );
 
-};
+    }
 
-});
+  }
 
-}
 
+  /* ==========================================================
+     LIMPIAR FORMULARIO
+     ========================================================== */
 
-/* =========================================================
-   LECCIONES ADMIN
-   ========================================================= */
+  at$(
+    "roxthalAtClearButton"
+  ).addEventListener(
+    "click",
+    atClearForm
+  );
 
-async function cargarLeccionesAdmin(){
 
-const r=
-await sb
-.from('academia_lecciones')
-.select('*')
-.order('curso_id')
-.order('numero');
+  function atClearForm(){
 
-const select=
-document.getElementById('admin-actividad-leccion');
+    at$("roxthalAtTitle")
+      .value = "";
 
-select.innerHTML=
-'<option value="">Seleccionar lección...</option>';
 
-const lista=
-document.getElementById('admin-lista-lecciones');
+    at$("roxthalAtDescription")
+      .value = "";
 
-lista.innerHTML='';
 
-if(r.error)return;
+    at$("roxthalAtType")
+      .value =
+      "Trabajo de alumno";
 
-r.data.forEach(l=>{
 
-select.innerHTML+=
-'<option value="'+l.id+'">'+
-esc(l.titulo)+
-'</option>';
+    at$("roxthalAtFile")
+      .value = "";
 
-lista.innerHTML+=
-'<div class="rox-card">'+
-'<h3>'+esc(l.titulo)+'</h3>'+
-'<p>Lección '+l.numero+'</p>'+
-'<p style="color:#aaa">'+
-esc((l.contenido||'').substring(0,180))+
-'</p>'+
-'</div>';
 
-});
+    at$("roxthal-at-preview")
+      .src = "";
 
-}
 
+    at$("roxthal-at-preview")
+      .style.display =
+      "none";
 
-/* =========================================================
-   SUBIDA DE ARCHIVOS
-   ========================================================= */
+  }
 
-async function subirArchivo(file,tipo){
 
-if(!file)return null;
+  /* ==========================================================
+     CARGAR LISTA DEL ADMINISTRADOR
+     ========================================================== */
 
-const nombre=
-Date.now()+'-'+
-Math.random().toString(36).slice(2)+
-'-'+
-file.name.replace(/[^a-zA-Z0-9._-]/g,'');
+  async function atLoadAdminPhotos(){
 
-const ruta=
-tipo+'/'+nombre;
+    const box =
+      at$("roxthalAtAdminPhotos");
 
-const r=
-await sb.storage
-.from('academia-media')
-.upload(ruta,file,{
-upsert:false
-});
 
-if(r.error)throw r.error;
+    if(!box) return;
 
-const url=
-SB_URL+
-'/storage/v1/object/public/academia-media/'+
-ruta;
 
-return url;
+    box.innerHTML =
+      '<div class="roxthal-at-empty">' +
+      '⏳ Cargando fotos...' +
+      '</div>';
 
-}
 
+    try{
 
-/* =========================================================
-   CREAR LECCIÓN
-   ========================================================= */
+      const result =
+        await atClient
+          .from("images")
+          .select(
+            "id,title,category,url,description,visible,created_at"
+          )
+          .eq(
+            "category",
+            AT_CATEGORY
+          )
+          .order(
+            "created_at",
+            {
+              ascending:false
+            }
+          );
 
-document.getElementById('admin-crear-leccion')
-.onclick=async function(){
 
-const msg=
-document.getElementById('admin-leccion-msg');
+      if(result.error){
 
-try{
+        throw result.error;
 
-const cursoId=
-Number(document.getElementById('admin-leccion-curso').value);
+      }
 
-const numero=
-Number(document.getElementById('admin-leccion-numero').value);
 
-const titulo=
-document.getElementById('admin-leccion-titulo').value.trim();
+      const photos =
+        result.data || [];
 
-const contenido=
-document.getElementById('admin-leccion-contenido').value.trim();
 
-const imagenFile=
-document.getElementById('admin-imagen').files[0];
+      if(!photos.length){
 
-const videoFile=
-document.getElementById('admin-video').files[0];
+        box.innerHTML =
+          '<div class="roxthal-at-empty">' +
+          'Todavía no hay fotos en este módulo.' +
+          '</div>';
 
-let imagen=
-document.getElementById('admin-imagen-url').value.trim();
+        return;
 
-let video=
-document.getElementById('admin-video-url').value.trim();
+      }
 
-if(!cursoId||!numero||!titulo){
 
-msg.innerHTML=
-'<div class="rox-msg rox-error">❌ Completa curso, número y título.</div>';
+      box.innerHTML =
+        photos.map(function(photo){
 
-return;
-}
+          return `
 
-msg.innerHTML=
-'<div class="rox-msg rox-info">⏳ Guardando lección...</div>';
+            <article
+              class="roxthal-at-admin-photo"
+            >
 
-if(imagenFile){
+              <img
+                src="${atEscape(photo.url)}"
+                alt="${atEscape(
+                  photo.title ||
+                  "Foto"
+                )}"
+              >
 
-imagen=await subirArchivo(
-imagenFile,'imagenes'
-);
 
-}
+              <div
+                class="roxthal-at-admin-info"
+              >
 
-if(videoFile){
+                <h4>
+                  ${atEscape(
+                    photo.title ||
+                    "Sin título"
+                  )}
+                </h4>
 
-video=await subirArchivo(
-videoFile,'videos'
-);
 
-}
+                <p>
+                  ${atEscape(
+                    photo.description ||
+                    ""
+                  )}
+                </p>
 
-const r=
-await sb
-.from('academia_lecciones')
-.insert({
-curso_id:cursoId,
-numero:numero,
-titulo:titulo,
-contenido:contenido,
-imagen_url:imagen||null,
-video_url:video||null
-});
 
-if(r.error)throw r.error;
+                <p>
+                  ${
+                    photo.visible
+                      ?
+                      "🟢 Visible en la app"
+                      :
+                      "⚪ Oculta en la app"
+                  }
+                </p>
 
-msg.innerHTML=
-'<div class="rox-msg rox-ok">✅ Lección guardada.</div>';
 
-document.getElementById('admin-leccion-titulo').value='';
-document.getElementById('admin-leccion-contenido').value='';
-document.getElementById('admin-imagen').value='';
-document.getElementById('admin-video').value='';
+                <div
+                  class="roxthal-at-admin-buttons"
+                >
 
-await cargarLeccionesAdmin();
+                  <button
+                    type="button"
+                    class="roxthal-at-btn"
+                    data-at-toggle="${atEscape(
+                      photo.id
+                    )}"
+                    data-at-visible="${
+                      photo.visible
+                        ?
+                        "false"
+                        :
+                        "true"
+                    }"
+                  >
 
-}catch(e){
+                    ${
+                      photo.visible
+                        ?
+                        "👁️ Ocultar"
+                        :
+                        "👁️ Mostrar"
+                    }
 
-msg.innerHTML=
-'<div class="rox-msg rox-error">❌ '+
-esc(e.message)+
-'</div>';
+                  </button>
 
-}
 
-};
+                  <button
+                    type="button"
+                    class="roxthal-at-btn roxthal-at-btn-red"
+                    data-at-delete="${atEscape(
+                      photo.id
+                    )}"
+                  >
 
+                    🗑️ Eliminar
 
-/* =========================================================
-   ACTIVIDADES ADMIN
-   ========================================================= */
+                  </button>
 
-async function cargarActividadesAdmin(){
+                </div>
 
-const lista=
-document.getElementById('admin-lista-actividades');
+              </div>
 
-const r=
-await sb
-.from('academia_actividades')
-.select('*')
-.order('id',{ascending:false});
+            </article>
 
-if(r.error)return;
+          `;
 
-lista.innerHTML='';
+        }).join("");
 
-r.data.forEach(a=>{
 
-lista.innerHTML+=
-'<div class="rox-card">'+
-'<h3>'+esc(a.titulo)+'</h3>'+
-'<p>'+esc(a.instrucciones||'')+'</p>'+
-'</div>';
+      box
+        .querySelectorAll(
+          "[data-at-toggle]"
+        )
+        .forEach(function(button){
 
-});
+          button.addEventListener(
+            "click",
+            function(){
 
-}
+              atTogglePhoto(
+                button.dataset.atToggle,
+                button.dataset.atVisible === "true"
+              );
 
-document.getElementById('admin-crear-actividad')
-.onclick=async function(){
+            }
+          );
 
-const msg=
-document.getElementById('admin-actividad-msg');
+        });
 
-const leccion=
-Number(document.getElementById('admin-actividad-leccion').value);
 
-const titulo=
-document.getElementById('admin-actividad-titulo').value.trim();
+      box
+        .querySelectorAll(
+          "[data-at-delete]"
+        )
+        .forEach(function(button){
 
-const instrucciones=
-document.getElementById('admin-actividad-instrucciones').value.trim();
+          button.addEventListener(
+            "click",
+            function(){
 
-if(!leccion||!titulo){
+              atDeletePhoto(
+                button.dataset.atDelete
+              );
 
-msg.innerHTML=
-'<div class="rox-msg rox-error">❌ Selecciona una lección y escribe el título.</div>';
+            }
+          );
 
-return;
-}
+        });
 
-const r=
-await sb
-.from('academia_actividades')
-.insert({
-leccion_id:leccion,
-titulo:titulo,
-instrucciones:instrucciones
-});
 
-if(r.error){
+    }catch(error){
 
-msg.innerHTML=
-'<div class="rox-msg rox-error">❌ '+
-esc(r.error.message)+
-'</div>';
+      box.innerHTML =
+        '<div class="roxthal-at-empty">' +
+        '❌ Error cargando las fotos.<br><br>' +
+        atEscape(
+          error?.message || error
+        ) +
+        '</div>';
 
-return;
-}
+    }
 
-msg.innerHTML=
-'<div class="rox-msg rox-ok">✅ Actividad creada.</div>';
+  }
 
-document.getElementById('admin-actividad-titulo').value='';
-document.getElementById('admin-actividad-instrucciones').value='';
 
-await cargarActividadesAdmin();
+  /* ==========================================================
+     MOSTRAR / OCULTAR
+     ========================================================== */
 
-};
+  async function atTogglePhoto(
+    id,
+    visible
+  ){
 
+    try{
 
-/* =========================================================
-   EXÁMENES ADMIN
-   ========================================================= */
+      const result =
+        await atClient
+          .from("images")
+          .update({
+            visible:visible
+          })
+          .eq(
+            "id",
+            id
+          );
 
-async function cargarExamenesAdmin(){
 
-const lista=
-document.getElementById('admin-lista-examenes');
+      if(result.error){
 
-const select=
-document.getElementById('admin-pregunta-examen');
+        throw result.error;
 
-const r=
-await sb
-.from('academia_examenes')
-.select('*')
-.order('id',{ascending:false});
+      }
 
-if(r.error)return;
 
-lista.innerHTML='';
+      await atLoadAdminPhotos();
 
-select.innerHTML=
-'<option value="">Seleccionar examen...</option>';
+      await atLoadPublic();
 
-r.data.forEach(e=>{
 
-select.innerHTML+=
-'<option value="'+e.id+'">'+
-esc(e.titulo)+
-'</option>';
+    }catch(error){
 
-lista.innerHTML+=
-'<div class="rox-card">'+
-'<h3>'+esc(e.titulo)+'</h3>'+
-'<p>Aprobación: '+
-e.porcentaje_aprobacion+'%</p>'+
-'</div>';
+      alert(
+        "❌ No se pudo cambiar la visibilidad:\n\n" +
+        (
+          error?.message ||
+          error
+        )
+      );
 
-});
+    }
 
-}
+  }
 
 
-/* =========================================================
-   CREAR EXAMEN
-   ========================================================= */
+  /* ==========================================================
+     ELIMINAR
+     ========================================================== */
 
-document.getElementById('admin-crear-examen')
-.onclick=async function(){
+  async function atDeletePhoto(id){
 
-const msg=
-document.getElementById('admin-examen-msg');
+    if(
+      !confirm(
+        "¿Seguro que querés eliminar esta foto?"
+      )
+    ){
 
-const curso=
-Number(document.getElementById('admin-examen-curso').value);
+      return;
 
-const titulo=
-document.getElementById('admin-examen-titulo').value.trim();
+    }
 
-const aprobacion=
-Number(document.getElementById('admin-examen-aprobacion').value)||70;
 
-if(!curso||!titulo){
+    try{
 
-msg.innerHTML=
-'<div class="rox-msg rox-error">❌ Completa curso y título.</div>';
+      /*
+       * Obtener URL antes de borrar.
+       */
 
-return;
-}
+      const query =
+        await atClient
+          .from("images")
+          .select(
+            "id,url"
+          )
+          .eq(
+            "id",
+            id
+          )
+          .single();
 
-const r=
-await sb
-.from('academia_examenes')
-.insert({
-curso_id:curso,
-titulo:titulo,
-porcentaje_aprobacion:aprobacion,
-activo:true
-});
 
-if(r.error){
+      if(query.error){
 
-msg.innerHTML=
-'<div class="rox-msg rox-error">❌ '+
-esc(r.error.message)+
-'</div>';
+        throw query.error;
 
-return;
-}
+      }
 
-msg.innerHTML=
-'<div class="rox-msg rox-ok">✅ Examen creado.</div>';
 
-document.getElementById('admin-examen-titulo').value='';
+      const photo =
+        query.data;
 
-await cargarExamenesAdmin();
 
-};
+      /*
+       * Eliminar registro.
+       */
 
+      const deleted =
+        await atClient
+          .from("images")
+          .delete()
+          .eq(
+            "id",
+            id
+          );
 
-/* =========================================================
-   CREAR PREGUNTA
-   ========================================================= */
 
-document.getElementById('admin-crear-pregunta')
-.onclick=async function(){
+      if(deleted.error){
 
-const msg=
-document.getElementById('admin-pregunta-msg');
+        throw deleted.error;
 
-const examen=
-Number(document.getElementById('admin-pregunta-examen').value);
+      }
 
-const pregunta=
-document.getElementById('admin-pregunta').value.trim();
 
-const a=
-document.getElementById('opcion-a').value.trim();
+      /*
+       * Intentar eliminar archivo de Storage.
+       */
 
-const b=
-document.getElementById('opcion-b').value.trim();
+      if(photo?.url){
 
-const c=
-document.getElementById('opcion-c').value.trim();
+        const marker =
+          "/storage/v1/object/public/" +
+          AT_BUCKET +
+          "/";
 
-const d=
-document.getElementById('opcion-d').value.trim();
 
-const correcta=
-document.getElementById('respuesta-correcta').value;
+        const position =
+          photo.url.indexOf(
+            marker
+          );
 
-if(!examen||!pregunta||!a||!b||!c||!d){
 
-msg.innerHTML=
-'<div class="rox-msg rox-error">❌ Completa todos los campos.</div>';
+        if(position !== -1){
 
-return;
-}
+          const path =
+            decodeURIComponent(
+              photo.url.substring(
+                position +
+                marker.length
+              )
+            );
 
-const r=
-await sb
-.from('academia_preguntas')
-.insert({
-examen_id:examen,
-pregunta:pregunta,
-opcion_a:a,
-opcion_b:b,
-opcion_c:c,
-opcion_d:d,
-respuesta_correcta:correcta
-});
 
-if(r.error){
+          if(path){
 
-msg.innerHTML=
-'<div class="rox-msg rox-error">❌ '+
-esc(r.error.message)+
-'</div>';
+            const storageDelete =
+              await atClient.storage
+                .from(AT_BUCKET)
+                .remove([
+                  path
+                ]);
 
-return;
-}
 
-msg.innerHTML=
-'<div class="rox-msg rox-ok">✅ Pregunta guardada.</div>';
+            if(
+              storageDelete.error
+            ){
 
-document.getElementById('admin-pregunta').value='';
-document.getElementById('opcion-a').value='';
-document.getElementById('opcion-b').value='';
-document.getElementById('opcion-c').value='';
-document.getElementById('opcion-d').value='';
+              console.warn(
+                "El registro fue eliminado pero Storage devolvió un error:",
+                storageDelete.error
+              );
 
-};
+            }
 
+          }
 
-/* =========================================================
-   NAVEGACIÓN ADMIN
-   ========================================================= */
+        }
 
-document.querySelectorAll('[data-admin]')
-.forEach(btn=>{
+      }
 
-btn.onclick=function(){
 
-document.querySelectorAll('[data-admin]')
-.forEach(x=>x.classList.remove('activo'));
+      await atLoadAdminPhotos();
 
-this.classList.add('activo');
+      await atLoadPublic();
 
-document.querySelectorAll('.admin-pagina')
-.forEach(x=>x.classList.add('rox-oculto'));
 
-document.getElementById(
-'admin-'+this.dataset.admin
-).classList.remove('rox-oculto');
+    }catch(error){
 
-};
+      alert(
+        "❌ No se pudo eliminar la foto:\n\n" +
+        (
+          error?.message ||
+          error
+        )
+      );
 
-});
+    }
 
+  }
 
-/* =========================================================
-   SALIR
-   ========================================================= */
 
-document.getElementById('rox-salir-alumno')
-.onclick=async function(){
+  /* ==========================================================
+     VISOR
+     ========================================================== */
 
-await sb.auth.signOut();
+  function atOpenLightbox(url){
 
-usuario=null;
-alumno=null;
-curso=null;
+    const lightbox =
+      at$("roxthal-at-lightbox");
 
-inicio();
 
-};
+    const image =
+      at$("roxthalAtLightboxImage");
 
-document.getElementById('rox-salir-admin')
-.onclick=async function(){
 
-await sb.auth.signOut();
+    image.src =
+      url;
 
-usuario=null;
 
-inicio();
+    lightbox.classList.add(
+      "open"
+    );
 
-};
 
+    document.body.style.overflow =
+      "hidden";
 
-/* =========================================================
-   SEGURIDAD HTML
-   ========================================================= */
+  }
 
-function esc(v){
 
-return String(v==null?'':v)
-.replace(/&/g,'&amp;')
-.replace(/</g,'&lt;')
-.replace(/>/g,'&gt;')
-.replace(/"/g,'&quot;')
-.replace(/'/g,'&#039;');
+  function atCloseLightbox(){
 
-}
+    const lightbox =
+      at$("roxthal-at-lightbox");
 
-function attr(v){
 
-return esc(v);
+    const image =
+      at$("roxthalAtLightboxImage");
 
-}
 
+    lightbox.classList.remove(
+      "open"
+    );
 
-/* =========================================================
-   CONECTAR
-   ========================================================= */
 
-conectar();
+    image.src = "";
+
+
+    document.body.style.overflow =
+      "";
+
+  }
+
+
+  at$(
+    "roxthal-at-lightbox-close"
+  ).addEventListener(
+    "click",
+    atCloseLightbox
+  );
+
+
+  at$(
+    "roxthal-at-lightbox"
+  ).addEventListener(
+    "click",
+    function(event){
+
+      if(
+        event.target === this
+      ){
+
+        atCloseLightbox();
+
+      }
+
+    }
+  );
+
+
+  document.addEventListener(
+    "keydown",
+    function(event){
+
+      if(
+        event.key === "Escape"
+      ){
+
+        atCloseLightbox();
+
+      }
+
+    }
+  );
+
+
+  /* ==========================================================
+     CERRAR SESIÓN
+     ========================================================== */
+
+  at$(
+    "roxthalAtLogoutButton"
+  ).addEventListener(
+    "click",
+    async function(){
+
+      try{
+
+        await atClient.auth.signOut();
+
+      }catch(error){
+
+        console.warn(error);
+
+      }
+
+
+      atSession = null;
+
+      atShowLogin();
+
+    }
+  );
+
+
+  /* ==========================================================
+     INICIO
+     ========================================================== */
+
+  atInit();
 
 })();
+
 </script>
 
-<!-- =========================================================
- FIN ACADEMIA ROXTHAL ART DESIGN
- ========================================================= -->
+<!-- ============================================================
+     FIN MÓDULO ALUMNOS Y TALLERES
+     ============================================================ -->
 </body>
 </html>
