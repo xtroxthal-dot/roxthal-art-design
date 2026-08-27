@@ -3688,5 +3688,354 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!-- FIN BUSCADOR DE TATUAJES -->
+  <!-- =========================================================
+     BUSCADOR DE CUADROS Y ARTISTAS
+     RoXThal Art Design
+     ========================================================= -->
+
+<section id="buscador-cuadros-artistas">
+
+  <div class="eyebrow">Arte · Obras · Historia · Artistas</div>
+
+  <h2>🖼️ Buscador de Cuadros y Artistas</h2>
+
+  <p class="muted">
+    Explorá obras de arte, pinturas, movimientos artísticos y artistas
+    de todas las épocas directamente en Internet.
+  </p>
+
+  <div class="card" style="
+    max-width:950px;
+    margin:25px auto 0;
+    padding:25px;
+  ">
+
+    <!-- BUSCADOR GENERAL -->
+
+    <div style="
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:stretch;
+    ">
+
+      <input
+        id="artSearch"
+        type="search"
+        placeholder="Ej.: Van Gogh, La Gioconda, Picasso, pintura surrealista..."
+        autocomplete="off"
+        aria-label="Buscar cuadros y artistas"
+        style="
+          flex:1;
+          min-width:220px;
+          padding:14px 16px;
+          border-radius:10px;
+          border:1px solid var(--line);
+          background:var(--panel2);
+          color:var(--text);
+          outline:none;
+        "
+      >
+
+      <button
+        class="btn btn-gold"
+        type="button"
+        onclick="buscarArte()"
+      >
+        🔍 BUSCAR ARTE
+      </button>
+
+    </div>
+
+
+    <!-- BUSCAR CUADROS -->
+
+    <div style="margin-top:26px;">
+
+      <p style="
+        margin:0 0 12px;
+        color:var(--gold2);
+        font-weight:700;
+      ">
+        🖼️ Buscar cuadros y estilos
+      </p>
+
+      <div style="
+        display:flex;
+        gap:8px;
+        flex-wrap:wrap;
+      ">
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArteCategoria('pinturas famosas')">
+          🖼️ Pinturas famosas
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArteCategoria('Renacimiento pintura')">
+          🏛️ Renacimiento
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArteCategoria('Barroco pintura')">
+          👑 Barroco
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArteCategoria('Impresionismo pintura')">
+          🌅 Impresionismo
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArteCategoria('Expresionismo pintura')">
+          🎭 Expresionismo
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArteCategoria('Surrealismo pintura')">
+          🌀 Surrealismo
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArteCategoria('Cubismo pintura')">
+          🔷 Cubismo
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArteCategoria('Realismo pintura')">
+          🎨 Realismo
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArteCategoria('arte abstracto pintura')">
+          ◼️ Abstracto
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArteCategoria('arte contemporáneo pintura')">
+          ✨ Contemporáneo
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- BUSCAR ARTISTAS -->
+
+    <div style="margin-top:28px;">
+
+      <p style="
+        margin:0 0 12px;
+        color:var(--gold2);
+        font-weight:700;
+      ">
+        👨‍🎨 Buscar artistas
+      </p>
+
+      <div style="
+        display:flex;
+        gap:8px;
+        flex-wrap:wrap;
+      ">
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArtista('Leonardo da Vinci')">
+          🎨 Leonardo da Vinci
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArtista('Michelangelo')">
+          🏛️ Michelangelo
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArtista('Vincent van Gogh')">
+          🌻 Van Gogh
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArtista('Pablo Picasso')">
+          🔷 Picasso
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArtista('Salvador Dalí')">
+          🌀 Dalí
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArtista('Frida Kahlo')">
+          🌺 Frida Kahlo
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArtista('Claude Monet')">
+          🌅 Monet
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArtista('Rembrandt')">
+          🖌️ Rembrandt
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArtista('Diego Velázquez')">
+          👑 Velázquez
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArtista('Francisco de Goya')">
+          🖼️ Goya
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- ARTE ARGENTINO Y LATINOAMERICANO -->
+
+    <div style="margin-top:28px;">
+
+      <p style="
+        margin:0 0 12px;
+        color:var(--gold2);
+        font-weight:700;
+      ">
+        🇦🇷 Arte argentino y latinoamericano
+      </p>
+
+      <div style="
+        display:flex;
+        gap:8px;
+        flex-wrap:wrap;
+      ">
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArteCategoria('arte argentino pintura')">
+          🇦🇷 Arte argentino
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArtista('Antonio Berni')">
+          🎨 Antonio Berni
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArtista('Benito Quinquela Martín')">
+          ⚓ Quinquela Martín
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArtista('Xul Solar')">
+          🌌 Xul Solar
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArtista('Fernando Botero')">
+          🎨 Botero
+        </button>
+
+        <button class="btn btn-dark" type="button"
+          onclick="buscarArteCategoria('arte latinoamericano pintura')">
+          🌎 Arte latinoamericano
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <p style="
+      margin:22px 0 0;
+      font-size:13px;
+      color:var(--muted);
+    ">
+      ℹ️ Las búsquedas se realizan en Google Imágenes.
+      Tocá Atrás para volver a RoXThal Art Design.
+    </p>
+
+  </div>
+
+</section>
+
+
+<script>
+
+function buscarArte() {
+
+  const campo = document.getElementById('artSearch');
+
+  if (!campo) return;
+
+  const texto = campo.value.trim();
+
+  if (!texto) {
+    campo.focus();
+    return;
+  }
+
+  const busqueda = 'arte ' + texto;
+
+  window.location.href =
+    'https://www.google.com/search?tbm=isch&q=' +
+    encodeURIComponent(busqueda);
+}
+
+
+function buscarArteCategoria(categoria) {
+
+  const campo = document.getElementById('artSearch');
+
+  if (campo) {
+    campo.value = categoria;
+  }
+
+  window.location.href =
+    'https://www.google.com/search?tbm=isch&q=' +
+    encodeURIComponent(categoria);
+}
+
+
+function buscarArtista(artista) {
+
+  const campo = document.getElementById('artSearch');
+
+  if (campo) {
+    campo.value = artista;
+  }
+
+  const busqueda = 'obras de arte ' + artista;
+
+  window.location.href =
+    'https://www.google.com/search?tbm=isch&q=' +
+    encodeURIComponent(busqueda);
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+
+  const campo = document.getElementById('artSearch');
+
+  if (!campo) return;
+
+  campo.addEventListener('keydown', function(event) {
+
+    if (event.key === 'Enter') {
+
+      event.preventDefault();
+
+      buscarArte();
+
+    }
+
+  });
+
+});
+
+</script>
+
+<!-- FIN BUSCADOR DE CUADROS Y ARTISTAS -->
 </body>
 </html>
