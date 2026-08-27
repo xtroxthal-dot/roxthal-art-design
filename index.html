@@ -6060,5 +6060,1268 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- =========================================================
      FIN MÓDULO
      ========================================================= -->
+  <!-- =========================================================
+     ROXTHAL ART DESIGN
+     MÓDULO INDEPENDIENTE:
+     TRABAJOS DE ALUMNOS Y TALLERES
+     FOTOS + VIDEOS + ADMINISTRADOR
+     ========================================================= -->
+
+<style>
+#roxthal-alumnos-talleres{
+  display:block!important;
+  width:100%!important;
+  max-width:1200px;
+  margin:35px auto!important;
+  padding:0 20px!important;
+  position:relative;
+  z-index:50;
+}
+
+#roxthal-alumnos-talleres-boton{
+  display:flex!important;
+  width:100%!important;
+  min-height:64px;
+  align-items:center;
+  justify-content:center;
+  padding:16px 20px;
+  background:#15151a!important;
+  color:#f5f5f5!important;
+  border:2px solid #d7b45a!important;
+  border-radius:15px!important;
+  font-size:17px;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 4px 20px rgba(0,0,0,.35);
+}
+
+#roxthal-alumnos-talleres-boton:hover{
+  background:#d7b45a!important;
+  color:#000!important;
+}
+
+#roxthal-alumnos-talleres-panel{
+  display:none;
+  margin-top:18px;
+  padding:25px;
+  background:#15151a;
+  color:#f5f5f5;
+  border:1px solid #2e2e38;
+  border-radius:20px;
+}
+
+#roxthal-alumnos-talleres-panel.abierto{
+  display:block!important;
+}
+
+.roxthal-at-titulo{
+  text-align:center;
+  font-size:28px;
+  font-weight:900;
+  color:#fff;
+  margin-bottom:6px;
+}
+
+.roxthal-at-subtitulo{
+  text-align:center;
+  color:#a0a0ab;
+  margin-bottom:25px;
+}
+
+#roxthal-at-admin-btn{
+  display:block;
+  margin:0 auto 20px;
+  padding:11px 18px;
+  background:#1e1e26;
+  color:#d7b45a;
+  border:1px solid #2e2e38;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+#roxthal-at-admin-panel{
+  display:none;
+  padding:20px;
+  margin-bottom:25px;
+  background:#080809;
+  border:1px solid #2e2e38;
+  border-radius:15px;
+}
+
+#roxthal-at-admin-panel.abierto{
+  display:block!important;
+}
+
+.roxthal-at-campo{
+  margin-bottom:14px;
+}
+
+.roxthal-at-campo label{
+  display:block;
+  margin-bottom:6px;
+  color:#d7b45a;
+  font-weight:700;
+  font-size:14px;
+}
+
+.roxthal-at-campo input,
+.roxthal-at-campo textarea,
+.roxthal-at-campo select{
+  width:100%;
+  padding:12px;
+  background:#15151a;
+  color:#fff;
+  border:1px solid #2e2e38;
+  border-radius:9px;
+}
+
+.roxthal-at-campo textarea{
+  min-height:80px;
+  resize:vertical;
+}
+
+#roxthal-at-login,
+#roxthal-at-publicar{
+  width:100%;
+  padding:13px;
+  background:#d7b45a;
+  color:#000;
+  border:0;
+  border-radius:10px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+#roxthal-at-login:hover,
+#roxthal-at-publicar:hover{
+  background:#f2da91;
+}
+
+#roxthal-at-formulario{
+  display:none;
+  margin-top:20px;
+}
+
+#roxthal-at-formulario.abierto{
+  display:block!important;
+}
+
+#roxthal-at-galeria{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:18px;
+}
+
+.roxthal-at-card{
+  overflow:hidden;
+  background:#1e1e26;
+  border:1px solid #2e2e38;
+  border-radius:15px;
+}
+
+.roxthal-at-card img,
+.roxthal-at-card video{
+  display:block;
+  width:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  background:#000;
+}
+
+.roxthal-at-info{
+  padding:14px;
+}
+
+.roxthal-at-info h3{
+  margin:0 0 6px;
+  color:#fff;
+  font-size:18px;
+}
+
+.roxthal-at-info p{
+  margin:0;
+  color:#a0a0ab;
+  font-size:14px;
+}
+
+.roxthal-at-eliminar{
+  width:100%;
+  margin-top:12px;
+  padding:9px;
+  background:#3b1717;
+  color:#ff8b8b;
+  border:1px solid #702020;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:800;
+}
+
+#roxthal-at-mensaje{
+  grid-column:1/-1;
+  padding:30px;
+  text-align:center;
+  color:#a0a0ab;
+}
+
+#roxthal-at-cerrar{
+  width:100%;
+  margin-top:25px;
+  padding:12px;
+  background:#1e1e26;
+  color:#fff;
+  border:1px solid #2e2e38;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.roxthal-at-error{
+  color:#ff7b7b!important;
+}
+
+.roxthal-at-ok{
+  color:#57d991!important;
+}
+</style>
+
+
+<div id="roxthal-alumnos-talleres">
+
+  <button
+    id="roxthal-alumnos-talleres-boton"
+    type="button">
+
+    📸 TRABAJOS DE NUESTROS ALUMNOS Y TALLERES
+
+  </button>
+
+
+  <div id="roxthal-alumnos-talleres-panel">
+
+    <div class="roxthal-at-titulo">
+      🎨 Trabajos de nuestros alumnos
+    </div>
+
+    <div class="roxthal-at-subtitulo">
+      Fotos y videos de nuestros trabajos y talleres
+    </div>
+
+
+    <button
+      id="roxthal-at-admin-btn"
+      type="button">
+
+      🔐 ADMINISTRADOR
+
+    </button>
+
+
+    <div id="roxthal-at-admin-panel">
+
+      <div class="roxthal-at-campo">
+
+        <label>
+          Email del administrador
+        </label>
+
+        <input
+          id="roxthal-at-email"
+          type="email"
+          autocomplete="username"
+          placeholder="Email">
+
+      </div>
+
+
+      <div class="roxthal-at-campo">
+
+        <label>
+          Contraseña
+        </label>
+
+        <input
+          id="roxthal-at-password"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Contraseña">
+
+      </div>
+
+
+      <button
+        id="roxthal-at-login"
+        type="button">
+
+        🔓 ENTRAR
+
+      </button>
+
+
+      <div
+        id="roxthal-at-login-mensaje"
+        style="
+          text-align:center;
+          margin-top:12px;
+          color:#a0a0ab;
+        ">
+      </div>
+
+
+      <div id="roxthal-at-formulario">
+
+        <div
+          style="
+            color:#57d991;
+            font-weight:bold;
+            margin-bottom:15px;
+            text-align:center;
+          ">
+
+          ✅ Administrador conectado
+
+        </div>
+
+
+        <div class="roxthal-at-campo">
+
+          <label>
+            Título
+          </label>
+
+          <input
+            id="roxthal-at-titulo"
+            type="text"
+            placeholder="Ej.: Taller de dibujo">
+
+        </div>
+
+
+        <div class="roxthal-at-campo">
+
+          <label>
+            Descripción
+          </label>
+
+          <textarea
+            id="roxthal-at-descripcion"
+            placeholder="Descripción del trabajo o taller"></textarea>
+
+        </div>
+
+
+        <div class="roxthal-at-campo">
+
+          <label>
+            Tipo de publicación
+          </label>
+
+          <select id="roxthal-at-tipo">
+
+            <option value="foto">
+              📸 Foto
+            </option>
+
+            <option value="video">
+              🎥 Video
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="roxthal-at-campo">
+
+          <label>
+            Foto o video
+          </label>
+
+          <input
+            id="roxthal-at-archivo"
+            type="file"
+            accept="image/*,video/*">
+
+        </div>
+
+
+        <button
+          id="roxthal-at-publicar"
+          type="button">
+
+          🚀 PUBLICAR
+
+        </button>
+
+
+        <div
+          id="roxthal-at-publicar-mensaje"
+          style="
+            text-align:center;
+            margin-top:12px;
+            color:#a0a0ab;
+          ">
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div id="roxthal-at-galeria">
+
+      <div id="roxthal-at-mensaje">
+        Cargando trabajos...
+      </div>
+
+    </div>
+
+
+    <button
+      id="roxthal-at-cerrar"
+      type="button">
+
+      ✕ CERRAR
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+(function(){
+
+"use strict";
+
+
+/* =========================================================
+   CONFIGURACIÓN REAL DE TU APP
+   ========================================================= */
+
+const ROXTHAL_SUPABASE_URL =
+'https://lvvhpuedktdmfehvhcwk.supabase.co';
+
+const ROXTHAL_SUPABASE_KEY =
+'sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp';
+
+
+const ROXTHAL_TABLA =
+'roxthal_trabajos_alumnos';
+
+const ROXTHAL_BUCKET =
+'roxthal_trabajos_alumnos';
+
+
+let roxthalSB = null;
+
+let roxthalAdmin = false;
+
+
+/* =========================================================
+   ELEMENTOS
+   ========================================================= */
+
+const boton =
+document.getElementById(
+'roxthal-alumnos-talleres-boton'
+);
+
+const panel =
+document.getElementById(
+'roxthal-alumnos-talleres-panel'
+);
+
+const cerrar =
+document.getElementById(
+'roxthal-at-cerrar'
+);
+
+const adminBtn =
+document.getElementById(
+'roxthal-at-admin-btn'
+);
+
+const adminPanel =
+document.getElementById(
+'roxthal-at-admin-panel'
+);
+
+const loginBtn =
+document.getElementById(
+'roxthal-at-login'
+);
+
+const publicarBtn =
+document.getElementById(
+'roxthal-at-publicar'
+);
+
+
+/* =========================================================
+   INICIAR SUPABASE
+   ========================================================= */
+
+function iniciarSupabase(){
+
+  if(roxthalSB){
+    return true;
+  }
+
+
+  if(
+    typeof window.supabase ===
+    'undefined'
+  ){
+
+    return false;
+
+  }
+
+
+  roxthalSB =
+    window.supabase.createClient(
+      ROXTHAL_SUPABASE_URL,
+      ROXTHAL_SUPABASE_KEY
+    );
+
+
+  return true;
+
+}
+
+
+/* =========================================================
+   ABRIR MÓDULO
+   ========================================================= */
+
+boton.addEventListener(
+'click',
+function(){
+
+  panel.classList.toggle(
+    'abierto'
+  );
+
+
+  if(
+    panel.classList.contains(
+      'abierto'
+    )
+  ){
+
+    cargarTrabajos();
+
+  }
+
+});
+
+
+/* =========================================================
+   CERRAR
+   ========================================================= */
+
+cerrar.addEventListener(
+'click',
+function(){
+
+  panel.classList.remove(
+    'abierto'
+  );
+
+});
+
+
+/* =========================================================
+   ABRIR ADMIN
+   ========================================================= */
+
+adminBtn.addEventListener(
+'click',
+function(){
+
+  adminPanel.classList.toggle(
+    'abierto'
+  );
+
+});
+
+
+/* =========================================================
+   LOGIN ADMINISTRADOR
+   ========================================================= */
+
+loginBtn.addEventListener(
+'click',
+async function(){
+
+  const mensaje =
+  document.getElementById(
+    'roxthal-at-login-mensaje'
+  );
+
+
+  if(!iniciarSupabase()){
+
+    mensaje.textContent =
+    '❌ No se pudo iniciar Supabase.';
+
+    mensaje.className =
+    'roxthal-at-error';
+
+    return;
+
+  }
+
+
+  const email =
+  document.getElementById(
+    'roxthal-at-email'
+  ).value.trim();
+
+
+  const password =
+  document.getElementById(
+    'roxthal-at-password'
+  ).value;
+
+
+  if(!email || !password){
+
+    mensaje.textContent =
+    'Introduce email y contraseña.';
+
+    return;
+
+  }
+
+
+  mensaje.textContent =
+  '⏳ Conectando...';
+
+
+  const resultado =
+  await roxthalSB.auth.signInWithPassword({
+    email:email,
+    password:password
+  });
+
+
+  if(resultado.error){
+
+    mensaje.textContent =
+    '❌ ' +
+    resultado.error.message;
+
+    mensaje.className =
+    'roxthal-at-error';
+
+    return;
+
+  }
+
+
+  roxthalAdmin = true;
+
+
+  mensaje.textContent =
+  '✅ Administrador conectado.';
+
+  mensaje.className =
+  'roxthal-at-ok';
+
+
+  document
+  .getElementById(
+    'roxthal-at-formulario'
+  )
+  .classList.add(
+    'abierto'
+  );
+
+
+  cargarTrabajos();
+
+});
+
+
+/* =========================================================
+   CARGAR PUBLICACIONES
+   ========================================================= */
+
+async function cargarTrabajos(){
+
+  const galeria =
+  document.getElementById(
+    'roxthal-at-galeria'
+  );
+
+
+  if(!iniciarSupabase()){
+
+    galeria.innerHTML =
+    '<div id="roxthal-at-mensaje" class="roxthal-at-error">' +
+    '❌ No se pudo conectar con Supabase.' +
+    '</div>';
+
+    return;
+
+  }
+
+
+  const resultado =
+  await roxthalSB
+  .from(ROXTHAL_TABLA)
+  .select('*')
+  .order(
+    'created_at',
+    {
+      ascending:false
+    }
+  );
+
+
+  if(resultado.error){
+
+    console.error(
+      resultado.error
+    );
+
+
+    galeria.innerHTML =
+    '<div id="roxthal-at-mensaje" class="roxthal-at-error">' +
+    '❌ No se pudieron cargar los trabajos.' +
+    '</div>';
+
+    return;
+
+  }
+
+
+  galeria.innerHTML = '';
+
+
+  const trabajos =
+  resultado.data || [];
+
+
+  if(!trabajos.length){
+
+    galeria.innerHTML =
+    '<div id="roxthal-at-mensaje">' +
+    'Todavía no hay trabajos publicados.' +
+    '</div>';
+
+    return;
+
+  }
+
+
+  trabajos.forEach(
+    function(trabajo){
+
+      crearTarjeta(
+        trabajo
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   CREAR TARJETA
+   ========================================================= */
+
+function crearTarjeta(
+trabajo
+){
+
+  const tarjeta =
+  document.createElement(
+    'div'
+  );
+
+  tarjeta.className =
+  'roxthal-at-card';
+
+
+  if(
+    trabajo.tipo ===
+    'video'
+  ){
+
+    const video =
+    document.createElement(
+      'video'
+    );
+
+    video.src =
+    trabajo.url;
+
+    video.controls =
+    true;
+
+    video.playsInline =
+    true;
+
+    tarjeta.appendChild(
+      video
+    );
+
+  }else{
+
+    const imagen =
+    document.createElement(
+      'img'
+    );
+
+    imagen.src =
+    trabajo.url;
+
+    imagen.alt =
+    trabajo.titulo ||
+    'Trabajo de alumno';
+
+    imagen.loading =
+    'lazy';
+
+    tarjeta.appendChild(
+      imagen
+    );
+
+  }
+
+
+  const info =
+  document.createElement(
+    'div'
+  );
+
+  info.className =
+  'roxthal-at-info';
+
+
+  const titulo =
+  document.createElement(
+    'h3'
+  );
+
+  titulo.textContent =
+  trabajo.titulo ||
+  'Trabajo de alumno';
+
+
+  const descripcion =
+  document.createElement(
+    'p'
+  );
+
+  descripcion.textContent =
+  trabajo.descripcion ||
+  '';
+
+
+  info.appendChild(
+    titulo
+  );
+
+  info.appendChild(
+    descripcion
+  );
+
+
+  if(roxthalAdmin){
+
+    const eliminar =
+    document.createElement(
+      'button'
+    );
+
+    eliminar.className =
+    'roxthal-at-eliminar';
+
+    eliminar.textContent =
+    '🗑️ ELIMINAR';
+
+    eliminar.addEventListener(
+      'click',
+      function(){
+
+        eliminarTrabajo(
+          trabajo
+        );
+
+      }
+    );
+
+
+    info.appendChild(
+      eliminar
+    );
+
+  }
+
+
+  tarjeta.appendChild(
+    info
+  );
+
+  document
+  .getElementById(
+    'roxthal-at-galeria'
+  )
+  .appendChild(
+    tarjeta
+  );
+
+}
+
+
+/* =========================================================
+   PUBLICAR
+   ========================================================= */
+
+publicarBtn.addEventListener(
+'click',
+async function(){
+
+  const mensaje =
+  document.getElementById(
+    'roxthal-at-publicar-mensaje'
+  );
+
+
+  if(!roxthalAdmin){
+
+    mensaje.textContent =
+    '❌ Primero debes entrar como administrador.';
+
+    return;
+
+  }
+
+
+  const titulo =
+  document.getElementById(
+    'roxthal-at-titulo'
+  ).value.trim();
+
+
+  const descripcion =
+  document.getElementById(
+    'roxthal-at-descripcion'
+  ).value.trim();
+
+
+  const tipo =
+  document.getElementById(
+    'roxthal-at-tipo'
+  ).value;
+
+
+  const archivo =
+  document.getElementById(
+    'roxthal-at-archivo'
+  ).files[0];
+
+
+  if(!titulo){
+
+    mensaje.textContent =
+    '❌ Escribe un título.';
+
+    return;
+
+  }
+
+
+  if(!archivo){
+
+    mensaje.textContent =
+    '❌ Selecciona una foto o video.';
+
+    return;
+
+  }
+
+
+  if(!iniciarSupabase()){
+
+    mensaje.textContent =
+    '❌ No se pudo conectar con Supabase.';
+
+    return;
+
+  }
+
+
+  publicarBtn.disabled =
+  true;
+
+  publicarBtn.textContent =
+  '⏳ SUBIENDO...';
+
+
+  mensaje.textContent =
+  'Subiendo archivo...';
+
+
+  try{
+
+    const extension =
+    archivo.name
+    .split('.')
+    .pop()
+    .toLowerCase();
+
+
+    const nombreArchivo =
+    Date.now() +
+    '_' +
+    Math.random()
+    .toString(36)
+    .substring(2,10) +
+    '.' +
+    extension;
+
+
+    const ruta =
+    'alumnos-talleres/' +
+    nombreArchivo;
+
+
+    const subida =
+    await roxthalSB
+    .storage
+    .from(
+      ROXTHAL_BUCKET
+    )
+    .upload(
+      ruta,
+      archivo,
+      {
+        cacheControl:'3600',
+        upsert:false,
+        contentType:
+        archivo.type
+      }
+    );
+
+
+    if(subida.error){
+
+      throw subida.error;
+
+    }
+
+
+    mensaje.textContent =
+    'Guardando publicación...';
+
+
+    const publicUrl =
+    roxthalSB
+    .storage
+    .from(
+      ROXTHAL_BUCKET
+    )
+    .getPublicUrl(
+      ruta
+    )
+    .data
+    .publicUrl;
+
+
+    const registro =
+    await roxthalSB
+    .from(
+      ROXTHAL_TABLA
+    )
+    .insert({
+
+      titulo:titulo,
+
+      descripcion:descripcion,
+
+      tipo:tipo,
+
+      url:publicUrl,
+
+      archivo:ruta
+
+    });
+
+
+    if(registro.error){
+
+      await roxthalSB
+      .storage
+      .from(
+        ROXTHAL_BUCKET
+      )
+      .remove([
+        ruta
+      ]);
+
+
+      throw registro.error;
+
+    }
+
+
+    mensaje.textContent =
+    '✅ Publicado correctamente.';
+
+    mensaje.className =
+    'roxthal-at-ok';
+
+
+    document
+    .getElementById(
+      'roxthal-at-titulo'
+    ).value='';
+
+
+    document
+    .getElementById(
+      'roxthal-at-descripcion'
+    ).value='';
+
+
+    document
+    .getElementById(
+      'roxthal-at-archivo'
+    ).value='';
+
+
+    await cargarTrabajos();
+
+
+  }catch(error){
+
+    console.error(
+      error
+    );
+
+
+    mensaje.textContent =
+    '❌ ' +
+    (
+      error.message ||
+      'No se pudo publicar.'
+    );
+
+
+    mensaje.className =
+    'roxthal-at-error';
+
+
+  }finally{
+
+    publicarBtn.disabled =
+    false;
+
+    publicarBtn.textContent =
+    '🚀 PUBLICAR';
+
+  }
+
+});
+
+
+/* =========================================================
+   ELIMINAR
+   ========================================================= */
+
+async function eliminarTrabajo(
+trabajo
+){
+
+  if(!roxthalAdmin){
+    return;
+  }
+
+
+  if(
+    !confirm(
+      '¿Quieres eliminar este trabajo?'
+    )
+  ){
+
+    return;
+
+  }
+
+
+  try{
+
+    if(trabajo.archivo){
+
+      await roxthalSB
+      .storage
+      .from(
+        ROXTHAL_BUCKET
+      )
+      .remove([
+        trabajo.archivo
+      ]);
+
+    }
+
+
+    const resultado =
+    await roxthalSB
+    .from(
+      ROXTHAL_TABLA
+    )
+    .delete()
+    .eq(
+      'id',
+      trabajo.id
+    );
+
+
+    if(resultado.error){
+
+      alert(
+        '❌ ' +
+        resultado.error.message
+      );
+
+      return;
+
+    }
+
+
+    cargarTrabajos();
+
+
+  }catch(error){
+
+    console.error(
+      error
+    );
+
+    alert(
+      '❌ No se pudo eliminar.'
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   FIN
+   ========================================================= */
+
+})();
+</script>
+
+<!-- =========================================================
+     FIN MÓDULO ROXTHAL
+     ========================================================= -->
 </body>
 </html>
