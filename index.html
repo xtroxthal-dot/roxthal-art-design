@@ -1843,5 +1843,1645 @@
 
 })();
 </script>
+  <!-- =========================================================
+     ROXTHAL ART DESIGN
+     SISTEMA DE RESEÑAS + MODERACIÓN
+     PEGAR TODO ESTE BLOQUE AL FINAL DE index.html
+     ========================================================= -->
+
+<section id="roxthal-resenas" style="
+  width:100%;
+  box-sizing:border-box;
+  padding:25px 15px 35px;
+  margin:0;
+  background:#000000;
+  color:#ffffff;
+  font-family:Arial,Helvetica,sans-serif;
+  border-top:1px solid rgba(255,255,255,0.15);
+">
+
+  <!-- =======================================================
+       CABECERA
+       ======================================================= -->
+
+  <div style="
+    text-align:center;
+    margin-bottom:15px;
+  ">
+
+    <div style="
+      font-size:23px;
+      font-weight:700;
+      margin-bottom:7px;
+    ">
+      ⭐ Reseñas
+    </div>
+
+    <div style="
+      font-size:14px;
+      opacity:0.75;
+    ">
+      Compartí tu experiencia con RoXThal Art Design
+    </div>
+
+  </div>
+
+
+  <!-- =======================================================
+       BOTÓN MOSTRAR / OCULTAR
+       ======================================================= -->
+
+  <button
+    id="roxthal-boton-resenas"
+    type="button"
+    style="
+      display:block;
+      width:100%;
+      max-width:520px;
+      margin:0 auto;
+      padding:14px 18px;
+      border:0;
+      border-radius:10px;
+      background:#ffffff;
+      color:#000000;
+      font-size:16px;
+      font-weight:700;
+      cursor:pointer;
+    "
+  >
+    ⭐ Ver reseñas ▼
+  </button>
+
+
+  <!-- =======================================================
+       CONTENIDO OCULTO
+       ======================================================= -->
+
+  <div
+    id="roxthal-contenido-resenas"
+    style="
+      display:none;
+      width:100%;
+      max-width:700px;
+      margin:20px auto 0;
+    "
+  >
+
+
+    <!-- =====================================================
+         FORMULARIO DE NUEVA RESEÑA
+         ===================================================== -->
+
+    <div style="
+      background:#111111;
+      border:1px solid rgba(255,255,255,0.15);
+      border-radius:12px;
+      padding:18px;
+      margin-bottom:20px;
+      box-sizing:border-box;
+    ">
+
+      <div style="
+        font-size:19px;
+        font-weight:700;
+        margin-bottom:6px;
+      ">
+        ✍️ Dejá tu reseña
+      </div>
+
+      <div style="
+        font-size:13px;
+        opacity:0.65;
+        margin-bottom:15px;
+      ">
+        Tu reseña será revisada antes de publicarse.
+      </div>
+
+
+      <input
+        id="roxthal-resena-nombre"
+        type="text"
+        maxlength="50"
+        autocomplete="name"
+        placeholder="Tu nombre"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:13px;
+          margin-bottom:10px;
+          border-radius:8px;
+          border:1px solid #444444;
+          background:#000000;
+          color:#ffffff;
+          font-size:15px;
+          outline:none;
+        "
+      >
+
+
+      <textarea
+        id="roxthal-resena-comentario"
+        maxlength="500"
+        rows="5"
+        placeholder="Escribí tu reseña..."
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:13px;
+          margin-bottom:10px;
+          border-radius:8px;
+          border:1px solid #444444;
+          background:#000000;
+          color:#ffffff;
+          font-size:15px;
+          resize:vertical;
+          outline:none;
+        "
+      ></textarea>
+
+
+      <button
+        id="roxthal-enviar-resena"
+        type="button"
+        style="
+          width:100%;
+          padding:13px;
+          border:0;
+          border-radius:8px;
+          background:#ffffff;
+          color:#000000;
+          font-size:15px;
+          font-weight:700;
+          cursor:pointer;
+        "
+      >
+        Publicar reseña
+      </button>
+
+
+      <div
+        id="roxthal-mensaje-resena"
+        style="
+          text-align:center;
+          margin-top:10px;
+          font-size:14px;
+          line-height:1.4;
+        "
+      ></div>
+
+    </div>
+
+
+    <!-- =====================================================
+         LISTADO DE RESEÑAS
+         ===================================================== -->
+
+    <div
+      id="roxthal-lista-resenas"
+      style="
+        width:100%;
+      "
+    >
+
+      <div style="
+        text-align:center;
+        padding:20px;
+        opacity:0.7;
+      ">
+        Cargando reseñas...
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         PANEL DE ADMINISTRACIÓN
+         ===================================================== -->
+
+    <div style="
+      margin-top:30px;
+      padding-top:20px;
+      border-top:1px solid rgba(255,255,255,0.12);
+    ">
+
+      <button
+        id="roxthal-admin-toggle"
+        type="button"
+        style="
+          display:block;
+          width:100%;
+          max-width:520px;
+          margin:0 auto;
+          padding:11px 16px;
+          border:1px solid rgba(255,255,255,0.25);
+          border-radius:8px;
+          background:#111111;
+          color:#ffffff;
+          font-size:14px;
+          cursor:pointer;
+        "
+      >
+        🔐 Administración
+      </button>
+
+
+      <div
+        id="roxthal-admin-panel"
+        style="
+          display:none;
+          margin-top:15px;
+        "
+      >
+
+        <!-- LOGIN -->
+
+        <div
+          id="roxthal-admin-login"
+          style="
+            background:#111111;
+            border:1px solid rgba(255,255,255,0.15);
+            border-radius:12px;
+            padding:18px;
+            box-sizing:border-box;
+          "
+        >
+
+          <div style="
+            font-size:18px;
+            font-weight:700;
+            margin-bottom:12px;
+          ">
+            🔐 Acceso de administrador
+          </div>
+
+
+          <input
+            id="roxthal-admin-email"
+            type="email"
+            autocomplete="email"
+            placeholder="Correo de administrador"
+            style="
+              width:100%;
+              box-sizing:border-box;
+              padding:12px;
+              margin-bottom:10px;
+              border-radius:8px;
+              border:1px solid #444444;
+              background:#000000;
+              color:#ffffff;
+              font-size:15px;
+              outline:none;
+            "
+          >
+
+
+          <input
+            id="roxthal-admin-password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Contraseña"
+            style="
+              width:100%;
+              box-sizing:border-box;
+              padding:12px;
+              margin-bottom:10px;
+              border-radius:8px;
+              border:1px solid #444444;
+              background:#000000;
+              color:#ffffff;
+              font-size:15px;
+              outline:none;
+            "
+          >
+
+
+          <button
+            id="roxthal-admin-login-btn"
+            type="button"
+            style="
+              width:100%;
+              padding:13px;
+              border:0;
+              border-radius:8px;
+              background:#ffffff;
+              color:#000000;
+              font-size:15px;
+              font-weight:700;
+              cursor:pointer;
+            "
+          >
+            Iniciar sesión
+          </button>
+
+
+          <div
+            id="roxthal-admin-login-msg"
+            style="
+              text-align:center;
+              margin-top:10px;
+              font-size:14px;
+            "
+          ></div>
+
+        </div>
+
+
+        <!-- PANEL AUTENTICADO -->
+
+        <div
+          id="roxthal-admin-content"
+          style="
+            display:none;
+            background:#111111;
+            border:1px solid rgba(255,255,255,0.15);
+            border-radius:12px;
+            padding:18px;
+            box-sizing:border-box;
+          "
+        >
+
+          <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:10px;
+            margin-bottom:15px;
+          ">
+
+            <div style="
+              font-size:18px;
+              font-weight:700;
+            ">
+              🛠️ Moderar reseñas
+            </div>
+
+            <button
+              id="roxthal-admin-logout"
+              type="button"
+              style="
+                padding:8px 10px;
+                border:1px solid #444444;
+                border-radius:7px;
+                background:#000000;
+                color:#ffffff;
+                cursor:pointer;
+              "
+            >
+              Salir
+            </button>
+
+          </div>
+
+
+          <div
+            id="roxthal-admin-lista"
+          >
+            Cargando...
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<script>
+/* =========================================================
+   ROXTHAL ART DESIGN
+   SISTEMA COMPLETO DE RESEÑAS Y MODERACIÓN
+   ========================================================= */
+
+(function () {
+
+  'use strict';
+
+
+  /* =======================================================
+     CONFIGURACIÓN SUPABASE
+     ======================================================= */
+
+  const SUPABASE_URL =
+    'https://lvvhpuedktdmfehvhcwk.supabase.co';
+
+  const SUPABASE_ANON_KEY =
+    'sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp';
+
+
+  /* =======================================================
+     ELEMENTOS
+     ======================================================= */
+
+  const botonResenas =
+    document.getElementById(
+      'roxthal-boton-resenas'
+    );
+
+  const contenidoResenas =
+    document.getElementById(
+      'roxthal-contenido-resenas'
+    );
+
+  const nombreInput =
+    document.getElementById(
+      'roxthal-resena-nombre'
+    );
+
+  const comentarioInput =
+    document.getElementById(
+      'roxthal-resena-comentario'
+    );
+
+  const botonEnviar =
+    document.getElementById(
+      'roxthal-enviar-resena'
+    );
+
+  const mensajeResena =
+    document.getElementById(
+      'roxthal-mensaje-resena'
+    );
+
+  const listaResenas =
+    document.getElementById(
+      'roxthal-lista-resenas'
+    );
+
+
+  const adminToggle =
+    document.getElementById(
+      'roxthal-admin-toggle'
+    );
+
+  const adminPanel =
+    document.getElementById(
+      'roxthal-admin-panel'
+    );
+
+  const adminLogin =
+    document.getElementById(
+      'roxthal-admin-login'
+    );
+
+  const adminContent =
+    document.getElementById(
+      'roxthal-admin-content'
+    );
+
+  const adminEmail =
+    document.getElementById(
+      'roxthal-admin-email'
+    );
+
+  const adminPassword =
+    document.getElementById(
+      'roxthal-admin-password'
+    );
+
+  const adminLoginBtn =
+    document.getElementById(
+      'roxthal-admin-login-btn'
+    );
+
+  const adminLoginMsg =
+    document.getElementById(
+      'roxthal-admin-login-msg'
+    );
+
+  const adminLogout =
+    document.getElementById(
+      'roxthal-admin-logout'
+    );
+
+  const adminLista =
+    document.getElementById(
+      'roxthal-admin-lista'
+    );
+
+
+  /* =======================================================
+     HEADERS
+     ======================================================= */
+
+  function headersJSON() {
+
+    return {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization':
+        'Bearer ' + SUPABASE_ANON_KEY,
+      'Content-Type':
+        'application/json'
+    };
+
+  }
+
+
+  function headersGET() {
+
+    return {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization':
+        'Bearer ' + SUPABASE_ANON_KEY
+    };
+
+  }
+
+
+  /* =======================================================
+     ABRIR / CERRAR RESEÑAS
+     ======================================================= */
+
+  botonResenas.addEventListener(
+    'click',
+    function () {
+
+      if (
+        contenidoResenas.style.display ===
+        'none'
+      ) {
+
+        contenidoResenas.style.display =
+          'block';
+
+        botonResenas.textContent =
+          '⭐ Ocultar reseñas ▲';
+
+        cargarResenas();
+
+      } else {
+
+        contenidoResenas.style.display =
+          'none';
+
+        botonResenas.textContent =
+          '⭐ Ver reseñas ▼';
+
+      }
+
+    }
+  );
+
+
+  /* =======================================================
+     CARGAR RESEÑAS APROBADAS
+     ======================================================= */
+
+  async function cargarResenas() {
+
+    listaResenas.innerHTML = `
+      <div style="
+        text-align:center;
+        padding:20px;
+        opacity:0.7;
+      ">
+        Cargando reseñas...
+      </div>
+    `;
+
+
+    try {
+
+      const respuesta =
+        await fetch(
+          SUPABASE_URL +
+          '/rest/v1/resenas' +
+          '?select=id,nombre,comentario,fecha' +
+          '&aprobada=eq.true' +
+          '&order=fecha.desc',
+          {
+            method:'GET',
+            headers:headersGET()
+          }
+        );
+
+
+      if (!respuesta.ok) {
+
+        throw new Error(
+          'HTTP ' + respuesta.status
+        );
+
+      }
+
+
+      const resenas =
+        await respuesta.json();
+
+
+      if (!resenas.length) {
+
+        listaResenas.innerHTML = `
+          <div style="
+            text-align:center;
+            padding:25px;
+            opacity:0.7;
+          ">
+            Todavía no hay reseñas publicadas.<br>
+            ¡Sé el primero en dejar una! ⭐
+          </div>
+        `;
+
+        return;
+      }
+
+
+      listaResenas.innerHTML = '';
+
+
+      resenas.forEach(
+        function (resena) {
+
+          const tarjeta =
+            document.createElement('div');
+
+
+          tarjeta.style.cssText = `
+            background:#111111;
+            border:1px solid rgba(255,255,255,0.15);
+            border-radius:12px;
+            padding:16px;
+            margin-bottom:12px;
+          `;
+
+
+          const nombre =
+            document.createElement('div');
+
+          nombre.textContent =
+            '⭐ ' + resena.nombre;
+
+          nombre.style.cssText = `
+            font-size:16px;
+            font-weight:700;
+            margin-bottom:8px;
+          `;
+
+
+          const comentario =
+            document.createElement('div');
+
+          comentario.textContent =
+            resena.comentario;
+
+          comentario.style.cssText = `
+            font-size:15px;
+            line-height:1.5;
+            white-space:pre-wrap;
+            overflow-wrap:anywhere;
+          `;
+
+
+          const fecha =
+            document.createElement('div');
+
+          fecha.textContent =
+            new Date(
+              resena.fecha
+            ).toLocaleDateString(
+              'es-AR'
+            );
+
+          fecha.style.cssText = `
+            font-size:12px;
+            opacity:0.55;
+            margin-top:10px;
+          `;
+
+
+          tarjeta.appendChild(nombre);
+          tarjeta.appendChild(comentario);
+          tarjeta.appendChild(fecha);
+
+          listaResenas.appendChild(
+            tarjeta
+          );
+
+        }
+      );
+
+
+    } catch (error) {
+
+      console.error(
+        'Error cargando reseñas:',
+        error
+      );
+
+      listaResenas.innerHTML = `
+        <div style="
+          text-align:center;
+          padding:20px;
+        ">
+          ❌ No se pudieron cargar las reseñas.
+        </div>
+      `;
+
+    }
+
+  }
+
+
+  /* =======================================================
+     ENVIAR RESEÑA
+     ======================================================= */
+
+  botonEnviar.addEventListener(
+    'click',
+    async function () {
+
+      const nombre =
+        nombreInput.value.trim();
+
+      const comentario =
+        comentarioInput.value.trim();
+
+
+      if (!nombre) {
+
+        mensajeResena.textContent =
+          '⚠️ Escribí tu nombre.';
+
+        return;
+
+      }
+
+
+      if (!comentario) {
+
+        mensajeResena.textContent =
+          '⚠️ Escribí una reseña.';
+
+        return;
+
+      }
+
+
+      if (nombre.length > 50) {
+
+        mensajeResena.textContent =
+          '⚠️ El nombre no puede superar 50 caracteres.';
+
+        return;
+
+      }
+
+
+      if (comentario.length > 500) {
+
+        mensajeResena.textContent =
+          '⚠️ La reseña no puede superar 500 caracteres.';
+
+        return;
+
+      }
+
+
+      botonEnviar.disabled = true;
+
+      botonEnviar.textContent =
+        'Enviando...';
+
+      mensajeResena.textContent =
+        '';
+
+
+      try {
+
+        const respuesta =
+          await fetch(
+            SUPABASE_URL +
+            '/rest/v1/resenas',
+            {
+              method:'POST',
+
+              headers:{
+                ...headersJSON(),
+                'Prefer':
+                  'return=minimal'
+              },
+
+              body:JSON.stringify({
+                nombre:nombre,
+                comentario:comentario,
+                aprobada:false
+              })
+            }
+          );
+
+
+        if (!respuesta.ok) {
+
+          const detalle =
+            await respuesta.text();
+
+          console.error(
+            'Supabase:',
+            detalle
+          );
+
+          throw new Error(
+            'No se pudo enviar.'
+          );
+
+        }
+
+
+        nombreInput.value = '';
+
+        comentarioInput.value = '';
+
+
+        mensajeResena.textContent =
+          '✅ Gracias. Tu reseña fue enviada y queda pendiente de aprobación.';
+
+
+      } catch (error) {
+
+        console.error(
+          'Error enviando reseña:',
+          error
+        );
+
+        mensajeResena.textContent =
+          '❌ No se pudo enviar la reseña. Intentá nuevamente.';
+
+      }
+
+
+      botonEnviar.disabled = false;
+
+      botonEnviar.textContent =
+        'Publicar reseña';
+
+    }
+  );
+
+
+  /* =======================================================
+     PANEL ADMINISTRACIÓN
+     ======================================================= */
+
+  adminToggle.addEventListener(
+    'click',
+    function () {
+
+      if (
+        adminPanel.style.display ===
+        'none'
+      ) {
+
+        adminPanel.style.display =
+          'block';
+
+        comprobarSesion();
+
+      } else {
+
+        adminPanel.style.display =
+          'none';
+
+      }
+
+    }
+  );
+
+
+  /* =======================================================
+     INICIAR SESIÓN ADMIN
+     ======================================================= */
+
+  adminLoginBtn.addEventListener(
+    'click',
+    async function () {
+
+      const email =
+        adminEmail.value.trim();
+
+      const password =
+        adminPassword.value;
+
+
+      if (!email || !password) {
+
+        adminLoginMsg.textContent =
+          '⚠️ Completá correo y contraseña.';
+
+        return;
+
+      }
+
+
+      adminLoginBtn.disabled = true;
+
+      adminLoginBtn.textContent =
+        'Ingresando...';
+
+      adminLoginMsg.textContent =
+        '';
+
+
+      try {
+
+        const respuesta =
+          await fetch(
+            SUPABASE_URL +
+            '/auth/v1/token?grant_type=password',
+            {
+              method:'POST',
+
+              headers:{
+                'apikey':
+                  SUPABASE_ANON_KEY,
+                'Content-Type':
+                  'application/json'
+              },
+
+              body:JSON.stringify({
+                email:email,
+                password:password
+              })
+            }
+          );
+
+
+        const datos =
+          await respuesta.json();
+
+
+        if (!respuesta.ok) {
+
+          throw new Error(
+            datos.msg ||
+            datos.error_description ||
+            'Datos incorrectos.'
+          );
+
+        }
+
+
+        /*
+         * Guardamos la sesión solamente
+         * para este navegador.
+         */
+
+        localStorage.setItem(
+          'roxthal_admin_session',
+          JSON.stringify(datos)
+        );
+
+
+        adminEmail.value = '';
+
+        adminPassword.value = '';
+
+        adminLoginMsg.textContent = '';
+
+        mostrarPanelAdmin(datos);
+
+        cargarPendientes();
+
+
+      } catch (error) {
+
+        console.error(
+          'Error de autenticación:',
+          error
+        );
+
+        adminLoginMsg.textContent =
+          '❌ Correo o contraseña incorrectos.';
+
+      }
+
+
+      adminLoginBtn.disabled = false;
+
+      adminLoginBtn.textContent =
+        'Iniciar sesión';
+
+    }
+  );
+
+
+  /* =======================================================
+     COMPROBAR SESIÓN
+     ======================================================= */
+
+  function comprobarSesion() {
+
+    try {
+
+      const guardado =
+        localStorage.getItem(
+          'roxthal_admin_session'
+        );
+
+
+      if (!guardado) {
+
+        mostrarLogin();
+
+        return;
+
+      }
+
+
+      const sesion =
+        JSON.parse(guardado);
+
+
+      if (
+        !sesion.access_token
+      ) {
+
+        mostrarLogin();
+
+        return;
+
+      }
+
+
+      mostrarPanelAdmin(sesion);
+
+      cargarPendientes();
+
+
+    } catch (error) {
+
+      localStorage.removeItem(
+        'roxthal_admin_session'
+      );
+
+      mostrarLogin();
+
+    }
+
+  }
+
+
+  /* =======================================================
+     MOSTRAR LOGIN
+     ======================================================= */
+
+  function mostrarLogin() {
+
+    adminLogin.style.display =
+      'block';
+
+    adminContent.style.display =
+      'none';
+
+  }
+
+
+  /* =======================================================
+     MOSTRAR PANEL
+     ======================================================= */
+
+  function mostrarPanelAdmin(
+    sesion
+  ) {
+
+    if (
+      !sesion ||
+      !sesion.access_token
+    ) {
+
+      mostrarLogin();
+
+      return;
+
+    }
+
+
+    adminLogin.style.display =
+      'none';
+
+    adminContent.style.display =
+      'block';
+
+  }
+
+
+  /* =======================================================
+     OBTENER TOKEN
+     ======================================================= */
+
+  function obtenerSesion() {
+
+    try {
+
+      const guardado =
+        localStorage.getItem(
+          'roxthal_admin_session'
+        );
+
+
+      if (!guardado) {
+        return null;
+      }
+
+
+      const sesion =
+        JSON.parse(guardado);
+
+
+      if (
+        !sesion.access_token
+      ) {
+        return null;
+      }
+
+
+      return sesion;
+
+
+    } catch (error) {
+
+      return null;
+
+    }
+
+  }
+
+
+  /* =======================================================
+     CARGAR RESEÑAS PENDIENTES
+     ======================================================= */
+
+  async function cargarPendientes() {
+
+    const sesion =
+      obtenerSesion();
+
+
+    if (!sesion) {
+
+      mostrarLogin();
+
+      return;
+
+    }
+
+
+    adminLista.innerHTML = `
+      <div style="
+        text-align:center;
+        padding:15px;
+        opacity:0.7;
+      ">
+        Cargando...
+      </div>
+    `;
+
+
+    try {
+
+      const respuesta =
+        await fetch(
+          SUPABASE_URL +
+          '/rest/v1/resenas' +
+          '?select=id,nombre,comentario,fecha,aprobada' +
+          '&order=fecha.desc',
+          {
+            method:'GET',
+
+            headers:{
+              'apikey':
+                SUPABASE_ANON_KEY,
+
+              'Authorization':
+                'Bearer ' +
+                sesion.access_token
+            }
+          }
+        );
+
+
+      if (!respuesta.ok) {
+
+        throw new Error(
+          'HTTP ' + respuesta.status
+        );
+
+      }
+
+
+      const resenas =
+        await respuesta.json();
+
+
+      if (!resenas.length) {
+
+        adminLista.innerHTML = `
+          <div style="
+            text-align:center;
+            padding:20px;
+            opacity:0.7;
+          ">
+            No hay reseñas.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      adminLista.innerHTML = '';
+
+
+      resenas.forEach(
+        function (resena) {
+
+          const tarjeta =
+            document.createElement('div');
+
+
+          tarjeta.style.cssText = `
+            background:#000000;
+            border:1px solid #333333;
+            border-radius:10px;
+            padding:15px;
+            margin-bottom:12px;
+          `;
+
+
+          const nombre =
+            document.createElement('div');
+
+          nombre.textContent =
+            resena.nombre;
+
+          nombre.style.cssText = `
+            font-weight:700;
+            font-size:16px;
+            margin-bottom:7px;
+          `;
+
+
+          const comentario =
+            document.createElement('div');
+
+          comentario.textContent =
+            resena.comentario;
+
+          comentario.style.cssText = `
+            font-size:14px;
+            line-height:1.5;
+            margin-bottom:8px;
+            white-space:pre-wrap;
+            overflow-wrap:anywhere;
+          `;
+
+
+          const estado =
+            document.createElement('div');
+
+          estado.textContent =
+            resena.aprobada
+              ? '✅ Publicada'
+              : '⏳ Pendiente';
+
+          estado.style.cssText = `
+            font-size:12px;
+            margin-bottom:12px;
+            opacity:0.75;
+          `;
+
+
+          const botones =
+            document.createElement('div');
+
+          botones.style.cssText = `
+            display:flex;
+            gap:8px;
+            flex-wrap:wrap;
+          `;
+
+
+          /* APROBAR */
+
+          if (!resena.aprobada) {
+
+            const aprobar =
+              document.createElement('button');
+
+            aprobar.type = 'button';
+
+            aprobar.textContent =
+              '✅ Aprobar';
+
+            aprobar.style.cssText = `
+              padding:9px 12px;
+              border:0;
+              border-radius:7px;
+              background:#ffffff;
+              color:#000000;
+              font-weight:700;
+              cursor:pointer;
+            `;
+
+
+            aprobar.addEventListener(
+              'click',
+              function () {
+
+                cambiarEstado(
+                  resena.id,
+                  true
+                );
+
+              }
+            );
+
+
+            botones.appendChild(
+              aprobar
+            );
+
+          }
+
+
+          /* ELIMINAR */
+
+          const eliminar =
+            document.createElement('button');
+
+          eliminar.type = 'button';
+
+          eliminar.textContent =
+            '🗑️ Eliminar';
+
+          eliminar.style.cssText = `
+            padding:9px 12px;
+            border:1px solid #555555;
+            border-radius:7px;
+            background:#111111;
+            color:#ffffff;
+            font-weight:700;
+            cursor:pointer;
+          `;
+
+
+          eliminar.addEventListener(
+            'click',
+            function () {
+
+              if (
+                confirm(
+                  '¿Eliminar esta reseña definitivamente?'
+                )
+              ) {
+
+                eliminarResena(
+                  resena.id
+                );
+
+              }
+
+            }
+          );
+
+
+          botones.appendChild(
+            eliminar
+          );
+
+
+          tarjeta.appendChild(nombre);
+          tarjeta.appendChild(comentario);
+          tarjeta.appendChild(estado);
+          tarjeta.appendChild(botones);
+
+          adminLista.appendChild(
+            tarjeta
+          );
+
+        }
+      );
+
+
+    } catch (error) {
+
+      console.error(
+        'Error cargando administración:',
+        error
+      );
+
+      adminLista.innerHTML = `
+        <div style="
+          text-align:center;
+          padding:20px;
+        ">
+          ❌ No se pudieron cargar las reseñas.
+        </div>
+      `;
+
+    }
+
+  }
+
+
+  /* =======================================================
+     APROBAR / DESAPROBAR
+     ======================================================= */
+
+  async function cambiarEstado(
+    id,
+    estado
+  ) {
+
+    const sesion =
+      obtenerSesion();
+
+
+    if (!sesion) {
+
+      mostrarLogin();
+
+      return;
+
+    }
+
+
+    try {
+
+      const respuesta =
+        await fetch(
+          SUPABASE_URL +
+          '/rest/v1/resenas?id=eq.' +
+          encodeURIComponent(id),
+          {
+            method:'PATCH',
+
+            headers:{
+              'apikey':
+                SUPABASE_ANON_KEY,
+
+              'Authorization':
+                'Bearer ' +
+                sesion.access_token,
+
+              'Content-Type':
+                'application/json',
+
+              'Prefer':
+                'return=minimal'
+            },
+
+            body:JSON.stringify({
+              aprobada:estado
+            })
+          }
+        );
+
+
+      if (!respuesta.ok) {
+
+        const detalle =
+          await respuesta.text();
+
+        console.error(
+          detalle
+        );
+
+        throw new Error(
+          'No se pudo modificar.'
+        );
+
+      }
+
+
+      cargarPendientes();
+
+      cargarResenas();
+
+
+    } catch (error) {
+
+      console.error(
+        'Error modificando reseña:',
+        error
+      );
+
+      alert(
+        'No se pudo modificar la reseña.'
+      );
+
+    }
+
+  }
+
+
+  /* =======================================================
+     ELIMINAR
+     ======================================================= */
+
+  async function eliminarResena(
+    id
+  ) {
+
+    const sesion =
+      obtenerSesion();
+
+
+    if (!sesion) {
+
+      mostrarLogin();
+
+      return;
+
+    }
+
+
+    try {
+
+      const respuesta =
+        await fetch(
+          SUPABASE_URL +
+          '/rest/v1/resenas?id=eq.' +
+          encodeURIComponent(id),
+          {
+            method:'DELETE',
+
+            headers:{
+              'apikey':
+                SUPABASE_ANON_KEY,
+
+              'Authorization':
+                'Bearer ' +
+                sesion.access_token
+            }
+          }
+        );
+
+
+      if (!respuesta.ok) {
+
+        throw new Error(
+          'No se pudo eliminar.'
+        );
+
+      }
+
+
+      cargarPendientes();
+
+      cargarResenas();
+
+
+    } catch (error) {
+
+      console.error(
+        'Error eliminando:',
+        error
+      );
+
+      alert(
+        'No se pudo eliminar la reseña.'
+      );
+
+    }
+
+  }
+
+
+  /* =======================================================
+     CERRAR SESIÓN
+     ======================================================= */
+
+  adminLogout.addEventListener(
+    'click',
+    async function () {
+
+      localStorage.removeItem(
+        'roxthal_admin_session'
+      );
+
+      mostrarLogin();
+
+      adminLista.innerHTML = '';
+
+    }
+  );
+
+
+  /* =======================================================
+     INICIALIZACIÓN
+     ======================================================= */
+
+  /*
+   * Las reseñas NO se cargan al abrir la app.
+   * Solamente se cargan cuando el visitante pulsa
+   * "Ver reseñas".
+   */
+
+})();
+</script>
 </body>
 </html>
