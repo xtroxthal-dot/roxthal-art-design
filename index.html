@@ -5797,5 +5797,50 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 })();
 </script>
+  <script>
+/* REPARACIÓN DEFINITIVA DE SLOTS — RoXThal Art Design */
+(function () {
+
+  const MAP = {
+    hero: 'hero_logo',
+    tatuajes: 'srv_tatuajes',
+    fileteado: 'srv_fileteado',
+    dibujo: 'srv_dibujo',
+    atelier: 'srv_atelier',
+    identidad: 'about_img'
+  };
+
+  /* Cambiar los identificadores de la página a los identificadores
+     que realmente existen en Supabase */
+  Object.keys(MAP).forEach(function (oldSlot) {
+    const newSlot = MAP[oldSlot];
+
+    document.querySelectorAll(
+      '[data-slot-bg="' + oldSlot + '"]'
+    ).forEach(function (el) {
+      el.setAttribute('data-slot-bg', newSlot);
+    });
+
+    document.querySelectorAll(
+      '[data-slot-img="' + oldSlot + '"]'
+    ).forEach(function (el) {
+      el.setAttribute('data-slot-img', newSlot);
+    });
+  });
+
+  /* Cambiar también los slots que utiliza el administrador */
+  if (typeof SITE_SLOTS !== 'undefined' && Array.isArray(SITE_SLOTS)) {
+    SITE_SLOTS.splice(0, SITE_SLOTS.length,
+      {id:'hero_logo',name:'Logo Principal (Sección Inicio)',selector:'[data-slot-bg="hero_logo"]'},
+      {id:'srv_tatuajes',name:'Servicio — Tatuajes'},
+      {id:'srv_fileteado',name:'Servicio — Fileteado Porteño'},
+      {id:'srv_dibujo',name:'Servicio — Dibujo y Pintura'},
+      {id:'srv_atelier',name:'Servicio — Atelier de Arte'},
+      {id:'about_img',name:'Imagen — Nuestra identidad'}
+    );
+  }
+
+})();
+</script>
 </body>
 </html>
