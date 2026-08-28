@@ -5728,6 +5728,1238 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- =========================================================
      FIN SORTEO ROXTHAL ART DESIGN
      ========================================================= -->
-  
+  <!-- ============================================================
+     ROXTHAL ART DESIGN — GALERÍA ALUMNOS Y TALLERES
+     MÓDULO INDEPENDIENTE
+     ============================================================ -->
+
+<style>
+#roxGaleriaModule{
+  --rx-gold:#d4af37;
+  --rx-bg:#090909;
+  --rx-card:#151515;
+  --rx-border:rgba(212,175,55,.25);
+  margin:35px auto;
+  max-width:1200px;
+  padding:0 15px;
+  font-family:Arial,sans-serif;
+  color:#fff;
+}
+
+#roxGaleriaModule *{
+  box-sizing:border-box;
+}
+
+.rx-galeria-btn{
+  width:100%;
+  border:1px solid var(--rx-gold);
+  background:linear-gradient(135deg,#111,#1c1c1c);
+  color:var(--rx-gold);
+  padding:18px 20px;
+  border-radius:14px;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 5px 20px rgba(0,0,0,.35);
+}
+
+.rx-galeria-btn:hover{
+  background:#202020;
+}
+
+#rxGaleriaContenido{
+  display:none;
+  margin-top:20px;
+  background:var(--rx-bg);
+  border:1px solid var(--rx-border);
+  border-radius:18px;
+  padding:20px;
+}
+
+.rx-galeria-header{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.rx-galeria-header h2{
+  color:var(--rx-gold);
+  margin:0 0 8px;
+}
+
+.rx-galeria-header p{
+  color:#bbb;
+  margin:0;
+}
+
+.rx-galeria-tools{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin:20px 0;
+}
+
+.rx-tool-btn{
+  border:1px solid #555;
+  background:#181818;
+  color:#fff;
+  padding:10px 15px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.rx-tool-btn.active,
+.rx-tool-btn:hover{
+  border-color:var(--rx-gold);
+  color:var(--rx-gold);
+}
+
+#rxGaleriaGrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:15px;
+}
+
+.rx-media-card{
+  background:var(--rx-card);
+  border:1px solid #292929;
+  border-radius:14px;
+  overflow:hidden;
+  position:relative;
+}
+
+.rx-media-card img,
+.rx-media-card video{
+  width:100%;
+  height:230px;
+  object-fit:cover;
+  display:block;
+  background:#000;
+}
+
+.rx-media-info{
+  padding:12px;
+}
+
+.rx-media-info h3{
+  margin:0 0 5px;
+  font-size:16px;
+  color:#fff;
+}
+
+.rx-media-info p{
+  margin:0;
+  color:#aaa;
+  font-size:13px;
+}
+
+.rx-media-type{
+  display:inline-block;
+  margin-bottom:7px;
+  padding:4px 8px;
+  border-radius:20px;
+  background:#222;
+  color:var(--rx-gold);
+  font-size:11px;
+}
+
+.rx-delete-btn{
+  width:100%;
+  margin-top:10px;
+  padding:9px;
+  border:1px solid #922;
+  background:#240b0b;
+  color:#ff7777;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+#rxAdminPanel{
+  display:none;
+  margin-top:25px;
+  padding:20px;
+  border:1px solid var(--rx-gold);
+  border-radius:15px;
+  background:#111;
+}
+
+#rxAdminPanel h3{
+  color:var(--rx-gold);
+  margin-top:0;
+}
+
+.rx-form-group{
+  margin-bottom:14px;
+}
+
+.rx-form-group label{
+  display:block;
+  margin-bottom:6px;
+  color:#ccc;
+  font-size:14px;
+}
+
+.rx-form-group input,
+.rx-form-group textarea,
+.rx-form-group select{
+  width:100%;
+  padding:12px;
+  border-radius:9px;
+  border:1px solid #444;
+  background:#080808;
+  color:#fff;
+}
+
+.rx-form-group textarea{
+  min-height:80px;
+  resize:vertical;
+}
+
+.rx-admin-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.rx-primary{
+  background:var(--rx-gold);
+  color:#000;
+  border:0;
+  padding:12px 18px;
+  border-radius:9px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.rx-secondary{
+  background:#222;
+  color:#fff;
+  border:1px solid #555;
+  padding:12px 18px;
+  border-radius:9px;
+  cursor:pointer;
+}
+
+#rxLoginPanel{
+  display:none;
+  margin-top:20px;
+  padding:20px;
+  background:#111;
+  border:1px solid #444;
+  border-radius:15px;
+}
+
+#rxAdminStatus,
+#rxGaleriaStatus{
+  margin-top:12px;
+  padding:10px;
+  border-radius:8px;
+  display:none;
+  font-size:14px;
+}
+
+.rx-loading{
+  text-align:center;
+  padding:30px;
+  color:#aaa;
+}
+
+.rx-empty{
+  text-align:center;
+  padding:40px 15px;
+  color:#888;
+  grid-column:1/-1;
+}
+
+@media(max-width:600px){
+  #rxGaleriaContenido{
+    padding:14px;
+  }
+
+  #rxGaleriaGrid{
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+  }
+
+  .rx-media-card img,
+  .rx-media-card video{
+    height:170px;
+  }
+
+  .rx-media-info{
+    padding:9px;
+  }
+
+  .rx-media-info h3{
+    font-size:14px;
+  }
+}
+</style>
+
+<section id="roxGaleriaModule">
+
+  <button
+    type="button"
+    class="rx-galeria-btn"
+    id="rxAbrirGaleria">
+    📸 Galería de Fotos y Videos de RoXThal Art Design
+  </button>
+
+  <div id="rxGaleriaContenido">
+
+    <div class="rx-galeria-header">
+      <h2>📸 Trabajos de nuestros alumnos y talleres</h2>
+      <p>Fotos y videos de cursos, talleres y actividades de RoXThal Art Design.</p>
+    </div>
+
+    <div class="rx-galeria-tools">
+
+      <button type="button"
+              class="rx-tool-btn active"
+              data-filter="todos">
+        Todo
+      </button>
+
+      <button type="button"
+              class="rx-tool-btn"
+              data-filter="foto">
+        📷 Fotos
+      </button>
+
+      <button type="button"
+              class="rx-tool-btn"
+              data-filter="video">
+        🎥 Videos
+      </button>
+
+      <button type="button"
+              class="rx-tool-btn"
+              id="rxAbrirAdmin">
+        🔐 Administrador
+      </button>
+
+    </div>
+
+    <div id="rxGaleriaStatus"></div>
+
+    <div id="rxGaleriaGrid">
+      <div class="rx-loading">
+        Cargando galería...
+      </div>
+    </div>
+
+    <!-- LOGIN DEL ADMINISTRADOR -->
+    <div id="rxLoginPanel">
+
+      <h3>🔐 Administrador de la galería</h3>
+
+      <div class="rx-form-group">
+        <label>Email</label>
+        <input
+          type="email"
+          id="rxAdminEmail"
+          autocomplete="username"
+          placeholder="Tu email">
+      </div>
+
+      <div class="rx-form-group">
+        <label>Contraseña</label>
+        <input
+          type="password"
+          id="rxAdminPassword"
+          autocomplete="current-password"
+          placeholder="Tu contraseña">
+      </div>
+
+      <div class="rx-admin-actions">
+        <button type="button"
+                class="rx-primary"
+                id="rxLoginBtn">
+          Entrar
+        </button>
+
+        <button type="button"
+                class="rx-secondary"
+                id="rxCerrarLogin">
+          Cancelar
+        </button>
+      </div>
+
+      <div id="rxAdminStatus"></div>
+
+    </div>
+
+    <!-- PANEL ADMINISTRADOR -->
+    <div id="rxAdminPanel">
+
+      <h3>⚙️ Administración de la galería</h3>
+
+      <p style="color:#aaa;font-size:14px;">
+        Desde aquí podés subir fotos y videos directamente desde tu celular.
+      </p>
+
+      <div class="rx-form-group">
+        <label>Tipo de contenido</label>
+
+        <select id="rxTipoMedia">
+          <option value="foto">📷 Foto</option>
+          <option value="video">🎥 Video</option>
+        </select>
+      </div>
+
+      <div class="rx-form-group">
+        <label>Título</label>
+
+        <input
+          type="text"
+          id="rxTituloMedia"
+          placeholder="Ej.: Taller de dibujo profesional">
+      </div>
+
+      <div class="rx-form-group">
+        <label>Descripción</label>
+
+        <textarea
+          id="rxDescripcionMedia"
+          placeholder="Descripción del trabajo, taller o actividad..."></textarea>
+      </div>
+
+      <div class="rx-form-group">
+        <label>Seleccionar foto o video</label>
+
+        <input
+          type="file"
+          id="rxArchivoMedia"
+          accept="image/*,video/*">
+      </div>
+
+      <div class="rx-admin-actions">
+
+        <button type="button"
+                class="rx-primary"
+                id="rxSubirMedia">
+          ⬆️ Subir contenido
+        </button>
+
+        <button type="button"
+                class="rx-secondary"
+                id="rxCerrarAdmin">
+          Cerrar administrador
+        </button>
+
+      </div>
+
+      <div id="rxUploadStatus"
+           style="margin-top:12px;color:#aaa;">
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script type="module">
+
+/* ============================================================
+   CONFIGURACIÓN SUPABASE
+   ============================================================ */
+
+import { createClient }
+from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+const RX_SUPABASE_URL =
+  "https://lvvhpuedktdmfehvhcwk.supabase.co";
+
+const RX_SUPABASE_KEY =
+  "sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp";
+
+const rxSupabase =
+  createClient(
+    RX_SUPABASE_URL,
+    RX_SUPABASE_KEY
+  );
+
+/* ============================================================
+   CONFIGURACIÓN DEL MÓDULO
+   ============================================================ */
+
+const RX_BUCKET = "roxthal-talleres";
+const RX_TABLE = "roxthal_talleres_media";
+
+/*
+  El control REAL de seguridad está en Supabase.
+  El usuario que inicia sesión necesita estar autorizado
+  por las políticas de la tabla y del Storage.
+*/
+
+let rxMediaActual = [];
+let rxFiltroActual = "todos";
+
+/* ============================================================
+   ELEMENTOS
+   ============================================================ */
+
+const rxAbrirGaleria =
+  document.getElementById("rxAbrirGaleria");
+
+const rxGaleriaContenido =
+  document.getElementById("rxGaleriaContenido");
+
+const rxGaleriaGrid =
+  document.getElementById("rxGaleriaGrid");
+
+const rxGaleriaStatus =
+  document.getElementById("rxGaleriaStatus");
+
+const rxAbrirAdmin =
+  document.getElementById("rxAbrirAdmin");
+
+const rxLoginPanel =
+  document.getElementById("rxLoginPanel");
+
+const rxAdminPanel =
+  document.getElementById("rxAdminPanel");
+
+const rxLoginBtn =
+  document.getElementById("rxLoginBtn");
+
+const rxCerrarLogin =
+  document.getElementById("rxCerrarLogin");
+
+const rxCerrarAdmin =
+  document.getElementById("rxCerrarAdmin");
+
+const rxSubirMedia =
+  document.getElementById("rxSubirMedia");
+
+/* ============================================================
+   ABRIR / CERRAR GALERÍA
+   ============================================================ */
+
+rxAbrirGaleria.addEventListener("click", async () => {
+
+  const abierta =
+    rxGaleriaContenido.style.display === "block";
+
+  if(abierta){
+
+    rxGaleriaContenido.style.display = "none";
+
+    rxAbrirGaleria.textContent =
+      "📸 Galería de Fotos y Videos de RoXThal Art Design";
+
+    return;
+  }
+
+  rxGaleriaContenido.style.display = "block";
+
+  rxAbrirGaleria.textContent =
+    "✕ Cerrar Galería";
+
+  await rxCargarGaleria();
+
+});
+
+/* ============================================================
+   MENSAJES
+   ============================================================ */
+
+function rxMensaje(texto, error=false){
+
+  rxGaleriaStatus.style.display = "block";
+
+  rxGaleriaStatus.textContent = texto;
+
+  rxGaleriaStatus.style.color =
+    error ? "#ff7777" : "#d4af37";
+
+}
+
+/* ============================================================
+   CARGAR GALERÍA
+   ============================================================ */
+
+async function rxCargarGaleria(){
+
+  rxGaleriaGrid.innerHTML =
+    '<div class="rx-loading">Cargando galería...</div>';
+
+  const { data, error } =
+    await rxSupabase
+      .from(RX_TABLE)
+      .select("*")
+      .order("created_at", {
+        ascending:false
+      });
+
+  if(error){
+
+    console.error(error);
+
+    rxGaleriaGrid.innerHTML =
+      '<div class="rx-empty">No se pudo cargar la galería.</div>';
+
+    rxMensaje(
+      "No se pudo conectar con la galería.",
+      true
+    );
+
+    return;
+  }
+
+  rxMediaActual = data || [];
+
+  rxMostrarGaleria();
+
+}
+
+/* ============================================================
+   MOSTRAR GALERÍA
+   ============================================================ */
+
+function rxMostrarGaleria(){
+
+  let lista =
+    [...rxMediaActual];
+
+  if(rxFiltroActual !== "todos"){
+
+    lista =
+      lista.filter(
+        item =>
+          String(item.tipo).toLowerCase()
+          === rxFiltroActual
+      );
+
+  }
+
+  if(!lista.length){
+
+    rxGaleriaGrid.innerHTML =
+      '<div class="rx-empty">Todavía no hay contenido en esta categoría.</div>';
+
+    return;
+  }
+
+  rxGaleriaGrid.innerHTML = "";
+
+  lista.forEach(item => {
+
+    const card =
+      document.createElement("article");
+
+    card.className =
+      "rx-media-card";
+
+    const tipo =
+      String(item.tipo || "foto").toLowerCase();
+
+    let mediaHTML = "";
+
+    if(tipo === "video"){
+
+      mediaHTML = `
+        <video
+          src="${rxEscapar(item.url)}"
+          controls
+          preload="metadata"
+          playsinline>
+        </video>
+      `;
+
+    }else{
+
+      mediaHTML = `
+        <img
+          src="${rxEscapar(item.url)}"
+          alt="${rxEscapar(item.titulo || "Trabajo de alumno")}"
+          loading="lazy">
+      `;
+
+    }
+
+    card.innerHTML = `
+
+      ${mediaHTML}
+
+      <div class="rx-media-info">
+
+        <span class="rx-media-type">
+          ${tipo === "video" ? "🎥 VIDEO" : "📷 FOTO"}
+        </span>
+
+        <h3>
+          ${rxEscapar(item.titulo || "RoXThal Art Design")}
+        </h3>
+
+        ${
+          item.descripcion
+          ? `<p>${rxEscapar(item.descripcion)}</p>`
+          : ""
+        }
+
+        <button
+          type="button"
+          class="rx-delete-btn"
+          style="display:none"
+          data-id="${item.id}"
+          data-path="${rxEscapar(item.storage_path)}">
+          🗑️ Eliminar
+        </button>
+
+      </div>
+    `;
+
+    rxGaleriaGrid.appendChild(card);
+
+  });
+
+  rxActualizarControlesAdmin();
+
+}
+
+/* ============================================================
+   ESCAPAR HTML
+   ============================================================ */
+
+function rxEscapar(valor){
+
+  return String(valor ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+/* ============================================================
+   FILTROS
+   ============================================================ */
+
+document
+  .querySelectorAll(
+    "#roxGaleriaModule .rx-tool-btn[data-filter]"
+  )
+  .forEach(btn => {
+
+    btn.addEventListener("click", () => {
+
+      document
+        .querySelectorAll(
+          "#roxGaleriaModule .rx-tool-btn[data-filter]"
+        )
+        .forEach(
+          b => b.classList.remove("active")
+        );
+
+      btn.classList.add("active");
+
+      rxFiltroActual =
+        btn.dataset.filter;
+
+      rxMostrarGaleria();
+
+    });
+
+  });
+
+/* ============================================================
+   ADMINISTRADOR
+   ============================================================ */
+
+rxAbrirAdmin.addEventListener("click", async () => {
+
+  const {
+    data:{
+      session
+    }
+  } =
+    await rxSupabase.auth.getSession();
+
+  if(session){
+
+    rxLoginPanel.style.display = "none";
+
+    rxAdminPanel.style.display = "block";
+
+    rxActualizarControlesAdmin();
+
+  }else{
+
+    rxAdminPanel.style.display = "none";
+
+    rxLoginPanel.style.display = "block";
+
+  }
+
+});
+
+/* ============================================================
+   LOGIN
+   ============================================================ */
+
+rxLoginBtn.addEventListener("click", async () => {
+
+  const email =
+    document
+      .getElementById("rxAdminEmail")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("rxAdminPassword")
+      .value;
+
+  const status =
+    document.getElementById("rxAdminStatus");
+
+  if(!email || !password){
+
+    status.style.display = "block";
+    status.style.color = "#ff7777";
+    status.textContent =
+      "Introducí email y contraseña.";
+
+    return;
+  }
+
+  status.style.display = "block";
+  status.style.color = "#aaa";
+  status.textContent =
+    "Iniciando sesión...";
+
+  const {
+    data,
+    error
+  } =
+    await rxSupabase.auth.signInWithPassword({
+      email,
+      password
+    });
+
+  if(error){
+
+    console.error(error);
+
+    status.style.color = "#ff7777";
+    status.textContent =
+      "No se pudo iniciar sesión. Comprobá tus datos.";
+
+    return;
+  }
+
+  status.style.color = "#d4af37";
+  status.textContent =
+    "Sesión iniciada.";
+
+  rxLoginPanel.style.display = "none";
+
+  rxAdminPanel.style.display = "block";
+
+  rxActualizarControlesAdmin();
+
+});
+
+/* ============================================================
+   CERRAR LOGIN
+   ============================================================ */
+
+rxCerrarLogin.addEventListener("click", () => {
+
+  rxLoginPanel.style.display = "none";
+
+});
+
+/* ============================================================
+   CERRAR ADMINISTRADOR
+   ============================================================ */
+
+rxCerrarAdmin.addEventListener("click", async () => {
+
+  await rxSupabase.auth.signOut();
+
+  rxAdminPanel.style.display = "none";
+
+  rxActualizarControlesAdmin();
+
+});
+
+/* ============================================================
+   COMPROBAR SESIÓN
+   ============================================================ */
+
+async function rxEstaLogueado(){
+
+  const {
+    data:{
+      session
+    }
+  } =
+    await rxSupabase.auth.getSession();
+
+  return !!session;
+
+}
+
+/* ============================================================
+   MOSTRAR BOTONES DE ELIMINAR SOLO SI HAY SESIÓN
+   ============================================================ */
+
+async function rxActualizarControlesAdmin(){
+
+  const logueado =
+    await rxEstaLogueado();
+
+  document
+    .querySelectorAll(
+      "#rxGaleriaGrid .rx-delete-btn"
+    )
+    .forEach(btn => {
+
+      btn.style.display =
+        logueado ? "block" : "none";
+
+    });
+
+}
+
+/* ============================================================
+   SUBIR FOTO / VIDEO
+   ============================================================ */
+
+rxSubirMedia.addEventListener("click", async () => {
+
+  const uploadStatus =
+    document.getElementById("rxUploadStatus");
+
+  const tipo =
+    document.getElementById("rxTipoMedia").value;
+
+  const titulo =
+    document.getElementById("rxTituloMedia")
+      .value.trim();
+
+  const descripcion =
+    document.getElementById("rxDescripcionMedia")
+      .value.trim();
+
+  const input =
+    document.getElementById("rxArchivoMedia");
+
+  const archivo =
+    input.files[0];
+
+  if(!archivo){
+
+    uploadStatus.style.color = "#ff7777";
+
+    uploadStatus.textContent =
+      "Seleccioná una foto o video.";
+
+    return;
+  }
+
+  const {
+    data:{
+      session
+    }
+  } =
+    await rxSupabase.auth.getSession();
+
+  if(!session){
+
+    uploadStatus.style.color = "#ff7777";
+
+    uploadStatus.textContent =
+      "Tu sesión de administrador ha terminado.";
+
+    return;
+  }
+
+  /* Comprobar tipo */
+
+  const esVideo =
+    archivo.type.startsWith("video/");
+
+  const esImagen =
+    archivo.type.startsWith("image/");
+
+  if(
+    (tipo === "video" && !esVideo) ||
+    (tipo === "foto" && !esImagen)
+  ){
+
+    uploadStatus.style.color = "#ff7777";
+
+    uploadStatus.textContent =
+      "El archivo no coincide con el tipo seleccionado.";
+
+    return;
+  }
+
+  /* Límite razonable para evitar errores desde celular */
+
+  const maxSize =
+    tipo === "video"
+      ? 200 * 1024 * 1024
+      : 15 * 1024 * 1024;
+
+  if(archivo.size > maxSize){
+
+    uploadStatus.style.color = "#ff7777";
+
+    uploadStatus.textContent =
+      tipo === "video"
+        ? "El video supera los 200 MB."
+        : "La foto supera los 15 MB.";
+
+    return;
+  }
+
+  uploadStatus.style.color = "#aaa";
+
+  uploadStatus.textContent =
+    "Subiendo... No cierres esta ventana.";
+
+  rxSubirMedia.disabled = true;
+
+  try{
+
+    const extension =
+      archivo.name
+        .split(".")
+        .pop()
+        .toLowerCase();
+
+    const nombreUnico =
+      crypto.randomUUID() +
+      "." +
+      extension;
+
+    const storagePath =
+      "galeria/" +
+      nombreUnico;
+
+    /* SUBIR AL STORAGE */
+
+    const {
+      error:uploadError
+    } =
+      await rxSupabase
+        .storage
+        .from(RX_BUCKET)
+        .upload(
+          storagePath,
+          archivo,
+          {
+            cacheControl:"3600",
+            upsert:false,
+            contentType:archivo.type
+          }
+        );
+
+    if(uploadError){
+
+      throw uploadError;
+
+    }
+
+    /* URL PÚBLICA */
+
+    const {
+      data:urlData
+    } =
+      rxSupabase
+        .storage
+        .from(RX_BUCKET)
+        .getPublicUrl(storagePath);
+
+    const publicUrl =
+      urlData.publicUrl;
+
+    /* GUARDAR REGISTRO */
+
+    const {
+      error:insertError
+    } =
+      await rxSupabase
+        .from(RX_TABLE)
+        .insert({
+          titulo:
+            titulo ||
+            "RoXThal Art Design",
+
+          descripcion:
+            descripcion || "",
+
+          categoria:
+            "alumnos_talleres",
+
+          tipo:
+            tipo,
+
+          storage_path:
+            storagePath,
+
+          url:
+            publicUrl
+        });
+
+    if(insertError){
+
+      /* Si la tabla falla, intentamos borrar
+         el archivo para no dejar basura. */
+
+      await rxSupabase
+        .storage
+        .from(RX_BUCKET)
+        .remove([storagePath]);
+
+      throw insertError;
+
+    }
+
+    uploadStatus.style.color =
+      "#d4af37";
+
+    uploadStatus.textContent =
+      "✅ Contenido subido correctamente.";
+
+    document
+      .getElementById("rxTituloMedia")
+      .value = "";
+
+    document
+      .getElementById("rxDescripcionMedia")
+      .value = "";
+
+    input.value = "";
+
+    await rxCargarGaleria();
+
+  }catch(error){
+
+    console.error(error);
+
+    uploadStatus.style.color =
+      "#ff7777";
+
+    uploadStatus.textContent =
+      "❌ No se pudo subir el contenido.";
+
+  }finally{
+
+    rxSubirMedia.disabled = false;
+
+  }
+
+});
+
+/* ============================================================
+   ELIMINAR CONTENIDO
+   ============================================================ */
+
+document.addEventListener("click", async event => {
+
+  const btn =
+    event.target.closest(
+      ".rx-delete-btn"
+    );
+
+  if(!btn) return;
+
+  const id =
+    btn.dataset.id;
+
+  const storagePath =
+    btn.dataset.path;
+
+  const confirmar =
+    confirm(
+      "¿Querés eliminar este contenido definitivamente?"
+    );
+
+  if(!confirmar) return;
+
+  btn.disabled = true;
+
+  try{
+
+    /* ELIMINAR ARCHIVO */
+
+    if(storagePath){
+
+      const {
+        error:storageError
+      } =
+        await rxSupabase
+          .storage
+          .from(RX_BUCKET)
+          .remove([
+            storagePath
+          ]);
+
+      if(storageError){
+
+        throw storageError;
+
+      }
+
+    }
+
+    /* ELIMINAR REGISTRO */
+
+    const {
+      error:deleteError
+    } =
+      await rxSupabase
+        .from(RX_TABLE)
+        .delete()
+        .eq("id",id);
+
+    if(deleteError){
+
+      throw deleteError;
+
+    }
+
+    await rxCargarGaleria();
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "No se pudo eliminar el contenido."
+    );
+
+    btn.disabled = false;
+
+  }
+
+});
+
+/* ============================================================
+   ESCUCHAR CAMBIOS DE SESIÓN
+   ============================================================ */
+
+rxSupabase.auth.onAuthStateChange(
+  () => {
+
+    setTimeout(
+      rxActualizarControlesAdmin,
+      0
+    );
+
+  }
+);
+
+</script>
+
+<!-- ============================================================
+     FIN DEL MÓDULO ROXTHAL GALERÍA
+     ============================================================ -->
 </body>
 </html>
