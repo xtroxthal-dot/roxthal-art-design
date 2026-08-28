@@ -5797,13 +5797,108 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 })();
 </script>
-  <script>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const bucket = "RoXThal alumnos talleres";
+  <section id="alumnos-talleres" style="padding:40px 20px; background:#111; color:#fff; text-align:center;">
+  <h2 style="font-size:30px; margin-bottom:10px;">
+    📸 Trabajos de nuestros alumnos
+  </h2>
 
-  console.log("Módulo RoXThal alumnos talleres conectado.");
-  console.log("Bucket:", bucket);
+  <p style="color:#ccc; margin-bottom:25px;">
+    Fotos y videos de nuestros alumnos y talleres
+  </p>
+
+  <div id="galeria-alumnos-talleres"
+       style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px; max-width:1100px; margin:auto;">
+    <p style="grid-column:1/-1; color:#aaa;">
+      Cargando galería...
+    </p>
+  </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+
+  const bucket = "RoXThal alumnos talleres";
+  const galeria = document.getElementById("galeria-alumnos-talleres");
+
+  try {
+
+    if (typeof supabase === "undefined") {
+      throw new Error("Supabase no está disponible en esta página.");
+    }
+
+    const { data, error } = await supabase
+      .storage
+      .from(bucket)
+      .list("", {
+        limit: 100,
+        sortBy: { column: "created_at", order: "desc" }
+      });
+
+    if (error) throw error;
+
+    if (!data || data.length === 0) {
+      galeria.innerHTML =
+        '<p style="grid-column:1/-1;color:#aaa;">Todavía no hay archivos para mostrar.</p>';
+      return;
+    }
+
+    galeria.innerHTML = "";
+
+    data.forEach(function (archivo) {
+
+      if (!archivo.name) return;
+
+      const { data: urlData } =
+        supabase.storage
+          .from(bucket)
+          .getPublicUrl(archivo.name);
+
+      const url = urlData.publicUrl;
+
+      const extension =
+        archivo.name.split(".").pop().toLowerCase();
+
+      const tarjeta = document.createElement("div");
+
+      tarjeta.style.cssText =
+        "background:#1b1b1b;border-radius:14px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,.4);";
+
+      if (["mp4","webm","mov","ogg"].includes(extension)) {
+
+        tarjeta.innerHTML = `
+          <video
+            src="${url}"
+            controls
+            playsinline
+            style="width:100%;display:block;max-height:350px;background:#000;">
+          </video>
+        `;
+
+      } else {
+
+        tarjeta.innerHTML = `
+          <img
+            src="${url}"
+            alt="Trabajo de alumno"
+            loading="lazy"
+            style="width:100%;height:250px;object-fit:cover;display:block;">
+        `;
+      }
+
+      galeria.appendChild(tarjeta);
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    galeria.innerHTML = `
+      <p style="grid-column:1/-1;color:#ff6b6b;">
+        No se pudo cargar la galería.
+      </p>
+    `;
+  }
+
 });
 </script>
 </body>
