@@ -5728,6 +5728,1840 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- =========================================================
      FIN SORTEO ROXTHAL ART DESIGN
      ========================================================= -->
-  
+  <!-- =========================================================
+     ROXTHAL ART DESIGN
+     MÓDULO FOTOS Y VIDEOS DE ALUMNOS Y TALLERES
+     Supabase:
+       Tabla  : roxthal_talleres_media
+       Bucket : roxthal-talleres
+     ========================================================= -->
+
+<section id="roxthal-talleres-media">
+
+  <div class="rtm-head">
+    <div>
+      <span class="eyebrow">Alumnos · Talleres · Procesos</span>
+      <h2>📸 Fotos y Videos</h2>
+      <p class="muted">
+        Trabajos de nuestros alumnos y momentos de nuestros talleres.
+      </p>
+    </div>
+
+    <button type="button" class="btn btn-dark" id="rtm-admin-open">
+      🔐 Administrar
+    </button>
+  </div>
+
+  <div id="rtm-status" class="status-box"></div>
+
+  <div class="rtm-filters">
+    <button type="button" class="btn btn-dark rtm-filter active" data-category="todos">
+      Todos
+    </button>
+    <button type="button" class="btn btn-dark rtm-filter" data-category="alumnos">
+      👨‍🎨 Alumnos
+    </button>
+    <button type="button" class="btn btn-dark rtm-filter" data-category="talleres">
+      🎨 Talleres
+    </button>
+    <button type="button" class="btn btn-dark rtm-filter" data-category="trabajos">
+      🖼️ Trabajos
+    </button>
+  </div>
+
+  <div id="rtm-gallery" class="grid">
+    <div class="empty-state">⏳ Cargando fotos y videos...</div>
+  </div>
+
+  <!-- ================= ADMIN ================= -->
+
+  <div id="rtm-admin" class="rtm-admin hidden">
+
+    <div class="rtm-admin-head">
+      <div>
+        <h3>🔐 Administrador de Fotos y Videos</h3>
+        <p class="muted">
+          Solo la cuenta autorizada puede publicar o eliminar contenido.
+        </p>
+      </div>
+
+      <button type="button" class="btn btn-dark" id="rtm-admin-close">
+        Cerrar
+      </button>
+    </div>
+
+    <!-- LOGIN -->
+
+    <div id="rtm-login">
+
+      <div class="form-grid">
+
+        <label class="field">
+          <span>Correo</span>
+          <input
+            id="rtm-email"
+            type="email"
+            autocomplete="username"
+            value=""
+            placeholder="Correo de administrador">
+        </label>
+
+        <label class="field">
+          <span>Contraseña</span>
+          <input
+            id="rtm-password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Contraseña">
+        </label>
+
+      </div>
+
+      <button type="button" class="btn btn-gold" id="rtm-login-btn">
+        🔑 Ingresar
+      </button>
+
+      <div id="rtm-login-status" class="status-box"></div>
+
+    </div>
+
+    <!-- PANEL -->
+
+    <div id="rtm-panel" class="hidden">
+
+      <div class="rtm-user">
+        <span>👤 Administrador:</span>
+        <strong id="rtm-user-email"></strong>
+
+        <button type="button" class="btn btn-dark" id="rtm-logout">
+          🚪 Salir
+        </button>
+      </div>
+
+      <hr class="rtm-line">
+
+      <h3>➕ Nueva publicación</h3>
+
+      <div class="form-grid">
+
+        <label class="field">
+          <span>Título *</span>
+          <input
+            id="rtm-title"
+            type="text"
+            maxlength="120"
+            placeholder="Ej.: Trabajo de Juan">
+        </label>
+
+        <label class="field">
+          <span>Categoría</span>
+          <select id="rtm-category">
+            <option value="alumnos">👨‍🎨 Alumnos</option>
+            <option value="talleres" selected>🎨 Talleres</option>
+            <option value="trabajos">🖼️ Trabajos</option>
+          </select>
+        </label>
+
+        <label class="field full">
+          <span>Descripción</span>
+          <textarea
+            id="rtm-description"
+            rows="3"
+            maxlength="500"
+            placeholder="Descripción opcional..."></textarea>
+        </label>
+
+        <div class="field full">
+
+          <span>Foto o video *</span>
+
+          <label class="rtm-file">
+
+            <span id="rtm-file-label">
+              📁 Seleccionar foto o video
+            </span>
+
+            <input
+              id="rtm-file"
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/quicktime">
+
+          </label>
+
+          <div id="rtm-preview"></div>
+
+        </div>
+
+      </div>
+
+      <button type="button" class="btn btn-gold" id="rtm-upload">
+        ☁️ Publicar
+      </button>
+
+      <div id="rtm-upload-status" class="status-box"></div>
+
+      <hr class="rtm-line">
+
+      <h3>🗑️ Publicaciones existentes</h3>
+
+      <div id="rtm-admin-list">
+        <div class="empty-state">Cargando...</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<style>
+
+#roxthal-talleres-media {
+  max-width:1200px;
+  margin:0 auto;
+  padding:70px 20px;
+}
+
+.rtm-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-bottom:25px;
+}
+
+.rtm-filters {
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:25px;
+}
+
+.rtm-filter.active {
+  background:var(--gold);
+  color:#000;
+}
+
+.rtm-admin {
+  margin-top:40px;
+  padding:25px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:18px;
+}
+
+.rtm-admin-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-bottom:25px;
+}
+
+.rtm-user {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  padding:14px;
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:10px;
+}
+
+.rtm-user .btn {
+  margin-left:auto;
+  padding:7px 12px;
+}
+
+.rtm-line {
+  border:0;
+  border-top:1px solid var(--line);
+  margin:25px 0;
+}
+
+.rtm-file {
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:110px;
+  padding:20px;
+  border:2px dashed var(--line);
+  border-radius:12px;
+  background:var(--bg);
+  cursor:pointer;
+  text-align:center;
+}
+
+.rtm-file:hover {
+  border-color:var(--gold);
+}
+
+.rtm-file input {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  opacity:0;
+  cursor:pointer;
+}
+
+#rtm-preview {
+  margin-top:12px;
+}
+
+#rtm-preview img,
+#rtm-preview video {
+  display:block;
+  width:100%;
+  max-width:420px;
+  max-height:300px;
+  object-fit:contain;
+  border-radius:12px;
+  background:#000;
+}
+
+.rtm-media-card {
+  position:relative;
+}
+
+.rtm-media {
+  width:100%;
+  height:250px;
+  display:block;
+  object-fit:cover;
+  background:#000;
+}
+
+.rtm-card-body {
+  padding:18px;
+}
+
+.rtm-card-body h3 {
+  margin:8px 0;
+}
+
+.rtm-admin-item {
+  display:grid;
+  grid-template-columns:110px 1fr auto;
+  gap:15px;
+  align-items:center;
+  padding:12px;
+  margin-bottom:10px;
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:12px;
+}
+
+.rtm-admin-thumb {
+  width:110px;
+  height:80px;
+  object-fit:cover;
+  border-radius:8px;
+  background:#000;
+}
+
+.rtm-admin-actions {
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.rtm-admin-actions .btn {
+  padding:8px 12px;
+  font-size:.85rem;
+}
+
+.rtm-lightbox {
+  position:fixed;
+  inset:0;
+  z-index:10000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(0,0,0,.94);
+}
+
+.rtm-lightbox.open {
+  display:flex;
+}
+
+.rtm-lightbox-content {
+  max-width:95vw;
+  max-height:90vh;
+  text-align:center;
+}
+
+.rtm-lightbox-content img,
+.rtm-lightbox-content video {
+  max-width:95vw;
+  max-height:78vh;
+  border-radius:12px;
+  background:#000;
+}
+
+.rtm-lightbox-title {
+  margin-top:12px;
+  color:#fff;
+  font-weight:700;
+}
+
+.rtm-lightbox-close {
+  position:absolute;
+  top:15px;
+  right:15px;
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:#222;
+  color:#fff;
+  border:1px solid #555;
+  font-size:20px;
+}
+
+@media(max-width:700px) {
+
+  #roxthal-talleres-media {
+    padding:45px 14px;
+  }
+
+  .rtm-admin-item {
+    grid-template-columns:1fr;
+  }
+
+  .rtm-admin-thumb {
+    width:100%;
+    height:180px;
+  }
+
+}
+
+</style>
+
+<div id="rtm-lightbox" class="rtm-lightbox">
+
+  <button
+    type="button"
+    class="rtm-lightbox-close"
+    id="rtm-lightbox-close">
+    ✕
+  </button>
+
+  <div class="rtm-lightbox-content" id="rtm-lightbox-content"></div>
+
+</div>
+
+<script>
+(function () {
+
+  "use strict";
+
+  /* =========================================================
+     CONFIGURACIÓN
+     ========================================================= */
+
+  const RTM_TABLE = "roxthal_talleres_media";
+  const RTM_BUCKET = "roxthal-talleres";
+  const RTM_ADMIN_EMAIL = "xtroxthal@gmail.com";
+
+  /*
+   * La aplicación ya tiene:
+   *   SUPABASE_URL
+   *   SUPABASE_KEY
+   *   sb
+   *
+   * No creamos otra configuración ni tocamos BUCKET = images.
+   */
+
+  const RTM_SUPABASE_URL =
+    window.SUPABASE_URL ||
+    "https://lvvhpuedktdmfehvhcwk.supabase.co";
+
+  const RTM_SUPABASE_KEY =
+    window.SUPABASE_KEY ||
+    "sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp";
+
+  let rtmClient = null;
+  let rtmItems = [];
+  let rtmCategory = "todos";
+
+  const $rtm = id =>
+    document.getElementById(id);
+
+  function rtmGetClient() {
+
+    if (rtmClient) {
+      return rtmClient;
+    }
+
+    if (
+      typeof window.supabase === "undefined" ||
+      !window.supabase.createClient
+    ) {
+      throw new Error(
+        "Supabase no está disponible."
+      );
+    }
+
+    rtmClient =
+      window.supabase.createClient(
+        RTM_SUPABASE_URL,
+        RTM_SUPABASE_KEY
+      );
+
+    return rtmClient;
+  }
+
+  function rtmEscape(value) {
+
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
+  function rtmStatus(id, message, type) {
+
+    const el = $rtm(id);
+
+    if (!el) return;
+
+    el.textContent = message;
+    el.className =
+      "status-box show " +
+      (type || "info");
+
+  }
+
+  function rtmIsVideo(item) {
+
+    const type =
+      String(item.tipo || "").toLowerCase();
+
+    const path =
+      String(item.storage_path || "").toLowerCase();
+
+    return (
+      type === "video" ||
+      type === "mp4" ||
+      type === "webm" ||
+      type === "mov" ||
+      /\.(mp4|webm|mov|m4v)$/i.test(path)
+    );
+
+  }
+
+  function rtmUrl(item) {
+
+    if (item.url) {
+      return item.url;
+    }
+
+    if (!item.storage_path) {
+      return "";
+    }
+
+    const encodedPath =
+      item.storage_path
+        .split("/")
+        .map(encodeURIComponent)
+        .join("/");
+
+    return (
+      RTM_SUPABASE_URL +
+      "/storage/v1/object/public/" +
+      RTM_BUCKET +
+      "/" +
+      encodedPath
+    );
+
+  }
+
+  /* =========================================================
+     GALERÍA PÚBLICA
+     ========================================================= */
+
+  async function rtmLoadGallery() {
+
+    const gallery =
+      $rtm("rtm-gallery");
+
+    if (!gallery) return;
+
+    try {
+
+      const client =
+        rtmGetClient();
+
+      const response =
+        await client
+          .from(RTM_TABLE)
+          .select(
+            "id,titulo,descripcion,categoria,tipo,storage_path,url,created_at"
+          )
+          .order(
+            "created_at",
+            { ascending:false }
+          );
+
+      if (response.error) {
+        throw response.error;
+      }
+
+      rtmItems =
+        response.data || [];
+
+      rtmRenderGallery();
+
+    } catch (error) {
+
+      console.error(
+        "RoXThal media:",
+        error
+      );
+
+      gallery.innerHTML =
+        '<div class="empty-state">' +
+        '❌ No se pudo cargar la galería.' +
+        '</div>';
+
+    }
+
+  }
+
+  function rtmRenderGallery() {
+
+    const gallery =
+      $rtm("rtm-gallery");
+
+    if (!gallery) return;
+
+    const items =
+      rtmCategory === "todos"
+        ? rtmItems
+        : rtmItems.filter(
+            item =>
+              String(
+                item.categoria || ""
+              ).toLowerCase() ===
+              rtmCategory
+          );
+
+    if (!items.length) {
+
+      gallery.innerHTML =
+        '<div class="empty-state">' +
+        '📭 Todavía no hay publicaciones en esta categoría.' +
+        '</div>';
+
+      return;
+
+    }
+
+    gallery.innerHTML =
+      items.map(item => {
+
+        const url =
+          rtmUrl(item);
+
+        const title =
+          rtmEscape(
+            item.titulo ||
+            "Publicación RoXThal"
+          );
+
+        const description =
+          rtmEscape(
+            item.descripcion || ""
+          );
+
+        const category =
+          rtmEscape(
+            item.categoria ||
+            "talleres"
+          );
+
+        let media;
+
+        if (rtmIsVideo(item)) {
+
+          media =
+            '<video class="rtm-media" ' +
+            'controls playsinline preload="metadata">' +
+            '<source src="' +
+            rtmEscape(url) +
+            '">' +
+            '</video>';
+
+        } else {
+
+          media =
+            '<img class="rtm-media" ' +
+            'loading="lazy" ' +
+            'src="' +
+            rtmEscape(url) +
+            '" ' +
+            'alt="' +
+            title +
+            '">';
+
+        }
+
+        return (
+          '<article class="card rtm-media-card">' +
+            media +
+            '<div class="rtm-card-body">' +
+              '<span class="badge">' +
+                category +
+              '</span>' +
+              '<h3>' +
+                title +
+              '</h3>' +
+              (
+                description
+                  ? '<p class="muted">' +
+                    description +
+                    '</p>'
+                  : ''
+              ) +
+              '<button type="button" ' +
+                'class="btn btn-dark rtm-view" ' +
+                'data-id="' +
+                String(item.id) +
+                '" ' +
+                'style="margin-top:12px;width:100%;">' +
+                '🔎 Ver' +
+              '</button>' +
+            '</div>' +
+          '</article>'
+        );
+
+      }).join("");
+
+    gallery
+      .querySelectorAll(".rtm-view")
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          function () {
+
+            const id =
+              Number(
+                this.dataset.id
+              );
+
+            const item =
+              rtmItems.find(
+                x => Number(x.id) === id
+              );
+
+            if (item) {
+              rtmOpenLightbox(item);
+            }
+
+          }
+        );
+
+      });
+
+  }
+
+  /* =========================================================
+     FILTROS
+     ========================================================= */
+
+  $rtm("rtm-filters")?.addEventListener(
+    "click",
+    function (event) {
+
+      const button =
+        event.target.closest(
+          ".rtm-filter"
+        );
+
+      if (!button) return;
+
+      rtmCategory =
+        button.dataset.category ||
+        "todos";
+
+      document
+        .querySelectorAll(
+          "#roxthal-talleres-media .rtm-filter"
+        )
+        .forEach(
+          item =>
+            item.classList.remove(
+              "active"
+            )
+        );
+
+      button.classList.add("active");
+
+      rtmRenderGallery();
+
+    }
+  );
+
+  /* =========================================================
+     LIGHTBOX
+     ========================================================= */
+
+  function rtmOpenLightbox(item) {
+
+    const box =
+      $rtm("rtm-lightbox");
+
+    const content =
+      $rtm("rtm-lightbox-content");
+
+    if (!box || !content) return;
+
+    const url =
+      rtmUrl(item);
+
+    const title =
+      rtmEscape(
+        item.titulo ||
+        "RoXThal Art Design"
+      );
+
+    if (rtmIsVideo(item)) {
+
+      content.innerHTML =
+        '<video controls autoplay playsinline>' +
+          '<source src="' +
+          rtmEscape(url) +
+          '">' +
+        '</video>' +
+        '<div class="rtm-lightbox-title">' +
+          title +
+        '</div>';
+
+    } else {
+
+      content.innerHTML =
+        '<img src="' +
+        rtmEscape(url) +
+        '" alt="' +
+        title +
+        '">' +
+        '<div class="rtm-lightbox-title">' +
+          title +
+        '</div>';
+
+    }
+
+    box.classList.add("open");
+
+  }
+
+  function rtmCloseLightbox() {
+
+    const box =
+      $rtm("rtm-lightbox");
+
+    const content =
+      $rtm("rtm-lightbox-content");
+
+    if (!box) return;
+
+    box.classList.remove("open");
+
+    if (content) {
+      content.innerHTML = "";
+    }
+
+  }
+
+  $rtm(
+    "rtm-lightbox-close"
+  )?.addEventListener(
+    "click",
+    rtmCloseLightbox
+  );
+
+  $rtm("rtm-lightbox")?.addEventListener(
+    "click",
+    function (event) {
+
+      if (
+        event.target === this
+      ) {
+        rtmCloseLightbox();
+      }
+
+    }
+  );
+
+  document.addEventListener(
+    "keydown",
+    function (event) {
+
+      if (
+        event.key === "Escape"
+      ) {
+        rtmCloseLightbox();
+      }
+
+    }
+  );
+
+  /* =========================================================
+     ADMIN
+     ========================================================= */
+
+  $rtm("rtm-admin-open")?.addEventListener(
+    "click",
+    async function () {
+
+      $rtm("rtm-admin")
+        ?.classList.remove("hidden");
+
+      await rtmCheckSession();
+
+      $rtm("rtm-admin")
+        ?.scrollIntoView({
+          behavior:"smooth",
+          block:"start"
+        });
+
+    }
+  );
+
+  $rtm("rtm-admin-close")?.addEventListener(
+    "click",
+    function () {
+
+      $rtm("rtm-admin")
+        ?.classList.add("hidden");
+
+    }
+  );
+
+  async function rtmCheckSession() {
+
+    try {
+
+      const client =
+        rtmGetClient();
+
+      const result =
+        await client.auth.getSession();
+
+      const session =
+        result.data?.session;
+
+      if (
+        session &&
+        session.user &&
+        String(
+          session.user.email || ""
+        ).toLowerCase() ===
+        RTM_ADMIN_EMAIL
+      ) {
+
+        rtmShowPanel(
+          session.user.email
+        );
+
+      } else {
+
+        if (session) {
+          await client.auth.signOut();
+        }
+
+        rtmShowLogin();
+
+      }
+
+    } catch (error) {
+
+      console.error(
+        "Session:",
+        error
+      );
+
+      rtmShowLogin();
+
+    }
+
+  }
+
+  function rtmShowLogin() {
+
+    $rtm("rtm-login")
+      ?.classList.remove("hidden");
+
+    $rtm("rtm-panel")
+      ?.classList.add("hidden");
+
+  }
+
+  function rtmShowPanel(email) {
+
+    $rtm("rtm-login")
+      ?.classList.add("hidden");
+
+    $rtm("rtm-panel")
+      ?.classList.remove("hidden");
+
+    const emailEl =
+      $rtm("rtm-user-email");
+
+    if (emailEl) {
+      emailEl.textContent =
+        email ||
+        RTM_ADMIN_EMAIL;
+    }
+
+    rtmLoadAdminList();
+
+  }
+
+  /* =========================================================
+     LOGIN
+     ========================================================= */
+
+  $rtm("rtm-login-btn")?.addEventListener(
+    "click",
+    async function () {
+
+      const email =
+        $rtm("rtm-email")
+          ?.value
+          .trim()
+          .toLowerCase();
+
+      const password =
+        $rtm("rtm-password")
+          ?.value || "";
+
+      if (
+        email !== RTM_ADMIN_EMAIL
+      ) {
+
+        rtmStatus(
+          "rtm-login-status",
+          "❌ Esta cuenta no está autorizada para administrar este módulo.",
+          "err"
+        );
+
+        return;
+
+      }
+
+      if (!password) {
+
+        rtmStatus(
+          "rtm-login-status",
+          "⚠️ Introducí tu contraseña.",
+          "err"
+        );
+
+        return;
+
+      }
+
+      const button =
+        $rtm("rtm-login-btn");
+
+      button.disabled = true;
+      button.textContent =
+        "⏳ Verificando...";
+
+      try {
+
+        const client =
+          rtmGetClient();
+
+        const result =
+          await client.auth.signInWithPassword({
+            email,
+            password
+          });
+
+        if (result.error) {
+          throw result.error;
+        }
+
+        const user =
+          result.data?.user;
+
+        if (
+          !user ||
+          String(
+            user.email || ""
+          ).toLowerCase() !==
+          RTM_ADMIN_EMAIL
+        ) {
+
+          await client.auth.signOut();
+
+          throw new Error(
+            "Cuenta no autorizada."
+          );
+
+        }
+
+        rtmStatus(
+          "rtm-login-status",
+          "✅ Acceso autorizado.",
+          "ok"
+        );
+
+        rtmShowPanel(
+          user.email
+        );
+
+      } catch (error) {
+
+        console.error(
+          "Login:",
+          error
+        );
+
+        rtmStatus(
+          "rtm-login-status",
+          "❌ Correo o contraseña incorrectos.",
+          "err"
+        );
+
+      } finally {
+
+        button.disabled = false;
+        button.textContent =
+          "🔑 Ingresar";
+
+      }
+
+    }
+  );
+
+  /* =========================================================
+     LOGOUT
+     ========================================================= */
+
+  $rtm("rtm-logout")?.addEventListener(
+    "click",
+    async function () {
+
+      try {
+
+        const client =
+          rtmGetClient();
+
+        await client.auth.signOut();
+
+      } catch (error) {
+
+        console.error(
+          "Logout:",
+          error
+        );
+
+      }
+
+      rtmShowLogin();
+
+    }
+  );
+
+  /* =========================================================
+     PREVISUALIZACIÓN
+     ========================================================= */
+
+  $rtm("rtm-file")?.addEventListener(
+    "change",
+    function () {
+
+      const file =
+        this.files?.[0];
+
+      const label =
+        $rtm("rtm-file-label");
+
+      const preview =
+        $rtm("rtm-preview");
+
+      if (!file) {
+
+        label.textContent =
+          "📁 Seleccionar foto o video";
+
+        preview.innerHTML = "";
+
+        return;
+
+      }
+
+      label.textContent =
+        "📎 " + file.name;
+
+      const objectUrl =
+        URL.createObjectURL(file);
+
+      if (
+        file.type.startsWith("video/")
+      ) {
+
+        preview.innerHTML =
+          '<video controls playsinline ' +
+          'src="' +
+          rtmEscape(objectUrl) +
+          '"></video>';
+
+      } else {
+
+        preview.innerHTML =
+          '<img src="' +
+          rtmEscape(objectUrl) +
+          '" alt="Vista previa">';
+
+      }
+
+    }
+  );
+
+  /* =========================================================
+     SUBIR
+     ========================================================= */
+
+  $rtm("rtm-upload")?.addEventListener(
+    "click",
+    rtmUpload
+  );
+
+  async function rtmUpload() {
+
+    const title =
+      $rtm("rtm-title")
+        ?.value
+        .trim();
+
+    const description =
+      $rtm("rtm-description")
+        ?.value
+        .trim() || "";
+
+    const category =
+      $rtm("rtm-category")
+        ?.value || "talleres";
+
+    const file =
+      $rtm("rtm-file")
+        ?.files?.[0];
+
+    if (!title) {
+
+      rtmStatus(
+        "rtm-upload-status",
+        "⚠️ Escribí un título.",
+        "err"
+      );
+
+      return;
+
+    }
+
+    if (!file) {
+
+      rtmStatus(
+        "rtm-upload-status",
+        "⚠️ Seleccioná una foto o video.",
+        "err"
+      );
+
+      return;
+
+    }
+
+    const maxSize =
+      file.type.startsWith("video/")
+        ? 100 * 1024 * 1024
+        : 15 * 1024 * 1024;
+
+    if (file.size > maxSize) {
+
+      rtmStatus(
+        "rtm-upload-status",
+        file.type.startsWith("video/")
+          ? "❌ El video supera los 100 MB."
+          : "❌ La imagen supera los 15 MB.",
+        "err"
+      );
+
+      return;
+
+    }
+
+    const allowed =
+      [
+        "image/jpeg",
+        "image/png",
+        "image/webp",
+        "image/gif",
+        "video/mp4",
+        "video/webm",
+        "video/quicktime"
+      ];
+
+    if (
+      !allowed.includes(
+        file.type
+      )
+    ) {
+
+      rtmStatus(
+        "rtm-upload-status",
+        "❌ Formato no permitido.",
+        "err"
+      );
+
+      return;
+
+    }
+
+    const button =
+      $rtm("rtm-upload");
+
+    button.disabled = true;
+    button.textContent =
+      "⏳ Publicando...";
+
+    let path = "";
+
+    try {
+
+      const client =
+        rtmGetClient();
+
+      const sessionResult =
+        await client.auth.getSession();
+
+      const session =
+        sessionResult.data?.session;
+
+      if (
+        !session ||
+        String(
+          session.user?.email || ""
+        ).toLowerCase() !==
+        RTM_ADMIN_EMAIL
+      ) {
+
+        throw new Error(
+          "Sesión de administrador no válida."
+        );
+
+      }
+
+      const extension =
+        (
+          file.name
+            .split(".")
+            .pop() ||
+          "bin"
+        )
+        .toLowerCase()
+        .replace(
+          /[^a-z0-9]/g,
+          ""
+        );
+
+      const random =
+        Math.random()
+          .toString(36)
+          .slice(2,10);
+
+      path =
+        "media/" +
+        category +
+        "/" +
+        Date.now() +
+        "_" +
+        random +
+        "." +
+        extension;
+
+      rtmStatus(
+        "rtm-upload-status",
+        "☁️ Subiendo archivo...",
+        "info"
+      );
+
+      const upload =
+        await client.storage
+          .from(RTM_BUCKET)
+          .upload(
+            path,
+            file,
+            {
+              cacheControl:"3600",
+              upsert:false,
+              contentType:file.type
+            }
+          );
+
+      if (upload.error) {
+        throw upload.error;
+      }
+
+      const publicResult =
+        client.storage
+          .from(RTM_BUCKET)
+          .getPublicUrl(path);
+
+      const publicUrl =
+        publicResult.data?.publicUrl;
+
+      if (!publicUrl) {
+
+        await client.storage
+          .from(RTM_BUCKET)
+          .remove([path]);
+
+        throw new Error(
+          "No se pudo obtener la URL pública."
+        );
+
+      }
+
+      const tipo =
+        file.type.startsWith("video/")
+          ? "video"
+          : "imagen";
+
+      rtmStatus(
+        "rtm-upload-status",
+        "💾 Guardando publicación...",
+        "info"
+      );
+
+      const insert =
+        await client
+          .from(RTM_TABLE)
+          .insert({
+            titulo:title,
+            descripcion:description,
+            categoria:category,
+            tipo:tipo,
+            storage_path:path,
+            url:publicUrl
+          })
+          .select()
+          .single();
+
+      if (insert.error) {
+
+        await client.storage
+          .from(RTM_BUCKET)
+          .remove([path]);
+
+        throw insert.error;
+
+      }
+
+      rtmStatus(
+        "rtm-upload-status",
+        "✅ Publicado correctamente.",
+        "ok"
+      );
+
+      $rtm("rtm-title").value = "";
+      $rtm("rtm-description").value = "";
+      $rtm("rtm-file").value = "";
+      $rtm("rtm-preview").innerHTML = "";
+      $rtm("rtm-file-label").textContent =
+        "📁 Seleccionar foto o video";
+
+      await rtmLoadGallery();
+      await rtmLoadAdminList();
+
+    } catch (error) {
+
+      console.error(
+        "Upload:",
+        error
+      );
+
+      /*
+       * Si falló la inserción de BD después
+       * de subir el archivo, intentamos limpiarlo.
+       */
+      if (path) {
+
+        try {
+
+          const client =
+            rtmGetClient();
+
+          await client.storage
+            .from(RTM_BUCKET)
+            .remove([path]);
+
+        } catch (cleanupError) {
+
+          console.warn(
+            "Cleanup:",
+            cleanupError
+          );
+
+        }
+
+      }
+
+      rtmStatus(
+        "rtm-upload-status",
+        "❌ No se pudo publicar: " +
+        (
+          error.message ||
+          "Error desconocido."
+        ),
+        "err"
+      );
+
+    } finally {
+
+      button.disabled = false;
+      button.textContent =
+        "☁️ Publicar";
+
+    }
+
+  }
+
+  /* =========================================================
+     LISTA ADMIN
+     ========================================================= */
+
+  async function rtmLoadAdminList() {
+
+    const list =
+      $rtm("rtm-admin-list");
+
+    if (!list) return;
+
+    try {
+
+      const client =
+        rtmGetClient();
+
+      const sessionResult =
+        await client.auth.getSession();
+
+      const session =
+        sessionResult.data?.session;
+
+      if (
+        !session ||
+        String(
+          session.user?.email || ""
+        ).toLowerCase() !==
+        RTM_ADMIN_EMAIL
+      ) {
+
+        return;
+
+      }
+
+      const response =
+        await client
+          .from(RTM_TABLE)
+          .select(
+            "id,titulo,descripcion,categoria,tipo,storage_path,url,created_at"
+          )
+          .order(
+            "created_at",
+            { ascending:false }
+          );
+
+      if (response.error) {
+        throw response.error;
+      }
+
+      const items =
+        response.data || [];
+
+      if (!items.length) {
+
+        list.innerHTML =
+          '<div class="empty-state">' +
+          'Todavía no hay publicaciones.' +
+          '</div>';
+
+        return;
+
+      }
+
+      list.innerHTML =
+        items.map(item => {
+
+          const url =
+            rtmUrl(item);
+
+          const title =
+            rtmEscape(
+              item.titulo
+            );
+
+          const category =
+            rtmEscape(
+              item.categoria ||
+              "talleres"
+            );
+
+          let thumb;
+
+          if (rtmIsVideo(item)) {
+
+            thumb =
+              '<video class="rtm-admin-thumb" ' +
+              'preload="metadata" muted>' +
+              '<source src="' +
+              rtmEscape(url) +
+              '">' +
+              '</video>';
+
+          } else {
+
+            thumb =
+              '<img class="rtm-admin-thumb" ' +
+              'src="' +
+              rtmEscape(url) +
+              '" alt="' +
+              title +
+              '">';
+
+          }
+
+          return (
+            '<div class="rtm-admin-item">' +
+
+              thumb +
+
+              '<div>' +
+                '<strong>' +
+                  title +
+                '</strong>' +
+                '<div class="muted" style="margin-top:5px;">' +
+                  category +
+                '</div>' +
+              '</div>' +
+
+              '<div class="rtm-admin-actions">' +
+
+                '<button type="button" ' +
+                  'class="btn btn-danger rtm-delete" ' +
+                  'data-id="' +
+                  String(item.id) +
+                  '" ' +
+                  'data-path="' +
+                  rtmEscape(item.storage_path || "") +
+                  '">' +
+                  '🗑️ Borrar' +
+                '</button>' +
+
+              '</div>' +
+
+            '</div>'
+          );
+
+        }).join("");
+
+      list
+        .querySelectorAll(".rtm-delete")
+        .forEach(button => {
+
+          button.addEventListener(
+            "click",
+            function () {
+
+              const id =
+                Number(
+                  this.dataset.id
+                );
+
+              const path =
+                this.dataset.path || "";
+
+              rtmDelete(
+                id,
+                path
+              );
+
+            }
+          );
+
+        });
+
+    } catch (error) {
+
+      console.error(
+        "Admin list:",
+        error
+      );
+
+      list.innerHTML =
+        '<div class="empty-state">' +
+        '❌ No se pudo cargar la administración.' +
+        '</div>';
+
+    }
+
+  }
+
+  /* =========================================================
+     BORRAR
+     ========================================================= */
+
+  async function rtmDelete(
+    id,
+    path
+  ) {
+
+    if (
+      !confirm(
+        "¿Querés eliminar esta publicación definitivamente?"
+      )
+    ) {
+      return;
+    }
+
+    try {
+
+      const client =
+        rtmGetClient();
+
+      const sessionResult =
+        await client.auth.getSession();
+
+      const session =
+        sessionResult.data?.session;
+
+      if (
+        !session ||
+        String(
+          session.user?.email || ""
+        ).toLowerCase() !==
+        RTM_ADMIN_EMAIL
+      ) {
+
+        throw new Error(
+          "Sesión no autorizada."
+        );
+
+      }
+
+      if (path) {
+
+        const storageResult =
+          await client.storage
+            .from(RTM_BUCKET)
+            .remove([path]);
+
+        if (
+          storageResult.error
+        ) {
+
+          console.warn(
+            "Storage:",
+            storageResult.error
+          );
+
+        }
+
+      }
+
+      const databaseResult =
+        await client
+          .from(RTM_TABLE)
+          .delete()
+          .eq(
+            "id",
+            id
+          );
+
+      if (
+        databaseResult.error
+      ) {
+
+        throw databaseResult.error;
+
+      }
+
+      rtmStatus(
+        "rtm-upload-status",
+        "✅ Publicación eliminada.",
+        "ok"
+      );
+
+      await rtmLoadGallery();
+      await rtmLoadAdminList();
+
+    } catch (error) {
+
+      console.error(
+        "Delete:",
+        error
+      );
+
+      rtmStatus(
+        "rtm-upload-status",
+        "❌ No se pudo eliminar: " +
+        (
+          error.message ||
+          "Error desconocido."
+        ),
+        "err"
+      );
+
+    }
+
+  }
+
+  /* =========================================================
+     INICIO
+     ========================================================= */
+
+  function rtmStart() {
+
+    /*
+     * Esperamos a que el documento esté listo.
+     */
+
+    rtmLoadGallery();
+
+  }
+
+  if (
+    document.readyState ===
+    "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      rtmStart,
+      { once:true }
+    );
+
+  } else {
+
+    rtmStart();
+
+  }
+
+})();
+</script>
+
+<!-- FIN MÓDULO ROXTHAL FOTOS Y VIDEOS -->
 </body>
 </html>
