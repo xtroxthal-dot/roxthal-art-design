@@ -6274,5 +6274,897 @@ onclick="roxthalPrepararSubidaAlumnos()">
 </script><!-- =========================================================
      FIN PARTE 2
 ========================================================= -->
+  <!-- ============================================================
+     ROXTHAL — TRABAJOS DE NUESTROS ALUMNOS Y TALLERES
+     Módulo independiente — Supabase
+     Tabla: roxthal_trabajos_alumnos
+     ============================================================ -->
+
+<section id="roxthalAlumnosTalleres" class="rat-module">
+
+  <button type="button" id="ratToggle" class="rat-toggle">
+    <span>🎨</span>
+    <span>Trabajos de nuestros alumnos y fotos de nuestros talleres</span>
+    <span id="ratArrow">▼</span>
+  </button>
+
+  <div id="ratContent" class="rat-content">
+
+    <div class="rat-header">
+      <h2>Trabajos de nuestros alumnos</h2>
+      <p>Fotos y vídeos de nuestros cursos, talleres y actividades.</p>
+    </div>
+
+    <div id="ratStatus" class="rat-status">
+      Cargando contenido...
+    </div>
+
+    <div id="ratGallery" class="rat-gallery"></div>
+
+  </div>
+</section>
+
+
+<!-- VISOR -->
+<div id="ratViewer" class="rat-viewer" aria-hidden="true">
+  <button type="button" id="ratViewerClose" class="rat-viewer-close">✕</button>
+
+  <div id="ratViewerContent" class="rat-viewer-content"></div>
+</div>
+
+
+<style>
+/* ============================================================
+   ROXTHAL — ESTILOS DEL MÓDULO
+   ============================================================ */
+
+.rat-module {
+  width: 100%;
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 0 14px;
+  box-sizing: border-box;
+}
+
+.rat-toggle {
+  width: 100%;
+  min-height: 58px;
+  padding: 15px 18px;
+  border: 1px solid rgba(215,180,90,.45);
+  border-radius: 14px;
+  background: linear-gradient(135deg,#17171b,#0d0d10);
+  color: #f5f5f5;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  box-shadow: 0 5px 18px rgba(0,0,0,.35);
+  transition: .2s ease;
+}
+
+.rat-toggle:hover {
+  border-color: #d7b45a;
+  transform: translateY(-1px);
+}
+
+.rat-toggle:active {
+  transform: scale(.99);
+}
+
+#ratArrow {
+  color: #d7b45a;
+  font-size: 13px;
+  transition: transform .25s ease;
+}
+
+.rat-toggle.open #ratArrow {
+  transform: rotate(180deg);
+}
+
+.rat-content {
+  display: none;
+  margin-top: 16px;
+  padding: 18px;
+  border: 1px solid #383840;
+  border-radius: 16px;
+  background: rgba(15,15,18,.96);
+  box-sizing: border-box;
+}
+
+.rat-content.open {
+  display: block;
+}
+
+.rat-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.rat-header h2 {
+  margin: 0 0 8px;
+  color: #d7b45a;
+  font-size: 25px;
+}
+
+.rat-header p {
+  margin: 0;
+  color: #aaa;
+  font-size: 14px;
+}
+
+.rat-status {
+  text-align: center;
+  color: #aaa;
+  padding: 15px 5px;
+  font-size: 14px;
+}
+
+.rat-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 14px;
+}
+
+.rat-card {
+  overflow: hidden;
+  border: 1px solid #383840;
+  border-radius: 14px;
+  background: #111115;
+  box-shadow: 0 5px 16px rgba(0,0,0,.25);
+}
+
+.rat-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #08080a;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.rat-media img,
+.rat-media video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.rat-video-badge {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  padding: 6px 9px;
+  border-radius: 20px;
+  background: rgba(0,0,0,.75);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.rat-info {
+  padding: 12px;
+}
+
+.rat-title {
+  margin: 0 0 5px;
+  color: #f5f5f5;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.rat-description {
+  margin: 0;
+  color: #aaa;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+/* ============================================================
+   VISOR
+   ============================================================ */
+
+.rat-viewer {
+  display: none;
+  position: fixed;
+  z-index: 999999;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,.94);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.rat-viewer.open {
+  display: flex;
+}
+
+.rat-viewer-content {
+  max-width: 95vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rat-viewer-content img,
+.rat-viewer-content video {
+  max-width: 95vw;
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.rat-viewer-close {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 1000000;
+
+  width: 44px;
+  height: 44px;
+
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 50%;
+
+  background: rgba(0,0,0,.75);
+  color: #fff;
+
+  font-size: 20px;
+  cursor: pointer;
+}
+
+
+/* ============================================================
+   TABLET
+   ============================================================ */
+
+@media (max-width: 800px) {
+
+  .rat-gallery {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+
+}
+
+
+/* ============================================================
+   CELULAR
+   ============================================================ */
+
+@media (max-width: 520px) {
+
+  .rat-module {
+    margin: 22px auto;
+    padding: 0 10px;
+  }
+
+  .rat-toggle {
+    font-size: 14px;
+    padding: 14px 12px;
+    min-height: 58px;
+  }
+
+  .rat-content {
+    padding: 12px;
+  }
+
+  .rat-header h2 {
+    font-size: 21px;
+  }
+
+  .rat-gallery {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .rat-media {
+    aspect-ratio: 16 / 11;
+  }
+
+}
+
+
+/* ============================================================
+   RESPETO A REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .rat-toggle,
+  #ratArrow {
+    transition: none;
+  }
+
+}
+</style>
+
+
+<script>
+(function () {
+
+  "use strict";
+
+  /* ==========================================================
+     CONFIGURACIÓN SUPABASE
+     ========================================================== */
+
+  const RAT_SUPABASE_URL =
+    "https://lvvhpuedktdmfehvhcwk.supabase.co";
+
+  const RAT_TABLE =
+    "roxthal_trabajos_alumnos";
+
+
+  /* ==========================================================
+     ELEMENTOS
+     ========================================================== */
+
+  const toggle =
+    document.getElementById("ratToggle");
+
+  const content =
+    document.getElementById("ratContent");
+
+  const arrow =
+    document.getElementById("ratArrow");
+
+  const status =
+    document.getElementById("ratStatus");
+
+  const gallery =
+    document.getElementById("ratGallery");
+
+  const viewer =
+    document.getElementById("ratViewer");
+
+  const viewerContent =
+    document.getElementById("ratViewerContent");
+
+  const viewerClose =
+    document.getElementById("ratViewerClose");
+
+
+  /* ==========================================================
+     URL SEGURA
+     ========================================================== */
+
+  function safeUrl(value) {
+
+    if (!value) return "";
+
+    try {
+
+      const url = new URL(value);
+
+      if (
+        url.protocol !== "https:" &&
+        url.protocol !== "http:"
+      ) {
+        return "";
+      }
+
+      return url.href;
+
+    } catch (error) {
+
+      return "";
+
+    }
+
+  }
+
+
+  /* ==========================================================
+     ESCAPAR TEXTO
+     ========================================================== */
+
+  function escapeHtml(value) {
+
+    if (value === null || value === undefined) {
+      return "";
+    }
+
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
+
+  /* ==========================================================
+     OBTENER DATOS DE SUPABASE
+     ========================================================== */
+
+  async function cargarTrabajos() {
+
+    status.textContent =
+      "Cargando fotos y vídeos...";
+
+    gallery.innerHTML = "";
+
+    const endpoint =
+      RAT_SUPABASE_URL +
+      "/rest/v1/" +
+      RAT_TABLE +
+      "?select=id,titulo,descripcion,tipo,url,archivo,created_at" +
+      "&order=created_at.desc";
+
+    try {
+
+      /*
+       * Esta consulta utiliza la API REST pública de Supabase.
+       *
+       * No usamos ninguna clave secreta.
+       * La tabla debe tener una política SELECT pública
+       * para que la web pueda mostrar el contenido.
+       */
+
+      const response = await fetch(endpoint, {
+
+        method: "GET",
+
+        headers: {
+          "Accept": "application/json"
+        }
+
+      });
+
+
+      if (!response.ok) {
+
+        const texto =
+          await response.text();
+
+        console.error(
+          "Supabase respondió:",
+          response.status,
+          texto
+        );
+
+        throw new Error(
+          "HTTP " + response.status
+        );
+
+      }
+
+
+      const trabajos =
+        await response.json();
+
+
+      if (!Array.isArray(trabajos) ||
+          trabajos.length === 0) {
+
+        status.textContent =
+          "Todavía no hay trabajos publicados.";
+
+        return;
+
+      }
+
+
+      status.textContent =
+        trabajos.length +
+        (trabajos.length === 1
+          ? " publicación"
+          : " publicaciones");
+
+
+      trabajos.forEach(function (item) {
+
+        crearTarjeta(item);
+
+      });
+
+
+    } catch (error) {
+
+      console.error(
+        "Error cargando trabajos:",
+        error
+      );
+
+      status.innerHTML =
+        "No se pudo cargar el contenido.<br>" +
+        "<small>Comprueba la conexión con Supabase y las políticas de lectura de la tabla.</small>";
+
+    }
+
+  }
+
+
+  /* ==========================================================
+     CREAR TARJETA
+     ========================================================== */
+
+  function crearTarjeta(item) {
+
+    const titulo =
+      escapeHtml(item.titulo || "Trabajo de alumno");
+
+    const descripcion =
+      escapeHtml(item.descripcion || "");
+
+    const tipo =
+      String(item.tipo || "foto").toLowerCase();
+
+    const url =
+      safeUrl(item.url);
+
+    if (!url) return;
+
+
+    const card =
+      document.createElement("article");
+
+    card.className =
+      "rat-card";
+
+
+    const media =
+      document.createElement("div");
+
+    media.className =
+      "rat-media";
+
+
+    if (tipo === "video" ||
+        /\.mp4($|\?)/i.test(url) ||
+        /\.webm($|\?)/i.test(url) ||
+        /\.mov($|\?)/i.test(url)) {
+
+      const video =
+        document.createElement("video");
+
+      video.src = url;
+
+      video.controls = true;
+
+      video.preload = "metadata";
+
+      video.playsInline = true;
+
+      video.setAttribute(
+        "aria-label",
+        item.titulo || "Vídeo"
+      );
+
+      media.appendChild(video);
+
+
+      const badge =
+        document.createElement("span");
+
+      badge.className =
+        "rat-video-badge";
+
+      badge.textContent =
+        "▶ VÍDEO";
+
+      media.appendChild(badge);
+
+
+      /*
+       * Al pulsar sobre el área fuera de los controles,
+       * abrimos el visor.
+       */
+
+      media.addEventListener(
+        "click",
+        function (event) {
+
+          if (
+            event.target.tagName.toLowerCase()
+            === "video"
+          ) {
+            return;
+          }
+
+          abrirVideo(url);
+
+        }
+      );
+
+
+    } else {
+
+      const img =
+        document.createElement("img");
+
+      img.src = url;
+
+      img.alt =
+        item.titulo || "Trabajo de alumno";
+
+      img.loading = "lazy";
+
+      img.decoding = "async";
+
+      media.appendChild(img);
+
+
+      media.addEventListener(
+        "click",
+        function () {
+
+          abrirImagen(
+            url,
+            item.titulo || "Trabajo de alumno"
+          );
+
+        }
+      );
+
+    }
+
+
+    const info =
+      document.createElement("div");
+
+    info.className =
+      "rat-info";
+
+
+    const titleElement =
+      document.createElement("h3");
+
+    titleElement.className =
+      "rat-title";
+
+    titleElement.textContent =
+      item.titulo || "Trabajo de alumno";
+
+
+    info.appendChild(
+      titleElement
+    );
+
+
+    if (item.descripcion) {
+
+      const descElement =
+        document.createElement("p");
+
+      descElement.className =
+        "rat-description";
+
+      descElement.textContent =
+        item.descripcion;
+
+      info.appendChild(
+        descElement
+      );
+
+    }
+
+
+    card.appendChild(media);
+
+    card.appendChild(info);
+
+    gallery.appendChild(card);
+
+  }
+
+
+  /* ==========================================================
+     VISOR IMAGEN
+     ========================================================== */
+
+  function abrirImagen(url, alt) {
+
+    viewerContent.innerHTML = "";
+
+    const img =
+      document.createElement("img");
+
+    img.src = url;
+
+    img.alt = alt || "";
+
+    viewerContent.appendChild(img);
+
+    viewer.classList.add("open");
+
+    viewer.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+    document.body.style.overflow =
+      "hidden";
+
+  }
+
+
+  /* ==========================================================
+     VISOR VÍDEO
+     ========================================================== */
+
+  function abrirVideo(url) {
+
+    viewerContent.innerHTML = "";
+
+    const video =
+      document.createElement("video");
+
+    video.src = url;
+
+    video.controls = true;
+
+    video.autoplay = true;
+
+    video.playsInline = true;
+
+    viewerContent.appendChild(video);
+
+    viewer.classList.add("open");
+
+    viewer.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+    document.body.style.overflow =
+      "hidden";
+
+  }
+
+
+  /* ==========================================================
+     CERRAR VISOR
+     ========================================================== */
+
+  function cerrarViewer() {
+
+    const video =
+      viewerContent.querySelector(
+        "video"
+      );
+
+    if (video) {
+
+      video.pause();
+
+      video.removeAttribute(
+        "src"
+      );
+
+      video.load();
+
+    }
+
+
+    viewerContent.innerHTML = "";
+
+    viewer.classList.remove(
+      "open"
+    );
+
+    viewer.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+    document.body.style.overflow =
+      "";
+
+  }
+
+
+  viewerClose.addEventListener(
+    "click",
+    cerrarViewer
+  );
+
+
+  viewer.addEventListener(
+    "click",
+    function (event) {
+
+      if (
+        event.target === viewer
+      ) {
+
+        cerrarViewer();
+
+      }
+
+    }
+  );
+
+
+  document.addEventListener(
+    "keydown",
+    function (event) {
+
+      if (
+        event.key === "Escape" &&
+        viewer.classList.contains("open")
+      ) {
+
+        cerrarViewer();
+
+      }
+
+    }
+  );
+
+
+  /* ==========================================================
+     ABRIR / CERRAR MÓDULO
+     ========================================================== */
+
+  toggle.addEventListener(
+    "click",
+    function () {
+
+      const abierto =
+        content.classList.toggle(
+          "open"
+        );
+
+      toggle.classList.toggle(
+        "open",
+        abierto
+      );
+
+      toggle.setAttribute(
+        "aria-expanded",
+        abierto ? "true" : "false"
+      );
+
+
+      if (abierto) {
+
+        /*
+         * Cargamos los datos solamente
+         * cuando el usuario abre el módulo.
+         */
+
+        cargarTrabajos();
+
+      }
+
+    }
+  );
+
+
+  toggle.setAttribute(
+    "aria-expanded",
+    "false"
+  );
+
+
+  /* ==========================================================
+     INICIALIZACIÓN
+     ========================================================== */
+
+  console.log(
+    "RoXThal — módulo alumnos/talleres iniciado"
+  );
+
+})();
+</script>
+
+<!-- ============================================================
+     FIN DEL MÓDULO
+     ============================================================ -->
 </body>
 </html>
