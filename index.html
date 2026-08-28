@@ -5815,91 +5815,177 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <script>
-document.addEventListener("DOMContentLoaded", async function () {
+<!-- =========================================================
+     ROXTHAL ART DESIGN
+     MÓDULO INDEPENDIENTE — ALUMNOS Y TALLERES
+     PARTE 1 — VISUALIZACIÓN
+========================================================= --><style>
+#roxthal-alumnos-modulo{
+  margin:50px auto 0;
+  padding:35px 15px;
+  max-width:1100px;
+  border-top:1px solid #383840;
+  text-align:center;
+  color:#f5f5f5;
+}
 
-  const bucket = "RoXThal alumnos talleres";
-  const galeria = document.getElementById("galeria-alumnos-talleres");
+#roxthal-alumnos-modulo h2{
+  margin:0 0 10px;
+  font-size:clamp(22px,5vw,32px);
+}
 
-  try {
+#roxthal-alumnos-modulo p{
+  color:#aaa;
+  line-height:1.6;
+}
 
-    if (typeof supabase === "undefined") {
-      throw new Error("Supabase no está disponible en esta página.");
-    }
+#roxthal-alumnos-boton{
+  margin:20px auto;
+  padding:15px 24px;
+  border:1px solid #d7b45a;
+  border-radius:10px;
+  background:#111116;
+  color:#f2da91;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
 
-    const { data, error } = await supabase
-      .storage
-      .from(bucket)
-      .list("", {
-        limit: 100,
-        sortBy: { column: "created_at", order: "desc" }
-      });
+#roxthal-alumnos-boton:active{
+  transform:scale(.98);
+}
 
-    if (error) throw error;
+#roxthal-alumnos-contenido{
+  display:none;
+  margin-top:30px;
+}
 
-    if (!data || data.length === 0) {
-      galeria.innerHTML =
-        '<p style="grid-column:1/-1;color:#aaa;">Todavía no hay archivos para mostrar.</p>';
-      return;
-    }
+#roxthal-alumnos-contenido.abierto{
+  display:block;
+}
 
-    galeria.innerHTML = "";
+#roxthal-alumnos-galeria{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  text-align:left;
+}
 
-    data.forEach(function (archivo) {
+.roxthal-alumno-item{
+  overflow:hidden;
+  border:1px solid #383840;
+  border-radius:12px;
+  background:#111116;
+}
 
-      if (!archivo.name) return;
+.roxthal-alumno-item img,
+.roxthal-alumno-item video{
+  display:block;
+  width:100%;
+  height:260px;
+  object-fit:cover;
+  background:#000;
+}
 
-      const { data: urlData } =
-        supabase.storage
-          .from(bucket)
-          .getPublicUrl(archivo.name);
+.roxthal-alumno-info{
+  padding:12px;
+}
 
-      const url = urlData.publicUrl;
+.roxthal-alumno-titulo{
+  color:#f5f5f5;
+  font-weight:bold;
+  margin-bottom:5px;
+}
 
-      const extension =
-        archivo.name.split(".").pop().toLowerCase();
+.roxthal-alumno-descripcion{
+  color:#aaa;
+  font-size:13px;
+}
 
-      const tarjeta = document.createElement("div");
+#roxthal-alumnos-vacio{
+  grid-column:1/-1;
+  padding:35px 15px;
+  border:1px dashed #383840;
+  border-radius:12px;
+  color:#888;
+  text-align:center;
+}
 
-      tarjeta.style.cssText =
-        "background:#1b1b1b;border-radius:14px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,.4);";
+@media(max-width:750px){
 
-      if (["mp4","webm","mov","ogg"].includes(extension)) {
-
-        tarjeta.innerHTML = `
-          <video
-            src="${url}"
-            controls
-            playsinline
-            style="width:100%;display:block;max-height:350px;background:#000;">
-          </video>
-        `;
-
-      } else {
-
-        tarjeta.innerHTML = `
-          <img
-            src="${url}"
-            alt="Trabajo de alumno"
-            loading="lazy"
-            style="width:100%;height:250px;object-fit:cover;display:block;">
-        `;
-      }
-
-      galeria.appendChild(tarjeta);
-    });
-
-  } catch (error) {
-
-    console.error(error);
-
-    galeria.innerHTML = `
-      <p style="grid-column:1/-1;color:#ff6b6b;">
-        No se pudo cargar la galería.
-      </p>
-    `;
+  #roxthal-alumnos-galeria{
+    grid-template-columns:1fr;
   }
 
-});
-</script>
+  .roxthal-alumno-item img,
+  .roxthal-alumno-item video{
+    height:250px;
+  }
+
+}
+</style><section id="roxthal-alumnos-modulo">  <h2>
+    Trabajos de nuestros alumnos y fotos de nuestros talleres
+  </h2>  <p>
+    Descubrí los trabajos realizados por nuestros alumnos
+    y momentos de nuestros talleres.
+  </p><button
+id="roxthal-alumnos-boton"
+type="button"
+onclick="roxthalAbrirAlumnos()">
+
+📸 Ver trabajos y talleres
+
+  </button>  <div id="roxthal-alumnos-contenido"><div id="roxthal-alumnos-galeria">
+
+  <div id="roxthal-alumnos-vacio">
+    📸🎥 Próximamente publicaremos aquí
+    los trabajos de nuestros alumnos
+    y fotos de nuestros talleres.
+  </div>
+
+</div>
+
+  </div></section><script>
+(function(){
+
+  window.roxthalAbrirAlumnos = function(){
+
+    const contenido =
+      document.getElementById(
+        'roxthal-alumnos-contenido'
+      );
+
+    const boton =
+      document.getElementById(
+        'roxthal-alumnos-boton'
+      );
+
+    if(!contenido || !boton)return;
+
+
+    if(
+      contenido.classList.contains('abierto')
+    ){
+
+      contenido.classList.remove('abierto');
+
+      boton.textContent =
+        '📸 Ver trabajos y talleres';
+
+    }else{
+
+      contenido.classList.add('abierto');
+
+      boton.textContent =
+        '🔼 Ocultar trabajos y talleres';
+
+    }
+
+  };
+
+})();
+</script><!-- =========================================================
+     FIN PARTE 1
+========================================================= -->
 </body>
 </html>
