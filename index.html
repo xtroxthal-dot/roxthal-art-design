@@ -5987,5 +5987,292 @@ onclick="roxthalAbrirAlumnos()">
 </script><!-- =========================================================
      FIN PARTE 1
 ========================================================= -->
+  <!-- =========================================================
+     ROXTHAL ART DESIGN
+     MÓDULO ALUMNOS Y TALLERES
+     PARTE 2 — PANEL PRIVADO DE SUBIDA
+========================================================= --><style>
+
+#roxthal-alumnos-admin{
+  display:none;
+  max-width:900px;
+  margin:30px auto;
+  padding:20px;
+  border:1px solid #383840;
+  border-radius:14px;
+  background:#111116;
+  color:#f5f5f5;
+  text-align:left;
+}
+
+#roxthal-alumnos-admin h3{
+  margin-top:0;
+}
+
+.roxthal-admin-campo{
+  margin-bottom:15px;
+}
+
+.roxthal-admin-campo label{
+  display:block;
+  margin-bottom:7px;
+  color:#aaa;
+  font-size:14px;
+}
+
+.roxthal-admin-campo input,
+.roxthal-admin-campo textarea{
+  width:100%;
+  box-sizing:border-box;
+  padding:12px;
+  border-radius:9px;
+  border:1px solid #383840;
+  background:#080809;
+  color:#f5f5f5;
+}
+
+.roxthal-admin-campo textarea{
+  min-height:80px;
+  resize:vertical;
+}
+
+#roxthal-alumnos-archivo{
+  padding:10px;
+}
+
+#roxthal-alumnos-subir{
+  width:100%;
+  padding:14px;
+  border:1px solid #d7b45a;
+  border-radius:9px;
+  background:#d7b45a;
+  color:#080809;
+  font-weight:bold;
+  font-size:15px;
+  cursor:pointer;
+}
+
+#roxthal-alumnos-estado{
+  display:none;
+  margin-top:15px;
+  padding:12px;
+  border-radius:9px;
+  background:#080809;
+  border:1px solid #383840;
+  color:#aaa;
+}
+
+#roxthal-alumnos-estado.visible{
+  display:block;
+}
+
+</style><!-- =========================================================
+     PANEL PRIVADO
+========================================================= --><div id="roxthal-alumnos-admin">  <h3>
+    📸🎥 Administrar trabajos de alumnos
+  </h3>  <p style="color:#aaa;">
+    Este panel es únicamente para el administrador.
+    Desde tu celular podés seleccionar una foto o un video.
+  </p>  <div class="roxthal-admin-campo"><label for="roxthal-alumnos-titulo">
+  Título
+</label>
+
+<input
+  id="roxthal-alumnos-titulo"
+  type="text"
+  placeholder="Ej.: Trabajo de Juan">
+
+  </div>  <div class="roxthal-admin-campo"><label for="roxthal-alumnos-descripcion">
+  Descripción
+</label>
+
+<textarea
+  id="roxthal-alumnos-descripcion"
+  placeholder="Descripción del trabajo o taller (opcional)">
+</textarea>
+
+  </div>  <div class="roxthal-admin-campo"><label for="roxthal-alumnos-archivo">
+  📸🎥 Foto o video
+</label>
+
+<input
+  id="roxthal-alumnos-archivo"
+  type="file"
+  accept="image/*,video/*"
+  capture="environment">
+
+  </div><button
+id="roxthal-alumnos-subir"
+type="button"
+onclick="roxthalPrepararSubidaAlumnos()">
+
+☁️ Subir foto / video
+
+  </button>  <div id="roxthal-alumnos-estado"></div></div><script>
+(function(){
+
+  /*
+   * Este código NO sube todavía el archivo.
+   *
+   * En la PARTE 3 conectaremos este botón
+   * con Supabase Storage y la base de datos.
+   */
+
+
+  window.roxthalPrepararSubidaAlumnos =
+    function(){
+
+      const archivo =
+        document.getElementById(
+          'roxthal-alumnos-archivo'
+        );
+
+      const estado =
+        document.getElementById(
+          'roxthal-alumnos-estado'
+        );
+
+
+      if(!archivo || !archivo.files.length){
+
+        estado.textContent =
+          '⚠️ Primero seleccioná una foto o un video.';
+
+        estado.classList.add('visible');
+
+        return;
+      }
+
+
+      const file =
+        archivo.files[0];
+
+
+      const esImagen =
+        file.type.startsWith('image/');
+
+      const esVideo =
+        file.type.startsWith('video/');
+
+
+      if(!esImagen && !esVideo){
+
+        estado.textContent =
+          '⚠️ El archivo debe ser una foto o un video.';
+
+        estado.classList.add('visible');
+
+        return;
+      }
+
+
+      estado.textContent =
+        '✅ Archivo seleccionado: ' +
+        file.name +
+        '. En la siguiente parte lo conectaremos con Supabase.';
+
+      estado.classList.add('visible');
+
+    };
+
+
+  /*
+   * Mostrar el panel solamente cuando
+   * el administrador tenga una sesión.
+   *
+   * Busca el cliente Supabase que ya utiliza
+   * tu aplicación.
+   */
+
+  async function roxthalDetectarAdministrador(){
+
+    const panel =
+      document.getElementById(
+        'roxthal-alumnos-admin'
+      );
+
+    if(!panel)return;
+
+
+    try{
+
+      if(
+        typeof window.supabase === 'undefined'
+      ){
+
+        return;
+      }
+
+
+      const url =
+        'https://lvvhpuedktdmfehvhcwk.supabase.co';
+
+
+      const key =
+        'sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp';
+
+
+      const cliente =
+        window.supabase.createClient(
+          url,
+          key
+        );
+
+
+      const resultado =
+        await cliente.auth.getSession();
+
+
+      const sesion =
+        resultado?.data?.session;
+
+
+      if(sesion){
+
+        panel.style.display =
+          'block';
+
+      }else{
+
+        panel.style.display =
+          'none';
+
+      }
+
+    }catch(error){
+
+      console.error(
+        'Módulo alumnos:',
+        error
+      );
+
+      panel.style.display =
+        'none';
+
+    }
+
+  }
+
+
+  if(
+    document.readyState ===
+    'loading'
+  ){
+
+    document.addEventListener(
+      'DOMContentLoaded',
+      roxthalDetectarAdministrador
+    );
+
+  }else{
+
+    roxthalDetectarAdministrador();
+
+  }
+
+})();
+</script><!-- =========================================================
+     FIN PARTE 2
+========================================================= -->
 </body>
 </html>
