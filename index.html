@@ -5730,49 +5730,7 @@ document.addEventListener('DOMContentLoaded', function() {
      ========================================================= -->
   <script>
 <script>
-/* CORRECCIÓN REAL DE FOTOS — RoXThal Art Design */
-(function () {
-  const SLOT_MAP = {
-    hero: 'hero_logo',
-    tatuajes: 'srv_tatuajes',
-    fileteado: 'srv_fileteado',
-    dibujo: 'srv_dibujo',
-    atelier: 'srv_atelier',
-    identidad: 'about_img'
-  };
-
-  /* Hace que las imágenes de la página usen los slots reales de Supabase */
-  async function corregirFotosGuardadas() {
-    if (!window.sb) return;
-
-    try {
-      const { data, error } = await sb
-        .from('site_assets')
-        .select('slot,name,url,storage_path,updated_at')
-        .order('updated_at', { ascending: false });
-
-      if (error) {
-        console.warn('No se pudieron leer site_assets:', error);
-        return;
-      }
-
-      const assets = {};
-      (data || []).forEach(item => {
-        if (item && item.slot && item.url && !assets[item.slot]) {
-          assets[item.slot] = item;
-        }
-      });
-
-      Object.keys(SLOT_MAP).forEach(oldSlot => {
-        const realSlot = SLOT_MAP[oldSlot];
-        const asset = assets[realSlot];
-
-        if (!asset || !asset.url) return;
-
-        const url = asset.url +
-          (asset.url.includes('?') ? '&' : '?') +
-          'v=' + encodeURIComponent(asset.updated_at || Date.now());
-
+/* 
         document
           .querySelectorAll('[data-slot-bg="' + oldSlot + '"]')
           .forEach(el => {
@@ -5918,20 +5876,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   .roxthal-alumno-item img,
-  .roxthal-alumno-item video{
-    height:250px;
-  }
-
-}
-</style><section id="roxthal-alumnos-modulo">  <h2>
-    Trabajos de nuestros alumnos y fotos de nuestros talleres
-  </h2>  <p>
-    Descubrí los trabajos realizados por nuestros alumnos
-    y momentos de nuestros talleres.
-  </p><button
-id="roxthal-alumnos-boton"
-type="button"
-onclick="roxthalAbrirAlumnos()">
+()">
 
 📸 Ver trabajos y talleres
 
@@ -6804,66 +6749,7 @@ onclick="roxthalPrepararSubidaAlumnos()">
     const tipo =
       String(item.tipo || "foto").toLowerCase();
 
-    const url =
-      safeUrl(item.url);
-
-    if (!url) return;
-
-
-    const card =
-      document.createElement("article");
-
-    card.className =
-      "rat-card";
-
-
-    const media =
-      document.createElement("div");
-
-    media.className =
-      "rat-media";
-
-
-    if (tipo === "video" ||
-        /\.mp4($|\?)/i.test(url) ||
-        /\.webm($|\?)/i.test(url) ||
-        /\.mov($|\?)/i.test(url)) {
-
-      const video =
-        document.createElement("video");
-
-      video.src = url;
-
-      video.controls = true;
-
-      video.preload = "metadata";
-
-      video.playsInline = true;
-
-      video.setAttribute(
-        "aria-label",
-        item.titulo || "Vídeo"
-      );
-
-      media.appendChild(video);
-
-
-      const badge =
-        document.createElement("span");
-
-      badge.className =
-        "rat-video-badge";
-
-      badge.textContent =
-        "▶ VÍDEO";
-
-      media.appendChild(badge);
-
-
-      /*
-       * Al pulsar sobre el área fuera de los controles,
-       * abrimos el visor.
-       */
+    const 
 
       media.addEventListener(
         "click",
@@ -7040,20 +6926,7 @@ onclick="roxthalPrepararSubidaAlumnos()">
 
     if (video) {
 
-      video.pause();
-
-      video.removeAttribute(
-        "src"
-      );
-
-      video.load();
-
-    }
-
-
-    viewerContent.innerHTML = "";
-
-    viewer.classList.remove(
+      video.pause()classList.remove(
       "open"
     );
 
@@ -7062,7 +6935,7 @@ onclick="roxthalPrepararSubidaAlumnos()">
       "true"
     );
 
-    document.body.style.overflow =
+    document.body..overflow =
       "";
 
   }
@@ -7089,82 +6962,11 @@ onclick="roxthalPrepararSubidaAlumnos()">
     }
   );
 
-
-  document.addEventListener(
-    "keydown",
-    function (event) {
-
-      if (
-        event.key === "Escape" &&
-        viewer.classList.contains("open")
-      ) {
-
-        cerrarViewer();
-
-      }
-
-    }
-  );
-
-
-  /* ==========================================================
-     ABRIR / CERRAR MÓDULO
-     ========================================================== */
-
-  toggle.addEventListener(
-    "click",
-    function () {
-
-      const abierto =
-        content.classList.toggle(
-          "open"
-        );
-
-      toggle.classList.toggle(
-        "open",
-        abierto
-      );
-
-      toggle.setAttribute(
-        "aria-expanded",
-        abierto ? "true" : "false"
-      );
-
-
-      if (abierto) {
-
-        /*
-         * Cargamos los datos solamente
-         * cuando el usuario abre el módulo.
-         */
-
-        cargarTrabajos();
-
-      }
-
-    }
-  );
-
-
-  toggle.setAttribute(
-    "aria-expanded",
+",
     "false"
-  );
+  );5
 
 
-  /* ==========================================================
-     INICIALIZACIÓN
-     ========================================================== */
-
-  console.log(
-    "RoXThal — módulo alumnos/talleres iniciado"
-  );
-
-})();
-</script>
-
-<!-- ============================================================
-     FIN DEL MÓDULO
-     ============================================================ -->
+  /* ====================================================
 </body>
 </html>
