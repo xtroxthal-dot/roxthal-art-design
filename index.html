@@ -5728,6 +5728,1691 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- =========================================================
      FIN SORTEO ROXTHAL ART DESIGN
      ========================================================= -->
-  
+  <!-- =========================================================
+     GALERÍA DE TRABAJO ROXTHAL ART DESIGN
+     MÓDULO CERRADO + GALERÍA + ADMINISTRADOR
+========================================================= -->
+
+<section id="galeria-trabajo-roxthal" style="padding:30px 20px;">
+
+  <button
+    id="roxthalGaleriaToggle"
+    type="button"
+    onclick="roxthalToggleGaleria()"
+    aria-expanded="false"
+    aria-controls="roxthalGaleriaContenido"
+    style="
+      width:100%;
+      padding:16px 20px;
+      border-radius:14px;
+      background:var(--gold,#d7b45a);
+      color:#000;
+      font-weight:800;
+      font-size:1rem;
+      cursor:pointer;
+      border:none;
+    "
+  >
+    📸 Galería de trabajo RoXThal Art Design
+  </button>
+
+  <div
+    id="roxthalGaleriaContenido"
+    style="display:none;margin-top:20px;"
+  >
+
+    <div
+      style="
+        background:var(--panel,#15151a);
+        border:1px solid var(--line,#2e2e38);
+        border-radius:18px;
+        padding:25px;
+        margin-bottom:20px;
+      "
+    >
+
+      <span class="eyebrow">RoXThal Art Design</span>
+
+      <h2 style="margin-bottom:10px;">
+        📸 Galería de trabajo
+      </h2>
+
+      <p class="muted">
+        Trabajos de nuestros alumnos y momentos de nuestros talleres.
+      </p>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;">
+
+        <button
+          type="button"
+          class="btn btn-dark"
+          onclick="roxthalFiltrarGaleria('todos')"
+        >
+          Todos
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-dark"
+          onclick="roxthalFiltrarGaleria('alumnos')"
+        >
+          👨‍🎨 Alumnos
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-dark"
+          onclick="roxthalFiltrarGaleria('talleres')"
+        >
+          🎨 Talleres
+        </button>
+
+      </div>
+    </div>
+
+
+    <!-- GALERÍA PÚBLICA -->
+
+    <div
+      id="roxthalGaleriaGrid"
+      class="grid"
+    ></div>
+
+    <div
+      id="roxthalGaleriaEstado"
+      class="status-box info show"
+      style="margin-top:20px;"
+    >
+      Abre la galería para cargar los trabajos.
+    </div>
+
+
+    <!-- =====================================================
+         ADMINISTRADOR
+    ====================================================== -->
+
+    <div
+      style="
+        margin-top:35px;
+        background:var(--panel,#15151a);
+        border:1px solid var(--line,#2e2e38);
+        border-radius:18px;
+        padding:25px;
+      "
+    >
+
+      <h3 style="margin-bottom:8px;">
+        🔐 Administrador
+      </h3>
+
+      <p class="muted" style="margin-bottom:20px;">
+        Área exclusiva para administrar fotos y videos.
+      </p>
+
+
+      <!-- LOGIN -->
+
+      <div id="roxthalAdminLogin">
+
+        <div class="form-grid">
+
+          <div class="field">
+
+            <label>Email</label>
+
+            <input
+              id="roxthalAdminEmail"
+              type="email"
+              autocomplete="email"
+              placeholder="Email del administrador"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>Contraseña</label>
+
+            <input
+              id="roxthalAdminPassword"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Contraseña"
+            >
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="btn btn-gold"
+          onclick="roxthalAdminIngresar()"
+        >
+          🔐 Entrar
+        </button>
+
+
+        <div
+          id="roxthalAdminLoginEstado"
+          class="status-box"
+          style="margin-top:15px;"
+        ></div>
+
+      </div>
+
+
+      <!-- PANEL ADMINISTRADOR -->
+
+      <div
+        id="roxthalAdminPanel"
+        style="display:none;"
+      >
+
+        <div
+          style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:10px;
+            flex-wrap:wrap;
+            margin-bottom:25px;
+          "
+        >
+
+          <strong>
+            🛠️ Administrador RoXThal
+          </strong>
+
+
+          <button
+            type="button"
+            class="btn btn-danger"
+            onclick="roxthalAdminSalir()"
+          >
+            Cerrar sesión
+          </button>
+
+        </div>
+
+
+        <!-- FORMULARIO -->
+
+        <div
+          style="
+            background:var(--bg,#080809);
+            border:1px solid var(--line,#2e2e38);
+            border-radius:14px;
+            padding:20px;
+          "
+        >
+
+          <h3 style="margin-bottom:20px;">
+            ⬆️ Publicar nuevo trabajo
+          </h3>
+
+
+          <div class="form-grid">
+
+            <div class="field">
+
+              <label>Título</label>
+
+              <input
+                id="roxthalMediaTitulo"
+                type="text"
+                maxlength="120"
+                placeholder="Ej: Trabajo de dibujo"
+              >
+
+            </div>
+
+
+            <div class="field">
+
+              <label>Categoría</label>
+
+              <select id="roxthalMediaCategoria">
+
+                <option value="alumnos">
+                  👨‍🎨 Trabajos de alumnos
+                </option>
+
+                <option value="talleres">
+                  🎨 Talleres
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div class="field full">
+
+              <label>Descripción</label>
+
+              <textarea
+                id="roxthalMediaDescripcion"
+                rows="3"
+                maxlength="500"
+                placeholder="Descripción del trabajo..."
+              ></textarea>
+
+            </div>
+
+
+            <div class="field full">
+
+              <label>
+                Foto o video
+              </label>
+
+              <input
+                id="roxthalMediaArchivo"
+                type="file"
+                accept="image/*,video/*"
+              >
+
+            </div>
+
+          </div>
+
+
+          <button
+            type="button"
+            class="btn btn-gold"
+            onclick="roxthalSubirMedia()"
+          >
+            ⬆️ Publicar
+          </button>
+
+
+          <div
+            id="roxthalMediaUploadEstado"
+            class="status-box"
+            style="margin-top:15px;"
+          ></div>
+
+        </div>
+
+
+        <!-- CONTENIDO ADMIN -->
+
+        <div style="margin-top:25px;">
+
+          <h3 style="margin-bottom:15px;">
+            📂 Contenido publicado
+          </h3>
+
+          <div id="roxthalAdminLista"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<script>
+(function () {
+
+  /* =========================================================
+     CONFIGURACIÓN REAL DE SUPABASE
+  ========================================================= */
+
+  const ROXTHAL_BUCKET = 'roxthal-talleres';
+
+  const ROXTHAL_ADMIN_EMAIL =
+    'xtroxthal@gmail.com';
+
+
+  let roxthalGaleriaDatos = [];
+
+  let roxthalGaleriaFiltro = 'todos';
+
+
+  /* =========================================================
+     ABRIR / CERRAR GALERÍA
+  ========================================================= */
+
+  window.roxthalToggleGaleria = function () {
+
+    const contenido =
+      document.getElementById(
+        'roxthalGaleriaContenido'
+      );
+
+    const boton =
+      document.getElementById(
+        'roxthalGaleriaToggle'
+      );
+
+    if (!contenido || !boton) return;
+
+
+    const abierta =
+      contenido.style.display !== 'none';
+
+
+    if (abierta) {
+
+      contenido.style.display = 'none';
+
+      boton.setAttribute(
+        'aria-expanded',
+        'false'
+      );
+
+    } else {
+
+      contenido.style.display = 'block';
+
+      boton.setAttribute(
+        'aria-expanded',
+        'true'
+      );
+
+      roxthalCargarGaleria();
+
+    }
+
+  };
+
+
+  /* =========================================================
+     CARGAR GALERÍA
+  ========================================================= */
+
+  window.roxthalCargarGaleria = async function () {
+
+    const grid =
+      document.getElementById(
+        'roxthalGaleriaGrid'
+      );
+
+    const estado =
+      document.getElementById(
+        'roxthalGaleriaEstado'
+      );
+
+
+    if (!grid || !estado) return;
+
+
+    if (!window.sb) {
+
+      estado.style.display = 'block';
+
+      estado.className =
+        'status-box err show';
+
+      estado.textContent =
+        'No se pudo conectar con Supabase.';
+
+      return;
+
+    }
+
+
+    estado.style.display = 'block';
+
+    estado.className =
+      'status-box info show';
+
+    estado.textContent =
+      'Cargando trabajos...';
+
+
+    try {
+
+      const {
+        data,
+        error
+      } =
+        await window.sb
+          .from('roxthal_talleres_media')
+          .select(
+            'id,titulo,descripcion,categoria,tipo,storage_path,url,created_at'
+          )
+          .order(
+            'created_at',
+            {
+              ascending:false
+            }
+          );
+
+
+      if (error) throw error;
+
+
+      roxthalGaleriaDatos =
+        Array.isArray(data)
+          ? data
+          : [];
+
+
+      roxthalRenderGaleria();
+
+
+    } catch (error) {
+
+      console.error(
+        'Error cargando galería:',
+        error
+      );
+
+
+      estado.style.display = 'block';
+
+      estado.className =
+        'status-box err show';
+
+      estado.textContent =
+        'No se pudo cargar la galería.';
+
+    }
+
+  };
+
+
+  /* =========================================================
+     FILTROS
+  ========================================================= */
+
+  window.roxthalFiltrarGaleria = function (
+    filtro
+  ) {
+
+    roxthalGaleriaFiltro =
+      filtro;
+
+    roxthalRenderGaleria();
+
+  };
+
+
+  /* =========================================================
+     RENDER GALERÍA
+  ========================================================= */
+
+  function roxthalRenderGaleria() {
+
+    const grid =
+      document.getElementById(
+        'roxthalGaleriaGrid'
+      );
+
+    const estado =
+      document.getElementById(
+        'roxthalGaleriaEstado'
+      );
+
+
+    if (!grid || !estado) return;
+
+
+    let datos =
+      roxthalGaleriaDatos;
+
+
+    if (
+      roxthalGaleriaFiltro !==
+      'todos'
+    ) {
+
+      datos =
+        datos.filter(
+          item =>
+            String(
+              item.categoria || ''
+            ).toLowerCase() ===
+            roxthalGaleriaFiltro
+        );
+
+    }
+
+
+    grid.innerHTML = '';
+
+
+    if (!datos.length) {
+
+      estado.style.display =
+        'block';
+
+      estado.className =
+        'status-box info show';
+
+      estado.textContent =
+        'Todavía no hay trabajos publicados.';
+
+      return;
+
+    }
+
+
+    estado.style.display =
+      'none';
+
+
+    datos.forEach(
+      item => {
+
+        const tarjeta =
+          document.createElement(
+            'article'
+          );
+
+
+        tarjeta.className =
+          'card gallery-card';
+
+
+        const url =
+          String(
+            item.url || ''
+          );
+
+
+        if (!url) return;
+
+
+        const tipo =
+          String(
+            item.tipo || ''
+          ).toLowerCase();
+
+
+        const esVideo =
+          tipo === 'video' ||
+          /\.(mp4|webm|mov|m4v)(\?|$)/i
+            .test(url);
+
+
+        const media =
+          esVideo
+          ? document.createElement(
+              'video'
+            )
+          : document.createElement(
+              'img'
+            );
+
+
+        media.src =
+          url;
+
+
+        media.style.cssText = `
+          width:100%;
+          height:240px;
+          object-fit:cover;
+          background:#000;
+          display:block;
+        `;
+
+
+        if (esVideo) {
+
+          media.controls =
+            true;
+
+          media.playsInline =
+            true;
+
+          media.preload =
+            'metadata';
+
+        } else {
+
+          media.loading =
+            'lazy';
+
+          media.alt =
+            item.titulo ||
+            'Trabajo RoXThal Art Design';
+
+        }
+
+
+        const body =
+          document.createElement(
+            'div'
+          );
+
+
+        body.className =
+          'card-body';
+
+
+        const badge =
+          document.createElement(
+            'span'
+          );
+
+
+        badge.className =
+          'badge';
+
+
+        badge.textContent =
+          item.categoria ===
+          'talleres'
+          ? '🎨 Taller'
+          : '👨‍🎨 Alumno';
+
+
+        const titulo =
+          document.createElement(
+            'h3'
+          );
+
+
+        titulo.style.marginTop =
+          '10px';
+
+
+        titulo.textContent =
+          item.titulo ||
+          'Trabajo RoXThal Art Design';
+
+
+        body.appendChild(
+          badge
+        );
+
+
+        body.appendChild(
+          titulo
+        );
+
+
+        if (item.descripcion) {
+
+          const descripcion =
+            document.createElement(
+              'p'
+            );
+
+
+          descripcion.className =
+            'muted';
+
+
+          descripcion.style.marginTop =
+            '8px';
+
+
+          descripcion.textContent =
+            item.descripcion;
+
+
+          body.appendChild(
+            descripcion
+          );
+
+        }
+
+
+        tarjeta.appendChild(
+          media
+        );
+
+
+        tarjeta.appendChild(
+          body
+        );
+
+
+        grid.appendChild(
+          tarjeta
+        );
+
+      }
+    );
+
+  }
+
+
+  /* =========================================================
+     LOGIN ADMIN
+  ========================================================= */
+
+  window.roxthalAdminIngresar =
+    async function () {
+
+      const email =
+        document.getElementById(
+          'roxthalAdminEmail'
+        ).value
+          .trim()
+          .toLowerCase();
+
+
+      const password =
+        document.getElementById(
+          'roxthalAdminPassword'
+        ).value;
+
+
+      const estado =
+        document.getElementById(
+          'roxthalAdminLoginEstado'
+        );
+
+
+      if (!window.sb) {
+
+        roxthalEstado(
+          estado,
+          'err',
+          'Supabase no está disponible.'
+        );
+
+        return;
+
+      }
+
+
+      if (
+        email !==
+        ROXTHAL_ADMIN_EMAIL
+      ) {
+
+        roxthalEstado(
+          estado,
+          'err',
+          'Este usuario no tiene permisos de administrador.'
+        );
+
+        return;
+
+      }
+
+
+      if (!password) {
+
+        roxthalEstado(
+          estado,
+          'err',
+          'Introduce tu contraseña.'
+        );
+
+        return;
+
+      }
+
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await window.sb.auth
+            .signInWithPassword({
+              email,
+              password
+            });
+
+
+        if (error) throw error;
+
+
+        const usuario =
+          data &&
+          data.user;
+
+
+        if (
+          !usuario ||
+          String(
+            usuario.email || ''
+          ).toLowerCase() !==
+          ROXTHAL_ADMIN_EMAIL
+        ) {
+
+          await window.sb.auth
+            .signOut()
+            .catch(() => {});
+
+
+          throw new Error(
+            'Usuario no autorizado.'
+          );
+
+        }
+
+
+        document.getElementById(
+          'roxthalAdminLogin'
+        ).style.display =
+          'none';
+
+
+        document.getElementById(
+          'roxthalAdminPanel'
+        ).style.display =
+          'block';
+
+
+        roxthalEstado(
+          estado,
+          'ok',
+          'Administrador conectado correctamente.'
+        );
+
+
+        roxthalCargarAdmin();
+
+      } catch (error) {
+
+        console.error(
+          'Error login:',
+          error
+        );
+
+
+        roxthalEstado(
+          estado,
+          'err',
+          'No se pudo iniciar sesión. Comprueba tus datos.'
+        );
+
+      }
+
+    };
+
+
+  /* =========================================================
+     CERRAR SESIÓN
+  ========================================================= */
+
+  window.roxthalAdminSalir =
+    async function () {
+
+      if (window.sb) {
+
+        await window.sb.auth
+          .signOut()
+          .catch(() => {});
+
+      }
+
+
+      document.getElementById(
+        'roxthalAdminLogin'
+      ).style.display =
+        'block';
+
+
+      document.getElementById(
+        'roxthalAdminPanel'
+      ).style.display =
+        'none';
+
+    };
+
+
+  /* =========================================================
+     SUBIR FOTO / VIDEO
+  ========================================================= */
+
+  window.roxthalSubirMedia =
+    async function () {
+
+      const archivo =
+        document.getElementById(
+          'roxthalMediaArchivo'
+        ).files[0];
+
+
+      const titulo =
+        document.getElementById(
+          'roxthalMediaTitulo'
+        ).value.trim();
+
+
+      const descripcion =
+        document.getElementById(
+          'roxthalMediaDescripcion'
+        ).value.trim();
+
+
+      const categoria =
+        document.getElementById(
+          'roxthalMediaCategoria'
+        ).value;
+
+
+      const estado =
+        document.getElementById(
+          'roxthalMediaUploadEstado'
+        );
+
+
+      if (!window.sb) {
+
+        roxthalEstado(
+          estado,
+          'err',
+          'Supabase no está disponible.'
+        );
+
+        return;
+
+      }
+
+
+      if (!archivo) {
+
+        roxthalEstado(
+          estado,
+          'err',
+          'Selecciona una foto o un video.'
+        );
+
+        return;
+
+      }
+
+
+      if (!titulo) {
+
+        roxthalEstado(
+          estado,
+          'err',
+          'Escribe un título.'
+        );
+
+        return;
+
+      }
+
+
+      try {
+
+        const {
+          data: {
+            user
+          } = {}
+        } =
+          await window.sb.auth
+            .getUser();
+
+
+        if (
+          !user ||
+          String(
+            user.email || ''
+          ).toLowerCase() !==
+          ROXTHAL_ADMIN_EMAIL
+        ) {
+
+          roxthalEstado(
+            estado,
+            'err',
+            'Debes iniciar sesión como administrador.'
+          );
+
+          return;
+
+        }
+
+
+        roxthalEstado(
+          estado,
+          'info',
+          'Subiendo archivo...'
+        );
+
+
+        const extension =
+          (
+            archivo.name
+              .split('.')
+              .pop() ||
+            'bin'
+          ).toLowerCase();
+
+
+        const nombreSeguro =
+          titulo
+            .toLowerCase()
+            .replace(
+              /[^a-z0-9áéíóúñ_-]+/gi,
+              '-'
+            )
+            .replace(
+              /-+/g,
+              '-'
+            )
+            .replace(
+              /^-|-$/g,
+              ''
+            )
+            .slice(
+              0,
+              80
+            ) ||
+          'trabajo';
+
+
+        const nombreArchivo =
+          Date.now() +
+          '-' +
+          nombreSeguro +
+          '-' +
+          Math.random()
+            .toString(36)
+            .slice(2,8) +
+          '.' +
+          extension;
+
+
+        const path =
+          categoria +
+          '/' +
+          nombreArchivo;
+
+
+        const {
+          error:
+            uploadError
+        } =
+          await window.sb.storage
+            .from(
+              ROXTHAL_BUCKET
+            )
+            .upload(
+              path,
+              archivo,
+              {
+                cacheControl:'0',
+                upsert:false,
+                contentType:
+                  archivo.type ||
+                  undefined
+              }
+            );
+
+
+        if (uploadError)
+          throw uploadError;
+
+
+        const {
+          data:
+            publicData
+        } =
+          window.sb.storage
+            .from(
+              ROXTHAL_BUCKET
+            )
+            .getPublicUrl(
+              path
+            );
+
+
+        const publicUrl =
+          publicData &&
+          publicData.publicUrl;
+
+
+        if (!publicUrl) {
+
+          await window.sb.storage
+            .from(
+              ROXTHAL_BUCKET
+            )
+            .remove([
+              path
+            ])
+            .catch(() => {});
+
+
+          throw new Error(
+            'No se pudo obtener la URL pública.'
+          );
+
+        }
+
+
+        const tipo =
+          archivo.type
+            .startsWith(
+              'video/'
+            )
+          ? 'video'
+          : 'foto';
+
+
+        const {
+          error:
+            dbError
+        } =
+          await window.sb
+            .from(
+              'roxthal_talleres_media'
+            )
+            .insert({
+
+              titulo:
+                titulo,
+
+              descripcion:
+                descripcion,
+
+              categoria:
+                categoria,
+
+              tipo:
+                tipo,
+
+              storage_path:
+                path,
+
+              url:
+                publicUrl
+
+            });
+
+
+        if (dbError) {
+
+          await window.sb.storage
+            .from(
+              ROXTHAL_BUCKET
+            )
+            .remove([
+              path
+            ])
+            .catch(() => {});
+
+
+          throw dbError;
+
+        }
+
+
+        document.getElementById(
+          'roxthalMediaTitulo'
+        ).value = '';
+
+
+        document.getElementById(
+          'roxthalMediaDescripcion'
+        ).value = '';
+
+
+        document.getElementById(
+          'roxthalMediaArchivo'
+        ).value = '';
+
+
+        roxthalEstado(
+          estado,
+          'ok',
+          'Trabajo publicado correctamente.'
+        );
+
+
+        await roxthalCargarGaleria();
+
+        await roxthalCargarAdmin();
+
+
+      } catch (error) {
+
+        console.error(
+          'Error subiendo:',
+          error
+        );
+
+
+        roxthalEstado(
+          estado,
+          'err',
+          'No se pudo publicar el archivo.'
+        );
+
+      }
+
+    };
+
+
+  /* =========================================================
+     LISTADO DEL ADMIN
+  ========================================================= */
+
+  async function roxthalCargarAdmin() {
+
+    const lista =
+      document.getElementById(
+        'roxthalAdminLista'
+      );
+
+
+    if (!lista || !window.sb)
+      return;
+
+
+    const {
+      data,
+      error
+    } =
+      await window.sb
+        .from(
+          'roxthal_talleres_media'
+        )
+        .select(
+          'id,titulo,categoria,tipo,storage_path,created_at'
+        )
+        .order(
+          'created_at',
+          {
+            ascending:false
+          }
+        );
+
+
+    if (error) {
+
+      lista.innerHTML =
+        '<p class="muted">No se pudo cargar el contenido.</p>';
+
+      return;
+
+    }
+
+
+    if (
+      !data ||
+      !data.length
+    ) {
+
+      lista.innerHTML =
+        '<p class="muted">No hay publicaciones.</p>';
+
+      return;
+
+    }
+
+
+    lista.innerHTML = '';
+
+
+    data.forEach(
+      item => {
+
+        const fila =
+          document.createElement(
+            'div'
+          );
+
+
+        fila.style.cssText = `
+          display:flex;
+          align-items:center;
+          justify-content:space-between;
+          gap:15px;
+          padding:15px;
+          margin-bottom:10px;
+          background:var(--bg,#080809);
+          border:1px solid var(--line,#2e2e38);
+          border-radius:12px;
+        `;
+
+
+        const info =
+          document.createElement(
+            'div'
+          );
+
+
+        info.style.flex =
+          '1';
+
+
+        const titulo =
+          document.createElement(
+            'strong'
+          );
+
+
+        titulo.textContent =
+          item.titulo ||
+          'Sin título';
+
+
+        const detalle =
+          document.createElement(
+            'div'
+          );
+
+
+        detalle.className =
+          'muted';
+
+
+        detalle.style.fontSize =
+          '.85rem';
+
+
+        detalle.textContent =
+          (
+            item.tipo === 'video'
+            ? '🎥 Video'
+            : '📸 Foto'
+          ) +
+          ' · ' +
+          (
+            item.categoria ===
+            'talleres'
+            ? 'Talleres'
+            : 'Alumnos'
+          );
+
+
+        info.appendChild(
+          titulo
+        );
+
+        info.appendChild(
+          detalle
+        );
+
+
+        const eliminar =
+          document.createElement(
+            'button'
+          );
+
+
+        eliminar.type =
+          'button';
+
+
+        eliminar.className =
+          'btn btn-danger';
+
+
+        eliminar.textContent =
+          '🗑️ Eliminar';
+
+
+        eliminar.onclick =
+          function () {
+
+            roxthalEliminarMedia(
+              item
+            );
+
+          };
+
+
+        fila.appendChild(
+          info
+        );
+
+        fila.appendChild(
+          eliminar
+        );
+
+
+        lista.appendChild(
+          fila
+        );
+
+      }
+    );
+
+  }
+
+
+  /* =========================================================
+     ELIMINAR
+  ========================================================= */
+
+  async function roxthalEliminarMedia(
+    item
+  ) {
+
+    if (
+      !confirm(
+        '¿Eliminar este trabajo definitivamente?'
+      )
+    )
+      return;
+
+
+    try {
+
+      const {
+        data: {
+          user
+        } = {}
+      } =
+        await window.sb.auth
+          .getUser();
+
+
+      if (
+        !user ||
+        String(
+          user.email || ''
+        ).toLowerCase() !==
+        ROXTHAL_ADMIN_EMAIL
+      ) {
+
+        alert(
+          'No tienes permisos para eliminar este contenido.'
+        );
+
+        return;
+
+      }
+
+
+      if (item.storage_path) {
+
+        const {
+          error:
+            storageError
+        } =
+          await window.sb.storage
+            .from(
+              ROXTHAL_BUCKET
+            )
+            .remove([
+              item.storage_path
+            ]);
+
+
+        if (storageError) {
+
+          console.warn(
+            'No se pudo eliminar el archivo de Storage:',
+            storageError
+          );
+
+        }
+
+      }
+
+
+      const {
+        error
+      } =
+        await window.sb
+          .from(
+            'roxthal_talleres_media'
+          )
+          .delete()
+          .eq(
+            'id',
+            item.id
+          );
+
+
+      if (error)
+        throw error;
+
+
+      await roxthalCargarGaleria();
+
+      await roxthalCargarAdmin();
+
+
+    } catch (error) {
+
+      console.error(
+        'Error eliminando:',
+        error
+      );
+
+
+      alert(
+        'No se pudo eliminar el contenido.'
+      );
+
+    }
+
+  }
+
+
+  /* =========================================================
+     ESTADOS
+  ========================================================= */
+
+  function roxthalEstado(
+    elemento,
+    tipo,
+    texto
+  ) {
+
+    if (!elemento)
+      return;
+
+
+    elemento.className =
+      'status-box ' +
+      tipo +
+      ' show';
+
+
+    elemento.textContent =
+      texto;
+
+  }
+
+
+  /* =========================================================
+     COMPROBAR SESIÓN EXISTENTE
+  ========================================================= */
+
+  async function roxthalComprobarSesion() {
+
+    if (!window.sb)
+      return;
+
+
+    try {
+
+      const {
+        data: {
+          session
+        } = {}
+      } =
+        await window.sb.auth
+          .getSession();
+
+
+      if (
+        session &&
+        session.user &&
+        String(
+          session.user.email || ''
+        ).toLowerCase() ===
+        ROXTHAL_ADMIN_EMAIL
+      ) {
+
+        const login =
+          document.getElementById(
+            'roxthalAdminLogin'
+          );
+
+
+        const panel =
+          document.getElementById(
+            'roxthalAdminPanel'
+          );
+
+
+        if (login)
+          login.style.display =
+            'none';
+
+
+        if (panel)
+          panel.style.display =
+            'block';
+
+
+        roxthalCargarAdmin();
+
+      }
+
+    } catch (_) {}
+
+  }
+
+
+  /* =========================================================
+     INICIO
+  ========================================================= */
+
+  function roxthalIniciarModulo() {
+
+    if (!window.sb) {
+
+      setTimeout(
+        roxthalIniciarModulo,
+        500
+      );
+
+      return;
+
+    }
+
+
+    roxthalComprobarSesion();
+
+  }
+
+
+  if (
+    document.readyState ===
+    'loading'
+  ) {
+
+    document.addEventListener(
+      'DOMContentLoaded',
+      roxthalIniciarModulo
+    );
+
+  } else {
+
+    roxthalIniciarModulo();
+
+  }
+
+})();
+</script>
 </body>
 </html>
