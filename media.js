@@ -1,9 +1,3 @@
-/* =========================================================
-   RoXThal Art Design
-   media.js
-   Módulo multimedia de alumnos y talleres
-   ========================================================= */
-
 (function () {
   "use strict";
 
@@ -25,6 +19,20 @@
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#039;");
+  }
+
+  function normalizeType(value) {
+    const type = String(value || "").toLowerCase().trim();
+
+    if (
+      type === "video" ||
+      type === "videos" ||
+      type.startsWith("video/")
+    ) {
+      return "video";
+    }
+
+    return "foto";
   }
 
   function getFileType(file) {
@@ -55,7 +63,7 @@
       .order("created_at", { ascending: false });
 
     if (error) {
-      console.error("[RoXThal Media] Error cargando contenido:", error);
+      console.error("[RoXThal Media] Error cargando:", error);
       return [];
     }
 
@@ -85,35 +93,31 @@
       const category = escapeHtml(item.categoria);
       const url = escapeHtml(item.url);
 
-      let media;
+      const tipo = normalizeType(item.tipo);
 
-      if (item.tipo === "video") {
-        media = `
+      const media = tipo === "video"
+        ? `
           <video
             src="${url}"
             controls
             preload="metadata"
             playsinline>
           </video>
-        `;
-      } else {
-        media = `
+        `
+        : `
           <img
             src="${url}"
             alt="${title}"
             loading="lazy">
         `;
-      }
 
       return `
         <article class="roxthal-media-item">
-
           <div class="roxthal-media-preview">
             ${media}
           </div>
 
           <div class="roxthal-media-info">
-
             <h3>${title}</h3>
 
             ${
@@ -122,12 +126,12 @@
                 : ""
             }
 
-            <span class="roxthal-media-category">
-              ${category}
-            </span>
-
+            ${
+              category
+                ? `<span class="roxthal-media-category">${category}</span>`
+                : ""
+            }
           </div>
-
         </article>
       `;
     }).join("");
@@ -147,9 +151,7 @@
     const tipo = getFileType(file);
 
     if (!tipo) {
-      throw new Error(
-        "El archivo debe ser una imagen o un video."
-      );
+      throw new Error("El archivo debe ser una imagen o un video.");
     }
 
     const timestamp = Date.now();
@@ -158,35 +160,30 @@
       .toLowerCase()
       .replace(/[^a-z0-9._-]/g, "-");
 
-    const path =
-      `talleres/${timestamp}-${safeName}`;
+    const path = `talleres/${timestamp}-${safeName}`;
 
-    const { error: uploadError } =
-      await sb.storage
-        .from(BUCKET)
-        .upload(path, file, {
-          cacheControl: "3600",
-          upsert: false,
-          contentType: file.type
-        });
+    const { error: uploadError } = await sb.storage
+      .from(BUCKET)
+      .upload(path, file, {
+        cacheControl: "3600",
+        upsert: false,
+        contentType: file.type
+      });
 
     if (uploadError) {
       console.error(
-        "[RoXThal Media] Error subiendo archivo:",
+        "[RoXThal Media] Error subiendo:",
         uploadError
       );
 
       throw uploadError;
     }
 
-    const {
-      data: publicData
-    } = sb.storage
+    const { data: publicData } = sb.storage
       .from(BUCKET)
       .getPublicUrl(path);
 
-    const publicUrl =
-      publicData?.publicUrl || "";
+    const publicUrl = publicData?.publicUrl || "";
 
     const { data, error } = await sb
       .from(TABLE)
@@ -194,7 +191,7 @@
         titulo: options.titulo || file.name,
         descripcion: options.descripcion || "",
         categoria: options.categoria || "talleres",
-        tipo,
+        tipo: tipo,
         storage_path: path,
         url: publicUrl
       })
@@ -203,12 +200,10 @@
 
     if (error) {
       console.error(
-        "[RoXThal Media] Error registrando archivo:",
+        "[RoXThal Media] Error registrando:",
         error
       );
 
-      // Intentamos eliminar el archivo si el registro
-      // de la base de datos no pudo crearse.
       await sb.storage
         .from(BUCKET)
         .remove([path]);
@@ -237,17 +232,9 @@
     }
 
     if (item.storage_path) {
-      const { error: storageError } =
-        await sb.storage
-          .from(BUCKET)
-          .remove([item.storage_path]);
-
-      if (storageError) {
-        console.warn(
-          "[RoXThal Media] No se pudo eliminar el archivo:",
-          storageError
-        );
-      }
+      await sb.storage
+        .from(BUCKET)
+        .remove([item.storage_path]);
     }
 
     const { error } = await sb
