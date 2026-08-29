@@ -1,317 +1,387 @@
 /* =========================================================
    RoXThal Art Design
    NUEVA APP — app.js
+   Núcleo de aplicación + Supabase
    ========================================================= */
 
 (() => {
   "use strict";
 
   /* =======================================================
-     CONFIGURACIÓN
+     CONFIGURACIÓN SUPABASE
      ======================================================= */
 
-  const CONFIG = {
-    search: {
-      tattoos:
-        "https://www.google.com/search?tbm=isch&q=",
-      artists:
-        "https://www.google.com/search?tbm=isch&q="
-    },
+  const SUPABASE_URL =
+    "https://lvvhpuedktdmfehvhcwk.supabase.co";
 
-    courses: {
-      dibujo: {
-        title: "Dibujo y pintura",
-        description:
-          "Formación artística orientada al desarrollo del dibujo, pintura, composición y expresión personal."
-      },
+  const SUPABASE_KEY =
+    "sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp";
 
-      infantil: {
-        title: "Curso infantil",
-        description:
-          "Actividades de dibujo y pintura adaptadas para estimular la creatividad y el desarrollo artístico."
-      },
+  let supabaseClient = null;
 
-      tatuaje: {
-        title: "Iniciación al tatuaje",
-        description:
-          "Introducción progresiva al mundo del tatuaje, diseño, herramientas, higiene y fundamentos técnicos."
-      }
-    }
+  /* =======================================================
+     ESTADO
+     ======================================================= */
+
+  const state = {
+    initialized: false,
+    assets: [],
+    gallery: [],
+    reviews: [],
+    courses: [],
+    services: [],
+    visits: null
   };
 
   /* =======================================================
      UTILIDADES
      ======================================================= */
 
-  const $ = (selector, parent = document) =>
-    parent.querySelector(selector);
+  const $ = (selector, root = document) =>
+    root.querySelector(selector);
 
-  const $$ = (selector, parent = document) =>
-    [...parent.querySelectorAll(selector)];
+  const $$ = (selector, root = document) =>
+    Array.from(root.querySelectorAll(selector));
 
-  const escapeHTML = (value) => {
-    const div = document.createElement("div");
-    div.textContent = String(value ?? "");
-    return div.innerHTML;
-  };
-
-  const safeJSON = (value, fallback = null) => {
-    try {
-      return JSON.parse(value);
-    } catch {
-      return fallback;
-    }
-  };
-
-  /* =======================================================
-     AÑO
-     ======================================================= */
-
-  function initYear() {
-    const year = $("#currentYear");
-
-    if (year) {
-      year.textContent = new Date().getFullYear();
-    }
+  function log(...args) {
+    console.log("[RoXThal]", ...args);
   }
 
-  /* =======================================================
-     MENÚ MÓVIL
-     ======================================================= */
-
-  function initMenu() {
-    const toggle = $("#menuToggle");
-    const nav = $("#mainNav");
-
-    if (!toggle || !nav) return;
-
-    toggle.addEventListener("click", () => {
-      const isOpen = nav.classList.toggle("open");
-
-      toggle.setAttribute(
-        "aria-expanded",
-        String(isOpen)
-      );
-    });
-
-    $$("#mainNav a").forEach((link) => {
-      link.addEventListener("click", () => {
-        nav.classList.remove("open");
-
-        toggle.setAttribute(
-          "aria-expanded",
-          "false"
-        );
-      });
-    });
-
-    document.addEventListener("click", (event) => {
-      if (
-        nav.classList.contains("open") &&
-        !nav.contains(event.target) &&
-        !toggle.contains(event.target)
-      ) {
-        nav.classList.remove("open");
-
-        toggle.setAttribute(
-          "aria-expanded",
-          "false"
-        );
-      }
-    });
+  function warn(...args) {
+    console.warn("[RoXThal]", ...args);
   }
 
-  /* =======================================================
-     MODAL
-     ======================================================= */
+  function error(...args) {
+    console.error("[RoXThal]", ...args);
+  }
 
-  function initModal() {
-    const modal = $("#appModal");
-    const body = $("#modalBody");
-    const close = $("#modalClose");
-    const overlay = $(".modal-overlay");
-
-    if (!modal || !body || !close) return;
-
-    const openModal = (html) => {
-      body.innerHTML = html;
-
-      modal.hidden = false;
-      modal.setAttribute("aria-hidden", "false");
-
-      document.body.classList.add("modal-open");
-
-      close.focus();
-    };
-
-    const closeModal = () => {
-      modal.hidden = true;
-      modal.setAttribute("aria-hidden", "true");
-
-      document.body.classList.remove("modal-open");
-
-      body.innerHTML = "";
-    };
-
-    close.addEventListener("click", closeModal);
-
-    if (overlay) {
-      overlay.addEventListener("click", closeModal);
+  function escapeHTML(value) {
+    if (value === null || value === undefined) {
+      return "";
     }
 
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && !modal.hidden) {
-        closeModal();
-      }
-    });
-
-    $$("[data-course]").forEach((button) => {
-      button.addEventListener("click", () => {
-        const courseId =
-          button.dataset.course;
-
-        const course =
-          CONFIG.courses[courseId];
-
-        if (!course) return;
-
-        openModal(`
-          <span class="eyebrow">CURSO</span>
-          <h2>${escapeHTML(course.title)}</h2>
-          <p>${escapeHTML(course.description)}</p>
-
-          <div style="margin-top:24px;">
-            <a
-              href="#contacto"
-              class="btn btn-primary"
-              id="modalContactButton"
-            >
-              Consultar
-            </a>
-          </div>
-        `);
-
-        const contactButton =
-          $("#modalContactButton");
-
-        if (contactButton) {
-          contactButton.addEventListener(
-            "click",
-            closeModal
-          );
-        }
-      });
-    });
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
   }
 
-  /* =======================================================
-     BUSCADOR DE TATUAJES
-     ======================================================= */
+  function cacheBust(url, version) {
+    if (!url) return "";
 
-  function initTattooSearch() {
-    const form = $("#tattooSearchForm");
-    const input = $("#tattooSearch");
+    const separator =
+      url.includes("?") ? "&" : "?";
 
-    if (!form || !input) return;
-
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-
-      const query = input.value.trim();
-
-      if (!query) {
-        input.focus();
-        return;
-      }
-
-      const url =
-        CONFIG.search.tattoos +
-        encodeURIComponent(
-          `${query} tattoo`
-        );
-
-      window.open(
-        url,
-        "_blank",
-        "noopener,noreferrer"
-      );
-    });
-  }
-
-  /* =======================================================
-     BUSCADOR DE ARTISTAS
-     ======================================================= */
-
-  function initArtistSearch() {
-    const form = $("#artistSearchForm");
-    const input = $("#artistSearch");
-
-    if (!form || !input) return;
-
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-
-      const query = input.value.trim();
-
-      if (!query) {
-        input.focus();
-        return;
-      }
-
-      const url =
-        CONFIG.search.artists +
-        encodeURIComponent(
-          `${query} art painting artist`
-        );
-
-      window.open(
-        url,
-        "_blank",
-        "noopener,noreferrer"
-      );
-    });
+    return `${url}${separator}roxthal_v=${encodeURIComponent(
+      version || Date.now()
+    )}`;
   }
 
   /* =======================================================
      SUPABASE
      ======================================================= */
 
-  function getSupabaseClient() {
-    if (
-      typeof window.supabase === "undefined"
-    ) {
-      return null;
-    }
+  function loadSupabaseLibrary() {
+    return new Promise((resolve, reject) => {
+      if (window.supabase) {
+        resolve(window.supabase);
+        return;
+      }
 
-    const url =
-      window.ROXTHAL_SUPABASE_URL ||
-      localStorage.getItem(
-        "ROXTHAL_SUPABASE_URL"
-      );
+      const existing =
+        document.querySelector(
+          'script[data-roxthal-supabase]'
+        );
 
-    const key =
-      window.ROXTHAL_SUPABASE_ANON_KEY ||
-      localStorage.getItem(
-        "ROXTHAL_SUPABASE_ANON_KEY"
-      );
+      if (existing) {
+        existing.addEventListener(
+          "load",
+          () => {
+            if (window.supabase) {
+              resolve(window.supabase);
+            } else {
+              reject(
+                new Error(
+                  "Supabase no pudo inicializarse."
+                )
+              );
+            }
+          },
+          { once: true }
+        );
 
-    if (!url || !key) {
-      return null;
-    }
+        existing.addEventListener(
+          "error",
+          () => {
+            reject(
+              new Error(
+                "No se pudo cargar la librería de Supabase."
+              )
+            );
+          },
+          { once: true }
+        );
 
+        return;
+      }
+
+      const script =
+        document.createElement("script");
+
+      script.src =
+        "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+
+      script.async = true;
+      script.dataset.roxthalSupabase = "true";
+
+      script.onload = () => {
+        if (window.supabase) {
+          resolve(window.supabase);
+        } else {
+          reject(
+            new Error(
+              "La librería Supabase se cargó pero no está disponible."
+            )
+          );
+        }
+      };
+
+      script.onerror = () => {
+        reject(
+          new Error(
+            "No se pudo cargar Supabase desde CDN."
+          )
+        );
+      };
+
+      document.head.appendChild(script);
+    });
+  }
+
+  async function initSupabase() {
     try {
-      return window.supabase.createClient(
-        url,
-        key
-      );
-    } catch (error) {
-      console.error(
-        "No se pudo inicializar Supabase:",
-        error
+      const library =
+        await loadSupabaseLibrary();
+
+      if (
+        !library ||
+        typeof library.createClient !==
+          "function"
+      ) {
+        throw new Error(
+          "createClient de Supabase no está disponible."
+        );
+      }
+
+      supabaseClient =
+        library.createClient(
+          SUPABASE_URL,
+          SUPABASE_KEY,
+          {
+            auth: {
+              persistSession: true,
+              autoRefreshToken: true,
+              detectSessionInUrl: true
+            },
+            global: {
+              headers: {
+                "x-client-info":
+                  "roxthal-art-design-new-app"
+              }
+            }
+          }
+        );
+
+      state.initialized = true;
+
+      window.roxthalSupabase =
+        supabaseClient;
+
+      log("Supabase conectado correctamente.");
+
+      return supabaseClient;
+    } catch (err) {
+      state.initialized = false;
+
+      error(
+        "Error inicializando Supabase:",
+        err
       );
 
       return null;
     }
+  }
+
+  /* =======================================================
+     CONSULTAS SEGURAS
+     ======================================================= */
+
+  async function queryTable(
+    table,
+    options = {}
+  ) {
+    if (!supabaseClient) {
+      return {
+        data: null,
+        error: new Error(
+          "Supabase no está inicializado."
+        )
+      };
+    }
+
+    let query =
+      supabaseClient
+        .from(table)
+        .select(
+          options.select || "*"
+        );
+
+    if (options.order) {
+      query = query.order(
+        options.order.column,
+        {
+          ascending:
+            options.order.ascending !== false
+        }
+      );
+    }
+
+    if (
+      Number.isInteger(options.limit)
+    ) {
+      query = query.limit(
+        options.limit
+      );
+    }
+
+    if (
+      options.eq &&
+      typeof options.eq === "object"
+    ) {
+      Object.entries(
+        options.eq
+      ).forEach(([column, value]) => {
+        query = query.eq(
+          column,
+          value
+        );
+      });
+    }
+
+    return query;
+  }
+
+  /* =======================================================
+     SITE ASSETS
+     ======================================================= */
+
+  async function loadSiteAssets() {
+    try {
+      const {
+        data,
+        error: queryError
+      } = await queryTable(
+        "site_assets",
+        {
+          order: {
+            column: "slot",
+            ascending: true
+          }
+        }
+      );
+
+      if (queryError) {
+        throw queryError;
+      }
+
+      state.assets =
+        Array.isArray(data)
+          ? data
+          : [];
+
+      applySiteAssets(
+        state.assets
+      );
+
+      log(
+        "Site assets cargados:",
+        state.assets.length
+      );
+
+      return state.assets;
+    } catch (err) {
+      warn(
+        "No se pudieron cargar site_assets:",
+        err
+      );
+
+      return [];
+    }
+  }
+
+  function applySiteAssets(
+    assets
+  ) {
+    assets.forEach((asset) => {
+      if (!asset) return;
+
+      const slot =
+        asset.slot ||
+        asset.name;
+
+      const url =
+        asset.url ||
+        asset.image_url;
+
+      if (!slot || !url) {
+        return;
+      }
+
+      const selectors = [
+        `[data-asset="${CSS.escape(slot)}"]`,
+        `[data-image-slot="${CSS.escape(slot)}"]`,
+        `[data-site-asset="${CSS.escape(slot)}"]`
+      ];
+
+      const elements =
+        selectors.flatMap(
+          (selector) => {
+            try {
+              return $$(selector);
+            } catch {
+              return [];
+            }
+          }
+        );
+
+      elements.forEach((element) => {
+        if (
+          element.tagName === "IMG"
+        ) {
+          element.src =
+            cacheBust(
+              url,
+              asset.updated_at
+            );
+
+          if (
+            asset.name &&
+            !element.alt
+          ) {
+            element.alt =
+              asset.name;
+          }
+        } else {
+          element.style.backgroundImage =
+            `url("${cacheBust(
+              url,
+              asset.updated_at
+            )}")`;
+        }
+      });
+    });
   }
 
   /* =======================================================
@@ -319,108 +389,108 @@
      ======================================================= */
 
   async function loadGallery() {
-    const container =
-      $("#galleryGrid");
+    try {
+      const {
+        data,
+        error: queryError
+      } = await queryTable(
+        "galeria",
+        {
+          order: {
+            column: "created_at",
+            ascending: false
+          }
+        }
+      );
 
-    if (!container) return;
+      if (queryError) {
+        throw queryError;
+      }
 
-    const client =
-      getSupabaseClient();
+      state.gallery =
+        Array.isArray(data)
+          ? data
+          : [];
 
-    if (!client) {
+      renderGallery(
+        state.gallery
+      );
+
+      return state.gallery;
+    } catch (err) {
+      warn(
+        "No se pudo cargar la galería:",
+        err
+      );
+
+      return [];
+    }
+  }
+
+  function renderGallery(
+    items
+  ) {
+    const containers =
+      $$("[data-gallery]");
+
+    if (!containers.length) {
       return;
     }
 
-    try {
-      const { data, error } =
-        await client
-          .from("galeria")
-          .select("*")
-          .order("created_at", {
-            ascending: false
-          });
+    containers.forEach(
+      (container) => {
+        container.innerHTML = "";
 
-      if (error) {
-        throw error;
-      }
+        items.forEach(
+          (item) => {
+            if (!item?.image_url) {
+              return;
+            }
 
-      if (!Array.isArray(data) || !data.length) {
-        container.innerHTML = `
-          <div class="gallery-empty">
-            <span>🎨</span>
-            <p>
-              Todavía no hay obras publicadas.
-            </p>
-          </div>
-        `;
+            const article =
+              document.createElement(
+                "article"
+              );
 
-        return;
-      }
+            article.className =
+              "roxthal-gallery-item";
 
-      const items = data
-        .map((item) => {
-          const image =
-            item.url ||
-            item.image_url ||
-            item.imagen ||
-            item.image;
-
-          const title =
-            item.titulo ||
-            item.title ||
-            "RoXThal Art Design";
-
-          if (!image) return "";
-
-          return `
-            <article class="gallery-item">
+            article.innerHTML = `
               <img
-                src="${escapeHTML(image)}"
-                alt="${escapeHTML(title)}"
+                src="${escapeHTML(
+                  cacheBust(
+                    item.image_url,
+                    item.created_at
+                  )
+                )}"
+                alt="${escapeHTML(
+                  item.title || "Obra de RoXThal Art Design"
+                )}"
                 loading="lazy"
               >
+              ${
+                item.title
+                  ? `<h3>${escapeHTML(
+                      item.title
+                    )}</h3>`
+                  : ""
+              }
+              ${
+                item.category
+                  ? `<span>${escapeHTML(
+                      item.category
+                    )}</span>`
+                  : ""
+              }
+            `;
 
-              <div class="gallery-caption">
-                <strong>
-                  ${escapeHTML(title)}
-                </strong>
-              </div>
-            </article>
-          `;
-        })
-        .filter(Boolean)
-        .join("");
-
-      if (!items) {
-        container.innerHTML = `
-          <div class="gallery-empty">
-            <span>🎨</span>
-            <p>
-              No se encontraron imágenes válidas.
-            </p>
-          </div>
-        `;
-
-        return;
+            container.appendChild(
+              article
+            );
+          }
+        );
       }
-
-      container.innerHTML = items;
-
-    } catch (error) {
-      console.error(
-        "Error cargando galería:",
-        error
-      );
-
-      container.innerHTML = `
-        <div class="gallery-empty">
-          <span>🎨</span>
-          <p>
-            La galería estará disponible próximamente.
-          </p>
-        </div>
-      `;
-    }
+    );
   }
 
   /* =======================================================
@@ -428,213 +498,444 @@
      ======================================================= */
 
   async function loadReviews() {
-    const container =
-      $("#reviewsContainer");
+    try {
+      const {
+        data,
+        error: queryError
+      } = await queryTable(
+        "resenas",
+        {
+          eq: {
+            aprobada: true
+          },
+          order: {
+            column: "fecha",
+            ascending: false
+          },
+          limit: 50
+        }
+      );
 
-    if (!container) return;
+      if (queryError) {
+        throw queryError;
+      }
 
-    const client =
-      getSupabaseClient();
+      state.reviews =
+        Array.isArray(data)
+          ? data
+          : [];
 
-    if (!client) {
-      container.innerHTML = `
-        <div class="empty-state">
-          Las reseñas estarán disponibles próximamente.
-        </div>
-      `;
+      renderReviews(
+        state.reviews
+      );
 
+      return state.reviews;
+    } catch (err) {
+      warn(
+        "No se pudieron cargar las reseñas:",
+        err
+      );
+
+      return [];
+    }
+  }
+
+  function renderReviews(
+    reviews
+  ) {
+    const containers =
+      $$("[data-reviews]");
+
+    if (!containers.length) {
       return;
     }
 
-    try {
-      const { data, error } =
-        await client
-          .from("resenas")
-          .select("*")
-          .order("created_at", {
-            ascending: false
-          });
+    containers.forEach(
+      (container) => {
+        container.innerHTML = "";
 
-      if (error) {
-        throw error;
-      }
+        if (!reviews.length) {
+          container.innerHTML =
+            "<p>Aún no hay reseñas publicadas.</p>";
 
-      if (!Array.isArray(data) || !data.length) {
-        container.innerHTML = `
-          <div class="empty-state">
-            Todavía no hay reseñas publicadas.
-          </div>
-        `;
+          return;
+        }
 
-        return;
-      }
+        reviews.forEach(
+          (review) => {
+            const article =
+              document.createElement(
+                "article"
+              );
 
-      container.innerHTML = data
-        .map((review) => {
-          const name =
-            review.nombre ||
-            review.name ||
-            "Cliente";
+            article.className =
+              "roxthal-review";
 
-          const text =
-            review.comentario ||
-            review.comment ||
-            review.texto ||
-            "";
-
-          const rating =
-            Number(
-              review.calificacion ||
-              review.rating ||
-              5
-            );
-
-          const stars =
-            "★".repeat(
-              Math.max(
-                1,
-                Math.min(5, rating)
-              )
-            );
-
-          return `
-            <article class="review-card">
-
-              <div class="review-stars">
-                ${stars}
+            article.innerHTML = `
+              <div class="roxthal-review-name">
+                ${escapeHTML(
+                  review.nombre
+                )}
               </div>
 
-              <h3>
-                ${escapeHTML(name)}
-              </h3>
+              <div class="roxthal-review-text">
+                ${escapeHTML(
+                  review.comentario
+                )}
+              </div>
 
-              <p>
-                ${escapeHTML(text)}
-              </p>
+              ${
+                review.fecha
+                  ? `<time datetime="${escapeHTML(
+                      review.fecha
+                    )}">
+                      ${escapeHTML(
+                        new Date(
+                          review.fecha
+                        ).toLocaleDateString(
+                          "es-AR"
+                        )
+                      )}
+                    </time>`
+                  : ""
+              }
+            `;
 
-            </article>
-          `;
-        })
-        .join("");
-
-    } catch (error) {
-      console.error(
-        "Error cargando reseñas:",
-        error
-      );
-
-      container.innerHTML = `
-        <div class="empty-state">
-          No fue posible cargar las reseñas.
-        </div>
-      `;
-    }
+            container.appendChild(
+              article
+            );
+          }
+        );
+      }
+    );
   }
 
   /* =======================================================
-     VISITAS
+     CURSOS
      ======================================================= */
 
-  async function registerVisit() {
-    const counter =
-      $("#visitCounter");
+  async function loadCourses() {
+    try {
+      const {
+        data,
+        error: queryError
+      } = await queryTable(
+        "courses",
+        {
+          eq: {
+            active: true
+          }
+        }
+      );
 
-    if (!counter) return;
+      if (queryError) {
+        throw queryError;
+      }
 
-    const client =
-      getSupabaseClient();
+      state.courses =
+        Array.isArray(data)
+          ? data
+          : [];
 
-    if (!client) {
-      counter.textContent = "—";
+      renderCourses(
+        state.courses
+      );
+
+      return state.courses;
+    } catch (err) {
+      warn(
+        "No se pudieron cargar courses:",
+        err
+      );
+
+      return [];
+    }
+  }
+
+  function renderCourses(
+    courses
+  ) {
+    const containers =
+      $$("[data-courses]");
+
+    if (!containers.length) {
       return;
     }
 
-    try {
-      const { data, error } =
-        await client.rpc(
-          "registrar_visita"
+    containers.forEach(
+      (container) => {
+        container.innerHTML = "";
+
+        courses.forEach(
+          (course) => {
+            const article =
+              document.createElement(
+                "article"
+              );
+
+            article.className =
+              "roxthal-course";
+
+            article.innerHTML = `
+              <h3>
+                ${escapeHTML(
+                  course.name
+                )}
+              </h3>
+
+              ${
+                course.description
+                  ? `<p>${escapeHTML(
+                      course.description
+                    )}</p>`
+                  : ""
+              }
+
+              ${
+                course.price !== null &&
+                course.price !== undefined
+                  ? `<strong>
+                      $${Number(
+                        course.price
+                      ).toLocaleString(
+                        "es-AR"
+                      )}
+                    </strong>`
+                  : ""
+              }
+            `;
+
+            container.appendChild(
+              article
+            );
+          }
         );
-
-      if (error) {
-        throw error;
       }
+    );
+  }
 
-      if (
-        typeof data === "number"
-      ) {
-        counter.textContent =
-          data.toLocaleString("es-AR");
+  /* =======================================================
+     SERVICIOS
+     ======================================================= */
 
-        return;
-      }
-
-      if (
-        data &&
-        typeof data.count === "number"
-      ) {
-        counter.textContent =
-          data.count.toLocaleString("es-AR");
-
-        return;
-      }
-
-      counter.textContent = "—";
-
-    } catch (error) {
-      console.warn(
-        "Contador de visitas no disponible:",
-        error
+  async function loadServices() {
+    try {
+      const {
+        data,
+        error: queryError
+      } = await queryTable(
+        "services",
+        {
+          eq: {
+            active: true
+          }
+        }
       );
 
-      counter.textContent = "—";
+      if (queryError) {
+        throw queryError;
+      }
+
+      state.services =
+        Array.isArray(data)
+          ? data
+          : [];
+
+      renderServices(
+        state.services
+      );
+
+      return state.services;
+    } catch (err) {
+      warn(
+        "No se pudieron cargar services:",
+        err
+      );
+
+      return [];
     }
   }
 
-  /* =======================================================
-     CONFIGURACIÓN PÚBLICA
-     ======================================================= */
+  function renderServices(
+    services
+  ) {
+    const containers =
+      $$("[data-services]");
 
-  function exposeConfig() {
-    window.RoXThalApp = {
-      reload: async () => {
-        await Promise.all([
-          loadGallery(),
-          loadReviews(),
-          registerVisit()
-        ]);
+    if (!containers.length) {
+      return;
+    }
+
+    containers.forEach(
+      (container) => {
+        container.innerHTML = "";
+
+        services.forEach(
+          (service) => {
+            const article =
+              document.createElement(
+                "article"
+              );
+
+            article.className =
+              "roxthal-service";
+
+            article.innerHTML = `
+              <h3>
+                ${escapeHTML(
+                  service.name
+                )}
+              </h3>
+
+              ${
+                service.description
+                  ? `<p>${escapeHTML(
+                      service.description
+                    )}</p>`
+                  : ""
+              }
+            `;
+
+            container.appendChild(
+              article
+            );
+          }
+        );
       }
-    };
+    );
   }
 
   /* =======================================================
-     INICIALIZACIÓN
+     CONTADOR DE VISITAS
      ======================================================= */
 
-  async function init() {
-    initYear();
-    initMenu();
-    initModal();
-    initTattooSearch();
-    initArtistSearch();
-    exposeConfig();
+  async function incrementVisits() {
+    try {
+      if (!supabaseClient) {
+        return null;
+      }
 
-    await Promise.all([
+      const {
+        data,
+        error: rpcError
+      } =
+        await supabaseClient.rpc(
+          "incrementar_visita"
+        );
+
+      if (rpcError) {
+        throw rpcError;
+      }
+
+      state.visits = data;
+
+      renderVisits(data);
+
+      return data;
+    } catch (err) {
+      warn(
+        "No se pudo incrementar el contador de visitas:",
+        err
+      );
+
+      return null;
+    }
+  }
+
+  function renderVisits(
+    total
+  ) {
+    $$("[data-visits]").forEach(
+      (element) => {
+        element.textContent =
+          Number(total || 0).toLocaleString(
+            "es-AR"
+          );
+      }
+    );
+  }
+
+  /* =======================================================
+     ACTUALIZACIÓN DE DATOS
+     ======================================================= */
+
+  async function refreshAppData() {
+    if (!supabaseClient) {
+      return;
+    }
+
+    await Promise.allSettled([
+      loadSiteAssets(),
       loadGallery(),
       loadReviews(),
-      registerVisit()
+      loadCourses(),
+      loadServices()
     ]);
   }
 
+  /* =======================================================
+     EXPONER API
+     ======================================================= */
+
+  window.RoXThalApp = {
+    get supabase() {
+      return supabaseClient;
+    },
+
+    state,
+
+    loadSiteAssets,
+    loadGallery,
+    loadReviews,
+    loadCourses,
+    loadServices,
+    incrementVisits,
+    refreshAppData
+  };
+
+  /* =======================================================
+     INICIO
+     ======================================================= */
+
+  async function boot() {
+    log("Iniciando nueva aplicación...");
+
+    const client =
+      await initSupabase();
+
+    if (!client) {
+      warn(
+        "La aplicación continuará sin datos remotos."
+      );
+
+      return;
+    }
+
+    await refreshAppData();
+
+    /*
+     * Incrementamos la visita después
+     * de establecer la conexión.
+     */
+
+    await incrementVisits();
+
+    log(
+      "RoXThal Art Design inicializada correctamente."
+    );
+  }
+
   if (
-    document.readyState === "loading"
+    document.readyState ===
+    "loading"
   ) {
     document.addEventListener(
       "DOMContentLoaded",
-      init,
+      boot,
       { once: true }
     );
   } else {
-    init();
+    boot();
   }
 
 })();
