@@ -1,13 +1,14 @@
 /* =========================================================
    RoXThal Art Design
    media.js
-   Fotos y videos de alumnos y talleres
+   Módulo multimedia de alumnos y talleres
    ========================================================= */
 
 (function () {
   "use strict";
 
   const TABLE = "roxthal_talleres_media";
+  const BUCKET = "images";
 
   const state = {
     items: []
@@ -26,11 +27,25 @@
       .replace(/'/g, "&#039;");
   }
 
+  function getFileType(file) {
+    if (!file || !file.type) return null;
+
+    if (file.type.startsWith("video/")) {
+      return "video";
+    }
+
+    if (file.type.startsWith("image/")) {
+      return "foto";
+    }
+
+    return null;
+  }
+
   async function loadMedia() {
     const sb = getSupabase();
 
     if (!sb) {
-      console.warn("[RoXThal Media] Supabase todavía no está disponible.");
+      console.warn("[RoXThal Media] Supabase no está disponible.");
       return [];
     }
 
@@ -40,12 +55,13 @@
       .order("created_at", { ascending: false });
 
     if (error) {
-      console.error("[RoXThal Media]", error);
+      console.error("[RoXThal Media] Error cargando contenido:", error);
       return [];
     }
 
     state.items = data || [];
     renderMedia();
+
     return state.items;
   }
 
@@ -55,8 +71,11 @@
     if (!container) return;
 
     if (!state.items.length) {
-      container.innerHTML =
-        '<div class="empty-state">Todavía no hay fotos o videos publicados.</div>';
+      container.innerHTML = `
+        <div class="empty-state">
+          Todavía no hay fotos o videos publicados.
+        </div>
+      `;
       return;
     }
 
@@ -66,40 +85,199 @@
       const category = escapeHtml(item.categoria);
       const url = escapeHtml(item.url);
 
-      const media =
-        item.tipo === "video"
-          ? `<video src="${url}" controls preload="metadata"></video>`
-          : `<img src="${url}" alt="${title}" loading="lazy">`;
+      let media;
+
+      if (item.tipo === "video") {
+        media = `
+          <video
+            src="${url}"
+            controls
+            preload="metadata"
+            playsinline>
+          </video>
+        `;
+      } else {
+        media = `
+          <img
+            src="${url}"
+            alt="${title}"
+            loading="lazy">
+        `;
+      }
 
       return `
         <article class="roxthal-media-item">
+
           <div class="roxthal-media-preview">
             ${media}
           </div>
 
           <div class="roxthal-media-info">
+
             <h3>${title}</h3>
-            <p>${description}</p>
-            <span>${category}</span>
+
+            ${
+              description
+                ? `<p>${description}</p>`
+                : ""
+            }
+
+            <span class="roxthal-media-category">
+              ${category}
+            </span>
+
           </div>
+
         </article>
       `;
     }).join("");
   }
 
-  function init() {
-    loadMedia();
+  async function uploadMedia(file, options = {}) {
+    const sb = getSupabase();
+
+    if (!sb) {
+      throw new Error("Supabase no está disponible.");
+    }
+
+    if (!file) {
+      throw new Error("No se seleccionó ningún archivo.");
+    }
+
+    const tipo = getFileType(file);
+
+    if (!tipo) {
+      throw new Error(
+        "El archivo debe ser una imagen o un video."
+      );
+    }
+
+    const timestamp = Date.now();
+
+    const safeName = file.name
+      .toLowerCase()
+      .replace(/[^a-z0-9._-]/g, "-");
+
+    const path =
+      `talleres/${timestamp}-${safeName}`;
+
+    const { error: uploadError } =
+      await sb.storage
+        .from(BUCKET)
+        .upload(path, file, {
+          cacheControl: "3600",
+          upsert: false,
+          contentType: file.type
+        });
+
+    if (uploadError) {
+      console.error(
+        "[RoXThal Media] Error subiendo archivo:",
+        uploadError
+      );
+
+      throw uploadError;
+    }
+
+    const {
+      data: publicData
+    } = sb.storage
+      .from(BUCKET)
+      .getPublicUrl(path);
+
+    const publicUrl =
+      publicData?.publicUrl || "";
+
+    const { data, error } = await sb
+      .from(TABLE)
+      .insert({
+        titulo: options.titulo || file.name,
+        descripcion: options.descripcion || "",
+        categoria: options.categoria || "talleres",
+        tipo,
+        storage_path: path,
+        url: publicUrl
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error(
+        "[RoXThal Media] Error registrando archivo:",
+        error
+      );
+
+      // Intentamos eliminar el archivo si el registro
+      // de la base de datos no pudo crearse.
+      await sb.storage
+        .from(BUCKET)
+        .remove([path]);
+
+      throw error;
+    }
+
+    await loadMedia();
+
+    return data;
+  }
+
+  async function deleteMedia(id) {
+    const sb = getSupabase();
+
+    if (!sb) {
+      throw new Error("Supabase no está disponible.");
+    }
+
+    const item = state.items.find(
+      entry => String(entry.id) === String(id)
+    );
+
+    if (!item) {
+      throw new Error("Contenido no encontrado.");
+    }
+
+    if (item.storage_path) {
+      const { error: storageError } =
+        await sb.storage
+          .from(BUCKET)
+          .remove([item.storage_path]);
+
+      if (storageError) {
+        console.warn(
+          "[RoXThal Media] No se pudo eliminar el archivo:",
+          storageError
+        );
+      }
+    }
+
+    const { error } = await sb
+      .from(TABLE)
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      throw error;
+    }
+
+    await loadMedia();
+
+    return true;
   }
 
   window.RoXThalMedia = {
     load: loadMedia,
-    render: renderMedia
+    render: renderMedia,
+    upload: uploadMedia,
+    remove: deleteMedia
   };
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
+    document.addEventListener(
+      "DOMContentLoaded",
+      loadMedia
+    );
   } else {
-    init();
+    loadMedia();
   }
 
 })();
