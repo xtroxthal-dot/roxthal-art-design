@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
+
+  <meta
+    name="theme-color"
+    content="#111111"
+  >
+
+  <meta
+    name="description"
+    content="RoXThal Art Design — Atelier de arte, dibujo, pintura y tatuaje."
+  >
+
+  <title>RoXThal Art Design</title>
+
+  <link rel="stylesheet" href="app.css">
+
+  <link
+    rel="manifest"
+    href="manifest.json"
+  >
+
+  <link
+    rel="icon"
+    href="https://roxthal-art-design.vercel.app/favicon.ico"
+  >
+
+  <!-- Supabase -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    defer
+  ></script>
+</head>
+
+<body>
+
+  <!-- =====================================================
+       APP
+       ===================================================== -->
+
+  <div id="app">
+
+    <!-- HEADER -->
+    <header class="site-header">
+
+      <div class="brand">
+        <div class="brand-mark">RX</div>
+
+        <div class="brand-text">
+          <strong>RoXThal</strong>
+          <span>Art Design</span>
+        </div>
+      </div>
+
+      <button
+        id="menuToggle"
+        class="menu-toggle"
+        type="button"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
+
+      <nav id="mainNav" class="main-nav">
+
+        <a href="#inicio">Inicio</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#cursos">Cursos</a>
+        <a href="#galeria">Galería</a>
+        <a href="#resenas">Reseñas</a>
+        <a href="#contacto">Contacto</a>
+
+      </nav>
+
+    </header>
+
+
+    <!-- ===================================================
+         MAIN
+         =================================================== -->
+
+    <main>
+
+      <!-- HERO -->
+      <section
+        id="inicio"
+        class="hero"
+        data-module="hero"
+      >
+
+        <div class="hero-content">
+
+          <span class="eyebrow">
+            ATELIER · ESCUELA · TATTOO
+          </span>
+
+          <h1>
+            RoXThal<br>
+            <span>Art Design</span>
+          </h1>
+
+          <p>
+            Arte, dibujo, pintura y tatuaje.
+            Un espacio para crear, aprender y transformar ideas.
+          </p>
+
+          <div class="hero-actions">
+
+            <a
+              href="#servicios"
+              class="btn btn-primary"
+            >
+              Explorar
+            </a>
+
+            <a
+              href="#contacto"
+              class="btn btn-secondary"
+            >
+              Contactar
+            </a>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- SERVICIOS -->
+      <section
+        id="servicios"
+        class="section"
+        data-module="services"
+      >
+
+        <div class="section-heading">
+
+          <span>01</span>
+
+          <h2>Servicios</h2>
+
+          <p>
+            Propuestas artísticas y profesionales de
+            RoXThal Art Design.
+          </p>
+
+        </div>
+
+        <div
+          id="servicesGrid"
+          class="cards-grid"
+        >
+
+          <article class="card">
+
+            <div class="card-icon">🎨</div>
+
+            <h3>Dibujo y pintura</h3>
+
+            <p>
+              Clases, talleres y desarrollo artístico.
+            </p>
+
+          </article>
+
+
+          <article class="card">
+
+            <div class="card-icon">🖌️</div>
+
+            <h3>Atelier</h3>
+
+            <p>
+              Espacio dedicado a la creación y experimentación.
+            </p>
+
+          </article>
+
+
+          <article class="card">
+
+            <div class="card-icon">⚡</div>
+
+            <h3>Tatuajes</h3>
+
+            <p>
+              Diseño artístico y trabajo personalizado.
+            </p>
+
+          </article>
+
+
+          <article class="card">
+
+            <div class="card-icon">🧑‍🎨</div>
+
+            <h3>Arte personalizado</h3>
+
+            <p>
+              Obras, retratos y proyectos especiales.
+            </p>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- CURSOS -->
+      <section
+        id="cursos"
+        class="section section-dark"
+        data-module="courses"
+      >
+
+        <div class="section-heading">
+
+          <span>02</span>
+
+          <h2>Cursos</h2>
+
+          <p>
+            Formación artística para distintos niveles.
+          </p>
+
+        </div>
+
+        <div
+          id="coursesGrid"
+          class="cards-grid"
+        >
+
+          <article class="card">
+
+            <div class="card-icon">✏️</div>
+
+            <h3>Dibujo y pintura</h3>
+
+            <p>
+              Formación artística y desarrollo técnico.
+            </p>
+
+            <button
+              class="card-button"
+              type="button"
+              data-course="dibujo"
+            >
+              Ver curso
+            </button>
+
+          </article>
+
+
+          <article class="card">
+
+            <div class="card-icon">👦</div>
+
+            <h3>Curso infantil</h3>
+
+            <p>
+              Actividades artísticas adaptadas para niños.
+            </p>
+
+            <button
+              class="card-button"
+              type="button"
+              data-course="infantil"
+            >
+              Ver curso
+            </button>
+
+          </article>
+
+
+          <article class="card">
+
+            <div class="card-icon">🖋️</div>
+
+            <h3>Iniciación al tatuaje</h3>
+
+            <p>
+              Formación progresiva en técnicas de tatuaje.
+            </p>
+
+            <button
+              class="card-button"
+              type="button"
+              data-course="tatuaje"
+            >
+              Ver curso
+            </button>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- GALERÍA -->
+      <section
+        id="galeria"
+        class="section"
+        data-module="gallery"
+      >
+
+        <div class="section-heading">
+
+          <span>03</span>
+
+          <h2>Galería</h2>
+
+          <p>
+            Obras, trabajos y proyectos de RoXThal.
+          </p>
+
+        </div>
+
+        <div
+          id="galleryGrid"
+          class="gallery-grid"
+        >
+
+          <div class="gallery-empty">
+
+            <span>🎨</span>
+
+            <p>
+              La galería se cargará desde Supabase.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- BUSCADORES -->
+      <section
+        class="section section-dark"
+        data-module="search"
+      >
+
+        <div class="section-heading">
+
+          <span>04</span>
+
+          <h2>Inspiración</h2>
+
+          <p>
+            Buscá referencias para tus próximos proyectos.
+          </p>
+
+        </div>
+
+
+        <div class="search-panels">
+
+          <div class="search-panel">
+
+            <h3>🔎 Buscador de tatuajes</h3>
+
+            <p>
+              Encontrá inspiración y referencias.
+            </p>
+
+            <form id="tattooSearchForm">
+
+              <input
+                id="tattooSearch"
+                type="search"
+                placeholder="Ej.: tatuaje realista, old school..."
+                autocomplete="off"
+              >
+
+              <button
+                type="submit"
+                class="btn btn-primary"
+              >
+                Buscar
+              </button>
+
+            </form>
+
+          </div>
+
+
+          <div class="search-panel">
+
+            <h3>🖼️ Cuadros y artistas</h3>
+
+            <p>
+              Explorá referencias artísticas.
+            </p>
+
+            <form id="artistSearchForm">
+
+              <input
+                id="artistSearch"
+                type="search"
+                placeholder="Ej.: Van Gogh, retratos..."
+                autocomplete="off"
+              >
+
+              <button
+                type="submit"
+                class="btn btn-primary"
+              >
+                Buscar
+              </button>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- RESEÑAS -->
+      <section
+        id="resenas"
+        class="section"
+        data-module="reviews"
+      >
+
+        <div class="section-heading">
+
+          <span>05</span>
+
+          <h2>Reseñas</h2>
+
+          <p>
+            Experiencias de quienes forman parte de RoXThal.
+          </p>
+
+        </div>
+
+        <div id="reviewsContainer">
+
+          <div class="loading">
+            Cargando reseñas...
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- CONTACTO -->
+      <section
+        id="contacto"
+        class="section section-contact"
+        data-module="contact"
+      >
+
+        <div class="section-heading">
+
+          <span>06</span>
+
+          <h2>Contacto</h2>
+
+          <p>
+            Consultas, cursos, tatuajes y proyectos.
+          </p>
+
+        </div>
+
+        <div class="contact-grid">
+
+          <div class="contact-card">
+
+            <span>📍</span>
+
+            <h3>Atelier</h3>
+
+            <p>
+              Lisandro de la Torre 880<br>
+              San Antonio de Padua
+            </p>
+
+          </div>
+
+
+          <div class="contact-card">
+
+            <span>✉️</span>
+
+            <h3>Email</h3>
+
+            <p>
+              roxthal@hotmail.com
+            </p>
+
+          </div>
+
+
+          <div class="contact-card">
+
+            <span>📱</span>
+
+            <h3>Instagram</h3>
+
+            <p>
+              @roxthalartdesign
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- VISITAS -->
+      <section
+        class="visits-section"
+        data-module="visits"
+      >
+
+        <span>👁️</span>
+
+        <strong id="visitCounter">
+          —
+        </strong>
+
+        <small>
+          visitas
+        </small>
+
+      </section>
+
+    </main>
+
+
+    <!-- ===================================================
+         FOOTER
+         =================================================== -->
+
+    <footer class="site-footer">
+
+      <div>
+
+        <strong>RoXThal Art Design</strong>
+
+        <p>
+          Arte · Diseño · Tatuaje
+        </p>
+
+      </div>
+
+      <div>
+
+        <small>
+          © <span id="currentYear"></span>
+          RoXThal Art Design
+        </small>
+
+      </div>
+
+    </footer>
+
+  </div>
+
+
+  <!-- =====================================================
+       MODAL
+       ===================================================== -->
+
+  <div
+    id="appModal"
+    class="modal"
+    hidden
+    aria-hidden="true"
+  >
+
+    <div class="modal-overlay"></div>
+
+    <div
+      class="modal-content"
+      role="dialog"
+      aria-modal="true"
+    >
+
+      <button
+        id="modalClose"
+        class="modal-close"
+        type="button"
+        aria-label="Cerrar"
+      >
+        ×
+      </button>
+
+      <div id="modalBody"></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       SCRIPTS
+       ===================================================== -->
+
+  <script src="app.js" defer></script>
+  <script src="admin.js" defer></script>
+  <script src="pwa.js" defer></script>
+
+</body>
+</html>
