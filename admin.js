@@ -1,21 +1,28 @@
 /* =========================================================
    RoXThal Art Design
    admin.js
-   Capa administrativa modular
+   Módulo administrativo
    ========================================================= */
 
-(() => {
-  'use strict';
-
-  /*
-   * Fase inicial:
-   * El administrador actual continúa funcionando desde
-   * index.html.
-   *
-   * Este archivo se prepara para recibir posteriormente
-   * la lógica administrativa real, sin duplicarla todavía.
-   */
+(function () {
+  "use strict";
 
   window.RoXThalAdmin = window.RoXThalAdmin || {};
+
+  window.RoXThalAdmin.initialized = false;
+
+  function initAdminModule() {
+    if (window.RoXThalAdmin.initialized) return;
+
+    window.RoXThalAdmin.initialized = true;
+
+    console.info("[RoXThal] Módulo administrativo preparado.");
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initAdminModule);
+  } else {
+    initAdminModule();
+  }
 
 })();
