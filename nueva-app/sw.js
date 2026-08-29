@@ -4,7 +4,12 @@
    Service Worker
    ========================================================= */
 
-const CACHE_NAME = "roxthal-art-design-v1";
+const CACHE_NAME = "roxthal-art-design-v2";
+
+/*
+ * Solo guardamos el núcleo de la aplicación.
+ * Los datos dinámicos de Supabase NO se almacenan aquí.
+ */
 
 const APP_SHELL = [
   "./",
@@ -23,12 +28,8 @@ const APP_SHELL = [
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => {
-        return cache.addAll(APP_SHELL);
-      })
-      .then(() => {
-        return self.skipWaiting();
-      })
+      .then((cache) => cache.addAll(APP_SHELL))
+      .then(() => self.skipWaiting())
   );
 });
 
@@ -42,22 +43,21 @@ self.addEventListener("activate", (event) => {
       .then((cacheNames) => {
         return Promise.all(
           cacheNames
-            .filter((name) => {
-              return (
+            .filter(
+              (name) =>
                 name.startsWith(
                   "roxthal-art-design-"
                 ) &&
                 name !== CACHE_NAME
-              );
-            })
-            .map((name) => {
-              return caches.delete(name);
-            })
+            )
+            .map((name) =>
+              caches.delete(name)
+            )
         );
       })
-      .then(() => {
-        return self.clients.claim();
-      })
+      .then(() =>
+        self.clients.claim()
+      )
   );
 });
 
@@ -72,17 +72,46 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  const url = new URL(request.url);
+  const url =
+    new URL(request.url);
 
   /*
-   * Solo gestionamos recursos de nuestra propia aplicación.
-   * Las peticiones externas, incluyendo Supabase,
-   * continúan directamente hacia Internet.
+   * Las peticiones externas, especialmente Supabase,
+   * NO pasan por nuestra caché.
    */
 
-  if (url.origin !== self.location.origin) {
+  if (
+    url.origin !== self.location.origin
+  ) {
     return;
   }
+
+  /*
+   * Para HTML utilizamos siempre la versión
+   * más reciente disponible en Internet.
+   */
+
+  if (
+    request.mode === "navigate" ||
+    request.destination === "document"
+  ) {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          return response;
+        })
+        .catch(() =>
+          caches.match("./index.html")
+        )
+    );
+
+    return;
+  }
+
+  /*
+   * CSS y JavaScript:
+   * red primero, caché como respaldo.
+   */
 
   event.respondWith(
     fetch(request)
@@ -92,23 +121,23 @@ self.addEventListener("fetch", (event) => {
           response &&
           response.status === 200
         ) {
-          const responseClone =
+          const copy =
             response.clone();
 
           caches.open(CACHE_NAME)
             .then((cache) => {
               cache.put(
                 request,
-                responseClone
+                copy
               );
             });
         }
 
         return response;
       })
-      .catch(() => {
-        return caches.match(request);
-      })
+      .catch(() =>
+        caches.match(request)
+      )
   );
 });
 
@@ -116,13 +145,16 @@ self.addEventListener("fetch", (event) => {
    MENSAJES
    ========================================================= */
 
-self.addEventListener("message", (event) => {
+self.addEventListener(
+  "message",
+  (event) => {
 
-  if (
-    event.data &&
-    event.data.type === "SKIP_WAITING"
-  ) {
-    self.skipWaiting();
+    if (
+      event.data?.type ===
+      "SKIP_WAITING"
+    ) {
+      self.skipWaiting();
+    }
+
   }
-
-});
+);
