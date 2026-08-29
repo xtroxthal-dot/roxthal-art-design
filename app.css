@@ -1,0 +1,13 @@
+/* =========================================================
+   RoXThal Art Design
+   app.css
+   Capa visual modular
+   ========================================================= */
+
+[data-module] {
+  scroll-margin-top: 90px;
+}
+
+[data-module][hidden] {
+  display: none !important;
+}
