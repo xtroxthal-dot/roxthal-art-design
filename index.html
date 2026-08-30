@@ -831,15 +831,34 @@
       <article class="card">
         <div class="card-img" data-slot-bg="cur_infantil" style="background-image:url('https://images.unsplash.com/photo-1596495578065-6e0763fa1178?auto=format&fit=crop&w=800&q=80')"></div>
         <div class="card-body">
-          <div>
-            <span class="badge" style="margin-bottom:10px;">Niños (6 a 12 años)</span>
-            <h3>🖌️ Taller Infantil Creativo</h3>
-            <p class="muted">Un espacio lúdico e inclusivo donde los más chicos exploran materiales, texturas y pierden el miedo a expresarse.</p>
-          </div>
-          <a href="https://wa.me/5491169633376?text=Hola!%20Quiero%20info%20sobre%20el%20Taller%20Infantil" target="_blank" class="btn btn-dark" style="margin-top:16px;width:100%;">Consultar Horarios</a>
-        </div>
-      </article>
+          
+<article class="card">
+  <div class="card-img"
+       data-slot-bg="cur_infantil"
+       style="background-image:url('https://images.unsplash.com/photo-1596495578065-6e0763fa1178?auto=format&fit=crop&w=800&q=80')">
+  </div>
 
+  <div class="card-body">
+    <div>
+      <span class="badge" style="margin-bottom:10px;">Niños (6 a 12 años)</span>
+
+      <h3>🎨 Taller Infantil Creativo</h3>
+
+      <p class="muted">
+        Un espacio lúdico e inclusivo donde los más chicos exploran materiales,
+        texturas y desarrollan su creatividad a través del arte.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-dark"
+      style="margin-top:16px;width:100%;"
+      onclick="abrirCursoInfantil()">
+      📚 Ver programa completo
+    </button>
+  </div>
+</article>
       <article class="card">
         <div class="card-img" data-slot-bg="cur_tatuaje" style="background-image:url('https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?auto=format&fit=crop&w=800&q=80')"></div>
         <div class="card-body">
@@ -11855,5 +11874,125 @@ Ejemplo:
 <!-- ============================================================
      FIN ROXTHAL IA
 ============================================================ -->
+     <!-- ============================================================
+     MODAL — TALLER INFANTIL CREATIVO
+============================================================ -->
+<div id="modalCursoInfantil"
+     style="position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:99999;
+            display:none;align-items:center;justify-content:center;
+            padding:20px;overflow-y:auto;">
+
+  <div style="background:#15151a;border:1px solid #2e2e38;border-radius:20px;
+              width:100%;max-width:800px;max-height:90vh;overflow-y:auto;
+              padding:28px;position:relative;">
+
+    <button type="button"
+            onclick="cerrarCursoInfantil()"
+            aria-label="Cerrar"
+            style="position:absolute;right:16px;top:16px;width:42px;height:42px;
+                   border-radius:50%;background:#1e1e26;border:1px solid #2e2e38;
+                   color:#fff;font-size:24px;cursor:pointer;">
+      ×
+    </button>
+
+    <span class="badge">Niños (6 a 12 años)</span>
+
+    <h2 style="margin-top:18px;">
+      🎨✨ TALLER INFANTIL DE DIBUJO Y PINTURA ✨🎨
+    </h2>
+
+    <div style="line-height:1.7;color:#a0a0ab;">
+
+      <p style="margin-bottom:18px;">
+        ¡Un espacio para que los chicos puedan crear, imaginar y aprender
+        jugando con el arte! 🖌️🌈
+      </p>
+
+      <p style="margin-bottom:20px;">
+        En nuestro taller infantil trabajamos el dibujo y la pintura de una
+        manera divertida y adaptada a cada edad, desarrollando la creatividad,
+        la imaginación, la expresión artística y la confianza de cada niño.
+      </p>
+
+      <h3 style="color:#fff;margin:20px 0 10px;">
+        👩‍🎨 ¿Qué hacemos?
+      </h3>
+
+      <p>🖍️ Dibujo y técnicas de ilustración</p>
+      <p>🎨 Pintura y mezcla de colores</p>
+      <p>🌈 Diferentes técnicas y materiales</p>
+      <p>✨ Desarrollo de la creatividad</p>
+      <p>🖼️ Trabajos y proyectos propios</p>
+
+      <p style="margin-top:20px;">
+        No hace falta tener experiencia: cada chico aprende a su propio ritmo
+        y descubre su manera de expresarse a través del arte.
+      </p>
+
+      <h3 style="color:#fff;margin:24px 0 10px;">
+        📅 DÍAS Y HORARIOS
+      </h3>
+
+      <p>Martes, miércoles, jueves y sábados</p>
+      <p>🕚 De 11:00 a 18:00 hs</p>
+      <p>⏰ 1 clase semanal de 1 hora</p>
+
+      <h3 style="color:#fff;margin:24px 0 10px;">
+        💰 VALOR MENSUAL: $15.000
+      </h3>
+
+      <p>📍 RoXThal Art Design – San Antonio de Padua</p>
+
+      <p style="margin-top:20px;">
+        💜 Regalales un espacio donde puedan crear, aprender y disfrutar del arte.
+      </p>
+
+      <p style="margin-top:20px;">
+        📲 Consultanos por disponibilidad y reservá su lugar.
+      </p>
+
+    </div>
+
+    <a href="https://wa.me/5491169633376?text=Hola!%20Quiero%20consultar%20por%20el%20Taller%20Infantil%20de%20Dibujo%20y%20Pintura"
+       target="_blank"
+       class="btn btn-wsp"
+       style="width:100%;margin-top:24px;">
+      📲 Consultar disponibilidad y reservar
+    </a>
+
+  </div>
+</div>
+
+<script>
+function abrirCursoInfantil() {
+  const modal = document.getElementById('modalCursoInfantil');
+  if (modal) {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function cerrarCursoInfantil() {
+  const modal = document.getElementById('modalCursoInfantil');
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+}
+
+document.addEventListener('click', function(event) {
+  const modal = document.getElementById('modalCursoInfantil');
+
+  if (modal && event.target === modal) {
+    cerrarCursoInfantil();
+  }
+});
+
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape') {
+    cerrarCursoInfantil();
+  }
+});
+</script>     
 </body>
 </html>
