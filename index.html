@@ -8700,5 +8700,1229 @@ document.addEventListener('click', function(event) {
   }
 });
 </script>
+  <!-- =========================================================
+     RoXThal Art Design
+     MÓDULO INDEPENDIENTE — CONTROL DE PAGOS Y VENCIMIENTOS
+     Ciclo fijo de 28 días
+     Aviso administrativo 3 días antes
+     ========================================================= -->
+
+<style>
+  /* ---------------------------------------------------------
+     CONTENEDOR DEL MÓDULO
+     --------------------------------------------------------- */
+  #roxthal-payment-module {
+    margin: 30px auto;
+    max-width: 1100px;
+    padding: 22px;
+    background: var(--card, #111);
+    border: 1px solid var(--line, #333);
+    border-radius: 18px;
+    box-sizing: border-box;
+  }
+
+  #roxthal-payment-module[hidden] {
+    display: none !important;
+  }
+
+  #roxthal-payment-module h3 {
+    margin: 0 0 6px;
+    color: var(--gold2, #d4af37);
+  }
+
+  .rx-pay-subtitle {
+    margin: 0 0 20px;
+    opacity: .75;
+  }
+
+  .rx-pay-alert {
+    display: none;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+    border-radius: 12px;
+    border: 1px solid var(--line, #333);
+    font-weight: 600;
+  }
+
+  .rx-pay-alert.show {
+    display: block;
+  }
+
+  .rx-pay-alert.warning {
+    background: rgba(255, 193, 7, .12);
+  }
+
+  .rx-pay-alert.danger {
+    background: rgba(220, 53, 69, .12);
+  }
+
+  .rx-pay-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .rx-pay-stat {
+    padding: 16px;
+    border-radius: 12px;
+    background: var(--bg, #0d0d0d);
+    border: 1px solid var(--line, #333);
+  }
+
+  .rx-pay-stat span {
+    display: block;
+    font-size: .85rem;
+    opacity: .7;
+    margin-bottom: 5px;
+  }
+
+  .rx-pay-stat strong {
+    font-size: 1.45rem;
+  }
+
+  .rx-pay-form {
+    padding: 18px;
+    margin-bottom: 22px;
+    border-radius: 14px;
+    background: var(--bg, #0d0d0d);
+    border: 1px solid var(--line, #333);
+  }
+
+  .rx-pay-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .rx-pay-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .rx-pay-field.full {
+    grid-column: 1 / -1;
+  }
+
+  .rx-pay-field label {
+    font-size: .85rem;
+    opacity: .8;
+  }
+
+  .rx-pay-field input,
+  .rx-pay-field select {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .rx-pay-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+
+  .rx-pay-table-wrap {
+    overflow-x: auto;
+  }
+
+  .rx-pay-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 760px;
+  }
+
+  .rx-pay-table th,
+  .rx-pay-table td {
+    padding: 11px 9px;
+    border-bottom: 1px solid var(--line, #333);
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .rx-pay-table th {
+    font-size: .8rem;
+    opacity: .7;
+  }
+
+  .rx-pay-status {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .rx-pay-status.ok {
+    background: rgba(40, 167, 69, .15);
+  }
+
+  .rx-pay-status.warning {
+    background: rgba(255, 193, 7, .15);
+  }
+
+  .rx-pay-status.danger {
+    background: rgba(220, 53, 69, .15);
+  }
+
+  .rx-pay-status.neutral {
+    background: rgba(128, 128, 128, .15);
+  }
+
+  .rx-pay-empty {
+    padding: 20px;
+    text-align: center;
+    opacity: .7;
+  }
+
+  .rx-pay-message {
+    display: none;
+    margin-top: 12px;
+    padding: 11px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--line, #333);
+  }
+
+  .rx-pay-message.show {
+    display: block;
+  }
+
+  @media (max-width: 800px) {
+    .rx-pay-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .rx-pay-fields {
+      grid-template-columns: 1fr;
+    }
+
+    .rx-pay-field.full {
+      grid-column: auto;
+    }
+  }
+
+  @media (max-width: 500px) {
+    #roxthal-payment-module {
+      margin: 20px 10px;
+      padding: 15px;
+    }
+
+    .rx-pay-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>
+
+
+<section id="roxthal-payment-module" aria-label="Control de pagos y vencimientos">
+
+  <h3>💰 Control de Pagos y Vencimientos</h3>
+
+  <p class="rx-pay-subtitle">
+    Ciclo fijo de 28 días · Aviso administrativo 3 días antes
+  </p>
+
+  <div id="rxPayAlertWarning" class="rx-pay-alert warning"></div>
+  <div id="rxPayAlertDanger" class="rx-pay-alert danger"></div>
+
+  <div class="rx-pay-grid">
+    <div class="rx-pay-stat">
+      <span>Total de pagos</span>
+      <strong id="rxPayTotal">0</strong>
+    </div>
+
+    <div class="rx-pay-stat">
+      <span>🟢 Al día</span>
+      <strong id="rxPayOk">0</strong>
+    </div>
+
+    <div class="rx-pay-stat">
+      <span>🟡 Próximos a vencer</span>
+      <strong id="rxPayWarning">0</strong>
+    </div>
+
+    <div class="rx-pay-stat">
+      <span>🔴 Vencidos</span>
+      <strong id="rxPayExpired">0</strong>
+    </div>
+  </div>
+
+
+  <!-- REGISTRAR PAGO -->
+  <div class="rx-pay-form">
+
+    <h4 style="margin-top:0;color:var(--gold2,#d4af37);">
+      ➕ Registrar pago
+    </h4>
+
+    <div class="rx-pay-fields">
+
+      <div class="rx-pay-field">
+        <label for="rxPayAlumnoId">ID del alumno</label>
+        <input
+          id="rxPayAlumnoId"
+          type="number"
+          min="1"
+          step="1"
+          placeholder="Ej: 1"
+        >
+      </div>
+
+      <div class="rx-pay-field">
+        <label for="rxPayImporte">Importe ($)</label>
+        <input
+          id="rxPayImporte"
+          type="number"
+          min="0"
+          step="500"
+          placeholder="Ej: 25000"
+        >
+      </div>
+
+      <div class="rx-pay-field">
+        <label for="rxPayFecha">Fecha del pago</label>
+        <input
+          id="rxPayFecha"
+          type="date"
+        >
+      </div>
+
+      <div class="rx-pay-field">
+        <label for="rxPayConcepto">Concepto</label>
+        <input
+          id="rxPayConcepto"
+          type="text"
+          placeholder="Ej: Cuota mensual"
+        >
+      </div>
+
+      <div class="rx-pay-field full">
+        <label for="rxPayObservaciones">Observaciones</label>
+        <input
+          id="rxPayObservaciones"
+          type="text"
+          placeholder="Observaciones opcionales"
+        >
+      </div>
+
+    </div>
+
+    <div class="rx-pay-actions">
+
+      <button
+        type="button"
+        class="btn btn-gold"
+        onclick="rxRegistrarPago()"
+      >
+        💾 Registrar pago
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-dark"
+        onclick="rxLimpiarFormularioPago()"
+      >
+        Limpiar
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-dark"
+        onclick="rxCargarPagos()"
+      >
+        🔄 Actualizar
+      </button>
+
+    </div>
+
+    <div id="rxPayMessage" class="rx-pay-message"></div>
+
+  </div>
+
+
+  <!-- LISTADO -->
+  <div class="rx-pay-table-wrap">
+
+    <table class="rx-pay-table">
+
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Alumno ID</th>
+          <th>Importe</th>
+          <th>Fecha pago</th>
+          <th>Vencimiento</th>
+          <th>Estado</th>
+          <th>Días</th>
+          <th>Concepto</th>
+        </tr>
+      </thead>
+
+      <tbody id="rxPayTableBody">
+        <tr>
+          <td colspan="8" class="rx-pay-empty">
+            Cargando pagos...
+          </td>
+        </tr>
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>
+
+
+<script>
+(function () {
+
+  "use strict";
+
+  /* =========================================================
+     CONFIGURACIÓN
+     ========================================================= */
+
+  const RX_DIAS_CICLO = 28;
+  const RX_DIAS_AVISO = 3;
+
+
+  /* =========================================================
+     OBTENER CLIENTE SUPABASE YA EXISTENTE
+     No crea otra conexión.
+     ========================================================= */
+
+  function rxGetSupabaseClient() {
+
+    const posibles = [
+      window.supabaseClient,
+      window.sb,
+      window.supabase
+    ];
+
+    for (const cliente of posibles) {
+
+      if (
+        cliente &&
+        typeof cliente.from === "function"
+      ) {
+        return cliente;
+      }
+
+    }
+
+    return null;
+  }
+
+
+  /* =========================================================
+     FECHAS
+     ========================================================= */
+
+  function rxFechaLocalISO(fecha) {
+
+    const y = fecha.getFullYear();
+    const m = String(fecha.getMonth() + 1).padStart(2, "0");
+    const d = String(fecha.getDate()).padStart(2, "0");
+
+    return y + "-" + m + "-" + d;
+  }
+
+
+  function rxHoyISO() {
+
+    return rxFechaLocalISO(new Date());
+
+  }
+
+
+  function rxSumarDias(fechaISO, dias) {
+
+    const partes = String(fechaISO).split("-");
+
+    const fecha = new Date(
+      Number(partes[0]),
+      Number(partes[1]) - 1,
+      Number(partes[2])
+    );
+
+    fecha.setDate(fecha.getDate() + dias);
+
+    return rxFechaLocalISO(fecha);
+
+  }
+
+
+  function rxDiferenciaDias(fechaISO) {
+
+    const partes = String(fechaISO).split("-");
+
+    const vencimiento = new Date(
+      Number(partes[0]),
+      Number(partes[1]) - 1,
+      Number(partes[2])
+    );
+
+    const hoy = new Date();
+
+    hoy.setHours(0, 0, 0, 0);
+    vencimiento.setHours(0, 0, 0, 0);
+
+    return Math.round(
+      (vencimiento - hoy) / 86400000
+    );
+
+  }
+
+
+  function rxFormatoFecha(fechaISO) {
+
+    if (!fechaISO) return "—";
+
+    const partes = String(fechaISO).split("-");
+
+    if (partes.length !== 3) {
+      return fechaISO;
+    }
+
+    return partes[2] + "/" + partes[1] + "/" + partes[0];
+
+  }
+
+
+  /* =========================================================
+     ESTADO DEL VENCIMIENTO
+     ========================================================= */
+
+  function rxEstadoVencimiento(fechaVencimiento) {
+
+    if (!fechaVencimiento) {
+
+      return {
+        clase: "neutral",
+        texto: "Sin vencimiento",
+        dias: null
+      };
+
+    }
+
+    const dias = rxDiferenciaDias(fechaVencimiento);
+
+    if (dias < 0) {
+
+      return {
+        clase: "danger",
+        texto: "🔴 Vencido",
+        dias: dias
+      };
+
+    }
+
+    if (dias <= RX_DIAS_AVISO) {
+
+      return {
+        clase: "warning",
+        texto: "🟡 Vence pronto",
+        dias: dias
+      };
+
+    }
+
+    return {
+      clase: "ok",
+      texto: "🟢 Al día",
+      dias: dias
+    };
+
+  }
+
+
+  /* =========================================================
+     MENSAJES
+     ========================================================= */
+
+  function rxMostrarMensaje(texto, tipo) {
+
+    const caja = document.getElementById("rxPayMessage");
+
+    if (!caja) return;
+
+    caja.textContent = texto;
+    caja.className = "rx-pay-message show";
+
+    if (tipo === "error") {
+      caja.style.borderColor = "#dc3545";
+    } else {
+      caja.style.borderColor = "";
+    }
+
+    setTimeout(function () {
+
+      caja.classList.remove("show");
+
+    }, 5000);
+
+  }
+
+
+  /* =========================================================
+     CARGAR PAGOS
+     ========================================================= */
+
+  window.rxCargarPagos = async function () {
+
+    const cliente = rxGetSupabaseClient();
+
+    const cuerpo = document.getElementById(
+      "rxPayTableBody"
+    );
+
+    if (!cuerpo) return;
+
+    if (!cliente) {
+
+      cuerpo.innerHTML =
+        '<tr><td colspan="8" class="rx-pay-empty">' +
+        '⚠️ No se encontró la conexión existente con Supabase.' +
+        '</td></tr>';
+
+      return;
+
+    }
+
+    cuerpo.innerHTML =
+      '<tr><td colspan="8" class="rx-pay-empty">' +
+      'Cargando pagos...' +
+      '</td></tr>';
+
+    try {
+
+      const respuesta = await cliente
+        .from("pagos")
+        .select(
+          "id, alumno_id, importe, fecha_pago, fecha_vencimiento, concepto, estado, observaciones"
+        )
+        .order(
+          "fecha_vencimiento",
+          { ascending: true }
+        );
+
+      if (respuesta.error) {
+        throw respuesta.error;
+      }
+
+      const pagos = respuesta.data || [];
+
+      rxRenderPagos(pagos);
+
+    } catch (error) {
+
+      console.error(
+        "RoXThal Control de Pagos:",
+        error
+      );
+
+      cuerpo.innerHTML =
+        '<tr><td colspan="8" class="rx-pay-empty">' +
+        '❌ No se pudieron cargar los pagos.' +
+        '</td></tr>';
+
+    }
+
+  };
+
+
+  /* =========================================================
+     RENDERIZAR
+     ========================================================= */
+
+  function rxRenderPagos(pagos) {
+
+    const cuerpo = document.getElementById(
+      "rxPayTableBody"
+    );
+
+    if (!cuerpo) return;
+
+    let total = 0;
+    let alDia = 0;
+    let proximos = 0;
+    let vencidos = 0;
+
+    if (!pagos.length) {
+
+      cuerpo.innerHTML =
+        '<tr><td colspan="8" class="rx-pay-empty">' +
+        'No hay pagos registrados.' +
+        '</td></tr>';
+
+      rxActualizarEstadisticas(
+        0,
+        0,
+        0,
+        0
+      );
+
+      rxActualizarAvisos([]);
+
+      return;
+    }
+
+
+    cuerpo.innerHTML = pagos.map(function (pago) {
+
+      total++;
+
+      const estado = rxEstadoVencimiento(
+        pago.fecha_vencimiento
+      );
+
+      if (estado.clase === "danger") {
+        vencidos++;
+      }
+      else if (estado.clase === "warning") {
+        proximos++;
+      }
+      else if (estado.clase === "ok") {
+        alDia++;
+      }
+
+
+      let textoDias = "—";
+
+      if (estado.dias !== null) {
+
+        if (estado.dias < 0) {
+          textoDias = Math.abs(estado.dias) + " días vencido";
+        }
+        else if (estado.dias === 0) {
+          textoDias = "Hoy";
+        }
+        else {
+          textoDias = estado.dias + " días";
+        }
+
+      }
+
+
+      return `
+        <tr>
+
+          <td>${rxEscapar(pago.id)}</td>
+
+          <td>${rxEscapar(pago.alumno_id)}</td>
+
+          <td>
+            $${Number(pago.importe || 0).toLocaleString("es-AR")}
+          </td>
+
+          <td>
+            ${rxFormatoFecha(pago.fecha_pago)}
+          </td>
+
+          <td>
+            <strong>
+              ${rxFormatoFecha(pago.fecha_vencimiento)}
+            </strong>
+          </td>
+
+          <td>
+            <span class="rx-pay-status ${estado.clase}">
+              ${estado.texto}
+            </span>
+          </td>
+
+          <td>
+            ${rxEscapar(textoDias)}
+          </td>
+
+          <td>
+            ${rxEscapar(pago.concepto || "—")}
+          </td>
+
+        </tr>
+      `;
+
+    }).join("");
+
+
+    rxActualizarEstadisticas(
+      total,
+      alDia,
+      proximos,
+      vencidos
+    );
+
+    rxActualizarAvisos(pagos);
+
+  }
+
+
+  /* =========================================================
+     ESCAPAR TEXTO
+     ========================================================= */
+
+  function rxEscapar(valor) {
+
+    if (valor === null || valor === undefined) {
+      return "";
+    }
+
+    return String(valor)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
+
+  /* =========================================================
+     ESTADÍSTICAS
+     ========================================================= */
+
+  function rxActualizarEstadisticas(
+    total,
+    alDia,
+    proximos,
+    vencidos
+  ) {
+
+    const elementos = {
+
+      total:
+        document.getElementById("rxPayTotal"),
+
+      ok:
+        document.getElementById("rxPayOk"),
+
+      warning:
+        document.getElementById("rxPayWarning"),
+
+      expired:
+        document.getElementById("rxPayExpired")
+
+    };
+
+
+    if (elementos.total) {
+      elementos.total.textContent = total;
+    }
+
+    if (elementos.ok) {
+      elementos.ok.textContent = alDia;
+    }
+
+    if (elementos.warning) {
+      elementos.warning.textContent = proximos;
+    }
+
+    if (elementos.expired) {
+      elementos.expired.textContent = vencidos;
+    }
+
+  }
+
+
+  /* =========================================================
+     AVISOS PARA EL ADMINISTRADOR
+     ========================================================= */
+
+  function rxActualizarAvisos(pagos) {
+
+    const avisoWarning =
+      document.getElementById(
+        "rxPayAlertWarning"
+      );
+
+    const avisoDanger =
+      document.getElementById(
+        "rxPayAlertDanger"
+      );
+
+
+    if (!avisoWarning || !avisoDanger) {
+      return;
+    }
+
+
+    const proximos = pagos.filter(function (pago) {
+
+      if (!pago.fecha_vencimiento) {
+        return false;
+      }
+
+      const dias = rxDiferenciaDias(
+        pago.fecha_vencimiento
+      );
+
+      return dias >= 0 &&
+             dias <= RX_DIAS_AVISO;
+
+    });
+
+
+    const vencidos = pagos.filter(function (pago) {
+
+      if (!pago.fecha_vencimiento) {
+        return false;
+      }
+
+      return rxDiferenciaDias(
+        pago.fecha_vencimiento
+      ) < 0;
+
+    });
+
+
+    avisoWarning.classList.remove("show");
+    avisoDanger.classList.remove("show");
+
+
+    if (proximos.length) {
+
+      avisoWarning.textContent =
+        "🟡 ATENCIÓN: hay " +
+        proximos.length +
+        " pago(s) que vence(n) dentro de los próximos " +
+        RX_DIAS_AVISO +
+        " días.";
+
+      avisoWarning.classList.add("show");
+
+    }
+
+
+    if (vencidos.length) {
+
+      avisoDanger.textContent =
+        "🔴 ATENCIÓN: hay " +
+        vencidos.length +
+        " pago(s) vencido(s).";
+
+      avisoDanger.classList.add("show");
+
+    }
+
+  }
+
+
+  /* =========================================================
+     REGISTRAR PAGO
+     ========================================================= */
+
+  window.rxRegistrarPago = async function () {
+
+    const cliente = rxGetSupabaseClient();
+
+    if (!cliente) {
+
+      rxMostrarMensaje(
+        "No se encontró la conexión con Supabase.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    const alumnoId =
+      document.getElementById(
+        "rxPayAlumnoId"
+      ).value.trim();
+
+
+    const importe =
+      document.getElementById(
+        "rxPayImporte"
+      ).value;
+
+
+    const fechaPago =
+      document.getElementById(
+        "rxPayFecha"
+      ).value;
+
+
+    const concepto =
+      document.getElementById(
+        "rxPayConcepto"
+      ).value.trim();
+
+
+    const observaciones =
+      document.getElementById(
+        "rxPayObservaciones"
+      ).value.trim();
+
+
+    if (!alumnoId) {
+
+      rxMostrarMensaje(
+        "Introduce el ID del alumno.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if (!fechaPago) {
+
+      rxMostrarMensaje(
+        "Selecciona la fecha del pago.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    /*
+     * -------------------------------------------------------
+     * BUSCAR EL ÚLTIMO VENCIMIENTO DEL ALUMNO
+     * -------------------------------------------------------
+     */
+
+    try {
+
+      const anterior = await cliente
+        .from("pagos")
+        .select(
+          "id, fecha_pago, fecha_vencimiento"
+        )
+        .eq(
+          "alumno_id",
+          alumnoId
+        )
+        .order(
+          "fecha_vencimiento",
+          { ascending: false }
+        )
+        .limit(1);
+
+
+      if (anterior.error) {
+        throw anterior.error;
+      }
+
+
+      let fechaVencimiento;
+
+
+      /*
+       * PRIMER PAGO:
+       *
+       * pago + 28 días
+       */
+
+      if (
+        !anterior.data ||
+        !anterior.data.length ||
+        !anterior.data[0].fecha_vencimiento
+      ) {
+
+        fechaVencimiento =
+          rxSumarDias(
+            fechaPago,
+            RX_DIAS_CICLO
+          );
+
+      }
+
+
+      /*
+       * PAGO POSTERIOR:
+       *
+       * VENCIMIENTO ANTERIOR + 28 DÍAS
+       *
+       * NO usamos la fecha real del pago.
+       *
+       * Así un pago atrasado NO desplaza
+       * el calendario.
+       */
+
+      else {
+
+        fechaVencimiento =
+          rxSumarDias(
+            anterior.data[0].fecha_vencimiento,
+            RX_DIAS_CICLO
+          );
+
+      }
+
+
+      const nuevoPago = {
+
+        alumno_id: Number(alumnoId),
+
+        importe:
+          importe === ""
+            ? null
+            : Number(importe),
+
+        fecha_pago:
+          fechaPago,
+
+        fecha_vencimiento:
+          fechaVencimiento,
+
+        concepto:
+          concepto || "Cuota",
+
+        estado:
+          "pagado",
+
+        observaciones:
+          observaciones || null
+
+      };
+
+
+      const insercion = await cliente
+        .from("pagos")
+        .insert(nuevoPago);
+
+
+      if (insercion.error) {
+        throw insercion.error;
+      }
+
+
+      rxMostrarMensaje(
+        "✅ Pago registrado. Próximo vencimiento: " +
+        rxFormatoFecha(fechaVencimiento),
+        "ok"
+      );
+
+
+      rxLimpiarFormularioPago();
+
+      await rxCargarPagos();
+
+
+    } catch (error) {
+
+      console.error(
+        "RoXThal - Error registrando pago:",
+        error
+      );
+
+      rxMostrarMensaje(
+        "❌ No se pudo registrar el pago: " +
+        (error.message || "error desconocido"),
+        "error"
+      );
+
+    }
+
+  };
+
+
+  /* =========================================================
+     LIMPIAR FORMULARIO
+     ========================================================= */
+
+  window.rxLimpiarFormularioPago = function () {
+
+    const alumno =
+      document.getElementById(
+        "rxPayAlumnoId"
+      );
+
+    const importe =
+      document.getElementById(
+        "rxPayImporte"
+      );
+
+    const fecha =
+      document.getElementById(
+        "rxPayFecha"
+      );
+
+    const concepto =
+      document.getElementById(
+        "rxPayConcepto"
+      );
+
+    const observaciones =
+      document.getElementById(
+        "rxPayObservaciones"
+      );
+
+
+    if (alumno) alumno.value = "";
+    if (importe) importe.value = "";
+    if (fecha) fecha.value = rxHoyISO();
+    if (concepto) concepto.value = "";
+    if (observaciones) observaciones.value = "";
+
+  };
+
+
+  /* =========================================================
+     INICIALIZACIÓN
+     ========================================================= */
+
+  function rxInicializarModuloPagos() {
+
+    const fecha =
+      document.getElementById(
+        "rxPayFecha"
+      );
+
+    if (fecha && !fecha.value) {
+      fecha.value = rxHoyISO();
+    }
+
+
+    rxCargarPagos();
+
+
+    /*
+     * Actualizar automáticamente cada 60 segundos.
+     * Esto recalcula los avisos según la fecha actual.
+     */
+
+    setInterval(function () {
+
+      rxCargarPagos();
+
+    }, 60000);
+
+  }
+
+
+  /*
+   * Esperamos a que exista el DOM.
+   */
+
+  if (
+    document.readyState === "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      rxInicializarModuloPagos
+    );
+
+  }
+  else {
+
+    rxInicializarModuloPagos();
+
+  }
+
+
+})();
+</script>
+
+<!-- FIN MÓDULO CONTROL DE PAGOS -->
 </body>
 </html>
