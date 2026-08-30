@@ -8700,5 +8700,2570 @@ document.addEventListener('click', function(event) {
   }
 });
 </script>
+  <!-- =========================================================
+     RoXThal Art Design
+     MÓDULO INDEPENDIENTE — ADMINISTRADOR DE CUOTAS
+     
+     DATOS EXCLUSIVOS:
+       roxthal_cuotas_alumnos
+       roxthal_cuotas_pagos
+
+     NO UTILIZA:
+       alumnos
+       students
+       pagos
+       adminPanel
+       admin.js
+       funciones del administrador anterior
+     ========================================================= -->
+
+<style>
+#rxcuotas-independent {
+  width:100%;
+  margin:35px 0 0;
+  box-sizing:border-box;
+  font-family:inherit;
+}
+
+#rxcuotas-independent *,
+#rxcuotas-independent *::before,
+#rxcuotas-independent *::after {
+  box-sizing:border-box;
+}
+
+#rxcuotas-independent .rxci-launch {
+  width:100%;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:12px;
+  padding:14px 18px;
+  background:#111;
+  color:#fff;
+  cursor:pointer;
+  font-size:15px;
+  font-weight:700;
+}
+
+#rxcuotas-independent .rxci-panel {
+  display:none;
+  margin-top:15px;
+  padding:20px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.12);
+  background:#111;
+  color:#fff;
+}
+
+#rxcuotas-independent.rxci-open .rxci-panel {
+  display:block;
+}
+
+#rxcuotas-independent .rxci-login {
+  max-width:430px;
+  margin:0 auto;
+}
+
+#rxcuotas-independent .rxci-login h3,
+#rxcuotas-independent .rxci-admin h3,
+#rxcuotas-independent .rxci-admin h4 {
+  margin-top:0;
+}
+
+#rxcuotas-independent .rxci-muted {
+  opacity:.7;
+  font-size:13px;
+}
+
+#rxcuotas-independent .rxci-field {
+  margin-bottom:13px;
+}
+
+#rxcuotas-independent .rxci-field label {
+  display:block;
+  margin-bottom:6px;
+  font-size:13px;
+  opacity:.8;
+}
+
+#rxcuotas-independent input,
+#rxcuotas-independent select {
+  width:100%;
+  padding:11px 12px;
+  border-radius:9px;
+  border:1px solid rgba(255,255,255,.16);
+  background:#191919;
+  color:#fff;
+  outline:none;
+}
+
+#rxcuotas-independent input:focus,
+#rxcuotas-independent select:focus {
+  border-color:#d4af37;
+}
+
+#rxcuotas-independent .rxci-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:13px;
+}
+
+#rxcuotas-independent .rxci-full {
+  grid-column:1/-1;
+}
+
+#rxcuotas-independent .rxci-actions {
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:12px;
+}
+
+#rxcuotas-independent button {
+  font-family:inherit;
+}
+
+#rxcuotas-independent .rxci-btn {
+  border:0;
+  border-radius:9px;
+  padding:11px 15px;
+  cursor:pointer;
+  font-weight:700;
+}
+
+#rxcuotas-independent .rxci-gold {
+  background:#d4af37;
+  color:#111;
+}
+
+#rxcuotas-independent .rxci-dark {
+  background:#242424;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.12);
+}
+
+#rxcuotas-independent .rxci-red {
+  background:#8f2929;
+  color:#fff;
+}
+
+#rxcuotas-independent .rxci-message {
+  display:none;
+  margin-top:13px;
+  padding:11px 12px;
+  border-radius:9px;
+  background:#222;
+  font-size:13px;
+}
+
+#rxcuotas-independent .rxci-message.show {
+  display:block;
+}
+
+#rxcuotas-independent .rxci-admin {
+  display:none;
+}
+
+#rxcuotas-independent .rxci-admin.show {
+  display:block;
+}
+
+#rxcuotas-independent .rxci-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-bottom:18px;
+}
+
+#rxcuotas-independent .rxci-card {
+  padding:18px;
+  border-radius:13px;
+  background:#181818;
+  border:1px solid rgba(255,255,255,.1);
+  margin-bottom:18px;
+}
+
+#rxcuotas-independent .rxci-stats {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+  margin-bottom:18px;
+}
+
+#rxcuotas-independent .rxci-stat {
+  padding:14px;
+  border-radius:11px;
+  background:#181818;
+  border:1px solid rgba(255,255,255,.1);
+}
+
+#rxcuotas-independent .rxci-stat span {
+  display:block;
+  font-size:12px;
+  opacity:.65;
+  margin-bottom:5px;
+}
+
+#rxcuotas-independent .rxci-stat strong {
+  font-size:20px;
+}
+
+#rxcuotas-independent .rxci-list {
+  display:grid;
+  gap:10px;
+}
+
+#rxcuotas-independent .rxci-student {
+  padding:15px;
+  border-radius:11px;
+  background:#191919;
+  border:1px solid rgba(255,255,255,.1);
+}
+
+#rxcuotas-independent .rxci-student-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
+}
+
+#rxcuotas-independent .rxci-student-name {
+  font-weight:800;
+  font-size:16px;
+}
+
+#rxcuotas-independent .rxci-student-info {
+  margin-top:7px;
+  font-size:13px;
+  opacity:.75;
+  line-height:1.6;
+}
+
+#rxcuotas-independent .rxci-payments {
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+
+#rxcuotas-independent .rxci-payment {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:8px 0;
+  font-size:13px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+#rxcuotas-independent .rxci-payment:last-child {
+  border-bottom:0;
+}
+
+#rxcuotas-independent .rxci-green {
+  color:#55d68a;
+  font-weight:700;
+}
+
+#rxcuotas-independent .rxci-yellow {
+  color:#e5c65a;
+  font-weight:700;
+}
+
+#rxcuotas-independent .rxci-danger {
+  color:#ef6868;
+  font-weight:700;
+}
+
+@media(max-width:700px) {
+  #rxcuotas-independent .rxci-grid {
+    grid-template-columns:1fr;
+  }
+
+  #rxcuotas-independent .rxci-full {
+    grid-column:auto;
+  }
+
+  #rxcuotas-independent .rxci-stats {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  #rxcuotas-independent .rxci-payment {
+    flex-direction:column;
+    gap:3px;
+  }
+}
+</style>
+
+
+<div id="rxcuotas-independent">
+
+  <!-- =======================================================
+       CERRADO AL CARGAR
+       ======================================================= -->
+
+  <button
+    type="button"
+    id="rxci-open"
+    class="rxci-launch"
+  >
+    🔒 Administrador independiente de cuotas
+  </button>
+
+
+  <div class="rxci-panel">
+
+    <!-- =====================================================
+         LOGIN
+         ===================================================== -->
+
+    <div
+      id="rxci-login"
+      class="rxci-login"
+    >
+
+      <h3>🔐 Acceso privado</h3>
+
+      <p class="rxci-muted">
+        Área exclusiva para administrar los alumnos y cuotas
+        de este módulo.
+      </p>
+
+      <div class="rxci-field">
+
+        <label for="rxci-email">
+          Correo
+        </label>
+
+        <input
+          id="rxci-email"
+          type="email"
+          autocomplete="username"
+          placeholder="Correo del administrador"
+        >
+
+      </div>
+
+
+      <div class="rxci-field">
+
+        <label for="rxci-password">
+          Contraseña
+        </label>
+
+        <input
+          id="rxci-password"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Contraseña"
+        >
+
+      </div>
+
+
+      <div class="rxci-actions">
+
+        <button
+          type="button"
+          id="rxci-login-button"
+          class="rxci-btn rxci-gold"
+        >
+          🔐 Entrar
+        </button>
+
+        <button
+          type="button"
+          id="rxci-close"
+          class="rxci-btn rxci-dark"
+        >
+          Cerrar
+        </button>
+
+      </div>
+
+
+      <div
+        id="rxci-login-message"
+        class="rxci-message"
+      ></div>
+
+    </div>
+
+
+    <!-- =====================================================
+         ADMINISTRADOR
+         ===================================================== -->
+
+    <div
+      id="rxci-admin"
+      class="rxci-admin"
+    >
+
+      <div class="rxci-header">
+
+        <div>
+
+          <h3>
+            💰 Control de Cuotas
+          </h3>
+
+          <div class="rxci-muted">
+            Módulo independiente
+          </div>
+
+        </div>
+
+
+        <div class="rxci-actions">
+
+          <button
+            type="button"
+            id="rxci-refresh"
+            class="rxci-btn rxci-dark"
+          >
+            🔄 Actualizar
+          </button>
+
+          <button
+            type="button"
+            id="rxci-logout"
+            class="rxci-btn rxci-dark"
+          >
+            🔒 Salir
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- ===================================================
+           ESTADÍSTICAS
+           =================================================== -->
+
+      <div class="rxci-stats">
+
+        <div class="rxci-stat">
+          <span>Alumnos</span>
+          <strong id="rxci-total-students">0</strong>
+        </div>
+
+        <div class="rxci-stat">
+          <span>Pagos</span>
+          <strong id="rxci-total-payments">0</strong>
+        </div>
+
+        <div class="rxci-stat">
+          <span>Recaudado</span>
+          <strong id="rxci-total-money">$0</strong>
+        </div>
+
+        <div class="rxci-stat">
+          <span>Vencidos</span>
+          <strong id="rxci-total-expired">0</strong>
+        </div>
+
+      </div>
+
+
+      <!-- ===================================================
+           ALTA / EDICIÓN DE ALUMNO
+           =================================================== -->
+
+      <div class="rxci-card">
+
+        <h4 id="rxci-student-form-title">
+          ➕ Nuevo alumno
+        </h4>
+
+
+        <div class="rxci-grid">
+
+          <div class="rxci-field">
+
+            <label for="rxci-name">
+              Nombre *
+            </label>
+
+            <input
+              id="rxci-name"
+              type="text"
+              placeholder="Nombre"
+            >
+
+          </div>
+
+
+          <div class="rxci-field">
+
+            <label for="rxci-lastname">
+              Apellido
+            </label>
+
+            <input
+              id="rxci-lastname"
+              type="text"
+              placeholder="Apellido"
+            >
+
+          </div>
+
+
+          <div class="rxci-field">
+
+            <label for="rxci-phone">
+              Teléfono
+            </label>
+
+            <input
+              id="rxci-phone"
+              type="text"
+              placeholder="Teléfono"
+            >
+
+          </div>
+
+
+          <div class="rxci-field">
+
+            <label for="rxci-course">
+              Curso
+            </label>
+
+            <input
+              id="rxci-course"
+              type="text"
+              placeholder="Curso"
+            >
+
+          </div>
+
+
+          <div class="rxci-field rxci-full">
+
+            <label for="rxci-student-notes">
+              Observaciones
+            </label>
+
+            <input
+              id="rxci-student-notes"
+              type="text"
+              placeholder="Observaciones"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="rxci-actions">
+
+          <button
+            type="button"
+            id="rxci-save-student"
+            class="rxci-btn rxci-gold"
+          >
+            💾 Guardar alumno
+          </button>
+
+          <button
+            type="button"
+            id="rxci-cancel-student"
+            class="rxci-btn rxci-dark"
+          >
+            Limpiar
+          </button>
+
+        </div>
+
+
+        <div
+          id="rxci-student-message"
+          class="rxci-message"
+        ></div>
+
+      </div>
+
+
+      <!-- ===================================================
+           REGISTRAR PAGO
+           =================================================== -->
+
+      <div class="rxci-card">
+
+        <h4>
+          💵 Registrar cuota / pago
+        </h4>
+
+
+        <div class="rxci-grid">
+
+          <div class="rxci-field rxci-full">
+
+            <label for="rxci-payment-student">
+              Alumno *
+            </label>
+
+            <select id="rxci-payment-student">
+
+              <option value="">
+                Seleccionar alumno...
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="rxci-field">
+
+            <label for="rxci-payment-amount">
+              Importe *
+            </label>
+
+            <input
+              id="rxci-payment-amount"
+              type="number"
+              min="0"
+              step="500"
+              placeholder="25000"
+            >
+
+          </div>
+
+
+          <div class="rxci-field">
+
+            <label for="rxci-payment-date">
+              Fecha de pago *
+            </label>
+
+            <input
+              id="rxci-payment-date"
+              type="date"
+            >
+
+          </div>
+
+
+          <div class="rxci-field">
+
+            <label for="rxci-due-date">
+              Vencimiento
+            </label>
+
+            <input
+              id="rxci-due-date"
+              type="date"
+            >
+
+          </div>
+
+
+          <div class="rxci-field">
+
+            <label for="rxci-concept">
+              Concepto
+            </label>
+
+            <input
+              id="rxci-concept"
+              type="text"
+              value="Cuota"
+            >
+
+          </div>
+
+
+          <div class="rxci-field rxci-full">
+
+            <label for="rxci-payment-notes">
+              Observaciones
+            </label>
+
+            <input
+              id="rxci-payment-notes"
+              type="text"
+              placeholder="Opcional"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="rxci-actions">
+
+          <button
+            type="button"
+            id="rxci-save-payment"
+            class="rxci-btn rxci-gold"
+          >
+            💾 Guardar pago
+          </button>
+
+          <button
+            type="button"
+            id="rxci-clear-payment"
+            class="rxci-btn rxci-dark"
+          >
+            Limpiar
+          </button>
+
+        </div>
+
+
+        <div
+          id="rxci-payment-message"
+          class="rxci-message"
+        ></div>
+
+      </div>
+
+
+      <!-- ===================================================
+           LISTA DE ALUMNOS
+           =================================================== -->
+
+      <div class="rxci-card">
+
+        <h4>
+          👥 Alumnos de este módulo
+        </h4>
+
+        <div
+          id="rxci-students-list"
+          class="rxci-list"
+        >
+          Cargando...
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+(function () {
+
+  "use strict";
+
+
+  /* ========================================================
+     CONFIGURACIÓN AISLADA
+     ======================================================== */
+
+  const RXCI_SUPABASE_URL =
+    "https://lvvhpuedktdmfehvhcwk.supabase.co";
+
+  const RXCI_SUPABASE_KEY =
+    "sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp";
+
+
+  const RXCI_TABLE_STUDENTS =
+    "roxthal_cuotas_alumnos";
+
+  const RXCI_TABLE_PAYMENTS =
+    "roxthal_cuotas_pagos";
+
+
+  let rxciClient = null;
+
+  let rxciStudents = [];
+
+  let rxciPayments = [];
+
+  let rxciEditingStudentId = null;
+
+
+  /* ========================================================
+     CLIENTE SUPABASE EXCLUSIVO
+     ======================================================== */
+
+  function rxciGetClient() {
+
+    if (rxciClient) {
+      return rxciClient;
+    }
+
+    if (
+      !window.supabase ||
+      typeof window.supabase.createClient !==
+        "function"
+    ) {
+
+      return null;
+
+    }
+
+
+    rxciClient =
+      window.supabase.createClient(
+        RXCI_SUPABASE_URL,
+        RXCI_SUPABASE_KEY
+      );
+
+
+    return rxciClient;
+
+  }
+
+
+  /* ========================================================
+     ELEMENTOS
+     ======================================================== */
+
+  const rxciRoot =
+    document.getElementById(
+      "rxcuotas-independent"
+    );
+
+  const rxciOpen =
+    document.getElementById(
+      "rxci-open"
+    );
+
+  const rxciLogin =
+    document.getElementById(
+      "rxci-login"
+    );
+
+  const rxciAdmin =
+    document.getElementById(
+      "rxci-admin"
+    );
+
+  const rxciClose =
+    document.getElementById(
+      "rxci-close"
+    );
+
+  const rxciEmail =
+    document.getElementById(
+      "rxci-email"
+    );
+
+  const rxciPassword =
+    document.getElementById(
+      "rxci-password"
+    );
+
+  const rxciLoginButton =
+    document.getElementById(
+      "rxci-login-button"
+    );
+
+  const rxciLoginMessage =
+    document.getElementById(
+      "rxci-login-message"
+    );
+
+  const rxciLogout =
+    document.getElementById(
+      "rxci-logout"
+    );
+
+  const rxciRefresh =
+    document.getElementById(
+      "rxci-refresh"
+    );
+
+  const rxciName =
+    document.getElementById(
+      "rxci-name"
+    );
+
+  const rxciLastname =
+    document.getElementById(
+      "rxci-lastname"
+    );
+
+  const rxciPhone =
+    document.getElementById(
+      "rxci-phone"
+    );
+
+  const rxciCourse =
+    document.getElementById(
+      "rxci-course"
+    );
+
+  const rxciStudentNotes =
+    document.getElementById(
+      "rxci-student-notes"
+    );
+
+  const rxciSaveStudent =
+    document.getElementById(
+      "rxci-save-student"
+    );
+
+  const rxciCancelStudent =
+    document.getElementById(
+      "rxci-cancel-student"
+    );
+
+  const rxciStudentMessage =
+    document.getElementById(
+      "rxci-student-message"
+    );
+
+  const rxciStudentFormTitle =
+    document.getElementById(
+      "rxci-student-form-title"
+    );
+
+  const rxciPaymentStudent =
+    document.getElementById(
+      "rxci-payment-student"
+    );
+
+  const rxciPaymentAmount =
+    document.getElementById(
+      "rxci-payment-amount"
+    );
+
+  const rxciPaymentDate =
+    document.getElementById(
+      "rxci-payment-date"
+    );
+
+  const rxciDueDate =
+    document.getElementById(
+      "rxci-due-date"
+    );
+
+  const rxciConcept =
+    document.getElementById(
+      "rxci-concept"
+    );
+
+  const rxciPaymentNotes =
+    document.getElementById(
+      "rxci-payment-notes"
+    );
+
+  const rxciSavePayment =
+    document.getElementById(
+      "rxci-save-payment"
+    );
+
+  const rxciClearPayment =
+    document.getElementById(
+      "rxci-clear-payment"
+    );
+
+  const rxciPaymentMessage =
+    document.getElementById(
+      "rxci-payment-message"
+    );
+
+  const rxciStudentsList =
+    document.getElementById(
+      "rxci-students-list"
+    );
+
+  const rxciTotalStudents =
+    document.getElementById(
+      "rxci-total-students"
+    );
+
+  const rxciTotalPayments =
+    document.getElementById(
+      "rxci-total-payments"
+    );
+
+  const rxciTotalMoney =
+    document.getElementById(
+      "rxci-total-money"
+    );
+
+  const rxciTotalExpired =
+    document.getElementById(
+      "rxci-total-expired"
+    );
+
+
+  /* ========================================================
+     MENSAJES
+     ======================================================== */
+
+  function rxciMessage(
+    element,
+    text
+  ) {
+
+    element.textContent =
+      text;
+
+    element.classList.add(
+      "show"
+    );
+
+  }
+
+
+  function rxciHideMessage(
+    element
+  ) {
+
+    element.textContent =
+      "";
+
+    element.classList.remove(
+      "show"
+    );
+
+  }
+
+
+  /* ========================================================
+     ESCAPE HTML
+     ======================================================== */
+
+  function rxciEscape(
+    value
+  ) {
+
+    return String(
+      value ?? ""
+    )
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+      .replace(
+        /</g,
+        "&lt;"
+      )
+      .replace(
+        />/g,
+        "&gt;"
+      )
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+      .replace(
+        /'/g,
+        "&#039;"
+      );
+
+  }
+
+
+  /* ========================================================
+     FECHA LOCAL
+     ======================================================== */
+
+  function rxciToday() {
+
+    const d =
+      new Date();
+
+    return [
+      d.getFullYear(),
+      String(
+        d.getMonth() + 1
+      ).padStart(2, "0"),
+      String(
+        d.getDate()
+      ).padStart(2, "0")
+    ].join("-");
+
+  }
+
+
+  /* ========================================================
+     FORMATO FECHA
+     ======================================================== */
+
+  function rxciDate(
+    value
+  ) {
+
+    if (!value) {
+      return "—";
+    }
+
+    const p =
+      String(value).split("-");
+
+    if (p.length !== 3) {
+      return value;
+    }
+
+    return (
+      p[2] +
+      "/" +
+      p[1] +
+      "/" +
+      p[0]
+    );
+
+  }
+
+
+  /* ========================================================
+     DINERO
+     ======================================================== */
+
+  function rxciMoney(
+    value
+  ) {
+
+    return "$" +
+      Number(
+        value || 0
+      ).toLocaleString(
+        "es-AR"
+      );
+
+  }
+
+
+  /* ========================================================
+     ABRIR
+     ======================================================== */
+
+  rxciOpen.addEventListener(
+    "click",
+    async function () {
+
+      rxciRoot.classList.add(
+        "rxci-open"
+      );
+
+      await rxciCheckSession();
+
+    }
+  );
+
+
+  /* ========================================================
+     CERRAR SIN SESIÓN
+     ======================================================== */
+
+  rxciClose.addEventListener(
+    "click",
+    function () {
+
+      rxciRoot.classList.remove(
+        "rxci-open"
+      );
+
+    }
+  );
+
+
+  /* ========================================================
+     SESIÓN
+     ======================================================== */
+
+  async function rxciCheckSession() {
+
+    const client =
+      rxciGetClient();
+
+
+    if (!client) {
+
+      rxciMessage(
+        rxciLoginMessage,
+        "❌ No se pudo cargar Supabase."
+      );
+
+      return;
+
+    }
+
+
+    try {
+
+      const result =
+        await client.auth.getSession();
+
+
+      const session =
+        result.data &&
+        result.data.session;
+
+
+      if (session) {
+
+        rxciShowAdmin();
+
+        await rxciLoadData();
+
+      }
+      else {
+
+        rxciLogin.style.display =
+          "block";
+
+        rxciAdmin.classList.remove(
+          "show"
+        );
+
+      }
+
+    }
+    catch (error) {
+
+      console.error(
+        "RXCI sesión:",
+        error
+      );
+
+      rxciMessage(
+        rxciLoginMessage,
+        "❌ No se pudo comprobar la sesión."
+      );
+
+    }
+
+  }
+
+
+  /* ========================================================
+     MOSTRAR ADMIN
+     ======================================================== */
+
+  function rxciShowAdmin() {
+
+    rxciLogin.style.display =
+      "none";
+
+    rxciAdmin.classList.add(
+      "show"
+    );
+
+  }
+
+
+  /* ========================================================
+     LOGIN
+     ======================================================== */
+
+  rxciLoginButton.addEventListener(
+    "click",
+    async function () {
+
+      const client =
+        rxciGetClient();
+
+
+      if (!client) {
+
+        rxciMessage(
+          rxciLoginMessage,
+          "❌ Supabase no está disponible."
+        );
+
+        return;
+
+      }
+
+
+      const emailValue =
+        rxciEmail.value.trim();
+
+      const passwordValue =
+        rxciPassword.value;
+
+
+      if (
+        !emailValue ||
+        !passwordValue
+      ) {
+
+        rxciMessage(
+          rxciLoginMessage,
+          "⚠️ Introduce correo y contraseña."
+        );
+
+        return;
+
+      }
+
+
+      rxciLoginButton.disabled =
+        true;
+
+      rxciLoginButton.textContent =
+        "Comprobando...";
+
+
+      try {
+
+        const result =
+          await client.auth.signInWithPassword({
+            email:
+              emailValue,
+            password:
+              passwordValue
+          });
+
+
+        if (result.error) {
+          throw result.error;
+        }
+
+
+        rxciPassword.value =
+          "";
+
+
+        rxciHideMessage(
+          rxciLoginMessage
+        );
+
+
+        rxciShowAdmin();
+
+
+        await rxciLoadData();
+
+      }
+      catch (error) {
+
+        console.error(
+          "RXCI login:",
+          error
+        );
+
+
+        rxciMessage(
+          rxciLoginMessage,
+          "❌ Acceso rechazado."
+        );
+
+      }
+      finally {
+
+        rxciLoginButton.disabled =
+          false;
+
+        rxciLoginButton.textContent =
+          "🔐 Entrar";
+
+      }
+
+    }
+  );
+
+
+  /* ========================================================
+     CARGAR DATOS
+     ======================================================== */
+
+  async function rxciLoadData() {
+
+    await rxciLoadStudents();
+
+    await rxciLoadPayments();
+
+    rxciRender();
+
+  }
+
+
+  /* ========================================================
+     CARGAR ALUMNOS — TABLA NUEVA
+     ======================================================== */
+
+  async function rxciLoadStudents() {
+
+    const client =
+      rxciGetClient();
+
+
+    const result =
+      await client
+        .from(
+          RXCI_TABLE_STUDENTS
+        )
+        .select(
+          "id,nombre,apellido,telefono,curso,observaciones,activo,created_at"
+        )
+        .order(
+          "apellido",
+          {
+            ascending:true
+          }
+        )
+        .order(
+          "nombre",
+          {
+            ascending:true
+          }
+        );
+
+
+    if (result.error) {
+      throw result.error;
+    }
+
+
+    rxciStudents =
+      result.data || [];
+
+  }
+
+
+  /* ========================================================
+     CARGAR PAGOS — TABLA NUEVA
+     ======================================================== */
+
+  async function rxciLoadPayments() {
+
+    const client =
+      rxciGetClient();
+
+
+    const result =
+      await client
+        .from(
+          RXCI_TABLE_PAYMENTS
+        )
+        .select(
+          "id,alumno_id,importe,fecha_pago,fecha_vencimiento,concepto,observaciones,created_at"
+        )
+        .order(
+          "fecha_pago",
+          {
+            ascending:false
+          }
+        );
+
+
+    if (result.error) {
+      throw result.error;
+    }
+
+
+    rxciPayments =
+      result.data || [];
+
+  }
+
+
+  /* ========================================================
+     RENDER
+     ======================================================== */
+
+  function rxciRender() {
+
+    rxciRenderStats();
+
+    rxciRenderStudentSelect();
+
+    rxciRenderStudents();
+
+  }
+
+
+  /* ========================================================
+     ESTADÍSTICAS
+     ======================================================== */
+
+  function rxciRenderStats() {
+
+    let total =
+      0;
+
+    let expired =
+      0;
+
+
+    rxciPayments.forEach(
+      function (payment) {
+
+        total +=
+          Number(
+            payment.importe || 0
+          );
+
+
+        if (
+          payment.fecha_vencimiento
+        ) {
+
+          const due =
+            new Date(
+              payment.fecha_vencimiento +
+              "T00:00:00"
+            );
+
+          const today =
+            new Date();
+
+          today.setHours(
+            0,0,0,0
+          );
+
+
+          if (due < today) {
+            expired++;
+          }
+
+        }
+
+      }
+    );
+
+
+    rxciTotalStudents.textContent =
+      rxciStudents.length;
+
+
+    rxciTotalPayments.textContent =
+      rxciPayments.length;
+
+
+    rxciTotalMoney.textContent =
+      rxciMoney(total);
+
+
+    rxciTotalExpired.textContent =
+      expired;
+
+  }
+
+
+  /* ========================================================
+     SELECTOR DE ALUMNOS
+     ======================================================== */
+
+  function rxciRenderStudentSelect() {
+
+    const current =
+      rxciPaymentStudent.value;
+
+
+    rxciPaymentStudent.innerHTML =
+      '<option value="">Seleccionar alumno...</option>';
+
+
+    rxciStudents.forEach(
+      function (student) {
+
+        const option =
+          document.createElement(
+            "option"
+          );
+
+
+        option.value =
+          student.id;
+
+
+        option.textContent =
+          (
+            student.apellido ||
+            ""
+          ) +
+          (
+            student.apellido
+              ? ", "
+              : ""
+          ) +
+          (
+            student.nombre ||
+            ""
+          ) +
+          (
+            student.curso
+              ? " — " +
+                student.curso
+              : ""
+          );
+
+
+        rxciPaymentStudent.appendChild(
+          option
+        );
+
+      }
+    );
+
+
+    if (current) {
+      rxciPaymentStudent.value =
+        current;
+    }
+
+  }
+
+
+  /* ========================================================
+     LISTA DE ALUMNOS
+     ======================================================== */
+
+  function rxciRenderStudents() {
+
+    if (!rxciStudents.length) {
+
+      rxciStudentsList.innerHTML =
+        "<div class='rxci-muted'>No hay alumnos registrados todavía.</div>";
+
+      return;
+
+    }
+
+
+    rxciStudentsList.innerHTML =
+      rxciStudents.map(
+        function (student) {
+
+          const payments =
+            rxciPayments.filter(
+              function (payment) {
+
+                return String(
+                  payment.alumno_id
+                ) === String(
+                  student.id
+                );
+
+              }
+            );
+
+
+          const paymentHtml =
+            payments.length
+              ? payments.map(
+                  function (payment) {
+
+                    let status =
+                      "";
+
+                    let statusClass =
+                      "rxci-green";
+
+
+                    if (
+                      payment.fecha_vencimiento
+                    ) {
+
+                      const due =
+                        new Date(
+                          payment.fecha_vencimiento +
+                          "T00:00:00"
+                        );
+
+                      const today =
+                        new Date();
+
+                      today.setHours(
+                        0,0,0,0
+                      );
+
+
+                      if (due < today) {
+
+                        status =
+                          "🔴 Vencido";
+
+                        statusClass =
+                          "rxci-danger";
+
+                      }
+                      else {
+
+                        status =
+                          "🟢 Al día";
+
+                      }
+
+                    }
+
+
+                    return `
+                      <div class="rxci-payment">
+
+                        <div>
+                          <strong>
+                            ${rxciEscape(
+                              payment.concepto ||
+                              "Cuota"
+                            )}
+                          </strong>
+
+                          <br>
+
+                          ${rxciDate(
+                            payment.fecha_pago
+                          )}
+
+                          ${
+                            payment.fecha_vencimiento
+                              ? " · vence " +
+                                rxciDate(
+                                  payment.fecha_vencimiento
+                                )
+                              : ""
+                          }
+                        </div>
+
+                        <div class="${statusClass}">
+                          ${rxciMoney(
+                            payment.importe
+                          )}
+
+                          ${
+                            status
+                              ? "<br>" +
+                                status
+                              : ""
+                          }
+                        </div>
+
+                      </div>
+                    `;
+
+                  }
+                ).join("")
+              : "<div class='rxci-muted'>Sin pagos registrados.</div>";
+
+
+          return `
+            <div class="rxci-student">
+
+              <div class="rxci-student-head">
+
+                <div>
+
+                  <div class="rxci-student-name">
+                    ${rxciEscape(
+                      (
+                        student.nombre ||
+                        ""
+                      ) +
+                      (
+                        student.apellido
+                          ? " " +
+                            student.apellido
+                          : ""
+                      )
+                    )}
+                  </div>
+
+                  <div class="rxci-student-info">
+
+                    ${
+                      student.curso
+                        ? "🎓 " +
+                          rxciEscape(
+                            student.curso
+                          ) +
+                          "<br>"
+                        : ""
+                    }
+
+                    ${
+                      student.telefono
+                        ? "📱 " +
+                          rxciEscape(
+                            student.telefono
+                          )
+                        : ""
+                    }
+
+                  </div>
+
+                </div>
+
+
+                <div class="rxci-actions">
+
+                  <button
+                    type="button"
+                    class="rxci-btn rxci-dark"
+                    data-rxci-edit="${rxciEscape(
+                      student.id
+                    )}"
+                  >
+                    ✏️ Editar
+                  </button>
+
+                  <button
+                    type="button"
+                    class="rxci-btn rxci-red"
+                    data-rxci-delete="${rxciEscape(
+                      student.id
+                    )}"
+                  >
+                    🗑️ Borrar
+                  </button>
+
+                </div>
+
+              </div>
+
+
+              <div class="rxci-payments">
+
+                ${paymentHtml}
+
+              </div>
+
+            </div>
+          `;
+
+        }
+      ).join("");
+
+
+    /* Eventos editar */
+
+    rxciStudentsList
+      .querySelectorAll(
+        "[data-rxci-edit]"
+      )
+      .forEach(
+        function (button) {
+
+          button.addEventListener(
+            "click",
+            function () {
+
+              rxciEditStudent(
+                button.dataset.rxciEdit
+              );
+
+            }
+          );
+
+        }
+      );
+
+
+    /* Eventos borrar */
+
+    rxciStudentsList
+      .querySelectorAll(
+        "[data-rxci-delete]"
+      )
+      .forEach(
+        function (button) {
+
+          button.addEventListener(
+            "click",
+            function () {
+
+              rxciDeleteStudent(
+                button.dataset.rxciDelete
+              );
+
+            }
+          );
+
+        }
+      );
+
+  }
+
+
+  /* ========================================================
+     CREAR / EDITAR ALUMNO
+     ======================================================== */
+
+  rxciSaveStudent.addEventListener(
+    "click",
+    async function () {
+
+      const client =
+        rxciGetClient();
+
+
+      const nombre =
+        rxciName.value.trim();
+
+      const apellido =
+        rxciLastname.value.trim();
+
+      const telefono =
+        rxciPhone.value.trim();
+
+      const curso =
+        rxciCourse.value.trim();
+
+      const observaciones =
+        rxciStudentNotes.value.trim();
+
+
+      if (!nombre) {
+
+        rxciMessage(
+          rxciStudentMessage,
+          "⚠️ El nombre es obligatorio."
+        );
+
+        return;
+
+      }
+
+
+      rxciSaveStudent.disabled =
+        true;
+
+
+      try {
+
+        const data = {
+
+          nombre:
+            nombre,
+
+          apellido:
+            apellido,
+
+          telefono:
+            telefono || null,
+
+          curso:
+            curso || null,
+
+          observaciones:
+            observaciones || null,
+
+          activo:
+            true
+
+        };
+
+
+        let result;
+
+
+        if (rxciEditingStudentId) {
+
+          result =
+            await client
+              .from(
+                RXCI_TABLE_STUDENTS
+              )
+              .update(
+                data
+              )
+              .eq(
+                "id",
+                rxciEditingStudentId
+              );
+
+        }
+        else {
+
+          result =
+            await client
+              .from(
+                RXCI_TABLE_STUDENTS
+              )
+              .insert(
+                data
+              );
+
+        }
+
+
+        if (result.error) {
+          throw result.error;
+        }
+
+
+        rxciMessage(
+          rxciStudentMessage,
+          rxciEditingStudentId
+            ? "✅ Alumno actualizado."
+            : "✅ Alumno creado."
+        );
+
+
+        rxciResetStudentForm();
+
+
+        await rxciLoadData();
+
+      }
+      catch (error) {
+
+        console.error(
+          "RXCI guardar alumno:",
+          error
+        );
+
+
+        rxciMessage(
+          rxciStudentMessage,
+          "❌ No se pudo guardar el alumno: " +
+          (
+            error.message ||
+            "error desconocido"
+          )
+        );
+
+      }
+      finally {
+
+        rxciSaveStudent.disabled =
+          false;
+
+      }
+
+    }
+  );
+
+
+  /* ========================================================
+     EDITAR ALUMNO
+     ======================================================== */
+
+  function rxciEditStudent(
+    id
+  ) {
+
+    const student =
+      rxciStudents.find(
+        function (item) {
+
+          return String(
+            item.id
+          ) === String(id);
+
+        }
+      );
+
+
+    if (!student) {
+      return;
+    }
+
+
+    rxciEditingStudentId =
+      student.id;
+
+
+    rxciStudentFormTitle.textContent =
+      "✏️ Editar alumno";
+
+
+    rxciName.value =
+      student.nombre || "";
+
+    rxciLastname.value =
+      student.apellido || "";
+
+    rxciPhone.value =
+      student.telefono || "";
+
+    rxciCourse.value =
+      student.curso || "";
+
+    rxciStudentNotes.value =
+      student.observaciones || "";
+
+
+    rxciStudentFormTitle
+      .scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+      });
+
+  }
+
+
+  /* ========================================================
+     BORRAR ALUMNO
+     ======================================================== */
+
+  async function rxciDeleteStudent(
+    id
+  ) {
+
+    const student =
+      rxciStudents.find(
+        function (item) {
+
+          return String(
+            item.id
+          ) === String(id);
+
+        }
+      );
+
+
+    if (!student) {
+      return;
+    }
+
+
+    const nombre =
+      (
+        student.nombre ||
+        ""
+      ) +
+      (
+        student.apellido
+          ? " " +
+            student.apellido
+          : ""
+      );
+
+
+    const confirmar =
+      window.confirm(
+        "¿Seguro que quieres borrar a " +
+        nombre +
+        "?\n\n" +
+        "También se eliminarán sus pagos registrados en ESTE módulo."
+      );
+
+
+    if (!confirmar) {
+      return;
+    }
+
+
+    const client =
+      rxciGetClient();
+
+
+    try {
+
+      const result =
+        await client
+          .from(
+            RXCI_TABLE_STUDENTS
+          )
+          .delete()
+          .eq(
+            "id",
+            id
+          );
+
+
+      if (result.error) {
+        throw result.error;
+      }
+
+
+      rxciMessage(
+        rxciStudentMessage,
+        "🗑️ Alumno eliminado."
+      );
+
+
+      if (
+        String(
+          rxciEditingStudentId
+        ) === String(id)
+      ) {
+
+        rxciResetStudentForm();
+
+      }
+
+
+      await rxciLoadData();
+
+    }
+    catch (error) {
+
+      console.error(
+        "RXCI borrar alumno:",
+        error
+      );
+
+
+      rxciMessage(
+        rxciStudentMessage,
+        "❌ No se pudo borrar el alumno: " +
+        (
+          error.message ||
+          "error desconocido"
+        )
+      );
+
+    }
+
+  }
+
+
+  /* ========================================================
+     RESET ALUMNO
+     ======================================================== */
+
+  rxciCancelStudent.addEventListener(
+    "click",
+    function () {
+
+      rxciResetStudentForm();
+
+      rxciHideMessage(
+        rxciStudentMessage
+      );
+
+    }
+  );
+
+
+  function rxciResetStudentForm() {
+
+    rxciEditingStudentId =
+      null;
+
+    rxciStudentFormTitle.textContent =
+      "➕ Nuevo alumno";
+
+    rxciName.value =
+      "";
+
+    rxciLastname.value =
+      "";
+
+    rxciPhone.value =
+      "";
+
+    rxciCourse.value =
+      "";
+
+    rxciStudentNotes.value =
+      "";
+
+  }
+
+
+  /* ========================================================
+     FECHA PAGO
+     ======================================================== */
+
+  rxciPaymentDate.value =
+    rxciToday();
+
+
+  /* ========================================================
+     GUARDAR PAGO
+     ======================================================== */
+
+  rxciSavePayment.addEventListener(
+    "click",
+    async function () {
+
+      const client =
+        rxciGetClient();
+
+
+      const alumnoId =
+        rxciPaymentStudent.value;
+
+      const amount =
+        Number(
+          rxciPaymentAmount.value
+        );
+
+      const paymentDate =
+        rxciPaymentDate.value;
+
+      const dueDate =
+        rxciDueDate.value;
+
+      const concept =
+        rxciConcept.value.trim();
+
+      const notes =
+        rxciPaymentNotes.value.trim();
+
+
+      if (!alumnoId) {
+
+        rxciMessage(
+          rxciPaymentMessage,
+          "⚠️ Selecciona un alumno."
+        );
+
+        return;
+
+      }
+
+
+      if (
+        !amount ||
+        amount < 0
+      ) {
+
+        rxciMessage(
+          rxciPaymentMessage,
+          "⚠️ Introduce un importe válido."
+        );
+
+        return;
+
+      }
+
+
+      if (!paymentDate) {
+
+        rxciMessage(
+          rxciPaymentMessage,
+          "⚠️ Introduce la fecha de pago."
+        );
+
+        return;
+
+      }
+
+
+      rxciSavePayment.disabled =
+        true;
+
+
+      try {
+
+        const result =
+          await client
+            .from(
+              RXCI_TABLE_PAYMENTS
+            )
+            .insert({
+              alumno_id:
+                Number(alumnoId),
+
+              importe:
+                amount,
+
+              fecha_pago:
+                paymentDate,
+
+              fecha_vencimiento:
+                dueDate || null,
+
+              concepto:
+                concept ||
+                "Cuota",
+
+              observaciones:
+                notes ||
+                null
+            });
+
+
+        if (result.error) {
+          throw result.error;
+        }
+
+
+        rxciMessage(
+          rxciPaymentMessage,
+          "✅ Pago guardado correctamente."
+        );
+
+
+        rxciClearPaymentForm();
+
+
+        await rxciLoadData();
+
+      }
+      catch (error) {
+
+        console.error(
+          "RXCI guardar pago:",
+          error
+        );
+
+
+        rxciMessage(
+          rxciPaymentMessage,
+          "❌ No se pudo guardar el pago: " +
+          (
+            error.message ||
+            "error desconocido"
+          )
+        );
+
+      }
+      finally {
+
+        rxciSavePayment.disabled =
+          false;
+
+      }
+
+    }
+  );
+
+
+  /* ========================================================
+     LIMPIAR PAGO
+     ======================================================== */
+
+  rxciClearPayment.addEventListener(
+    "click",
+    function () {
+
+      rxciClearPaymentForm();
+
+      rxciHideMessage(
+        rxciPaymentMessage
+      );
+
+    }
+  );
+
+
+  function rxciClearPaymentForm() {
+
+    rxciPaymentStudent.value =
+      "";
+
+    rxciPaymentAmount.value =
+      "";
+
+    rxciPaymentDate.value =
+      rxciToday();
+
+    rxciDueDate.value =
+      "";
+
+    rxciConcept.value =
+      "Cuota";
+
+    rxciPaymentNotes.value =
+      "";
+
+  }
+
+
+  /* ========================================================
+     ACTUALIZAR
+     ======================================================== */
+
+  rxciRefresh.addEventListener(
+    "click",
+    async function () {
+
+      try {
+
+        await rxciLoadData();
+
+        rxciMessage(
+          rxciPaymentMessage,
+          "🔄 Datos actualizados."
+        );
+
+      }
+      catch (error) {
+
+        console.error(
+          "RXCI actualizar:",
+          error
+        );
+
+        rxciMessage(
+          rxciPaymentMessage,
+          "❌ No se pudieron actualizar los datos."
+        );
+
+      }
+
+    }
+  );
+
+
+  /* ========================================================
+     CERRAR SESIÓN
+     ======================================================== */
+
+  rxciLogout.addEventListener(
+    "click",
+    async function () {
+
+      const client =
+        rxciGetClient();
+
+
+      if (!client) {
+        return;
+      }
+
+
+      await client.auth.signOut();
+
+
+      rxciAdmin.classList.remove(
+        "show"
+      );
+
+
+      rxciLogin.style.display =
+        "block";
+
+
+      rxciEmail.value =
+        "";
+
+      rxciPassword.value =
+        "";
+
+
+      rxciResetStudentForm();
+
+      rxciClearPaymentForm();
+
+
+      rxciHideMessage(
+        rxciStudentMessage
+      );
+
+      rxciHideMessage(
+        rxciPaymentMessage
+      );
+
+
+      rxciMessage(
+        rxciLoginMessage,
+        "🔒 Sesión cerrada."
+      );
+
+    }
+  );
+
+
+  /* ========================================================
+     ENTER EN LOGIN
+     ======================================================== */
+
+  rxciPassword.addEventListener(
+    "keydown",
+    function (event) {
+
+      if (
+        event.key === "Enter"
+      ) {
+
+        rxciLoginButton.click();
+
+      }
+
+    }
+  );
+
+
+  /* ========================================================
+     INICIO
+     
+     IMPORTANTE:
+     NO SE ABRE AUTOMÁTICAMENTE.
+     ======================================================== */
+
+})();
+</script>
+
+<!-- =========================================================
+     FIN DEL MÓDULO INDEPENDIENTE
+     ========================================================= -->
 </body>
 </html>
