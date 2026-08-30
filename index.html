@@ -1592,7 +1592,10 @@
       $('stuPayStatus').value = s.payment_status || 'pendiente'; $('stuAmount').value = s.payment_amount || '';
       $('stuDate').value = s.payment_date || ''; $('stuNotes').value = s.notes || '';
       $('stuSaveBtn').textContent = '💾 Actualizar';
-      window.scrollTo({ top: $('stuFormTitle').offsetTop - 100, behavior: 'smooth' });
+      $('stuFormTitle').scrollIntoView({
+  behavior: 'smooth',
+  block: 'center'
+});
     }
 
     function resetStudentForm() {
