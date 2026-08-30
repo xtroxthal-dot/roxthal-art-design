@@ -12387,6 +12387,672 @@ document.addEventListener('keydown', function(event) {
   }
 
 })();
-</script>    
+</script>   
+  <!-- =========================================================
+     ROXTHAL ART DESIGN
+     NUESTRA IDENTIDAD — PANEL DESPLEGABLE
+     ========================================================= -->
+
+<style>
+
+  #identidad-roxthal-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    padding: 18px 22px;
+    margin: 0 0 20px 0;
+
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+
+    color: var(--gold2);
+
+    font-size: 1.05rem;
+    font-weight: 800;
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+      background 0.25s ease,
+      border-color 0.25s ease,
+      transform 0.2s ease;
+  }
+
+  #identidad-roxthal-toggle:hover {
+    background: var(--panel2);
+    border-color: var(--gold);
+  }
+
+  #identidad-roxthal-toggle:active {
+    transform: scale(0.99);
+  }
+
+  #identidad-roxthal-flecha {
+    font-size: 1.4rem;
+    line-height: 1;
+
+    transition: transform 0.25s ease;
+  }
+
+  #identidad-roxthal.abierto
+  #identidad-roxthal-flecha {
+    transform: rotate(180deg);
+  }
+
+  #identidad-roxthal-contenido {
+    display: none;
+  }
+
+  #identidad-roxthal.abierto
+  #identidad-roxthal-contenido {
+    display: block;
+    animation: identidadRoxthalEntrada 0.35s ease;
+  }
+
+  #identidad-roxthal-presentacion {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 28px;
+    margin-top: 24px;
+  }
+
+  #identidad-roxthal-presentacion h2 {
+    margin-bottom: 10px;
+  }
+
+  #identidad-roxthal-presentacion h3 {
+    color: var(--gold2);
+    margin-top: 30px;
+    margin-bottom: 12px;
+    font-size: 1.2rem;
+  }
+
+  #identidad-roxthal-presentacion p {
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  #identidad-roxthal-presentacion strong {
+    color: #fff;
+  }
+
+  #identidad-roxthal-presentacion ul {
+    margin: 12px 0 18px 22px;
+    color: var(--muted);
+  }
+
+  #identidad-roxthal-presentacion li {
+    margin-bottom: 8px;
+  }
+
+  .roxthal-frase-final {
+    text-align: center;
+    margin-top: 35px;
+    padding: 25px 15px;
+
+    border-top: 1px solid var(--line);
+  }
+
+  .roxthal-frase-final h2 {
+    color: var(--gold2);
+    margin-top: 10px;
+  }
+
+  @keyframes identidadRoxthalEntrada {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+</style>
+
+<script>
+
+(function () {
+
+  "use strict";
+
+  function iniciarNuestraIdentidad() {
+
+    /*
+     * Buscamos la sección existente de Nuestra Identidad.
+     *
+     * No modificamos Supabase.
+     * No modificamos el administrador.
+     * No creamos otra sección.
+     */
+
+    const secciones =
+      document.querySelectorAll("section");
+
+    let identidad = null;
+
+    secciones.forEach(function (section) {
+
+      const texto =
+        section.textContent.toLowerCase();
+
+      if (
+        texto.includes("nuestra identidad")
+      ) {
+        identidad = section;
+      }
+
+    });
+
+    if (!identidad) return;
+
+    /*
+     * Evitar duplicación.
+     */
+
+    if (
+      identidad.querySelector(
+        "#identidad-roxthal-toggle"
+      )
+    ) {
+      return;
+    }
+
+    /*
+     * Guardamos el contenido original.
+     */
+
+    const contenidoOriginal =
+      Array.from(identidad.children);
+
+    /*
+     * Ocultamos inicialmente el contenido
+     * original de la sección.
+     */
+
+    contenidoOriginal.forEach(function (elemento) {
+
+      elemento.style.display = "none";
+
+    });
+
+    /*
+     * Creamos el contenedor principal.
+     */
+
+    identidad.id =
+      "identidad-roxthal";
+
+    /*
+     * Creamos el botón.
+     */
+
+    const boton =
+      document.createElement("button");
+
+    boton.type = "button";
+
+    boton.id =
+      "identidad-roxthal-toggle";
+
+    boton.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+    boton.setAttribute(
+      "aria-controls",
+      "identidad-roxthal-contenido"
+    );
+
+    boton.innerHTML = `
+      <span>▸ NUESTRA IDENTIDAD</span>
+      <span id="identidad-roxthal-flecha">⌄</span>
+    `;
+
+    /*
+     * Creamos el contenido desplegable.
+     */
+
+    const contenido =
+      document.createElement("div");
+
+    contenido.id =
+      "identidad-roxthal-contenido";
+
+    /*
+     * =========================================================
+     * PRESENTACIÓN ROXTHAL ART DESIGN
+     * =========================================================
+     */
+
+    contenido.innerHTML = `
+
+      <div id="identidad-roxthal-presentacion">
+
+        <h2>🎨 RoXThal Art Design</h2>
+
+        <h3 style="margin-top:0;">
+          Atelier de Arte, Diseño e Inclusión
+        </h3>
+
+        <p>
+          <strong>
+            Donde el arte no tiene límites, y cada persona
+            encuentra su propia manera de crear.
+          </strong>
+        </p>
+
+        <p>
+          En <strong>RoXThal Art Design</strong> creemos que
+          el arte es mucho más que aprender una técnica:
+          es una herramienta para
+          <strong>
+            expresarse, descubrir capacidades,
+            desarrollar la creatividad, fortalecer la
+            autoestima y compartir con los demás.
+          </strong>
+        </p>
+
+        <p>
+          Nuestro Atelier nace como un espacio abierto,
+          creativo y diverso, pensado para que
+          <strong>
+            niños, jóvenes y adultos
+          </strong>
+          puedan acercarse al mundo del arte desde sus
+          propias posibilidades, intereses y tiempos.
+        </p>
+
+        <p>
+          Aquí no buscamos que todos hagan lo mismo.
+        </p>
+
+        <p>
+          <strong>
+            Buscamos que cada persona pueda descubrir
+            lo que es capaz de hacer.
+          </strong>
+        </p>
+
+
+        <h3>
+          🖌️ UN ATELIER, INFINITAS FORMAS DE CREAR
+        </h3>
+
+        <p>
+          En RoXThal Art Design reunimos diferentes
+          disciplinas artísticas y creativas en un mismo espacio:
+        </p>
+
+        <p>
+          🎨 <strong>Dibujo y pintura</strong><br>
+          Desde la iniciación y los primeros trazos hasta
+          el desarrollo de técnicas profesionales.
+        </p>
+
+        <p>
+          🖼️ <strong>Arte y expresión creativa</strong><br>
+          Experimentación con diferentes materiales,
+          técnicas, estilos y formas de expresión.
+        </p>
+
+        <p>
+          ✏️ <strong>Dibujo profesional</strong><br>
+          Perfeccionamiento de técnicas, composición,
+          perspectiva, anatomía, color, iluminación y
+          desarrollo artístico.
+        </p>
+
+        <p>
+          🖌️ <strong>Pintura</strong><br>
+          Exploración de distintas técnicas y estilos,
+          adaptando el aprendizaje al nivel y objetivos
+          de cada alumno.
+        </p>
+
+        <p>
+          🎭 <strong>Expresión artística</strong><br>
+          Un espacio para experimentar, crear y expresarse
+          libremente a través de diferentes lenguajes visuales.
+        </p>
+
+        <p>
+          🇦🇷 <strong>Fileteado Porteño</strong><br>
+          El arte tradicional argentino llevado a un espacio
+          de aprendizaje, creación y conservación de nuestra
+          identidad cultural.
+        </p>
+
+        <p>
+          🖋️ <strong>Tatuaje y arte corporal</strong><br>
+          Formación artística vinculada al mundo del tatuaje,
+          desde la iniciación hasta el perfeccionamiento técnico.
+        </p>
+
+        <p>
+          🎨 <strong>Diseño y creatividad</strong><br>
+          Desarrollo de proyectos visuales, identidad artística
+          y diferentes propuestas de diseño.
+        </p>
+
+        <p>
+          👧 <strong>Talleres infantiles</strong><br>
+          Propuestas especialmente pensadas para que los más
+          pequeños aprendan jugando, experimentando y creando.
+        </p>
+
+
+        <h3>
+          ♿ ARTE PARA TODOS: DIVERSIDAD E INCLUSIÓN
+        </h3>
+
+        <p>
+          Uno de los pilares fundamentales de nuestro Atelier
+          es la <strong>inclusión a través del arte.</strong>
+        </p>
+
+        <p>
+          Entendemos la diversidad como una riqueza.
+        </p>
+
+        <p>
+          Cada persona tiene una historia diferente, una manera
+          diferente de aprender, diferentes capacidades,
+          intereses, ritmos y formas de comunicarse.
+        </p>
+
+        <p>
+          Por eso trabajamos desde una mirada basada en el
+          <strong>respeto, la empatía y la adaptación.</strong>
+        </p>
+
+        <p>
+          Nuestro objetivo es generar un entorno donde las
+          personas con <strong>diversidad funcional</strong>
+          puedan participar de actividades artísticas
+          encontrando alternativas y adaptaciones que les
+          permitan desarrollar su creatividad y disfrutar
+          del proceso.
+        </p>
+
+        <p>
+          Porque creemos que una dificultad para realizar una
+          técnica de una determinada manera
+          <strong>no significa que no pueda realizarse.</strong>
+        </p>
+
+        <p>
+          Significa que quizás necesitamos encontrar
+          <strong>otra manera de hacerlo.</strong>
+        </p>
+
+
+        <h3>
+          🌈 LA DIVERSIDAD ES PARTE DE NUESTRO ARTE
+        </h3>
+
+        <p>
+          En RoXThal Art Design queremos que nuestro Atelier
+          sea un lugar donde puedan convivir diferentes edades,
+          experiencias, capacidades y formas de expresión.
+        </p>
+
+        <p>
+          Trabajamos para que cada alumno pueda:
+        </p>
+
+        <ul>
+
+          <li>Descubrir y desarrollar sus capacidades.</li>
+
+          <li>Potenciar su creatividad.</li>
+
+          <li>Mejorar su autonomía.</li>
+
+          <li>Fortalecer su confianza y autoestima.</li>
+
+          <li>Expresarse mediante el arte.</li>
+
+          <li>Experimentar con diferentes materiales y técnicas.</li>
+
+          <li>Aprender respetando su propio ritmo.</li>
+
+          <li>Compartir y relacionarse con otras personas.</li>
+
+          <li>Encontrar una actividad artística que realmente disfrute.</li>
+
+        </ul>
+
+
+        <h3>
+          ❤️ EL ARTE COMO PUENTE
+        </h3>
+
+        <p>
+          Creemos que el arte puede convertirse en un
+          <strong>puente entre las personas.</strong>
+        </p>
+
+        <p>
+          Un dibujo puede comunicar lo que las palabras
+          no consiguen expresar.
+        </p>
+
+        <p>
+          Una pintura puede convertirse en una forma de
+          descubrir nuevas capacidades.
+        </p>
+
+        <p>
+          Una actividad creativa puede generar vínculos,
+          confianza y autonomía.
+        </p>
+
+        <p>
+          Y un Atelier puede convertirse en mucho más que
+          un lugar donde se aprende arte:
+        </p>
+
+        <p>
+          <strong>
+            puede convertirse en un espacio donde cada
+            persona se sienta capaz de crear.
+          </strong>
+        </p>
+
+
+        <h3>
+          👨‍👩‍👧‍👦 PARA TODAS LAS EDADES Y TODAS LAS PERSONAS
+        </h3>
+
+        <p>
+          Nuestro Atelier ofrece propuestas para
+          <strong>
+            niños, adolescentes, jóvenes y adultos,
+          </strong>
+          tanto para quienes simplemente quieren disfrutar
+          del arte como para quienes buscan desarrollar
+          una formación artística más profunda y profesional.
+        </p>
+
+        <p>
+          No importa si estás empezando desde cero.
+        </p>
+
+        <p>
+          No importa tu edad.
+        </p>
+
+        <p>
+          No importa si nunca dibujaste.
+        </p>
+
+        <p>
+          No importa si necesitas una adaptación.
+        </p>
+
+        <p>
+          <strong>
+            Cada persona comienza desde donde está y avanza
+            desde sus propias posibilidades.
+          </strong>
+        </p>
+
+
+        <h3>
+          🚀 DEL PRIMER TRAZO A LA FORMACIÓN PROFESIONAL
+        </h3>
+
+        <p>
+          RoXThal Art Design también ofrece formación para
+          quienes quieren convertir su pasión por el arte
+          en una verdadera disciplina profesional.
+        </p>
+
+        <p>
+          Acompañamos diferentes procesos de aprendizaje,
+          desde los primeros pasos hasta el perfeccionamiento
+          de técnicas y la construcción de una identidad
+          artística propia.
+        </p>
+
+        <p>
+          Nuestro enfoque combina:
+        </p>
+
+        <p>
+          <strong>
+            Técnica + creatividad + práctica +
+            acompañamiento + identidad.
+          </strong>
+        </p>
+
+
+        <div class="roxthal-frase-final">
+
+          <h3>
+            ✨ ROXTHAL ART DESIGN
+          </h3>
+
+          <p>
+            Somos <strong>arte, diseño, formación,
+            creatividad e inclusión.</strong>
+          </p>
+
+          <p>
+            Un Atelier donde conviven diferentes disciplinas
+            y donde cada persona puede encontrar su propio
+            lenguaje artístico.
+          </p>
+
+          <p>
+            Porque no creemos en un único modo de crear.
+          </p>
+
+          <p>
+            Creemos en
+            <strong>infinitas maneras de expresarse.</strong>
+          </p>
+
+          <p>
+            Y, sobre todo, creemos en algo fundamental:
+          </p>
+
+          <h2>
+            EL ARTE ES PARA TODOS.
+          </h2>
+
+          <p>
+            <strong>
+              RoXThal Art Design 🎨
+            </strong>
+            <br>
+            <em>
+              Creando oportunidades a través del arte.
+            </em>
+          </p>
+
+        </div>
+
+      </div>
+
+    `;
+
+    /*
+     * Insertamos botón y contenido.
+     */
+
+    identidad.appendChild(boton);
+
+    identidad.appendChild(contenido);
+
+    /*
+     * Estado inicial: CERRADO.
+     */
+
+    identidad.classList.remove("abierto");
+
+    /*
+     * Abrir / cerrar.
+     */
+
+    boton.addEventListener(
+      "click",
+      function () {
+
+        const abierto =
+          identidad.classList.toggle("abierto");
+
+        boton.setAttribute(
+          "aria-expanded",
+          abierto ? "true" : "false"
+        );
+
+        const texto =
+          boton.querySelector(
+            "span:first-child"
+          );
+
+        if (texto) {
+
+          texto.textContent =
+            abierto
+              ? "▾ NUESTRA IDENTIDAD"
+              : "▸ NUESTRA IDENTIDAD";
+
+        }
+
+      }
+    );
+
+  }
+
+
+  if (
+    document.readyState === "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      iniciarNuestraIdentidad
+    );
+
+  } else {
+
+    iniciarNuestraIdentidad();
+
+  }
+
+})();
+</script>
 </body>
 </html>
