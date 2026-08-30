@@ -848,7 +848,7 @@
             <h3>🖋️ Iniciación al Tatuaje</h3>
             <p class="muted">Formación integral: bioseguridad, armado de mesa, calibración de máquinas, prácticas en piel sintética y diseño aplicado.</p>
           </div>
-          <a href="https://wa.me/5491169633376?text=Hola!%20Quiero%20info%20sobre%20el%20curso%20de%20Tatuaje" target="_blank" class="btn btn-dark" style="margin-top:16px;width:100%;">Consultar Programa</a>
+          <button type="button" class="btn btn-dark" style="margin-top:16px;width:100%;" onclick="abrirCursoTatuaje()">📚 Ver programa completo</button>
         </div>
       </article>
     </div>
@@ -8507,6 +8507,198 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- =========================================================
      FIN MÓDULO ROXTHAL FOTOS Y VIDEOS
+     ========================================================= --
+  <!-- =========================================================
+     MODAL — CURSO PROFESIONAL DE TATUAJE
      ========================================================= -->
+
+<div id="modalCursoTatuaje"
+     style="display:none; position:fixed; inset:0; z-index:99999;
+            background:rgba(0,0,0,.75); overflow-y:auto; padding:20px;">
+
+  <div style="max-width:850px; margin:30px auto; background:#fff;
+              border-radius:18px; padding:28px; position:relative;
+              color:#222; box-shadow:0 20px 60px rgba(0,0,0,.4);">
+
+    <button type="button"
+            onclick="cerrarCursoTatuaje()"
+            aria-label="Cerrar"
+            style="position:absolute; right:15px; top:12px;
+                   border:0; background:none; font-size:30px;
+                   cursor:pointer;">
+      ✕
+    </button>
+
+    <h1>CURSO PROFESIONAL DE TATUAJE</h1>
+
+    <h3>🎨 Formación presencial desde cero hasta un nivel profesional</h3>
+
+    <p>
+      En <strong>RoXThal Art Design</strong> formamos nuevos artistas del tatuaje
+      mediante una metodología práctica y personalizada, combinando
+      conocimientos técnicos, artísticos y profesionales.
+    </p>
+
+    <hr>
+
+    <h2>📚 Modalidad 1 — Formación profesional</h2>
+
+    <h3>$60.000 mensuales</h3>
+
+    <p><strong>También podés abonar $20.000 por clase.</strong></p>
+
+    <ul>
+      <li>1 clase semanal de <strong>1 hora y media</strong></li>
+      <li>Duración aproximada: <strong>8 meses</strong></li>
+      <li>Modalidad <strong>presencial</strong></li>
+      <li>Días disponibles: <strong>martes, miércoles, jueves y sábados</strong></li>
+      <li>Horarios: de <strong>11:00 a 18:00 hs</strong></li>
+      <li>Grupos reducidos</li>
+      <li><strong>Las vacantes se reservan únicamente con seña</strong></li>
+    </ul>
+
+    <hr>
+
+    <h2>🧰 Modalidad 2 — Curso con materiales incluidos</h2>
+
+    <h3>$100.000 mensuales</h3>
+
+    <p>
+      Incluye todos los materiales necesarios para trabajar durante las clases.
+    </p>
+
+    <ul>
+      <li>Grupos de máximo <strong>3 o 4 alumnos</strong></li>
+      <li>Asesoramiento personalizado del profesor</li>
+      <li>Corrección y seguimiento de cada trabajo</li>
+      <li>Desarrollo del estilo que busca cada alumno</li>
+      <li>Flexibilidad horaria</li>
+      <li>Descuentos en otros cursos</li>
+      <li>Orientación para licencias y permisos legales</li>
+      <li>Certificado de asistencia y credencial digital</li>
+    </ul>
+
+    <hr>
+
+    <h2>🖊️ PRINCIPALES CONTENIDOS</h2>
+
+    <h3>Fundamentos y técnica</h3>
+
+    <ul>
+      <li>Dibujo, trazo y composición</li>
+      <li>Diseño de tatuajes</li>
+      <li>Líneas, sombras, rellenos y color</li>
+      <li>Máquinas y agujas</li>
+      <li>Stencil y preparación del trabajo</li>
+      <li>Mesa de trabajo y preparación previa</li>
+    </ul>
+
+    <h3>Bioseguridad y cuidados</h3>
+
+    <ul>
+      <li>Higiene y bioseguridad</li>
+      <li>Contaminación y prevención</li>
+      <li>Conocimientos sanitarios</li>
+      <li>Piel y curaciones</li>
+      <li>Cuidados posteriores al tatuaje</li>
+      <li>Atención al cliente</li>
+    </ul>
+
+    <h3>Estilos</h3>
+
+    <ul>
+      <li>Fine Line</li>
+      <li>Old School</li>
+      <li>Tradicional americano</li>
+      <li>Tradicional japonés / Oriental</li>
+      <li>Black &amp; Grey</li>
+      <li>Blackwork</li>
+      <li>Puntillismo</li>
+      <li>Lettering</li>
+      <li>Realismo</li>
+      <li>Floral</li>
+      <li>Tribal</li>
+      <li>Entre otros.</li>
+    </ul>
+
+    <hr>
+
+    <h2>👨‍🎨 UNA FORMACIÓN CON EXPERIENCIA REAL</h2>
+
+    <p>
+      Las prácticas son <strong>supervisadas por profesionales del mundo del
+      tatuaje y las bellas artes</strong>.
+    </p>
+
+    <p>
+      La escuela funciona dentro de nuestro propio estudio, donde los alumnos
+      tienen la posibilidad de conocer y convivir con artistas de amplia
+      trayectoria profesional en Argentina, España, Uruguay y otros lugares
+      del mundo.
+    </p>
+
+    <hr>
+
+    <h2>🚀 NUESTRA MISIÓN</h2>
+
+    <p>
+      En <strong>RoXThal Art Design</strong> queremos formar artistas desde
+      cero, potenciar su creatividad y acompañarlos en su crecimiento
+      profesional y personal.
+    </p>
+
+    <p>
+      No solo buscamos que aprendas a tatuar: queremos que desarrolles
+      <strong>tu propio estilo, confianza y visión artística</strong>,
+      formando parte de una comunidad de nuevos profesionales comprometidos
+      con el arte, el emprendimiento y la superación.
+    </p>
+
+    <div style="text-align:center; margin-top:30px;">
+
+      <h2>
+        🔥 ¡INSCRIBITE HOY Y COMENZÁ A FORMARTE COMO PROFESIONAL DEL TATUAJE!
+      </h2>
+
+      <a href="https://wa.me/5491169633376?text=Hola!%20Quiero%20inscribirme%20al%20Curso%20Profesional%20de%20Tatuaje"
+         target="_blank"
+         rel="noopener"
+         class="btn btn-primary"
+         style="display:inline-block; margin-top:15px;">
+        📲 Inscribirme / Consultar
+      </a>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+function abrirCursoTatuaje() {
+  const modal = document.getElementById('modalCursoTatuaje');
+
+  if (modal) {
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function cerrarCursoTatuaje() {
+  const modal = document.getElementById('modalCursoTatuaje');
+
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+}
+
+document.addEventListener('click', function(event) {
+  const modal = document.getElementById('modalCursoTatuaje');
+
+  if (event.target === modal) {
+    cerrarCursoTatuaje();
+  }
+});
+</script>
 </body>
 </html>
