@@ -1,4 +1,4 @@
-const CACHE_NAME = "roxthal-app-v2";
+const CACHE_NAME = "roxthal-app-v3";
 
 self.addEventListener("install", event => {
   self.skipWaiting();
@@ -12,18 +12,15 @@ self.addEventListener("activate", event => {
           .filter(key => key !== CACHE_NAME)
           .map(key => caches.delete(key))
       )
-    )
+    ).then(() => self.clients.claim())
   );
-
-  self.clients.claim();
 });
 
 self.addEventListener("fetch", event => {
   const request = event.request;
 
   // No guardar imágenes en la caché.
-  // Así, cuando cambies una foto en Supabase,
-  // los demás dispositivos recibirán la nueva.
+  // Así, las imágenes nuevas de Supabase se cargan directamente.
   if (
     request.destination === "image" ||
     request.url.includes("/storage/v1/object/public/")
@@ -36,10 +33,19 @@ self.addEventListener("fetch", event => {
     return;
   }
 
-  // Para HTML, JS y CSS: intentar primero la versión de Internet.
+  // Para HTML, JS y CSS:
+  // primero intentar siempre la versión actual de Internet.
   event.respondWith(
     fetch(request, {
       cache: "no-store"
     }).catch(() => caches.match(request))
   );
+});
+
+// Avisar a las páginas abiertas cuando el nuevo Service Worker
+// ya está activo para que puedan actualizarse.
+self.addEventListener("message", event => {
+  if (event.data === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
 });
