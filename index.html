@@ -11265,5 +11265,595 @@ document.addEventListener('click', function(event) {
 <!-- =========================================================
      FIN DEL MÓDULO INDEPENDIENTE
      ========================================================= -->
+  <!-- ============================================================
+     ROXTHAL IA — INSPIRACIÓN · DISEÑOS · ESTILOS
+     BLOQUE ÚNICO — PEGAR JUSTO ANTES DE </body>
+============================================================ -->
+
+<style>
+  /* ---------- ROXTHAL IA ---------- */
+
+  #roxthal-ia-container {
+    max-width: 1000px;
+    margin: 30px auto 0;
+    padding: 0 20px;
+  }
+
+  #roxthal-ia-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 18px 22px;
+    border: 1px solid rgba(215,180,90,.55);
+    border-radius: 16px;
+    background:
+      linear-gradient(135deg,
+        rgba(215,180,90,.16),
+        rgba(30,30,38,.96));
+    color: #fff;
+    cursor: pointer;
+    transition: .25s ease;
+    box-shadow: 0 8px 30px rgba(0,0,0,.25);
+  }
+
+  #roxthal-ia-toggle:hover {
+    border-color: #f2da91;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(215,180,90,.18);
+  }
+
+  .roxthal-ia-toggle-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-align: left;
+  }
+
+  .roxthal-ia-icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #080809;
+    border: 1px solid rgba(215,180,90,.45);
+    font-size: 25px;
+  }
+
+  .roxthal-ia-title {
+    font-size: 1.05rem;
+    font-weight: 850;
+    color: #f2da91;
+  }
+
+  .roxthal-ia-subtitle {
+    margin-top: 2px;
+    font-size: .82rem;
+    color: #a0a0ab;
+  }
+
+  #roxthal-ia-arrow {
+    font-size: 20px;
+    transition: transform .25s ease;
+  }
+
+  #roxthal-ia-toggle.open #roxthal-ia-arrow {
+    transform: rotate(180deg);
+  }
+
+  #roxthal-ia-panel {
+    display: none;
+    margin-top: 12px;
+    padding: 22px;
+    border: 1px solid #2e2e38;
+    border-radius: 18px;
+    background: rgba(21,21,26,.98);
+    box-shadow: 0 15px 50px rgba(0,0,0,.35);
+  }
+
+  #roxthal-ia-panel.open {
+    display: block;
+    animation: roxthalIAOpen .25s ease;
+  }
+
+  @keyframes roxthalIAOpen {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .roxthal-ia-header {
+    margin-bottom: 20px;
+  }
+
+  .roxthal-ia-header h3 {
+    margin: 0 0 6px;
+    color: #fff;
+    font-size: 1.35rem;
+  }
+
+  .roxthal-ia-header p {
+    margin: 0;
+    color: #a0a0ab;
+    font-size: .9rem;
+  }
+
+  .roxthal-ia-topics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
+    gap: 9px;
+    margin-bottom: 18px;
+  }
+
+  .roxthal-ia-topic {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #2e2e38;
+    background: #080809;
+    color: #ddd;
+    cursor: pointer;
+    text-align: center;
+    font-size: .82rem;
+    transition: .2s ease;
+  }
+
+  .roxthal-ia-topic:hover {
+    border-color: #d7b45a;
+    color: #f2da91;
+    background: #15151a;
+  }
+
+  #roxthal-ia-question {
+    width: 100%;
+    min-height: 120px;
+    resize: vertical;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #2e2e38;
+    background: #080809;
+    color: #fff;
+    outline: none;
+  }
+
+  #roxthal-ia-question:focus {
+    border-color: #d7b45a;
+  }
+
+  .roxthal-ia-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  #roxthal-ia-send {
+    flex: 1;
+    min-width: 180px;
+    padding: 13px 20px;
+    border-radius: 11px;
+    background: #d7b45a;
+    color: #000;
+    font-weight: 850;
+    cursor: pointer;
+    transition: .2s ease;
+  }
+
+  #roxthal-ia-send:hover {
+    background: #f2da91;
+  }
+
+  #roxthal-ia-send:disabled {
+    opacity: .55;
+    cursor: wait;
+  }
+
+  #roxthal-ia-clear {
+    padding: 13px 18px;
+    border-radius: 11px;
+    background: #1e1e26;
+    border: 1px solid #2e2e38;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  #roxthal-ia-answer {
+    display: none;
+    margin-top: 18px;
+    padding: 18px;
+    border-radius: 13px;
+    border: 1px solid #2e2e38;
+    background: #080809;
+    white-space: pre-wrap;
+    line-height: 1.65;
+    color: #f5f5f5;
+  }
+
+  #roxthal-ia-answer.show {
+    display: block;
+  }
+
+  #roxthal-ia-answer.loading {
+    color: #f2da91;
+  }
+
+  .roxthal-ia-note {
+    margin-top: 13px;
+    font-size: .75rem;
+    color: #777783;
+    text-align: center;
+  }
+
+  @media(max-width:600px) {
+    #roxthal-ia-container {
+      padding: 0 12px;
+    }
+
+    #roxthal-ia-panel {
+      padding: 16px;
+    }
+
+    .roxthal-ia-topics {
+      grid-template-columns: repeat(2,1fr);
+    }
+
+    .roxthal-ia-actions {
+      flex-direction: column;
+    }
+
+    #roxthal-ia-send,
+    #roxthal-ia-clear {
+      width: 100%;
+    }
+  }
+</style>
+
+
+<div id="roxthal-ia-container">
+
+  <button
+    id="roxthal-ia-toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="roxthal-ia-panel"
+  >
+    <span class="roxthal-ia-toggle-left">
+
+      <span class="roxthal-ia-icon">🤖</span>
+
+      <span>
+        <span class="roxthal-ia-title">
+          RoXThal IA — Asistente de Arte
+        </span>
+
+        <span class="roxthal-ia-subtitle">
+          Inspiración · Diseños · Estilos · Tatuajes
+        </span>
+      </span>
+
+    </span>
+
+    <span id="roxthal-ia-arrow">▼</span>
+  </button>
+
+
+  <div id="roxthal-ia-panel">
+
+    <div class="roxthal-ia-header">
+
+      <h3>🎨 RoXThal IA</h3>
+
+      <p>
+        Pregunta sobre arte, dibujo, pintura, estilos o diseño de tatuajes.
+      </p>
+
+    </div>
+
+
+    <div class="roxthal-ia-topics">
+
+      <button class="roxthal-ia-topic" type="button"
+        data-question="Explícame técnicas fundamentales de dibujo y cómo puedo practicarlas.">
+        ✏️ Dibujo
+      </button>
+
+      <button class="roxthal-ia-topic" type="button"
+        data-question="Explícame técnicas de pintura y cómo elegir la técnica adecuada para una obra.">
+        🖌️ Pintura
+      </button>
+
+      <button class="roxthal-ia-topic" type="button"
+        data-question="Dame ideas originales para un diseño de tatuaje y explícame cómo desarrollar la composición.">
+        🖋️ Tatuajes
+      </button>
+
+      <button class="roxthal-ia-topic" type="button"
+        data-question="Explícame los principales estilos de tatuaje y sus características visuales.">
+        🔥 Estilos
+      </button>
+
+      <button class="roxthal-ia-topic" type="button"
+        data-question="Ayúdame a crear una paleta de colores y una composición equilibrada para una obra artística.">
+        🎨 Color
+      </button>
+
+      <button class="roxthal-ia-topic" type="button"
+        data-question="Háblame de movimientos artísticos importantes y de sus principales características.">
+        🧑‍🎨 Historia
+      </button>
+
+      <button class="roxthal-ia-topic" type="button"
+        data-question="Ayúdame a desarrollar una idea artística original paso a paso.">
+        💡 Ideas
+      </button>
+
+      <button class="roxthal-ia-topic" type="button"
+        data-question="Créame un ejercicio de arte adaptado a un nivel principiante.">
+        📚 Ejercicio
+      </button>
+
+    </div>
+
+
+    <textarea
+      id="roxthal-ia-question"
+      placeholder="Escribe aquí tu pregunta...
+
+Ejemplo:
+¿Cómo puedo diseñar un tatuaje estilo blackwork de un animal con una composición dinámica?"
+    ></textarea>
+
+
+    <div class="roxthal-ia-actions">
+
+      <button id="roxthal-ia-send" type="button">
+        🤖 CONSULTAR A ROXTHAL IA
+      </button>
+
+      <button id="roxthal-ia-clear" type="button">
+        🗑️ Limpiar
+      </button>
+
+    </div>
+
+
+    <div id="roxthal-ia-answer"></div>
+
+    <div class="roxthal-ia-note">
+      RoXThal IA está orientada a educación, inspiración y desarrollo artístico.
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+(function () {
+
+  "use strict";
+
+  const toggle = document.getElementById("roxthal-ia-toggle");
+  const panel = document.getElementById("roxthal-ia-panel");
+  const arrow = document.getElementById("roxthal-ia-arrow");
+  const question = document.getElementById("roxthal-ia-question");
+  const send = document.getElementById("roxthal-ia-send");
+  const clear = document.getElementById("roxthal-ia-clear");
+  const answer = document.getElementById("roxthal-ia-answer");
+  const topics = document.querySelectorAll(".roxthal-ia-topic");
+
+
+  /* ------------------------------------------------------------
+     ABRIR / CERRAR
+  ------------------------------------------------------------ */
+
+  toggle.addEventListener("click", function () {
+
+    const isOpen = panel.classList.toggle("open");
+
+    toggle.classList.toggle("open", isOpen);
+
+    toggle.setAttribute(
+      "aria-expanded",
+      isOpen ? "true" : "false"
+    );
+
+  });
+
+
+  /* ------------------------------------------------------------
+     BOTONES DE TEMAS
+  ------------------------------------------------------------ */
+
+  topics.forEach(function (button) {
+
+    button.addEventListener("click", function () {
+
+      question.value = button.dataset.question;
+
+      question.focus();
+
+    });
+
+  });
+
+
+  /* ------------------------------------------------------------
+     LIMPIAR
+  ------------------------------------------------------------ */
+
+  clear.addEventListener("click", function () {
+
+    question.value = "";
+
+    answer.textContent = "";
+
+    answer.classList.remove("show", "loading");
+
+    question.focus();
+
+  });
+
+
+  /* ------------------------------------------------------------
+     CONSULTA
+  ------------------------------------------------------------ */
+
+  send.addEventListener("click", async function () {
+
+    const text = question.value.trim();
+
+    if (!text) {
+
+      answer.textContent =
+        "Escribe primero una pregunta sobre arte, diseño o tatuajes.";
+
+      answer.classList.add("show");
+
+      question.focus();
+
+      return;
+
+    }
+
+
+    send.disabled = true;
+
+    send.textContent = "⏳ CONSULTANDO...";
+
+    answer.className = "show loading";
+
+    answer.textContent =
+      "RoXThal IA está preparando tu respuesta...";
+
+
+    try {
+
+      /*
+       * IMPORTANTE:
+       * Esta URL apunta al proyecto Supabase donde se creó
+       * la Edge Function roxthal-arte-ia.
+       */
+
+      const supabaseUrl =
+        "https://lvvhpuedktdmfehvhcwk.supabase.co";
+
+
+      /*
+       * La clave pública puede utilizarse desde el navegador.
+       * NUNCA colocar aquí una service_role key.
+       */
+
+      const supabaseAnonKey =
+        "sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp";
+
+
+      if (
+        typeof window.supabase === "undefined" ||
+        typeof window.supabase.createClient !== "function"
+      ) {
+
+        throw new Error(
+          "No se encontró la librería de Supabase."
+        );
+
+      }
+
+
+      const client =
+        window.supabase.createClient(
+          supabaseUrl,
+          supabaseAnonKey
+        );
+
+
+      const { data, error } =
+        await client.functions.invoke(
+          "roxthal-arte-ia",
+          {
+            body: {
+              question: text,
+              context: "Inspiración, diseños y estilos de RoXThal Art Design",
+              language: "es"
+            }
+          }
+        );
+
+
+      if (error) {
+        throw error;
+      }
+
+
+      if (!data) {
+
+        throw new Error(
+          "La IA no devolvió ninguna respuesta."
+        );
+
+      }
+
+
+      const responseText =
+        data.answer ||
+        data.response ||
+        data.message ||
+        data.output;
+
+
+      if (!responseText) {
+
+        throw new Error(
+          "La respuesta recibida no tiene un formato válido."
+        );
+
+      }
+
+
+      answer.className = "show";
+
+      answer.textContent = responseText;
+
+
+    } catch (error) {
+
+      console.error(
+        "RoXThal IA:",
+        error
+      );
+
+      answer.className = "show";
+
+      answer.textContent =
+        "⚠️ No se pudo conectar con RoXThal IA en este momento.\n\n" +
+        "La interfaz está instalada correctamente, pero todavía " +
+        "hay que completar la conexión del servicio de inteligencia artificial.";
+
+    } finally {
+
+      send.disabled = false;
+
+      send.textContent =
+        "🤖 CONSULTAR A ROXTHAL IA";
+
+    }
+
+  });
+
+
+})();
+</script>
+
+<!-- ============================================================
+     FIN ROXTHAL IA
+============================================================ -->
 </body>
 </html>
