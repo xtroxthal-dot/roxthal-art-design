@@ -12006,6 +12006,130 @@ document.addEventListener('keydown', function(event) {
     cerrarCursoInfantil();
   }
 });
+</script>    
+   <!-- ============================================================
+     MODAL — DIBUJO Y PINTURA PROFESIONAL
+============================================================ -->
+<div id="modalCursoDibujo"
+     style="position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:99999;
+            display:none;align-items:center;justify-content:center;
+            padding:20px;overflow-y:auto;">
+
+  <div style="background:#15151a;border:1px solid #2e2e38;border-radius:20px;
+              width:100%;max-width:800px;max-height:90vh;overflow-y:auto;
+              padding:28px;position:relative;">
+
+    <button type="button"
+            onclick="cerrarCursoDibujo()"
+            aria-label="Cerrar"
+            style="position:absolute;right:16px;top:16px;width:42px;height:42px;
+                   border-radius:50%;background:#1e1e26;border:1px solid #2e2e38;
+                   color:#fff;font-size:24px;cursor:pointer;">
+      ×
+    </button>
+
+    <span class="badge">Jóvenes y Adultos</span>
+
+    <h2 style="margin-top:18px;">
+      🎨✨ CURSO DE DIBUJO Y PINTURA PROFESIONAL ✨🎨
+    </h2>
+
+    <div style="line-height:1.7;color:#a0a0ab;">
+
+      <p style="margin-bottom:18px;">
+        ¿Querés aprender a dibujar y pintar
+        <strong style="color:#fff;">desde cero o perfeccionar tus conocimientos</strong>?
+      </p>
+
+      <p style="margin-bottom:20px;">
+        En RoXThal Art Design te ofrecemos una formación práctica y personalizada
+        para desarrollar tu técnica, creatividad y estilo propio. 🖌️🔥
+      </p>
+
+      <h3 style="color:#fff;margin:20px 0 10px;">
+        👨‍🎨 ¿Qué vas a aprender?
+      </h3>
+
+      <p>✏️ Dibujo y construcción de formas</p>
+      <p>🎨 Técnicas de pintura</p>
+      <p>🌈 Teoría y mezcla de colores</p>
+      <p>🖼️ Composición y creación de obras</p>
+      <p>🖌️ Diferentes técnicas y materiales</p>
+      <p>✨ Desarrollo de tu estilo personal</p>
+
+      <p style="margin-top:20px;">
+        No importa si estás empezando o ya tenés conocimientos:
+        <strong style="color:#fff;">trabajamos de manera personalizada para que puedas avanzar a tu propio ritmo.</strong>
+      </p>
+
+      <h3 style="color:#fff;margin:24px 0 10px;">
+        📅 DÍAS Y HORARIOS
+      </h3>
+
+      <p>Martes, miércoles, jueves y sábados</p>
+      <p>🕚 De <strong style="color:#fff;">11:00 a 18:00 hs</strong></p>
+      <p>⏰ <strong style="color:#fff;">1 clase semanal de 1 hora</strong></p>
+
+      <h3 style="color:#fff;margin:24px 0 10px;">
+        💰 VALOR MENSUAL: $50.000
+      </h3>
+
+      <p>📍 <strong style="color:#fff;">RoXThal Art Design – San Antonio de Padua</strong></p>
+
+      <p style="margin-top:20px;">
+        🔥 <strong style="color:#fff;">
+          Convertí tu pasión por el dibujo y la pintura en una verdadera habilidad artística.
+        </strong>
+      </p>
+
+      <p style="margin-top:20px;">
+        📲 Consultanos por disponibilidad y reservá tu lugar.
+      </p>
+
+    </div>
+
+    <a href="https://wa.me/5491169633376?text=Hola!%20Quiero%20consultar%20por%20el%20Curso%20de%20Dibujo%20y%20Pintura%20Profesional"
+       target="_blank"
+       class="btn btn-wsp"
+       style="width:100%;margin-top:24px;">
+      📲 Consultar disponibilidad y reservar
+    </a>
+
+  </div>
+</div>
+
+<script>
+function abrirCursoDibujo() {
+  const modal = document.getElementById('modalCursoDibujo');
+
+  if (modal) {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function cerrarCursoDibujo() {
+  const modal = document.getElementById('modalCursoDibujo');
+
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+}
+
+document.addEventListener('click', function(event) {
+  const modal = document.getElementById('modalCursoDibujo');
+
+  if (modal && event.target === modal) {
+    cerrarCursoDibujo();
+  }
+});
+
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape') {
+    cerrarCursoDibujo();
+  }
+});
 </script>     
 </body>
 </html>
