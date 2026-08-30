@@ -13054,5 +13054,348 @@ document.addEventListener('keydown', function(event) {
 
 })();
 </script>
+  <!-- =========================================================
+     ROXTHAL ART DESIGN
+     GALERÍA DE TRABAJOS — PANEL DESPLEGABLE
+     ========================================================= -->
+
+<style>
+
+  /* =========================================================
+     ESTADO CERRADO
+     Solo queda visible el botón.
+     ========================================================= */
+
+  #galeria.roxthal-galeria-cerrada > * {
+    display: none !important;
+  }
+
+  #galeria.roxthal-galeria-cerrada
+  .roxthal-galeria-boton {
+    display: flex !important;
+  }
+
+
+  /* =========================================================
+     BOTÓN
+     ========================================================= */
+
+  #galeria .roxthal-galeria-boton {
+
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 18px 22px;
+
+    margin: 0;
+
+    background: var(--panel);
+
+    border: 1px solid var(--line);
+
+    border-radius: 14px;
+
+    color: var(--gold2);
+
+    font-size: 1.05rem;
+
+    font-weight: 800;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+      background 0.25s ease,
+      border-color 0.25s ease,
+      transform 0.2s ease;
+  }
+
+
+  #galeria .roxthal-galeria-boton:hover {
+
+    background: var(--panel2);
+
+    border-color: var(--gold);
+
+  }
+
+
+  #galeria .roxthal-galeria-boton:active {
+
+    transform: scale(0.99);
+
+  }
+
+
+  /* =========================================================
+     FLECHA
+     ========================================================= */
+
+  #galeria .roxthal-galeria-flecha {
+
+    font-size: 1.4rem;
+
+    line-height: 1;
+
+    transition:
+      transform 0.25s ease;
+
+  }
+
+
+  #galeria.roxthal-galeria-abierta
+  .roxthal-galeria-flecha {
+
+    transform: rotate(180deg);
+
+  }
+
+
+  /* =========================================================
+     ESTADO ABIERTO
+     Restauramos los elementos originales.
+     ========================================================= */
+
+  #galeria.roxthal-galeria-abierta > * {
+
+    display: revert;
+
+  }
+
+
+  #galeria.roxthal-galeria-abierta
+  .roxthal-galeria-boton {
+
+    display: flex !important;
+
+    margin-bottom: 24px;
+
+  }
+
+
+  /* =========================================================
+     ANIMACIÓN
+     ========================================================= */
+
+  #galeria.roxthal-galeria-abierta
+  #publicGalleryGrid {
+
+    animation:
+      roxthalGaleriaEntrada
+      0.35s ease;
+
+  }
+
+
+  @keyframes roxthalGaleriaEntrada {
+
+    from {
+
+      opacity: 0;
+
+      transform:
+        translateY(-10px);
+
+    }
+
+    to {
+
+      opacity: 1;
+
+      transform:
+        translateY(0);
+
+    }
+
+  }
+
+</style>
+
+
+<script>
+
+(function () {
+
+  "use strict";
+
+
+  function iniciarGaleriaDesplegable() {
+
+    const galeria =
+      document.getElementById("galeria");
+
+    if (!galeria) return;
+
+
+    /*
+     * Evitar duplicar el botón
+     * si el script se ejecuta nuevamente.
+     */
+
+    if (
+      galeria.querySelector(
+        ".roxthal-galeria-boton"
+      )
+    ) {
+
+      return;
+
+    }
+
+
+    /*
+     * Crear botón.
+     */
+
+    const boton =
+      document.createElement("button");
+
+    boton.type = "button";
+
+    boton.className =
+      "roxthal-galeria-boton";
+
+
+    boton.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+
+    boton.setAttribute(
+      "aria-controls",
+      "publicGalleryGrid"
+    );
+
+
+    boton.innerHTML = `
+
+      <span>
+        ▸ GALERÍA DE TRABAJOS
+      </span>
+
+      <span class="roxthal-galeria-flecha">
+        ⌄
+      </span>
+
+    `;
+
+
+    /*
+     * Insertar el botón al principio
+     * de la galería.
+     */
+
+    galeria.insertBefore(
+      boton,
+      galeria.firstChild
+    );
+
+
+    /*
+     * Estado inicial:
+     * CERRADO.
+     */
+
+    galeria.classList.add(
+      "roxthal-galeria-cerrada"
+    );
+
+
+    /*
+     * Abrir / cerrar.
+     */
+
+    boton.addEventListener(
+      "click",
+      function () {
+
+        const abierta =
+          galeria.classList.toggle(
+            "roxthal-galeria-abierta"
+          );
+
+
+        galeria.classList.toggle(
+          "roxthal-galeria-cerrada",
+          !abierta
+        );
+
+
+        boton.setAttribute(
+          "aria-expanded",
+          abierta
+            ? "true"
+            : "false"
+        );
+
+
+        const texto =
+          boton.querySelector(
+            "span:first-child"
+          );
+
+
+        if (texto) {
+
+          texto.textContent =
+            abierta
+              ? "▾ GALERÍA DE TRABAJOS"
+              : "▸ GALERÍA DE TRABAJOS";
+
+        }
+
+
+        /*
+         * Cuando se abre:
+         *
+         * La galería original sigue funcionando.
+         * Si las fotos todavía no están cargadas,
+         * se solicita la carga.
+         */
+
+        if (
+          abierta &&
+          typeof loadPublicGallery === "function"
+        ) {
+
+          loadPublicGallery();
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /*
+   * Ejecutar cuando la app esté cargada.
+   */
+
+  if (
+    document.readyState === "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      iniciarGaleriaDesplegable
+    );
+
+  } else {
+
+    iniciarGaleriaDesplegable();
+
+  }
+
+})();
+
+</script>
 </body>
 </html>
