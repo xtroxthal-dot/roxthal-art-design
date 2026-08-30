@@ -12130,6 +12130,263 @@ document.addEventListener('keydown', function(event) {
     cerrarCursoDibujo();
   }
 });
-</script>     
+</script>   
+    <!-- =========================================================
+     ROXTHAL ART DESIGN
+     LO QUE HACEMOS — PANEL DESPLEGABLE
+     ========================================================= -->
+
+<style>
+  /* Ocultamos inicialmente el contenido de "Lo que hacemos" */
+  #servicios.roxthal-servicios-cerrado .servicios-contenido {
+    display: none;
+  }
+
+  /* Cuando está abierto, aparecen los servicios existentes */
+  #servicios.roxthal-servicios-abierto .servicios-contenido {
+    display: block;
+    animation: roxthalServiciosEntrada 0.3s ease;
+  }
+
+  /* Botón principal */
+  #servicios .roxthal-servicios-boton {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    padding: 18px 22px;
+
+    margin: 0 0 20px 0;
+
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+
+    color: var(--gold2);
+
+    font-size: 1.05rem;
+    font-weight: 800;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+      background 0.25s ease,
+      border-color 0.25s ease,
+      transform 0.2s ease;
+  }
+
+  #servicios .roxthal-servicios-boton:hover {
+    background: var(--panel2);
+    border-color: var(--gold);
+  }
+
+  #servicios .roxthal-servicios-boton:active {
+    transform: scale(0.99);
+  }
+
+  /* Flecha */
+  #servicios .roxthal-servicios-flecha {
+    font-size: 1.4rem;
+    line-height: 1;
+
+    transition: transform 0.25s ease;
+  }
+
+  #servicios.roxthal-servicios-abierto
+  .roxthal-servicios-flecha {
+    transform: rotate(180deg);
+  }
+
+  /* Título "Arte que se transforma" */
+  #servicios .roxthal-servicios-titulo {
+    margin-bottom: 24px;
+  }
+
+  /* Animación de entrada */
+  @keyframes roxthalServiciosEntrada {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<script>
+(function () {
+
+  "use strict";
+
+  function iniciarLoQueHacemos() {
+
+    const servicios = document.getElementById("servicios");
+
+    if (!servicios) return;
+
+    /*
+     * Evitamos crear el sistema dos veces
+     */
+    if (
+      servicios.querySelector(
+        ".roxthal-servicios-boton"
+      )
+    ) {
+      return;
+    }
+
+    /*
+     * Buscamos los elementos que YA EXISTEN
+     * en la aplicación.
+     */
+    const eyebrow =
+      servicios.querySelector(".eyebrow");
+
+    const titulo =
+      servicios.querySelector("h2");
+
+    const grid =
+      servicios.querySelector(".grid");
+
+    if (!grid) return;
+
+    /*
+     * Guardamos los cuatro servicios existentes.
+     * NO se crean nuevos.
+     */
+    const contenido =
+      document.createElement("div");
+
+    contenido.className =
+      "servicios-contenido";
+
+    /*
+     * Movemos la cuadrícula existente
+     * dentro del contenedor desplegable.
+     */
+    contenido.appendChild(grid);
+
+    /*
+     * Creamos el botón.
+     */
+    const boton =
+      document.createElement("button");
+
+    boton.type = "button";
+
+    boton.className =
+      "roxthal-servicios-boton";
+
+    boton.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+    boton.setAttribute(
+      "aria-controls",
+      "roxthal-servicios-contenido"
+    );
+
+    boton.innerHTML = `
+      <span>▸ LO QUE HACEMOS</span>
+      <span class="roxthal-servicios-flecha">⌄</span>
+    `;
+
+    contenido.id =
+      "roxthal-servicios-contenido";
+
+    /*
+     * Insertamos el botón antes del contenido.
+     */
+    if (eyebrow) {
+      eyebrow.style.display = "none";
+    }
+
+    if (titulo) {
+      titulo.classList.add(
+        "roxthal-servicios-titulo"
+      );
+      titulo.style.display = "none";
+    }
+
+    servicios.appendChild(boton);
+    servicios.appendChild(contenido);
+
+    /*
+     * Estado inicial:
+     * CERRADO.
+     */
+    servicios.classList.add(
+      "roxthal-servicios-cerrado"
+    );
+
+    /*
+     * Abrir / cerrar.
+     */
+    boton.addEventListener(
+      "click",
+      function () {
+
+        const abierto =
+          servicios.classList.toggle(
+            "roxthal-servicios-abierto"
+          );
+
+        servicios.classList.toggle(
+          "roxthal-servicios-cerrado",
+          !abierto
+        );
+
+        boton.setAttribute(
+          "aria-expanded",
+          abierto ? "true" : "false"
+        );
+
+        const texto =
+          boton.querySelector(
+            "span:first-child"
+          );
+
+        if (texto) {
+
+          texto.textContent =
+            abierto
+              ? "▾ LO QUE HACEMOS"
+              : "▸ LO QUE HACEMOS";
+
+        }
+
+      }
+    );
+
+  }
+
+  /*
+   * Esperamos a que la app esté cargada.
+   */
+  if (
+    document.readyState === "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      iniciarLoQueHacemos
+    );
+
+  } else {
+
+    iniciarLoQueHacemos();
+
+  }
+
+})();
+</script>    
 </body>
 </html>
