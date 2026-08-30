@@ -8700,5 +8700,1820 @@ document.addEventListener('click', function(event) {
   }
 });
 </script>
+  <!-- =========================================================
+     RoXThal Art Design
+     ADMINISTRADOR INDEPENDIENTE DE CUOTAS
+     NUEVO / AISLADO / PROTEGIDO POR SUPABASE
+     Pegar completo antes de </body>
+     ========================================================= -->
+
+<style>
+/* ===== CONTENEDOR PRINCIPAL ===== */
+#rx-cuotas-nuevo {
+  display: block;
+  width: 100%;
+  margin: 35px 0 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Botón cerrado */
+#rx-cuotas-nuevo .rxcn-launch {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 12px;
+  background: #111;
+  color: #fff;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Todo el contenido permanece oculto hasta abrir */
+#rx-cuotas-nuevo .rxcn-panel {
+  display: none;
+  margin-top: 15px;
+  padding: 20px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 16px;
+  background: #111;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+#rx-cuotas-nuevo.rxcn-open .rxcn-panel {
+  display: block;
+}
+
+/* Login */
+.rxcn-login {
+  max-width: 430px;
+  margin: 0 auto;
+}
+
+.rxcn-login h3 {
+  margin: 0 0 8px;
+}
+
+.rxcn-login p {
+  margin: 0 0 18px;
+  opacity: .75;
+  font-size: 14px;
+}
+
+.rxcn-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 13px;
+}
+
+.rxcn-field label {
+  font-size: 13px;
+  opacity: .8;
+}
+
+.rxcn-field input,
+.rxcn-field select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 12px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: #181818;
+  color: #fff;
+  outline: none;
+}
+
+.rxcn-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.rxcn-btn {
+  border: 0;
+  border-radius: 9px;
+  padding: 11px 15px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.rxcn-btn-main {
+  background: #d4af37;
+  color: #111;
+}
+
+.rxcn-btn-dark {
+  background: #242424;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+.rxcn-message {
+  display: none;
+  margin-top: 14px;
+  padding: 11px 12px;
+  border-radius: 9px;
+  font-size: 13px;
+  background: #222;
+}
+
+.rxcn-message.show {
+  display: block;
+}
+
+/* Administrador */
+.rxcn-admin {
+  display: none;
+}
+
+.rxcn-admin.show {
+  display: block;
+}
+
+.rxcn-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.rxcn-top h3 {
+  margin: 0;
+}
+
+.rxcn-top small {
+  opacity: .65;
+}
+
+.rxcn-form {
+  padding: 18px;
+  border-radius: 13px;
+  background: #181818;
+  border: 1px solid rgba(255,255,255,.1);
+}
+
+.rxcn-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 13px;
+}
+
+.rxcn-full {
+  grid-column: 1 / -1;
+}
+
+.rxcn-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.rxcn-stat {
+  padding: 14px;
+  border-radius: 11px;
+  background: #181818;
+  border: 1px solid rgba(255,255,255,.1);
+}
+
+.rxcn-stat span {
+  display: block;
+  font-size: 12px;
+  opacity: .65;
+  margin-bottom: 5px;
+}
+
+.rxcn-stat strong {
+  font-size: 21px;
+}
+
+.rxcn-table-wrap {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.rxcn-table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+}
+
+.rxcn-table th,
+.rxcn-table td {
+  padding: 10px 9px;
+  border-bottom: 1px solid rgba(255,255,255,.09);
+  text-align: left;
+  font-size: 13px;
+}
+
+.rxcn-table th {
+  opacity: .65;
+  font-weight: 500;
+}
+
+.rxcn-ok {
+  color: #54d68a;
+  font-weight: 600;
+}
+
+.rxcn-warning {
+  color: #e4c65a;
+  font-weight: 600;
+}
+
+.rxcn-danger {
+  color: #ef6666;
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .rxcn-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rxcn-full {
+    grid-column: auto;
+  }
+
+  .rxcn-stats {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+
+<div id="rx-cuotas-nuevo">
+
+  <!-- =====================================================
+       ESTO ES LO ÚNICO VISIBLE CUANDO ESTÁ CERRADO
+       ===================================================== -->
+
+  <button
+    type="button"
+    id="rxcn-launch"
+    class="rxcn-launch"
+  >
+    🔒 Administrador de Cuotas
+  </button>
+
+
+  <!-- =====================================================
+       PANEL COMPLETO
+       ===================================================== -->
+
+  <div id="rxcn-panel" class="rxcn-panel">
+
+    <!-- ================= LOGIN ================= -->
+
+    <div id="rxcn-login" class="rxcn-login">
+
+      <h3>🔐 Acceso privado</h3>
+
+      <p>
+        Área exclusiva del administrador.
+        Inicia sesión para acceder al control de cuotas.
+      </p>
+
+      <div class="rxcn-field">
+        <label for="rxcn-email">
+          Correo del administrador
+        </label>
+
+        <input
+          id="rxcn-email"
+          type="email"
+          autocomplete="username"
+          placeholder="Correo de administrador"
+        >
+      </div>
+
+
+      <div class="rxcn-field">
+        <label for="rxcn-password">
+          Contraseña
+        </label>
+
+        <input
+          id="rxcn-password"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Contraseña"
+        >
+      </div>
+
+
+      <div class="rxcn-actions">
+
+        <button
+          type="button"
+          id="rxcn-login-btn"
+          class="rxcn-btn rxcn-btn-main"
+        >
+          🔐 Entrar
+        </button>
+
+        <button
+          type="button"
+          id="rxcn-close-login"
+          class="rxcn-btn rxcn-btn-dark"
+        >
+          Cerrar
+        </button>
+
+      </div>
+
+
+      <div
+        id="rxcn-login-message"
+        class="rxcn-message"
+      ></div>
+
+    </div>
+
+
+    <!-- ================= ADMINISTRADOR ================= -->
+
+    <div id="rxcn-admin" class="rxcn-admin">
+
+      <div class="rxcn-top">
+
+        <div>
+          <h3>💰 Control de Cuotas</h3>
+
+          <small>
+            Administrador independiente
+          </small>
+        </div>
+
+        <div class="rxcn-actions">
+
+          <button
+            type="button"
+            id="rxcn-refresh"
+            class="rxcn-btn rxcn-btn-dark"
+          >
+            🔄 Actualizar
+          </button>
+
+          <button
+            type="button"
+            id="rxcn-logout"
+            class="rxcn-btn rxcn-btn-dark"
+          >
+            🔒 Cerrar sesión
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- ESTADÍSTICAS -->
+
+      <div class="rxcn-stats">
+
+        <div class="rxcn-stat">
+          <span>Alumnos</span>
+          <strong id="rxcn-stat-alumnos">0</strong>
+        </div>
+
+        <div class="rxcn-stat">
+          <span>Pagos registrados</span>
+          <strong id="rxcn-stat-pagos">0</strong>
+        </div>
+
+        <div class="rxcn-stat">
+          <span>Vencidos</span>
+          <strong id="rxcn-stat-vencidos">0</strong>
+        </div>
+
+      </div>
+
+
+      <!-- NUEVO PAGO -->
+
+      <div class="rxcn-form">
+
+        <h4 style="margin-top:0;">
+          ➕ Registrar pago
+        </h4>
+
+
+        <div class="rxcn-grid">
+
+          <div class="rxcn-field rxcn-full">
+
+            <label for="rxcn-alumno-select">
+              Alumno
+            </label>
+
+            <select id="rxcn-alumno-select">
+              <option value="">
+                Seleccionar alumno...
+              </option>
+            </select>
+
+          </div>
+
+
+          <div class="rxcn-field">
+
+            <label for="rxcn-importe">
+              Importe
+            </label>
+
+            <input
+              id="rxcn-importe"
+              type="number"
+              min="0"
+              step="500"
+              placeholder="25000"
+            >
+
+          </div>
+
+
+          <div class="rxcn-field">
+
+            <label for="rxcn-fecha-pago">
+              Fecha de pago
+            </label>
+
+            <input
+              id="rxcn-fecha-pago"
+              type="date"
+            >
+
+          </div>
+
+
+          <div class="rxcn-field">
+
+            <label for="rxcn-fecha-vencimiento">
+              Fecha de vencimiento
+            </label>
+
+            <input
+              id="rxcn-fecha-vencimiento"
+              type="date"
+            >
+
+          </div>
+
+
+          <div class="rxcn-field">
+
+            <label for="rxcn-concepto">
+              Concepto
+            </label>
+
+            <input
+              id="rxcn-concepto"
+              type="text"
+              value="Cuota"
+              placeholder="Cuota mensual"
+            >
+
+          </div>
+
+
+          <div class="rxcn-field rxcn-full">
+
+            <label for="rxcn-observaciones">
+              Observaciones
+            </label>
+
+            <input
+              id="rxcn-observaciones"
+              type="text"
+              placeholder="Opcional"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="rxcn-actions">
+
+          <button
+            type="button"
+            id="rxcn-save"
+            class="rxcn-btn rxcn-btn-main"
+          >
+            💾 Guardar pago
+          </button>
+
+          <button
+            type="button"
+            id="rxcn-clear"
+            class="rxcn-btn rxcn-btn-dark"
+          >
+            Limpiar
+          </button>
+
+        </div>
+
+
+        <div
+          id="rxcn-save-message"
+          class="rxcn-message"
+        ></div>
+
+      </div>
+
+
+      <!-- LISTADO -->
+
+      <div class="rxcn-table-wrap">
+
+        <table class="rxcn-table">
+
+          <thead>
+
+            <tr>
+              <th>Alumno</th>
+              <th>Curso</th>
+              <th>Importe</th>
+              <th>Pago</th>
+              <th>Vencimiento</th>
+              <th>Estado</th>
+            </tr>
+
+          </thead>
+
+          <tbody id="rxcn-payments-list">
+
+            <tr>
+              <td colspan="6">
+                Cargando...
+              </td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+(function () {
+
+  "use strict";
+
+  /* ========================================================
+     TODO ESTE CÓDIGO USA EL PREFIJO RXCN.
+     NO UTILIZA VARIABLES DEL ADMINISTRADOR ANTERIOR.
+     ======================================================== */
+
+  const RXCN_URL =
+    "https://lvvhpuedktdmfehvhcwk.supabase.co";
+
+  const RXCN_KEY =
+    "sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp";
+
+
+  let RXCN_SUPABASE = null;
+  let RXCN_ALUMNOS = [];
+  let RXCN_PAGOS = [];
+
+
+  /* ========================================================
+     CLIENTE SUPABASE INDEPENDIENTE
+     ======================================================== */
+
+  function rxcnGetClient() {
+
+    if (RXCN_SUPABASE) {
+      return RXCN_SUPABASE;
+    }
+
+    if (
+      !window.supabase ||
+      typeof window.supabase.createClient !== "function"
+    ) {
+      return null;
+    }
+
+    RXCN_SUPABASE =
+      window.supabase.createClient(
+        RXCN_URL,
+        RXCN_KEY
+      );
+
+    return RXCN_SUPABASE;
+  }
+
+
+  /* ========================================================
+     ELEMENTOS
+     ======================================================== */
+
+  const root =
+    document.getElementById(
+      "rx-cuotas-nuevo"
+    );
+
+  const launch =
+    document.getElementById(
+      "rxcn-launch"
+    );
+
+  const login =
+    document.getElementById(
+      "rxcn-login"
+    );
+
+  const admin =
+    document.getElementById(
+      "rxcn-admin"
+    );
+
+  const email =
+    document.getElementById(
+      "rxcn-email"
+    );
+
+  const password =
+    document.getElementById(
+      "rxcn-password"
+    );
+
+  const loginBtn =
+    document.getElementById(
+      "rxcn-login-btn"
+    );
+
+  const closeLogin =
+    document.getElementById(
+      "rxcn-close-login"
+    );
+
+  const loginMessage =
+    document.getElementById(
+      "rxcn-login-message"
+    );
+
+  const logout =
+    document.getElementById(
+      "rxcn-logout"
+    );
+
+  const refresh =
+    document.getElementById(
+      "rxcn-refresh"
+    );
+
+  const alumnoSelect =
+    document.getElementById(
+      "rxcn-alumno-select"
+    );
+
+  const importe =
+    document.getElementById(
+      "rxcn-importe"
+    );
+
+  const fechaPago =
+    document.getElementById(
+      "rxcn-fecha-pago"
+    );
+
+  const fechaVencimiento =
+    document.getElementById(
+      "rxcn-fecha-vencimiento"
+    );
+
+  const concepto =
+    document.getElementById(
+      "rxcn-concepto"
+    );
+
+  const observaciones =
+    document.getElementById(
+      "rxcn-observaciones"
+    );
+
+  const save =
+    document.getElementById(
+      "rxcn-save"
+    );
+
+  const clear =
+    document.getElementById(
+      "rxcn-clear"
+    );
+
+  const saveMessage =
+    document.getElementById(
+      "rxcn-save-message"
+    );
+
+  const paymentsList =
+    document.getElementById(
+      "rxcn-payments-list"
+    );
+
+  const statAlumnos =
+    document.getElementById(
+      "rxcn-stat-alumnos"
+    );
+
+  const statPagos =
+    document.getElementById(
+      "rxcn-stat-pagos"
+    );
+
+  const statVencidos =
+    document.getElementById(
+      "rxcn-stat-vencidos"
+    );
+
+
+  /* ========================================================
+     MENSAJES
+     ======================================================== */
+
+  function rxcnShowMessage(
+    element,
+    text
+  ) {
+
+    element.textContent = text;
+
+    element.classList.add(
+      "show"
+    );
+
+  }
+
+
+  function rxcnHideMessage(
+    element
+  ) {
+
+    element.textContent = "";
+
+    element.classList.remove(
+      "show"
+    );
+
+  }
+
+
+  /* ========================================================
+     FECHA ACTUAL
+     ======================================================== */
+
+  function rxcnToday() {
+
+    const d =
+      new Date();
+
+    return [
+      d.getFullYear(),
+      String(
+        d.getMonth() + 1
+      ).padStart(2, "0"),
+      String(
+        d.getDate()
+      ).padStart(2, "0")
+    ].join("-");
+
+  }
+
+
+  /* ========================================================
+     FECHA + 28 DÍAS
+     ======================================================== */
+
+  function rxcnAddDays(
+    dateString,
+    days
+  ) {
+
+    if (!dateString) {
+      return "";
+    }
+
+    const parts =
+      dateString.split("-");
+
+    const d =
+      new Date(
+        Number(parts[0]),
+        Number(parts[1]) - 1,
+        Number(parts[2])
+      );
+
+    d.setDate(
+      d.getDate() + days
+    );
+
+    return [
+      d.getFullYear(),
+      String(
+        d.getMonth() + 1
+      ).padStart(2, "0"),
+      String(
+        d.getDate()
+      ).padStart(2, "0")
+    ].join("-");
+
+  }
+
+
+  /* ========================================================
+     FORMATO FECHA
+     ======================================================== */
+
+  function rxcnFormatDate(
+    value
+  ) {
+
+    if (!value) {
+      return "—";
+    }
+
+    const parts =
+      String(value).split("-");
+
+    if (parts.length !== 3) {
+      return value;
+    }
+
+    return (
+      parts[2] +
+      "/" +
+      parts[1] +
+      "/" +
+      parts[0]
+    );
+
+  }
+
+
+  /* ========================================================
+     ESCAPE HTML
+     ======================================================== */
+
+  function rxcnEscape(
+    value
+  ) {
+
+    return String(
+      value ?? ""
+    )
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
+
+  /* ========================================================
+     ESTADO DEL VENCIMIENTO
+     ======================================================== */
+
+  function rxcnDaysUntil(
+    value
+  ) {
+
+    if (!value) {
+      return null;
+    }
+
+    const parts =
+      String(value).split("-");
+
+    const vencimiento =
+      new Date(
+        Number(parts[0]),
+        Number(parts[1]) - 1,
+        Number(parts[2])
+      );
+
+    const hoy =
+      new Date();
+
+    vencimiento.setHours(
+      0, 0, 0, 0
+    );
+
+    hoy.setHours(
+      0, 0, 0, 0
+    );
+
+    return Math.round(
+      (
+        vencimiento.getTime() -
+        hoy.getTime()
+      ) / 86400000
+    );
+
+  }
+
+
+  function rxcnStatus(
+    value
+  ) {
+
+    const dias =
+      rxcnDaysUntil(value);
+
+    if (dias === null) {
+
+      return {
+        text: "—",
+        className: ""
+      };
+
+    }
+
+    if (dias < 0) {
+
+      return {
+        text: "🔴 Vencido",
+        className: "rxcn-danger"
+      };
+
+    }
+
+    if (dias <= 3) {
+
+      return {
+        text: "🟡 Próximo",
+        className: "rxcn-warning"
+      };
+
+    }
+
+    return {
+      text: "🟢 Al día",
+      className: "rxcn-ok"
+    };
+
+  }
+
+
+  /* ========================================================
+     ABRIR / CERRAR
+     ======================================================== */
+
+  launch.addEventListener(
+    "click",
+    async function () {
+
+      root.classList.add(
+        "rxcn-open"
+      );
+
+      await rxcnCheckSession();
+
+    }
+  );
+
+
+  closeLogin.addEventListener(
+    "click",
+    function () {
+
+      root.classList.remove(
+        "rxcn-open"
+      );
+
+      rxcnHideMessage(
+        loginMessage
+      );
+
+    }
+  );
+
+
+  /* ========================================================
+     COMPROBAR SESIÓN
+     ======================================================== */
+
+  async function rxcnCheckSession() {
+
+    const client =
+      rxcnGetClient();
+
+    if (!client) {
+
+      rxcnShowMessage(
+        loginMessage,
+        "❌ No se pudo cargar la conexión con Supabase."
+      );
+
+      return;
+
+    }
+
+
+    try {
+
+      const result =
+        await client.auth.getSession();
+
+      const session =
+        result.data &&
+        result.data.session;
+
+
+      if (session) {
+
+        login.style.display =
+          "none";
+
+        admin.classList.add(
+          "show"
+        );
+
+        await rxcnLoadAll();
+
+      }
+      else {
+
+        login.style.display =
+          "block";
+
+        admin.classList.remove(
+          "show"
+        );
+
+      }
+
+    }
+    catch (error) {
+
+      console.error(
+        "RXCN sesión:",
+        error
+      );
+
+    }
+
+  }
+
+
+  /* ========================================================
+     LOGIN
+     ======================================================== */
+
+  loginBtn.addEventListener(
+    "click",
+    async function () {
+
+      const client =
+        rxcnGetClient();
+
+      if (!client) {
+
+        rxcnShowMessage(
+          loginMessage,
+          "❌ Supabase no está disponible."
+        );
+
+        return;
+
+      }
+
+
+      const correo =
+        email.value.trim();
+
+      const clave =
+        password.value;
+
+
+      if (!correo || !clave) {
+
+        rxcnShowMessage(
+          loginMessage,
+          "⚠️ Introduce correo y contraseña."
+        );
+
+        return;
+
+      }
+
+
+      loginBtn.disabled =
+        true;
+
+      loginBtn.textContent =
+        "Comprobando...";
+
+
+      try {
+
+        const result =
+          await client.auth.signInWithPassword({
+            email: correo,
+            password: clave
+          });
+
+
+        if (result.error) {
+          throw result.error;
+        }
+
+
+        rxcnHideMessage(
+          loginMessage
+        );
+
+
+        login.style.display =
+          "none";
+
+        admin.classList.add(
+          "show"
+        );
+
+
+        password.value = "";
+
+
+        await rxcnLoadAll();
+
+
+      }
+      catch (error) {
+
+        console.error(
+          "RXCN login:",
+          error
+        );
+
+
+        rxcnShowMessage(
+          loginMessage,
+          "❌ Acceso rechazado. Comprueba tus datos de administrador."
+        );
+
+      }
+      finally {
+
+        loginBtn.disabled =
+          false;
+
+        loginBtn.textContent =
+          "🔐 Entrar";
+
+      }
+
+    }
+  );
+
+
+  /* ========================================================
+     CARGAR TODO
+     ======================================================== */
+
+  async function rxcnLoadAll() {
+
+    const client =
+      rxcnGetClient();
+
+    if (!client) {
+      return;
+    }
+
+
+    await Promise.all([
+      rxcnLoadAlumnos(),
+      rxcnLoadPagos()
+    ]);
+
+  }
+
+
+  /* ========================================================
+     ALUMNOS
+     ======================================================== */
+
+  async function rxcnLoadAlumnos() {
+
+    const client =
+      rxcnGetClient();
+
+
+    try {
+
+      const result =
+        await client
+          .from("alumnos")
+          .select(
+            "id,nombre,apellido,curso,activo"
+          )
+          .order(
+            "apellido",
+            {
+              ascending: true
+            }
+          );
+
+
+      if (result.error) {
+        throw result.error;
+      }
+
+
+      RXCN_ALUMNOS =
+        result.data || [];
+
+
+      statAlumnos.textContent =
+        RXCN_ALUMNOS.length;
+
+
+      alumnoSelect.innerHTML =
+        '<option value="">Seleccionar alumno...</option>';
+
+
+      RXCN_ALUMNOS.forEach(
+        function (alumno) {
+
+          const option =
+            document.createElement(
+              "option"
+            );
+
+          option.value =
+            alumno.id;
+
+          option.textContent =
+            (
+              alumno.apellido ||
+              ""
+            ) +
+            ", " +
+            (
+              alumno.nombre ||
+              ""
+            ) +
+            (
+              alumno.curso
+                ? " — " +
+                  alumno.curso
+                : ""
+            );
+
+          alumnoSelect.appendChild(
+            option
+          );
+
+        }
+      );
+
+    }
+    catch (error) {
+
+      console.error(
+        "RXCN alumnos:",
+        error
+      );
+
+
+      rxcnShowMessage(
+        saveMessage,
+        "❌ No se pudieron cargar los alumnos."
+      );
+
+    }
+
+  }
+
+
+  /* ========================================================
+     PAGOS
+     ======================================================== */
+
+  async function rxcnLoadPagos() {
+
+    const client =
+      rxcnGetClient();
+
+
+    try {
+
+      const result =
+        await client
+          .from("pagos")
+          .select(
+            "id,alumno_id,importe,fecha_pago,fecha_vencimiento,concepto,estado,observaciones,created_at"
+          )
+          .order(
+            "fecha_vencimiento",
+            {
+              ascending: true
+            }
+          );
+
+
+      if (result.error) {
+        throw result.error;
+      }
+
+
+      RXCN_PAGOS =
+        result.data || [];
+
+
+      rxcnRenderPagos();
+
+
+    }
+    catch (error) {
+
+      console.error(
+        "RXCN pagos:",
+        error
+      );
+
+
+      paymentsList.innerHTML = `
+        <tr>
+          <td colspan="6">
+            ❌ No se pudieron cargar los pagos.
+          </td>
+        </tr>
+      `;
+
+    }
+
+  }
+
+
+  /* ========================================================
+     RENDER PAGOS
+     ======================================================== */
+
+  function rxcnRenderPagos() {
+
+    statPagos.textContent =
+      RXCN_PAGOS.length;
+
+
+    let vencidos = 0;
+
+
+    if (!RXCN_PAGOS.length) {
+
+      paymentsList.innerHTML = `
+        <tr>
+          <td colspan="6">
+            No hay pagos registrados.
+          </td>
+        </tr>
+      `;
+
+      statVencidos.textContent =
+        "0";
+
+      return;
+
+    }
+
+
+    paymentsList.innerHTML =
+      RXCN_PAGOS.map(
+        function (pago) {
+
+          const alumno =
+            RXCN_ALUMNOS.find(
+              function (a) {
+                return (
+                  String(a.id) ===
+                  String(pago.alumno_id)
+                );
+              }
+            );
+
+
+          const nombre =
+            alumno
+              ? (
+                  (alumno.apellido || "") +
+                  ", " +
+                  (alumno.nombre || "")
+                )
+              : "Alumno #" +
+                pago.alumno_id;
+
+
+          const curso =
+            alumno &&
+            alumno.curso
+              ? alumno.curso
+              : "—";
+
+
+          const status =
+            rxcnStatus(
+              pago.fecha_vencimiento
+            );
+
+
+          if (
+            status.text ===
+            "🔴 Vencido"
+          ) {
+            vencidos++;
+          }
+
+
+          return `
+            <tr>
+
+              <td>
+                ${rxcnEscape(nombre)}
+              </td>
+
+              <td>
+                ${rxcnEscape(curso)}
+              </td>
+
+              <td>
+                $${Number(
+                  pago.importe || 0
+                ).toLocaleString(
+                  "es-AR"
+                )}
+              </td>
+
+              <td>
+                ${rxcnFormatDate(
+                  pago.fecha_pago
+                )}
+              </td>
+
+              <td>
+                ${rxcnFormatDate(
+                  pago.fecha_vencimiento
+                )}
+              </td>
+
+              <td class="${status.className}">
+                ${status.text}
+              </td>
+
+            </tr>
+          `;
+
+        }
+      ).join("");
+
+
+    statVencidos.textContent =
+      vencidos;
+
+  }
+
+
+  /* ========================================================
+     AL CAMBIAR FECHA DE PAGO
+     PROPONE +28 DÍAS
+     ======================================================== */
+
+  fechaPago.addEventListener(
+    "change",
+    function () {
+
+      if (
+        fechaPago.value &&
+        !fechaVencimiento.value
+      ) {
+
+        fechaVencimiento.value =
+          rxcnAddDays(
+            fechaPago.value,
+            28
+          );
+
+      }
+
+    }
+  );
+
+
+  /* ========================================================
+     GUARDAR PAGO
+     ======================================================== */
+
+  save.addEventListener(
+    "click",
+    async function () {
+
+      const client =
+        rxcnGetClient();
+
+
+      if (!client) {
+
+        rxcnShowMessage(
+          saveMessage,
+          "❌ Supabase no está disponible."
+        );
+
+        return;
+
+      }
+
+
+      const alumnoId =
+        alumnoSelect.value;
+
+      const amount =
+        importe.value;
+
+      const paymentDate =
+        fechaPago.value;
+
+      const dueDate =
+        fechaVencimiento.value;
+
+      const concept =
+        concepto.value.trim();
+
+      const notes =
+        observaciones.value.trim();
+
+
+      if (!alumnoId) {
+
+        rxcnShowMessage(
+          saveMessage,
+          "⚠️ Selecciona un alumno."
+        );
+
+        return;
+
+      }
+
+
+      if (
+        !amount ||
+        Number(amount) <= 0
+      ) {
+
+        rxcnShowMessage(
+          saveMessage,
+          "⚠️ Introduce un importe válido."
+        );
+
+        return;
+
+      }
+
+
+      if (!paymentDate) {
+
+        rxcnShowMessage(
+          saveMessage,
+          "⚠️ Introduce la fecha de pago."
+        );
+
+        return;
+
+      }
+
+
+      save.disabled =
+        true;
+
+      save.textContent =
+        "Guardando...";
+
+
+      try {
+
+        const registro = {
+
+          alumno_id:
+            Number(alumnoId),
+
+          importe:
+            Number(amount),
+
+          fecha_pago:
+            paymentDate,
+
+          fecha_vencimiento:
+            dueDate || null,
+
+          concepto:
+            concept || "Cuota",
+
+          estado:
+            "pagado",
+
+          observaciones:
+            notes || null
+
+        };
+
+
+        const result =
+          await client
+            .from("pagos")
+            .insert(
+              registro
+            );
+
+
+        if (result.error) {
+          throw result.error;
+        }
+
+
+        rxcnShowMessage(
+          saveMessage,
+          "✅ Pago guardado correctamente."
+        );
+
+
+        rxcnClearForm();
+
+
+        await rxcnLoadPagos();
+
+
+      }
+      catch (error) {
+
+        console.error(
+          "RXCN guardar pago:",
+          error
+        );
+
+
+        rxcnShowMessage(
+          saveMessage,
+          "❌ No se pudo guardar el pago: " +
+          (
+            error.message ||
+            "error desconocido"
+          )
+        );
+
+      }
+      finally {
+
+        save.disabled =
+          false;
+
+        save.textContent =
+          "💾 Guardar pago";
+
+      }
+
+    }
+  );
+
+
+  /* ========================================================
+     LIMPIAR FORMULARIO
+     ======================================================== */
+
+  clear.addEventListener(
+    "click",
+    function () {
+
+      rxcnClearForm();
+
+      rxcnHideMessage(
+        saveMessage
+      );
+
+    }
+  );
+
+
+  function rxcnClearForm() {
+
+    alumnoSelect.value =
+      "";
+
+    importe.value =
+      "";
+
+    fechaPago.value =
+      rxcnToday();
+
+    fechaVencimiento.value =
+      "";
+
+    concepto.value =
+      "Cuota";
+
+    observaciones.value =
+      "";
+
+  }
+
+
+  /* ========================================================
+     ACTUALIZAR
+     ======================================================== */
+
+  refresh.addEventListener(
+    "click",
+    async function () {
+
+      await rxcnLoadAll();
+
+    }
+  );
+
+
+  /* ========================================================
+     CERRAR SESIÓN
+     ======================================================== */
+
+  logout.addEventListener(
+    "click",
+    async function () {
+
+      const client =
+        rxcnGetClient();
+
+
+      if (!client) {
+        return;
+      }
+
+
+      await client.auth.signOut();
+
+
+      admin.classList.remove(
+        "show"
+      );
+
+
+      login.style.display =
+        "block";
+
+
+      email.value =
+        "";
+
+      password.value =
+        "";
+
+
+      rxcnHideMessage(
+        saveMessage
+      );
+
+
+      rxcnShowMessage(
+        loginMessage,
+        "🔒 Sesión cerrada."
+      );
+
+    }
+  );
+
+
+  /* ========================================================
+     INICIALIZACIÓN
+     ======================================================== */
+
+  fechaPago.value =
+    rxcnToday();
+
+
+  /* NO ABRIMOS EL MÓDULO AUTOMÁTICAMENTE.
+     QUEDA CERRADO. */
+
+})();
+</script>
+
+<!-- =========================================================
+     FIN ADMINISTRADOR INDEPENDIENTE DE CUOTAS
+     ========================================================= -->
 </body>
 </html>
