@@ -19450,6 +19450,1693 @@ body {
   });
 
 })();
-</script>      
+</script>   
+  <!-- ==========================================================
+     ROXTHAL TATTOO DESIGNER
+     GENERADOR VISUAL LOCAL + STENCIL
+     SIN API / SIN CUENTAS / SIN COSTE
+     ========================================================== -->
+
+<script>
+(function () {
+  "use strict";
+
+  function iniciarRoxthalGenerador() {
+
+    const input = document.getElementById("rxtd-ai-prompt");
+    const result = document.getElementById("rxtd-ai-result");
+    const canvas = document.getElementById("rxtd-canvas");
+
+    if (!input || !result || !canvas) {
+      console.warn("RoXThal Designer: elementos no encontrados.");
+      return;
+    }
+
+    const ctx = canvas.getContext("2d");
+
+    /* -------------------------------------------------------
+       ESTILOS
+       ------------------------------------------------------- */
+
+    const style = document.createElement("style");
+
+    style.textContent = `
+      #roxthal-local-generator {
+        margin-top:14px;
+        display:grid;
+        gap:8px;
+      }
+
+      #roxthal-local-generator button {
+        width:100%;
+        border:1px solid rgba(255,255,255,.15);
+        border-radius:10px;
+        padding:12px;
+        cursor:pointer;
+        font-weight:800;
+        color:#fff;
+        background:#18181d;
+      }
+
+      #roxthal-local-generator button:hover {
+        border-color:#d7b45a;
+      }
+
+      #roxthal-local-generator .roxthal-main {
+        background:#b9953d;
+        color:#080809;
+      }
+
+      #roxthal-local-generator .roxthal-stencil {
+        background:#080809;
+      }
+
+      #roxthal-local-generator .roxthal-clear {
+        background:#222;
+      }
+
+      #roxthal-local-info {
+        font-size:12px;
+        opacity:.7;
+        line-height:1.45;
+        margin-top:4px;
+      }
+    `;
+
+    document.head.appendChild(style);
+
+
+    /* -------------------------------------------------------
+       PANEL
+       ------------------------------------------------------- */
+
+    const panel =
+      document.createElement("div");
+
+    panel.id =
+      "roxthal-local-generator";
+
+    panel.innerHTML = `
+      <button
+        type="button"
+        class="roxthal-main"
+        id="roxthal-generate-local">
+        🎨 Crear diseño visual
+      </button>
+
+      <button
+        type="button"
+        class="roxthal-stencil"
+        id="roxthal-create-stencil">
+        🖤 Convertir a stencil
+      </button>
+
+      <button
+        type="button"
+        id="roxthal-download-design">
+        ⬇️ Descargar diseño
+      </button>
+
+      <button
+        type="button"
+        id="roxthal-download-stencil">
+        ⬇️ Descargar stencil
+      </button>
+
+      <button
+        type="button"
+        class="roxthal-clear"
+        id="roxthal-clear-design">
+        🗑️ Limpiar lienzo
+      </button>
+
+      <div id="roxthal-local-info">
+        Generador local gratuito. No utiliza servicios externos.
+      </div>
+    `;
+
+    /*
+       Lo colocamos debajo del resultado existente.
+    */
+
+    result.parentNode.insertBefore(
+      panel,
+      result.nextSibling
+    );
+
+
+    /* -------------------------------------------------------
+       OBTENER INFORMACIÓN DEL DISEÑO
+       ------------------------------------------------------- */
+
+    function obtenerDatos() {
+
+      const idea =
+        input.value.trim();
+
+      const zona =
+        document.getElementById("rxtd-body");
+
+      const estilo =
+        document.getElementById("rxtd-style-result");
+
+      return {
+        idea: idea || "diseño de tatuaje artístico",
+        zona: zona ? zona.value : "",
+        estilo: estilo ? estilo.textContent : ""
+      };
+    }
+
+
+    /* -------------------------------------------------------
+       DETECTAR CONCEPTO
+       ------------------------------------------------------- */
+
+    function detectarConcepto(texto) {
+
+      const t =
+        texto.toLowerCase();
+
+      if (
+        t.includes("serpiente") ||
+        t.includes("snake")
+      )
+        return "serpiente";
+
+      if (
+        t.includes("rosa") ||
+        t.includes("flor")
+      )
+        return "flor";
+
+      if (
+        t.includes("dragón") ||
+        t.includes("dragon")
+      )
+        return "dragon";
+
+      if (
+        t.includes("calavera") ||
+        t.includes("craneo") ||
+        t.includes("cráneo")
+      )
+        return "calavera";
+
+      if (
+        t.includes("corazón") ||
+        t.includes("corazon")
+      )
+        return "corazon";
+
+      if (
+        t.includes("águila") ||
+        t.includes("aguila")
+      )
+        return "aguila";
+
+      if (
+        t.includes("tigre")
+      )
+        return "tigre";
+
+      if (
+        t.includes("lobo")
+      )
+        return "lobo";
+
+      if (
+        t.includes("mariposa")
+      )
+        return "mariposa";
+
+      return "ornamental";
+    }
+
+
+    /* -------------------------------------------------------
+       LIMPIAR LIENZO
+       ------------------------------------------------------- */
+
+    function limpiar() {
+
+      ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      ctx.fillStyle =
+        "#ffffff";
+
+      ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      guardarHistorial();
+
+      result.innerHTML =
+        "Lienzo limpio.";
+    }
+
+
+    /* -------------------------------------------------------
+       HISTORIAL DEL DISEÑADOR
+       ------------------------------------------------------- */
+
+    function guardarHistorial() {
+
+      try {
+
+        if (
+          typeof window.saveSnapshot ===
+          "function"
+        ) {
+          window.saveSnapshot();
+        }
+
+      } catch (e) {
+        console.warn(
+          "No se pudo guardar historial.",
+          e
+        );
+      }
+    }
+
+
+    /* -------------------------------------------------------
+       CONFIGURACIÓN DEL LIENZO
+       ------------------------------------------------------- */
+
+    function prepararCanvas() {
+
+      ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      ctx.fillStyle =
+        "#ffffff";
+
+      ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      ctx.lineCap =
+        "round";
+
+      ctx.lineJoin =
+        "round";
+
+      ctx.strokeStyle =
+        "#111111";
+
+      ctx.fillStyle =
+        "#111111";
+    }
+
+
+    /* -------------------------------------------------------
+       DISEÑO PRINCIPAL
+       ------------------------------------------------------- */
+
+    function generarDiseño() {
+
+      const datos =
+        obtenerDatos();
+
+      if (!datos.idea) {
+        return;
+      }
+
+      prepararCanvas();
+
+      const concepto =
+        detectarConcepto(
+          datos.idea
+        );
+
+      /*
+         CABECERA
+      */
+
+      ctx.save();
+
+      ctx.font =
+        "700 18px Arial";
+
+      ctx.fillStyle =
+        "#777";
+
+      ctx.textAlign =
+        "center";
+
+      ctx.fillText(
+        "ROXTHAL TATTOO DESIGN",
+        canvas.width / 2,
+        32
+      );
+
+      ctx.restore();
+
+
+      /*
+         CENTRO
+      */
+
+      const cx =
+        canvas.width / 2;
+
+      const cy =
+        canvas.height / 2;
+
+
+      switch (concepto) {
+
+        case "serpiente":
+          dibujarSerpiente(
+            cx,
+            cy
+          );
+          break;
+
+        case "rosa":
+        case "flor":
+          dibujarRosa(
+            cx,
+            cy
+          );
+          break;
+
+        case "dragon":
+          dibujarDragon(
+            cx,
+            cy
+          );
+          break;
+
+        case "calavera":
+          dibujarCalavera(
+            cx,
+            cy
+          );
+          break;
+
+        case "corazon":
+          dibujarCorazon(
+            cx,
+            cy
+          );
+          break;
+
+        case "aguila":
+          dibujarAguila(
+            cx,
+            cy
+          );
+          break;
+
+        case "tigre":
+        case "lobo":
+          dibujarAnimal(
+            cx,
+            cy,
+            concepto
+          );
+          break;
+
+        case "mariposa":
+          dibujarMariposa(
+            cx,
+            cy
+          );
+          break;
+
+        default:
+          dibujarOrnamental(
+            cx,
+            cy
+          );
+      }
+
+
+      /*
+         DETALLES DE COMPOSICIÓN
+      */
+
+      dibujarMarcoTattoo();
+
+      guardarHistorial();
+
+
+      result.innerHTML = `
+        <strong>🎨 Diseño creado</strong><br><br>
+        Concepto: ${datos.idea}<br>
+        ${datos.zona ? "Zona: " + datos.zona + "<br>" : ""}
+        ${datos.estilo ? "Estilo: " + datos.estilo : ""}
+        <br><br>
+        Puedes modificarlo directamente en el lienzo
+        o convertirlo a stencil.
+      `;
+    }
+
+
+    /* -------------------------------------------------------
+       SERPIENTE
+       ------------------------------------------------------- */
+
+    function dibujarSerpiente(cx, cy) {
+
+      ctx.save();
+
+      ctx.translate(
+        cx,
+        cy
+      );
+
+      ctx.rotate(
+        -0.15
+      );
+
+      ctx.lineWidth =
+        13;
+
+      ctx.strokeStyle =
+        "#111";
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        -230,
+        180
+      );
+
+      ctx.bezierCurveTo(
+        -70,
+        80,
+        -180,
+        -30,
+        0,
+        -160
+      );
+
+      ctx.bezierCurveTo(
+        180,
+        -290,
+        270,
+        -80,
+        130,
+        80
+      );
+
+      ctx.bezierCurveTo(
+        30,
+        190,
+        -90,
+        130,
+        -10,
+        20
+      );
+
+      ctx.stroke();
+
+
+      /*
+         CABEZA
+      */
+
+      ctx.beginPath();
+
+      ctx.ellipse(
+        140,
+        72,
+        42,
+        25,
+        -0.3,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.stroke();
+
+
+      /*
+         OJO
+      */
+
+      ctx.beginPath();
+
+      ctx.arc(
+        158,
+        65,
+        4,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.fill();
+
+
+      /*
+         LENGUA
+      */
+
+      ctx.lineWidth =
+        4;
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        178,
+        78
+      );
+
+      ctx.lineTo(
+        215,
+        90
+      );
+
+      ctx.lineTo(
+        235,
+        82
+      );
+
+      ctx.moveTo(
+        215,
+        90
+      );
+
+      ctx.lineTo(
+        234,
+        99
+      );
+
+      ctx.stroke();
+
+
+      /*
+         ESCAMAS
+      */
+
+      ctx.lineWidth =
+        2;
+
+      for (
+        let x = -190;
+        x < 150;
+        x += 28
+      ) {
+
+        ctx.beginPath();
+
+        ctx.arc(
+          x,
+          100,
+          12,
+          0,
+          Math.PI
+        );
+
+        ctx.stroke();
+      }
+
+
+      ctx.restore();
+    }
+
+
+    /* -------------------------------------------------------
+       ROSA
+       ------------------------------------------------------- */
+
+    function dibujarRosa(cx, cy) {
+
+      ctx.save();
+
+      ctx.translate(
+        cx,
+        cy - 30
+      );
+
+      ctx.strokeStyle =
+        "#111";
+
+      ctx.lineWidth =
+        6;
+
+      for (
+        let i = 0;
+        i < 8;
+        i++
+      ) {
+
+        ctx.save();
+
+        ctx.rotate(
+          i * Math.PI / 4
+        );
+
+        ctx.beginPath();
+
+        ctx.ellipse(
+          0,
+          -75,
+          45,
+          80,
+          0,
+          0,
+          Math.PI * 2
+        );
+
+        ctx.stroke();
+
+        ctx.restore();
+      }
+
+      ctx.beginPath();
+
+      ctx.arc(
+        0,
+        0,
+        55,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.stroke();
+
+      ctx.beginPath();
+
+      ctx.arc(
+        0,
+        0,
+        25,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.stroke();
+
+
+      /*
+         TALLO
+      */
+
+      ctx.lineWidth =
+        7;
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        0,
+        50
+      );
+
+      ctx.bezierCurveTo(
+        -20,
+        150,
+        20,
+        240,
+        -30,
+        310
+      );
+
+      ctx.stroke();
+
+
+      /*
+         HOJAS
+      */
+
+      ctx.lineWidth =
+        5;
+
+      dibujarHoja(
+        -15,
+        160,
+        -0.7
+      );
+
+      dibujarHoja(
+        0,
+        220,
+        0.6
+      );
+
+      ctx.restore();
+    }
+
+
+    function dibujarHoja(
+      x,
+      y,
+      rot
+    ) {
+
+      ctx.save();
+
+      ctx.translate(
+        x,
+        y
+      );
+
+      ctx.rotate(
+        rot
+      );
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        0,
+        0
+      );
+
+      ctx.bezierCurveTo(
+        50,
+        -30,
+        75,
+        10,
+        0,
+        0
+      );
+
+      ctx.bezierCurveTo(
+        -35,
+        20,
+        -45,
+        5,
+        0,
+        0
+      );
+
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+
+    /* -------------------------------------------------------
+       DRAGÓN
+       ------------------------------------------------------- */
+
+    function dibujarDragon(cx, cy) {
+
+      ctx.save();
+
+      ctx.translate(
+        cx,
+        cy
+      );
+
+      ctx.lineWidth =
+        9;
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        -250,
+        160
+      );
+
+      ctx.bezierCurveTo(
+        -100,
+        80,
+        -170,
+        -130,
+        0,
+        -170
+      );
+
+      ctx.bezierCurveTo(
+        180,
+        -210,
+        230,
+        30,
+        70,
+        160
+      );
+
+      ctx.bezierCurveTo(
+        -50,
+        240,
+        -170,
+        180,
+        -250,
+        160
+      );
+
+      ctx.stroke();
+
+
+      /*
+         CABEZA
+      */
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        80,
+        -160
+      );
+
+      ctx.lineTo(
+        160,
+        -190
+      );
+
+      ctx.lineTo(
+        190,
+        -150
+      );
+
+      ctx.lineTo(
+        150,
+        -115
+      );
+
+      ctx.lineTo(
+        80,
+        -160
+      );
+
+      ctx.stroke();
+
+
+      /*
+         ALAS
+      */
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        -20,
+        -80
+      );
+
+      ctx.lineTo(
+        -130,
+        -190
+      );
+
+      ctx.lineTo(
+        -80,
+        -50
+      );
+
+      ctx.lineTo(
+        -170,
+        -100
+      );
+
+      ctx.lineTo(
+        -50,
+        0
+      );
+
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+
+    /* -------------------------------------------------------
+       CALAVERA
+       ------------------------------------------------------- */
+
+    function dibujarCalavera(cx, cy) {
+
+      ctx.save();
+
+      ctx.translate(
+        cx,
+        cy
+      );
+
+      ctx.lineWidth =
+        8;
+
+      ctx.beginPath();
+
+      ctx.ellipse(
+        0,
+        -20,
+        150,
+        170,
+        0,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.stroke();
+
+
+      /*
+         OJOS
+      */
+
+      ctx.beginPath();
+
+      ctx.ellipse(
+        -55,
+        -30,
+        35,
+        45,
+        0,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.ellipse(
+        55,
+        -30,
+        35,
+        45,
+        0,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.stroke();
+
+
+      /*
+         NARIZ
+      */
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        0,
+        5
+      );
+
+      ctx.lineTo(
+        -20,
+        45
+      );
+
+      ctx.lineTo(
+        20,
+        45
+      );
+
+      ctx.closePath();
+
+      ctx.stroke();
+
+
+      /*
+         DIENTES
+      */
+
+      ctx.lineWidth =
+        5;
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        -75,
+        100
+      );
+
+      ctx.lineTo(
+        75,
+        100
+      );
+
+      ctx.stroke();
+
+      for (
+        let x = -60;
+        x <= 60;
+        x += 20
+      ) {
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+          x,
+          100
+        );
+
+        ctx.lineTo(
+          x,
+          130
+        );
+
+        ctx.stroke();
+      }
+
+      ctx.restore();
+    }
+
+
+    /* -------------------------------------------------------
+       CORAZÓN
+       ------------------------------------------------------- */
+
+    function dibujarCorazon(cx, cy) {
+
+      ctx.save();
+
+      ctx.translate(
+        cx,
+        cy
+      );
+
+      ctx.scale(
+        1.3,
+        1.3
+      );
+
+      ctx.lineWidth =
+        9;
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        0,
+        180
+      );
+
+      ctx.bezierCurveTo(
+        -260,
+        20,
+        -170,
+        -180,
+        0,
+        -80
+      );
+
+      ctx.bezierCurveTo(
+        170,
+        -180,
+        260,
+        20,
+        0,
+        180
+      );
+
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+
+    /* -------------------------------------------------------
+       ÁGUILA
+       ------------------------------------------------------- */
+
+    function dibujarAguila(cx, cy) {
+
+      ctx.save();
+
+      ctx.translate(
+        cx,
+        cy
+      );
+
+      ctx.lineWidth =
+        8;
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        0,
+        30
+      );
+
+      ctx.bezierCurveTo(
+        -120,
+        -20,
+        -230,
+        -120,
+        -320,
+        -100
+      );
+
+      ctx.bezierCurveTo(
+        -240,
+        0,
+        -130,
+        60,
+        0,
+        30
+      );
+
+      ctx.bezierCurveTo(
+        130,
+        60,
+        240,
+        0,
+        320,
+        -100
+      );
+
+      ctx.bezierCurveTo(
+        230,
+        -120,
+        120,
+        -20,
+        0,
+        30
+      );
+
+      ctx.stroke();
+
+
+      ctx.beginPath();
+
+      ctx.arc(
+        0,
+        0,
+        45,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+
+    /* -------------------------------------------------------
+       ANIMAL
+       ------------------------------------------------------- */
+
+    function dibujarAnimal(
+      cx,
+      cy,
+      nombre
+    ) {
+
+      ctx.save();
+
+      ctx.translate(
+        cx,
+        cy
+      );
+
+      ctx.lineWidth =
+        9;
+
+      ctx.beginPath();
+
+      ctx.ellipse(
+        0,
+        0,
+        170,
+        130,
+        0,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.stroke();
+
+
+      /*
+         OJOS
+      */
+
+      ctx.beginPath();
+
+      ctx.arc(
+        -55,
+        -20,
+        15,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.arc(
+        55,
+        -20,
+        15,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.stroke();
+
+
+      /*
+         NARIZ
+      */
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        -20,
+        35
+      );
+
+      ctx.lineTo(
+        0,
+        50
+      );
+
+      ctx.lineTo(
+        20,
+        35
+      );
+
+      ctx.stroke();
+
+
+      /*
+         BIGOTES / PELO
+      */
+
+      ctx.lineWidth =
+        4;
+
+      for (
+        let i = -3;
+        i <= 3;
+        i++
+      ) {
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+          i * 25,
+          55
+        );
+
+        ctx.lineTo(
+          i * 50,
+          85
+        );
+
+        ctx.stroke();
+      }
+
+
+      ctx.restore();
+    }
+
+
+    /* -------------------------------------------------------
+       MARIPOSA
+       ------------------------------------------------------- */
+
+    function dibujarMariposa(
+      cx,
+      cy
+    ) {
+
+      ctx.save();
+
+      ctx.translate(
+        cx,
+        cy
+      );
+
+      ctx.lineWidth =
+        7;
+
+      ctx.beginPath();
+
+      ctx.ellipse(
+        -70,
+        -60,
+        100,
+        140,
+        -0.4,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.ellipse(
+        70,
+        -60,
+        100,
+        140,
+        0.4,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.ellipse(
+        -55,
+        90,
+        75,
+        100,
+        0.4,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.ellipse(
+        55,
+        90,
+        75,
+        100,
+        -0.4,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.stroke();
+
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        0,
+        -120
+      );
+
+      ctx.lineTo(
+        0,
+        140
+      );
+
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+
+    /* -------------------------------------------------------
+       ORNAMENTAL
+       ------------------------------------------------------- */
+
+    function dibujarOrnamental(
+      cx,
+      cy
+    ) {
+
+      ctx.save();
+
+      ctx.translate(
+        cx,
+        cy
+      );
+
+      ctx.lineWidth =
+        6;
+
+      for (
+        let i = 0;
+        i < 12;
+        i++
+      ) {
+
+        ctx.save();
+
+        ctx.rotate(
+          i * Math.PI / 6
+        );
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+          0,
+          -40
+        );
+
+        ctx.bezierCurveTo(
+          50,
+          -120,
+          100,
+          -120,
+          0,
+          -230
+        );
+
+        ctx.bezierCurveTo(
+          -100,
+          -120,
+          -50,
+          -120,
+          0,
+          -40
+        );
+
+        ctx.stroke();
+
+        ctx.restore();
+      }
+
+      ctx.beginPath();
+
+      ctx.arc(
+        0,
+        0,
+        65,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+
+    /* -------------------------------------------------------
+       MARCO
+       ------------------------------------------------------- */
+
+    function dibujarMarcoTattoo() {
+
+      ctx.save();
+
+      ctx.strokeStyle =
+        "rgba(0,0,0,.18)";
+
+      ctx.lineWidth =
+        2;
+
+      ctx.setLineDash([
+        10,
+        10
+      ]);
+
+      ctx.strokeRect(
+        35,
+        55,
+        canvas.width - 70,
+        canvas.height - 90
+      );
+
+      ctx.restore();
+    }
+
+
+    /* -------------------------------------------------------
+       STENCIL
+       ------------------------------------------------------- */
+
+    function crearStencil() {
+
+      const imageData =
+        ctx.getImageData(
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+
+      const pixels =
+        imageData.data;
+
+      /*
+         Umbral de alto contraste.
+      */
+
+      for (
+        let i = 0;
+        i < pixels.length;
+        i += 4
+      ) {
+
+        const gris =
+          (
+            pixels[i] * 0.299 +
+            pixels[i + 1] * 0.587 +
+            pixels[i + 2] * 0.114
+          );
+
+        const valor =
+          gris < 175
+            ? 0
+            : 255;
+
+        pixels[i] =
+          valor;
+
+        pixels[i + 1] =
+          valor;
+
+        pixels[i + 2] =
+          valor;
+
+        pixels[i + 3] =
+          255;
+      }
+
+
+      ctx.putImageData(
+        imageData,
+        0,
+        0
+      );
+
+      guardarHistorial();
+
+      result.innerHTML = `
+        <strong>🖤 STENCIL PREPARADO</strong><br><br>
+        Diseño convertido a alto contraste.
+        Puedes descargarlo o seguir editándolo.
+      `;
+    }
+
+
+    /* -------------------------------------------------------
+       DESCARGA
+       ------------------------------------------------------- */
+
+    function descargar(
+      nombre
+    ) {
+
+      const enlace =
+        document.createElement("a");
+
+      enlace.download =
+        nombre;
+
+      enlace.href =
+        canvas.toDataURL(
+          "image/png"
+        );
+
+      enlace.click();
+    }
+
+
+    /* -------------------------------------------------------
+       EVENTOS
+       ------------------------------------------------------- */
+
+    document
+      .getElementById(
+        "roxthal-generate-local"
+      )
+      .addEventListener(
+        "click",
+        generarDiseño
+      );
+
+
+    document
+      .getElementById(
+        "roxthal-create-stencil"
+      )
+      .addEventListener(
+        "click",
+        crearStencil
+      );
+
+
+    document
+      .getElementById(
+        "roxthal-download-design"
+      )
+      .addEventListener(
+        "click",
+        function () {
+          descargar(
+            "roxthal-tatuaje.png"
+          );
+        }
+      );
+
+
+    document
+      .getElementById(
+        "roxthal-download-stencil"
+      )
+      .addEventListener(
+        "click",
+        function () {
+          descargar(
+            "roxthal-stencil.png"
+          );
+        }
+      );
+
+
+    document
+      .getElementById(
+        "roxthal-clear-design"
+      )
+      .addEventListener(
+        "click",
+        limpiar
+      );
+
+
+    /*
+       Permite también pulsar Enter + Ctrl
+       dentro del campo de idea.
+    */
+
+    input.addEventListener(
+      "keydown",
+      function (event) {
+
+        if (
+          event.key === "Enter" &&
+          event.ctrlKey
+        ) {
+
+          event.preventDefault();
+
+          generarDiseño();
+        }
+      }
+    );
+
+
+    console.log(
+      "✅ RoXThal Generador Visual Local activo"
+    );
+  }
+
+
+  /*
+     Esperamos a que la app haya cargado.
+  */
+
+  if (
+    document.readyState ===
+    "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      iniciarRoxthalGenerador
+    );
+
+  } else {
+
+    iniciarRoxthalGenerador();
+  }
+
+})();
+</script>
 </body>
 </html>
