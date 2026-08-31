@@ -16283,6 +16283,292 @@ body {
 
 }
 
-</style><!-- FIN FONDO ARTÍSTICO ROXTHAL -->    
+</style><!-- FIN FONDO ARTÍSTICO ROXTHAL -->  
+  <!-- ============================================================
+     ROXTHAL ART DESIGN — COMPARTIR APP + DERECHOS
+     BLOQUE INDEPENDIENTE
+     PEGAR JUSTO ANTES DE </body>
+============================================================ -->
+
+<style>
+  .roxthal-share-footer {
+    max-width: 1100px;
+    margin: 70px auto 0;
+    padding: 45px 22px 35px;
+    text-align: center;
+    border-top: 1px solid var(--line);
+  }
+
+  .roxthal-share-box {
+    background:
+      radial-gradient(circle at top, rgba(215,180,90,.16), transparent 60%),
+      var(--panel);
+    border: 1px solid var(--gold);
+    border-radius: 24px;
+    padding: 38px 24px;
+    box-shadow: 0 0 30px rgba(215,180,90,.08);
+  }
+
+  .roxthal-share-icon {
+    font-size: 3rem;
+    margin-bottom: 10px;
+  }
+
+  .roxthal-share-title {
+    color: var(--gold2);
+    font-size: clamp(1.6rem, 4vw, 2.3rem);
+    font-weight: 900;
+    margin-bottom: 12px;
+  }
+
+  .roxthal-share-text {
+    max-width: 720px;
+    margin: 0 auto 24px;
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .roxthal-share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-width: 240px;
+    padding: 15px 25px;
+    border-radius: 12px;
+    background: var(--gold);
+    color: #000;
+    font-weight: 900;
+    font-size: 1rem;
+    cursor: pointer;
+    border: 1px solid var(--gold2);
+    box-shadow: 0 0 18px rgba(215,180,90,.18);
+    transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+  }
+
+  .roxthal-share-btn:hover {
+    background: var(--gold2);
+    transform: translateY(-2px);
+    box-shadow: 0 0 28px rgba(215,180,90,.3);
+  }
+
+  .roxthal-share-status {
+    min-height: 24px;
+    margin-top: 14px;
+    color: var(--gold2);
+    font-size: .9rem;
+  }
+
+  .roxthal-rights {
+    max-width: 900px;
+    margin: 35px auto 0;
+    padding: 25px 20px 5px;
+    color: var(--muted);
+    font-size: .82rem;
+    line-height: 1.7;
+  }
+
+  .roxthal-rights-title {
+    color: var(--gold2);
+    font-size: 1rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+
+  .roxthal-rights strong {
+    color: #fff;
+  }
+
+  .roxthal-copyright {
+    margin-top: 18px;
+    color: var(--gold);
+    font-weight: 800;
+    font-size: .85rem;
+  }
+
+  @media (max-width: 600px) {
+    .roxthal-share-footer {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    .roxthal-share-box {
+      padding: 30px 18px;
+    }
+
+    .roxthal-share-btn {
+      width: 100%;
+      min-width: 0;
+    }
+  }
+</style>
+
+<section class="roxthal-share-footer" aria-label="Compartir RoXThal Art Design">
+
+  <div class="roxthal-share-box">
+
+    <div class="roxthal-share-icon">❤️</div>
+
+    <h2 class="roxthal-share-title">
+      ¿Te gusta RoXThal Art Design?
+    </h2>
+
+    <p class="roxthal-share-text">
+      Ayúdanos a seguir creciendo y a que nuestro arte llegue a más personas.
+      Comparte nuestra aplicación con tus amigos, familiares y personas
+      amantes del arte.
+      <br><br>
+      <strong>📲 ¡Comparte RoXThal Art Design y haz que el arte siga creciendo!</strong>
+    </p>
+
+    <button
+      type="button"
+      class="roxthal-share-btn"
+      id="roxthalShareAppBtn"
+      aria-label="Compartir la aplicación RoXThal Art Design"
+    >
+      📲 COMPARTIR LA APP
+    </button>
+
+    <div
+      id="roxthalShareStatus"
+      class="roxthal-share-status"
+      aria-live="polite"
+    ></div>
+
+  </div>
+
+  <div class="roxthal-rights">
+
+    <div class="roxthal-rights-title">
+      © DERECHOS DE AUTOR Y PROPIEDAD INTELECTUAL
+    </div>
+
+    <p>
+      Esta aplicación ha sido creada y desarrollada por
+      <strong>RoXThal Art Design</strong>, titular de los derechos de
+      propiedad intelectual correspondientes a la aplicación y a sus
+      contenidos.
+    </p>
+
+    <p>
+      El diseño, estructura, identidad visual, textos, imágenes, elementos
+      gráficos, contenidos y funcionalidades que forman parte de esta
+      aplicación son propiedad de <strong>RoXThal Art Design</strong> o se
+      encuentran bajo los derechos correspondientes.
+    </p>
+
+    <p>
+      Queda prohibida, sin autorización expresa y previa de
+      <strong>RoXThal Art Design</strong>, la reproducción, copia,
+      modificación, distribución, publicación, comercialización, adaptación
+      o utilización, total o parcial, de esta aplicación o de cualquiera
+      de sus elementos y contenidos.
+    </p>
+
+    <p>
+      <strong>
+        Todos los derechos sobre esta aplicación quedan reservados a
+        RoXThal Art Design.
+      </strong>
+    </p>
+
+    <div class="roxthal-copyright">
+      © 2026 RoXThal Art Design — Todos los derechos reservados.
+    </div>
+
+  </div>
+
+</section>
+
+<script>
+(function () {
+
+  const shareButton = document.getElementById("roxthalShareAppBtn");
+  const status = document.getElementById("roxthalShareStatus");
+
+  if (!shareButton) return;
+
+  shareButton.addEventListener("click", async function () {
+
+    const shareUrl = window.location.href;
+
+    const shareData = {
+      title: "RoXThal Art Design",
+      text:
+        "🎨 Descubre RoXThal Art Design: arte, tatuajes, dibujo, pintura y mucho más. ¡Entra y descubre nuestra aplicación!",
+      url: shareUrl
+    };
+
+    /* Compartir mediante el menú nativo del teléfono */
+    if (navigator.share) {
+
+      try {
+
+        await navigator.share(shareData);
+
+        status.textContent = "❤️ ¡Gracias por compartir RoXThal Art Design!";
+
+      } catch (error) {
+
+        /* El usuario canceló el menú de compartir */
+        if (error && error.name === "AbortError") {
+          status.textContent = "";
+          return;
+        }
+
+        status.textContent =
+          "No se pudo abrir el menú de compartir.";
+
+      }
+
+      return;
+    }
+
+    /* Alternativa para dispositivos sin Web Share API */
+    try {
+
+      if (navigator.clipboard && window.isSecureContext) {
+
+        await navigator.clipboard.writeText(shareUrl);
+
+        status.textContent =
+          "📋 ¡Enlace copiado! Ahora puedes compartirlo donde quieras.";
+
+      } else {
+
+        const tempInput = document.createElement("input");
+
+        tempInput.value = shareUrl;
+        document.body.appendChild(tempInput);
+
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999);
+
+        document.execCommand("copy");
+
+        tempInput.remove();
+
+        status.textContent =
+          "📋 ¡Enlace copiado! Ahora puedes compartirlo.";
+
+      }
+
+    } catch (error) {
+
+      status.textContent =
+        "📲 Copia este enlace para compartir la aplicación: " + shareUrl;
+
+    }
+
+  });
+
+})();
+</script>
+
+<!-- ============================================================
+     FIN ROXTHAL ART DESIGN — COMPARTIR APP + DERECHOS
+============================================================ -->  
 </body>
 </html>
