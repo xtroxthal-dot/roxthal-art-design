@@ -16569,6 +16569,147 @@ body {
 
 <!-- ============================================================
      FIN ROXTHAL ART DESIGN — COMPARTIR APP + DERECHOS
-============================================================ -->  
+============================================================ --> 
+  <!-- =========================================================
+     ROXTHAL ART DESIGN - BOTÓN INSTALAR APP
+     Pegar justo antes de </body>
+     ========================================================= -->
+
+<style>
+  #roxthal-install-container {
+    text-align: center;
+    margin: 30px auto 20px;
+    padding: 20px;
+    max-width: 600px;
+  }
+
+  #roxthal-install-btn {
+    display: none;
+    border: none;
+    border-radius: 14px;
+    padding: 15px 28px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    background: linear-gradient(135deg, #f5c400, #ff7a00);
+    color: #111;
+    box-shadow: 0 5px 18px rgba(0,0,0,.25);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+
+  #roxthal-install-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(0,0,0,.3);
+  }
+
+  #roxthal-install-text {
+    margin-top: 10px;
+    font-size: 14px;
+    opacity: .8;
+  }
+
+  #roxthal-install-message {
+    display: none;
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(255,255,255,.08);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+</style>
+
+<div id="roxthal-install-container">
+
+  <button id="roxthal-install-btn" type="button">
+    📲 INSTALAR APP
+  </button>
+
+  <div id="roxthal-install-text">
+    Instala RoXThal Art Design en tu dispositivo para acceder más rápido.
+  </div>
+
+  <div id="roxthal-install-message"></div>
+
+</div>
+
+<script>
+(function () {
+
+  let deferredPrompt = null;
+
+  const installButton =
+    document.getElementById("roxthal-install-btn");
+
+  const installMessage =
+    document.getElementById("roxthal-install-message");
+
+  if (!installButton) return;
+
+  function isAppInstalled() {
+    return (
+      window.matchMedia("(display-mode: standalone)").matches ||
+      window.navigator.standalone === true
+    );
+  }
+
+  if (isAppInstalled()) {
+    installButton.style.display = "none";
+    return;
+  }
+
+  window.addEventListener("beforeinstallprompt", function (event) {
+
+    event.preventDefault();
+
+    deferredPrompt = event;
+
+    installButton.style.display = "inline-block";
+
+  });
+
+  installButton.addEventListener("click", async function () {
+
+    if (deferredPrompt) {
+
+      deferredPrompt.prompt();
+
+      const result = await deferredPrompt.userChoice;
+
+      if (result.outcome === "accepted") {
+        installButton.style.display = "none";
+      }
+
+      deferredPrompt = null;
+
+      return;
+    }
+
+    installMessage.style.display = "block";
+
+    installMessage.innerHTML =
+      "📱 Para instalar RoXThal Art Design:<br><br>" +
+      "1. Abre el menú <strong>⋮</strong> de tu navegador.<br>" +
+      "2. Pulsa <strong>Instalar aplicación</strong> o " +
+      "<strong>Añadir a pantalla de inicio</strong>.<br>" +
+      "3. Confirma la instalación.";
+
+  });
+
+  window.addEventListener("appinstalled", function () {
+
+    deferredPrompt = null;
+
+    installButton.style.display = "none";
+
+    installMessage.style.display = "block";
+
+    installMessage.innerHTML =
+      "✅ <strong>RoXThal Art Design se ha instalado correctamente.</strong>";
+
+  });
+
+})();
+</script>
 </body>
 </html>
