@@ -15558,6 +15558,520 @@ document.addEventListener('keydown', function(event) {
 
 })();
 
-</script>      
+</script>   
+  <!-- =========================================================
+     ROXTHAL ART DESIGN
+     BUSCADORES WEB — DESPLEGABLE
+     Une los dos buscadores existentes sin modificar su contenido
+     ========================================================= -->
+
+<style>
+
+  /* CONTENEDOR PRINCIPAL */
+
+  #roxthal-buscadores-web {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+
+  /* PORTADA */
+
+  .roxthal-buscadores-portada {
+
+    width: 100%;
+    min-height: 280px;
+
+    position: relative;
+    overflow: hidden;
+
+    border-radius: 22px;
+
+    cursor: pointer;
+
+    border: 1px solid var(--line);
+
+    background-image:
+      linear-gradient(
+        rgba(0,0,0,0.18),
+        rgba(0,0,0,0.80)
+      ),
+      url("https://images.unsplash.com/photo-1553484771-047a44eee27b?auto=format&fit=crop&w=1400&q=85");
+
+    background-size: cover;
+    background-position: center;
+
+    box-shadow:
+      0 15px 40px rgba(0,0,0,0.45);
+
+    transition:
+      transform 0.25s ease,
+      border-color 0.25s ease;
+
+  }
+
+
+  .roxthal-buscadores-portada:hover {
+
+    transform: translateY(-3px);
+
+    border-color: var(--gold);
+
+  }
+
+
+  .roxthal-buscadores-portada-contenido {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    text-align: center;
+
+    padding: 30px 20px;
+
+  }
+
+
+  .roxthal-buscadores-portada h2 {
+
+    margin: 0 0 8px;
+
+    color: #fff;
+
+    font-size:
+      clamp(1.7rem, 4vw, 2.6rem);
+
+    font-weight: 900;
+
+    text-shadow:
+      0 3px 15px rgba(0,0,0,0.9);
+
+  }
+
+
+  .roxthal-buscadores-portada p {
+
+    margin: 0;
+
+    color: var(--gold2);
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+  }
+
+
+  .roxthal-buscadores-indicador {
+
+    margin-top: 12px;
+
+    color: #fff;
+
+    font-size: 0.9rem;
+
+  }
+
+
+  /* CONTENIDO CERRADO */
+
+  #roxthal-buscadores-web.roxthal-buscadores-cerrado
+  .roxthal-buscadores-contenido {
+
+    display: none !important;
+
+  }
+
+
+  /* CONTENIDO ABIERTO */
+
+  #roxthal-buscadores-web.roxthal-buscadores-abierto
+  .roxthal-buscadores-contenido {
+
+    display: block !important;
+
+    animation:
+      roxthalBuscadoresEntrada
+      0.35s ease;
+
+  }
+
+
+  /* SEPARACIÓN ENTRE LOS DOS BUSCADORES */
+
+  .roxthal-buscadores-contenido
+  #buscador-tatuajes,
+  .roxthal-buscadores-contenido
+  #buscador-cuadros-artistas {
+
+    display: block !important;
+
+    max-width: 1200px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+  }
+
+
+  .roxthal-buscadores-contenido
+  #buscador-tatuajes {
+
+    padding-top: 45px;
+
+  }
+
+
+  .roxthal-buscadores-contenido
+  #buscador-cuadros-artistas {
+
+    padding-top: 45px;
+
+  }
+
+
+  @keyframes roxthalBuscadoresEntrada {
+
+    from {
+
+      opacity: 0;
+
+      transform:
+        translateY(-15px);
+
+    }
+
+    to {
+
+      opacity: 1;
+
+      transform:
+        translateY(0);
+
+    }
+
+  }
+
+
+  @media (max-width: 700px) {
+
+    #roxthal-buscadores-web {
+
+      padding:
+        30px 14px;
+
+    }
+
+    .roxthal-buscadores-portada {
+
+      min-height: 250px;
+
+    }
+
+  }
+
+</style>
+
+
+<script>
+
+(function () {
+
+  "use strict";
+
+
+  function iniciarBuscadoresWeb() {
+
+    const tatuajes =
+      document.getElementById(
+        "buscador-tatuajes"
+      );
+
+    const cuadros =
+      document.getElementById(
+        "buscador-cuadros-artistas"
+      );
+
+
+    /*
+     * Seguridad:
+     * si alguno no existe, no hacemos nada.
+     */
+
+    if (!tatuajes || !cuadros) {
+
+      console.warn(
+        "RoXThal: no se encontraron los dos buscadores."
+      );
+
+      return;
+
+    }
+
+
+    /*
+     * Evitar duplicación.
+     */
+
+    if (
+      document.getElementById(
+        "roxthal-buscadores-web"
+      )
+    ) {
+
+      return;
+
+    }
+
+
+    /*
+     * Crear el nuevo bloque.
+     */
+
+    const contenedor =
+      document.createElement("section");
+
+    contenedor.id =
+      "roxthal-buscadores-web";
+
+
+    contenedor.className =
+      "roxthal-buscadores-cerrado";
+
+
+    /*
+     * Crear portada.
+     */
+
+    const portada =
+      document.createElement("div");
+
+    portada.className =
+      "roxthal-buscadores-portada";
+
+
+    portada.setAttribute(
+      "role",
+      "button"
+    );
+
+
+    portada.setAttribute(
+      "tabindex",
+      "0"
+    );
+
+
+    portada.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+
+    portada.setAttribute(
+      "aria-label",
+      "Abrir Buscadores Web"
+    );
+
+
+    portada.innerHTML = `
+
+      <div
+        class="roxthal-buscadores-portada-contenido">
+
+        <h2>
+          🔎 BUSCADORES WEB
+        </h2>
+
+        <p>
+          TATUAJES · ARTE · CUADROS · ARTISTAS
+        </p>
+
+        <div
+          class="roxthal-buscadores-indicador">
+
+          Toca la imagen para explorar ↓
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    /*
+     * Crear zona de contenido.
+     */
+
+    const contenido =
+      document.createElement("div");
+
+    contenido.className =
+      "roxthal-buscadores-contenido";
+
+
+    /*
+     * Guardamos temporalmente los dos
+     * buscadores existentes y los movemos
+     * dentro del nuevo apartado.
+     */
+
+    contenido.appendChild(
+      tatuajes
+    );
+
+    contenido.appendChild(
+      cuadros
+    );
+
+
+    /*
+     * Montar el nuevo bloque.
+     */
+
+    contenedor.appendChild(
+      portada
+    );
+
+    contenedor.appendChild(
+      contenido
+    );
+
+
+    /*
+     * Colocarlo antes del primer buscador.
+     */
+
+    tatuajes.parentNode.insertBefore(
+      contenedor,
+      tatuajes
+    );
+
+
+    /*
+     * Estado inicial cerrado.
+     */
+
+    contenedor.classList.add(
+      "roxthal-buscadores-cerrado"
+    );
+
+
+    /*
+     * Abrir / cerrar.
+     */
+
+    function cambiarEstado() {
+
+      const abierto =
+        contenedor.classList.toggle(
+          "roxthal-buscadores-abierto"
+        );
+
+
+      contenedor.classList.toggle(
+        "roxthal-buscadores-cerrado",
+        !abierto
+      );
+
+
+      portada.setAttribute(
+        "aria-expanded",
+        abierto
+          ? "true"
+          : "false"
+      );
+
+
+      portada.setAttribute(
+        "aria-label",
+        abierto
+          ? "Cerrar Buscadores Web"
+          : "Abrir Buscadores Web"
+      );
+
+
+      const indicador =
+        portada.querySelector(
+          ".roxthal-buscadores-indicador"
+        );
+
+
+      if (indicador) {
+
+        indicador.textContent =
+          abierto
+            ? "Toca la imagen para cerrar ↑"
+            : "Toca la imagen para explorar ↓";
+
+      }
+
+    }
+
+
+    portada.addEventListener(
+      "click",
+      cambiarEstado
+    );
+
+
+    /*
+     * También permite abrir/cerrar
+     * con Enter o espacio.
+     */
+
+    portada.addEventListener(
+      "keydown",
+      function (evento) {
+
+        if (
+          evento.key === "Enter" ||
+          evento.key === " "
+        ) {
+
+          evento.preventDefault();
+
+          cambiarEstado();
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /*
+   * Ejecutar cuando la página esté lista.
+   */
+
+  if (
+    document.readyState === "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      iniciarBuscadoresWeb
+    );
+
+  } else {
+
+    iniciarBuscadoresWeb();
+
+  }
+
+})();
+
+</script>
 </body>
 </html>
