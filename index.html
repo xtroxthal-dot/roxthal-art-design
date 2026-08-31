@@ -19383,5 +19383,73 @@ body {
 <!-- ============================================================
      FIN DEL MÓDULO ROXTHAL TATTOO DESIGNER
      ============================================================ -->
+    <script>
+(function () {
+  const designer = document.getElementById("roxthal-tattoo-designer");
+
+  if (!designer) return;
+
+  const button = document.createElement("button");
+
+  button.type = "button";
+  button.id = "roxthal-designer-toggle";
+  button.textContent = "🎨 Diseñador de Tatuajes";
+
+  button.style.cssText = `
+    display:block;
+    width:100%;
+    max-width:1500px;
+    margin:30px auto 0;
+    padding:16px 20px;
+    border:1px solid #d7b45a;
+    border-radius:14px;
+    background:#15151a;
+    color:#d7b45a;
+    font-size:1.05rem;
+    font-weight:800;
+    cursor:pointer;
+    text-align:center;
+  `;
+
+  designer.parentNode.insertBefore(button, designer);
+
+  /* Cerrado inicialmente */
+  designer.style.display = "none";
+
+  button.addEventListener("click", function () {
+
+    const cerrado =
+      designer.style.display === "none";
+
+    if (cerrado) {
+
+      designer.style.display = "block";
+
+      button.textContent =
+        "🔽 Cerrar Diseñador de Tatuajes";
+
+      designer.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+    } else {
+
+      designer.style.display = "none";
+
+      button.textContent =
+        "🎨 Diseñador de Tatuajes";
+
+      button.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+    }
+
+  });
+
+})();
+</script>      
 </body>
 </html>
