@@ -15150,6 +15150,414 @@ document.addEventListener('keydown', function(event) {
 
 })();
 
-</script>                    
+</script>   
+  <!-- =========================================================
+     ROXTHAL ART DESIGN
+     ADMINISTRADOR DEL SITIO — PORTADA DESPLEGABLE
+     ========================================================= -->
+
+<style>
+
+  /* ADMINISTRADOR CERRADO */
+
+  #admin.roxthal-admin-cerrado > .eyebrow,
+  #admin.roxthal-admin-cerrado > h2,
+  #admin.roxthal-admin-cerrado > .admin-wrap {
+    display: none !important;
+  }
+
+  #admin.roxthal-admin-cerrado
+  .roxthal-admin-portada {
+    display: block !important;
+  }
+
+
+  /* PORTADA */
+
+  .roxthal-admin-portada {
+
+    width: 100%;
+    min-height: 300px;
+
+    position: relative;
+    overflow: hidden;
+
+    border-radius: 22px;
+
+    cursor: pointer;
+
+    border: 1px solid var(--line);
+
+    background-image:
+      linear-gradient(
+        rgba(0,0,0,0.18),
+        rgba(0,0,0,0.78)
+      ),
+      url("https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1400&q=85");
+
+    background-size: cover;
+    background-position: center;
+
+    box-shadow:
+      0 15px 40px rgba(0,0,0,0.45);
+
+    transition:
+      transform 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+
+  .roxthal-admin-portada:hover {
+
+    transform: translateY(-3px);
+
+    border-color: var(--gold);
+
+  }
+
+
+  /* TEXTO DE LA PORTADA */
+
+  .roxthal-admin-contenido {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    text-align: center;
+
+    padding: 30px 20px;
+
+  }
+
+
+  .roxthal-admin-contenido h2 {
+
+    margin: 0 0 8px;
+
+    color: #fff;
+
+    font-size:
+      clamp(1.6rem, 4vw, 2.5rem);
+
+    font-weight: 900;
+
+    text-shadow:
+      0 3px 14px rgba(0,0,0,0.9);
+
+  }
+
+
+  .roxthal-admin-contenido p {
+
+    margin: 0;
+
+    color: var(--gold2);
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+  }
+
+
+  .roxthal-admin-indicador {
+
+    margin-top: 12px;
+
+    color: #fff;
+
+    font-size: 0.9rem;
+
+    opacity: 0.95;
+
+  }
+
+
+  /* PORTADA ABIERTA */
+
+  #admin.roxthal-admin-abierto
+  .roxthal-admin-portada {
+
+    margin-bottom: 28px;
+
+  }
+
+
+  #admin.roxthal-admin-abierto
+  .admin-wrap {
+
+    display: block !important;
+
+    animation:
+      roxthalAdminEntrada
+      0.35s ease;
+
+  }
+
+
+  @keyframes roxthalAdminEntrada {
+
+    from {
+
+      opacity: 0;
+
+      transform:
+        translateY(-12px);
+
+    }
+
+    to {
+
+      opacity: 1;
+
+      transform:
+        translateY(0);
+
+    }
+
+  }
+
+
+  /* MÓVIL */
+
+  @media (max-width: 700px) {
+
+    .roxthal-admin-portada {
+
+      min-height: 260px;
+
+    }
+
+  }
+
+</style>
+
+
+<script>
+
+(function () {
+
+  "use strict";
+
+
+  function iniciarAdministradorDesplegable() {
+
+    const admin =
+      document.getElementById("admin");
+
+    if (!admin) return;
+
+
+    /*
+     * Evitar crear la portada dos veces.
+     */
+
+    if (
+      admin.querySelector(
+        ".roxthal-admin-portada"
+      )
+    ) {
+
+      return;
+
+    }
+
+
+    /*
+     * Crear portada.
+     */
+
+    const portada =
+      document.createElement("div");
+
+    portada.className =
+      "roxthal-admin-portada";
+
+
+    portada.setAttribute(
+      "role",
+      "button"
+    );
+
+
+    portada.setAttribute(
+      "tabindex",
+      "0"
+    );
+
+
+    portada.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+
+    portada.setAttribute(
+      "aria-label",
+      "Abrir Administrador del sitio"
+    );
+
+
+    portada.innerHTML = `
+
+      <div
+        class="roxthal-admin-contenido">
+
+        <h2>
+          ⚙️ Administrador del sitio
+        </h2>
+
+        <p>
+          ROXTHAL ART DESIGN
+        </p>
+
+        <div
+          class="roxthal-admin-indicador">
+
+          Toca la imagen para entrar ↓
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    /*
+     * Colocar portada
+     * antes del administrador actual.
+     */
+
+    admin.insertBefore(
+      portada,
+      admin.firstChild
+    );
+
+
+    /*
+     * Estado inicial:
+     * CERRADO.
+     */
+
+    admin.classList.add(
+      "roxthal-admin-cerrado"
+    );
+
+
+    /*
+     * Abrir / cerrar.
+     */
+
+    function cambiarEstado() {
+
+      const abierto =
+        admin.classList.toggle(
+          "roxthal-admin-abierto"
+        );
+
+
+      admin.classList.toggle(
+        "roxthal-admin-cerrado",
+        !abierto
+      );
+
+
+      portada.setAttribute(
+        "aria-expanded",
+        abierto
+          ? "true"
+          : "false"
+      );
+
+
+      portada.setAttribute(
+        "aria-label",
+        abierto
+          ? "Cerrar Administrador del sitio"
+          : "Abrir Administrador del sitio"
+      );
+
+
+      const indicador =
+        portada.querySelector(
+          ".roxthal-admin-indicador"
+        );
+
+
+      if (indicador) {
+
+        indicador.textContent =
+          abierto
+            ? "Toca la imagen para cerrar ↑"
+            : "Toca la imagen para entrar ↓";
+
+      }
+
+    }
+
+
+    portada.addEventListener(
+      "click",
+      cambiarEstado
+    );
+
+
+    /*
+     * También funciona con Enter
+     * y barra espaciadora.
+     */
+
+    portada.addEventListener(
+      "keydown",
+      function (evento) {
+
+        if (
+          evento.key === "Enter" ||
+          evento.key === " "
+        ) {
+
+          evento.preventDefault();
+
+          cambiarEstado();
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /*
+   * Ejecutar cuando la página esté lista.
+   */
+
+  if (
+    document.readyState === "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      iniciarAdministradorDesplegable
+    );
+
+  } else {
+
+    iniciarAdministradorDesplegable();
+
+  }
+
+})();
+
+</script>      
 </body>
 </html>
