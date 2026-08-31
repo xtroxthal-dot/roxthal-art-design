@@ -15558,6 +15558,289 @@ document.addEventListener('keydown', function(event) {
 
 })();
 
-</script>      
+</script>  
+    <!-- =========================================================
+     ROXTHAL — DESPLEGABLE PARA BUSCADORES EXISTENTES
+     IMPORTANTE:
+     NO REEMPLAZA NI DUPLICA LOS BUSCADORES ACTUALES.
+     PEGAR UNA SOLA VEZ ANTES DE </body>
+     ========================================================= --><style>
+
+.roxthal-toggle-buscador {
+  display:block;
+  width:68px;
+  height:68px;
+  padding:0;
+  margin:18px auto 7px;
+  border:2px solid #d4af37;
+  border-radius:12px;
+  overflow:hidden;
+  background:#111;
+  cursor:pointer;
+  box-shadow:0 4px 15px rgba(0,0,0,.45);
+  transition:transform .2s ease;
+}
+
+.roxthal-toggle-buscador:hover {
+  transform:scale(1.05);
+}
+
+.roxthal-toggle-buscador:active {
+  transform:scale(.96);
+}
+
+.roxthal-toggle-buscador img {
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.roxthal-toggle-titulo {
+  display:block;
+  text-align:center;
+  margin:0 auto 14px;
+  color:#aaa;
+  font-size:12px;
+}
+
+/*
+   Cuando está cerrado:
+   solamente permanece visible el botón y su pequeño título.
+*/
+
+.roxthal-buscador-cerrado
+  > *:not(.roxthal-toggle-buscador):not(.roxthal-toggle-titulo) {
+  display:none !important;
+}
+
+</style><script>
+
+(function() {
+
+  function prepararBuscador(
+    id,
+    imagen,
+    texto,
+    alt
+  ) {
+
+    const bloque =
+      document.getElementById(id);
+
+    if (!bloque) return;
+
+    /*
+     * Evita duplicar el botón si el script
+     * se ejecutara más de una vez.
+     */
+
+    if (
+      bloque.querySelector(
+        '.roxthal-toggle-buscador'
+      )
+    ) {
+      return;
+    }
+
+
+    /*
+     * El buscador comienza CERRADO.
+     */
+
+    bloque.classList.add(
+      'roxthal-buscador-cerrado'
+    );
+
+
+    /*
+     * Crear botón.
+     */
+
+    const boton =
+      document.createElement('button');
+
+    boton.type =
+      'button';
+
+    boton.className =
+      'roxthal-toggle-buscador';
+
+    boton.setAttribute(
+      'aria-expanded',
+      'false'
+    );
+
+    boton.setAttribute(
+      'aria-label',
+      'Abrir ' + texto
+    );
+
+
+    /*
+     * Crear imagen.
+     */
+
+    const img =
+      document.createElement('img');
+
+    img.src =
+      imagen;
+
+    img.alt =
+      alt;
+
+    img.loading =
+      'lazy';
+
+
+    boton.appendChild(img);
+
+
+    /*
+     * Crear pequeño título.
+     */
+
+    const titulo =
+      document.createElement('div');
+
+    titulo.className =
+      'roxthal-toggle-titulo';
+
+    titulo.textContent =
+      texto;
+
+
+    /*
+     * Insertar ambos al principio
+     * del bloque EXISTENTE.
+     */
+
+    bloque.insertBefore(
+      titulo,
+      bloque.firstChild
+    );
+
+    bloque.insertBefore(
+      boton,
+      titulo
+    );
+
+
+    /*
+     * Abrir / cerrar.
+     */
+
+    boton.addEventListener(
+      'click',
+      function() {
+
+        const cerrado =
+          bloque.classList.contains(
+            'roxthal-buscador-cerrado'
+          );
+
+
+        if (cerrado) {
+
+          bloque.classList.remove(
+            'roxthal-buscador-cerrado'
+          );
+
+          boton.setAttribute(
+            'aria-expanded',
+            'true'
+          );
+
+          boton.setAttribute(
+            'aria-label',
+            'Cerrar ' + texto
+          );
+
+        } else {
+
+          bloque.classList.add(
+            'roxthal-buscador-cerrado'
+          );
+
+          boton.setAttribute(
+            'aria-expanded',
+            'false'
+          );
+
+          boton.setAttribute(
+            'aria-label',
+            'Abrir ' + texto
+          );
+
+        }
+
+      }
+    );
+
+  }
+
+
+  function iniciar() {
+
+    /*
+     * BUSCADOR DE TATUAJES EXISTENTE
+     */
+
+    prepararBuscador(
+
+      'buscador-tatuajes',
+
+      'https://commons.wikimedia.org/wiki/Special:Redirect/file/Tattoo_machine_2_coil.jpg',
+
+      '🔎 Buscador de tatuajes',
+
+      'Máquina de tatuaje de bobina'
+
+    );
+
+
+    /*
+     * BUSCADOR DE CUADROS Y ARTISTAS EXISTENTE
+     */
+
+    prepararBuscador(
+
+      'buscador-cuadros-artistas',
+
+      'https://commons.wikimedia.org/wiki/Special:Redirect/file/Oil_painting_palette.jpg',
+
+      '🖼️ Buscador de cuadros y artistas',
+
+      'Paleta de pintor'
+
+    );
+
+  }
+
+
+  /*
+   * Tus bloques ya están en el HTML cuando
+   * normalmente se ejecuta este código.
+   */
+
+  if (
+    document.readyState === 'loading'
+  ) {
+
+    document.addEventListener(
+      'DOMContentLoaded',
+      iniciar
+    );
+
+  } else {
+
+    iniciar();
+
+  }
+
+})();
+
+</script><!-- FIN DESPLEGABLES BUSCADORES -->    
 </body>
 </html>
