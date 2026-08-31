@@ -13397,5 +13397,401 @@ document.addEventListener('keydown', function(event) {
 })();
 
 </script>
+  <!-- =========================================================
+     ROXTHAL ART DESIGN
+     FORMACIÓN ARTÍSTICA — PORTADA DESPLEGABLE
+     ========================================================= -->
+
+<style>
+
+  #cursos.roxthal-cursos-cerrado > * {
+    display: none !important;
+  }
+
+  /* La portada permanece visible cuando está cerrado */
+  #cursos.roxthal-cursos-cerrado
+  .roxthal-cursos-portada {
+    display: block !important;
+  }
+
+
+  /* =========================================================
+     PORTADA
+     ========================================================= */
+
+  .roxthal-cursos-portada {
+    position: relative;
+    width: 100%;
+    min-height: 260px;
+
+    border-radius: 22px;
+    overflow: hidden;
+
+    cursor: pointer;
+
+    background-image:
+      linear-gradient(
+        rgba(0,0,0,0.28),
+        rgba(0,0,0,0.68)
+      ),
+      url("https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1400&q=85");
+
+    background-size: cover;
+    background-position: center;
+
+    border: 1px solid var(--line);
+
+    box-shadow:
+      0 12px 35px rgba(0,0,0,0.35);
+
+    transition:
+      transform 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+
+  .roxthal-cursos-portada:hover {
+    transform: translateY(-3px);
+    border-color: var(--gold);
+  }
+
+
+  .roxthal-cursos-portada-contenido {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    padding: 30px 25px;
+
+    text-align: center;
+  }
+
+
+  .roxthal-cursos-portada-titulo {
+    margin: 0 0 8px;
+
+    color: #fff;
+
+    font-size: clamp(
+      1.6rem,
+      4vw,
+      2.5rem
+    );
+
+    font-weight: 900;
+
+    text-shadow:
+      0 3px 12px rgba(0,0,0,0.8);
+  }
+
+
+  .roxthal-cursos-portada-subtitulo {
+    margin: 0;
+
+    color: var(--gold2);
+
+    font-size: 1rem;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+  }
+
+
+  .roxthal-cursos-portada-indicador {
+    margin-top: 15px;
+
+    color: #fff;
+
+    font-size: 0.9rem;
+
+    opacity: 0.9;
+  }
+
+
+  /* =========================================================
+     ESTADO ABIERTO
+     ========================================================= */
+
+  #cursos.roxthal-cursos-abierto
+  .roxthal-cursos-portada {
+
+    margin-bottom: 30px;
+
+    animation:
+      roxthalCursosEntrada
+      0.35s ease;
+
+  }
+
+
+  #cursos.roxthal-cursos-abierto
+  > .eyebrow {
+
+    display: inline-block !important;
+
+  }
+
+
+  #cursos.roxthal-cursos-abierto
+  > h2 {
+
+    display: block !important;
+
+  }
+
+
+  #cursos.roxthal-cursos-abierto
+  > .grid {
+
+    display: grid !important;
+
+    animation:
+      roxthalCursosEntrada
+      0.35s ease;
+
+  }
+
+
+  @keyframes roxthalCursosEntrada {
+
+    from {
+      opacity: 0;
+      transform: translateY(-12px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+  }
+
+</style>
+
+
+<script>
+
+(function () {
+
+  "use strict";
+
+
+  function iniciarFormacionArtistica() {
+
+    const cursos =
+      document.getElementById("cursos");
+
+    if (!cursos) return;
+
+
+    /*
+     * Evitar duplicación.
+     */
+
+    if (
+      cursos.querySelector(
+        ".roxthal-cursos-portada"
+      )
+    ) {
+      return;
+    }
+
+
+    /*
+     * Crear portada.
+     */
+
+    const portada =
+      document.createElement("div");
+
+    portada.className =
+      "roxthal-cursos-portada";
+
+
+    portada.setAttribute(
+      "role",
+      "button"
+    );
+
+
+    portada.setAttribute(
+      "tabindex",
+      "0"
+    );
+
+
+    portada.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+
+    portada.setAttribute(
+      "aria-label",
+      "Abrir Formación Artística"
+    );
+
+
+    portada.innerHTML = `
+
+      <div
+        class="roxthal-cursos-portada-contenido"
+      >
+
+        <div
+          class="roxthal-cursos-portada-titulo"
+        >
+          🎨 FORMACIÓN ARTÍSTICA
+        </div>
+
+        <div
+          class="roxthal-cursos-portada-subtitulo"
+        >
+          Cursos y Talleres
+        </div>
+
+        <div
+          class="roxthal-cursos-portada-indicador"
+        >
+          Toca la imagen para ver los cursos
+          ↓
+        </div>
+
+      </div>
+
+    `;
+
+
+    /*
+     * Insertar la portada
+     * al principio de la sección.
+     */
+
+    cursos.insertBefore(
+      portada,
+      cursos.firstChild
+    );
+
+
+    /*
+     * Estado inicial:
+     * CERRADO.
+     */
+
+    cursos.classList.add(
+      "roxthal-cursos-cerrado"
+    );
+
+
+    /*
+     * Abrir / cerrar.
+     */
+
+    function cambiarEstado() {
+
+      const abierto =
+        cursos.classList.toggle(
+          "roxthal-cursos-abierto"
+        );
+
+
+      cursos.classList.toggle(
+        "roxthal-cursos-cerrado",
+        !abierto
+      );
+
+
+      portada.setAttribute(
+        "aria-expanded",
+        abierto
+          ? "true"
+          : "false"
+      );
+
+
+      portada.setAttribute(
+        "aria-label",
+        abierto
+          ? "Cerrar Formación Artística"
+          : "Abrir Formación Artística"
+      );
+
+
+      const indicador =
+        portada.querySelector(
+          ".roxthal-cursos-portada-indicador"
+        );
+
+
+      if (indicador) {
+
+        indicador.textContent =
+          abierto
+            ? "Toca la imagen para cerrar ↑"
+            : "Toca la imagen para ver los cursos ↓";
+
+      }
+
+    }
+
+
+    portada.addEventListener(
+      "click",
+      cambiarEstado
+    );
+
+
+    /*
+     * También funciona con teclado.
+     */
+
+    portada.addEventListener(
+      "keydown",
+      function (evento) {
+
+        if (
+          evento.key === "Enter" ||
+          evento.key === " "
+        ) {
+
+          evento.preventDefault();
+
+          cambiarEstado();
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /*
+   * Ejecutar cuando la app esté cargada.
+   */
+
+  if (
+    document.readyState === "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      iniciarFormacionArtistica
+    );
+
+  } else {
+
+    iniciarFormacionArtistica();
+
+  }
+
+})();
+
+</script>
 </body>
 </html>
