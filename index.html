@@ -14299,5 +14299,426 @@ document.addEventListener('keydown', function(event) {
 })();
 
 </script>
+  <!-- =========================================================
+     ROXTHAL ART DESIGN
+     CONTACTO + REDES SOCIALES — PORTADA DESPLEGABLE
+     ========================================================= -->
+
+<style>
+
+  /* ================================
+     CONTACTO CERRADO
+     ================================ */
+
+  #contacto.roxthal-contacto-cerrado > * {
+    display: none !important;
+  }
+
+  #contacto.roxthal-contacto-cerrado
+  .roxthal-contacto-portada {
+    display: block !important;
+  }
+
+
+  /* ================================
+     PORTADA
+     ================================ */
+
+  .roxthal-contacto-portada {
+
+    width: 100%;
+    min-height: 310px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 22px;
+
+    cursor: pointer;
+
+    border: 1px solid var(--line);
+
+    background-image:
+      linear-gradient(
+        rgba(0,0,0,0.12),
+        rgba(0,0,0,0.72)
+      ),
+      url("https://hoist.digital/user/pages/06.content/blog/81.expand-geographical-area-of-your-business/socialmediaiconsovermap.png");
+
+    background-size: cover;
+
+    background-position: center;
+
+    box-shadow:
+      0 15px 40px
+      rgba(0,0,0,0.45);
+
+    transition:
+      transform 0.25s ease,
+      border-color 0.25s ease;
+
+  }
+
+
+  .roxthal-contacto-portada:hover {
+
+    transform:
+      translateY(-3px);
+
+    border-color:
+      var(--gold);
+
+  }
+
+
+  /* ================================
+     TEXTO
+     ================================ */
+
+  .roxthal-contacto-portada-contenido {
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    padding: 30px 24px;
+
+    text-align: center;
+
+  }
+
+
+  .roxthal-contacto-portada h2 {
+
+    margin: 0 0 8px;
+
+    color: #fff;
+
+    font-size:
+      clamp(
+        1.6rem,
+        4vw,
+        2.5rem
+      );
+
+    font-weight: 900;
+
+    text-shadow:
+      0 3px 14px
+      rgba(0,0,0,0.9);
+
+  }
+
+
+  .roxthal-contacto-portada p {
+
+    margin: 0;
+
+    color: var(--gold2);
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+  }
+
+
+  .roxthal-contacto-indicador {
+
+    margin-top: 12px;
+
+    color: #fff;
+
+    font-size: 0.9rem;
+
+    opacity: 0.95;
+
+  }
+
+
+  /* ================================
+     ABIERTO
+     ================================ */
+
+  #contacto.roxthal-contacto-abierto
+  .roxthal-contacto-portada {
+
+    margin-bottom: 30px;
+
+  }
+
+
+  #contacto.roxthal-contacto-abierto
+  > .eyebrow {
+
+    display: inline-block !important;
+
+  }
+
+
+  #contacto.roxthal-contacto-abierto
+  > h2 {
+
+    display: block !important;
+
+  }
+
+
+  #contacto.roxthal-contacto-abierto
+  > .grid {
+
+    display: grid !important;
+
+    animation:
+      roxthalContactoEntrada
+      0.35s ease;
+
+  }
+
+
+  @keyframes roxthalContactoEntrada {
+
+    from {
+
+      opacity: 0;
+
+      transform:
+        translateY(-12px);
+
+    }
+
+    to {
+
+      opacity: 1;
+
+      transform:
+        translateY(0);
+
+    }
+
+  }
+
+</style>
+
+
+<script>
+
+(function () {
+
+  "use strict";
+
+
+  function iniciarContactoDesplegable() {
+
+    const contacto =
+      document.getElementById("contacto");
+
+    if (!contacto) return;
+
+
+    /*
+     * Evitar duplicación.
+     */
+
+    if (
+      contacto.querySelector(
+        ".roxthal-contacto-portada"
+      )
+    ) {
+
+      return;
+
+    }
+
+
+    /*
+     * Crear portada.
+     */
+
+    const portada =
+      document.createElement("div");
+
+    portada.className =
+      "roxthal-contacto-portada";
+
+
+    portada.setAttribute(
+      "role",
+      "button"
+    );
+
+
+    portada.setAttribute(
+      "tabindex",
+      "0"
+    );
+
+
+    portada.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+
+    portada.setAttribute(
+      "aria-label",
+      "Abrir contacto y redes sociales"
+    );
+
+
+    portada.innerHTML = `
+
+      <div
+        class="roxthal-contacto-portada-contenido">
+
+        <h2>
+          🌐 CONTACTO Y REDES SOCIALES
+        </h2>
+
+        <p>
+          🗺️ UBICACIÓN · 📱 CONTACTO · 🌐 REDES
+        </p>
+
+        <div
+          class="roxthal-contacto-indicador">
+
+          Toca la imagen para entrar ↓
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    /*
+     * Insertar portada
+     * al principio del contacto.
+     */
+
+    contacto.insertBefore(
+      portada,
+      contacto.firstChild
+    );
+
+
+    /*
+     * Estado inicial:
+     * CERRADO.
+     */
+
+    contacto.classList.add(
+      "roxthal-contacto-cerrado"
+    );
+
+
+    /*
+     * Abrir / cerrar.
+     */
+
+    function cambiarEstado() {
+
+      const abierto =
+        contacto.classList.toggle(
+          "roxthal-contacto-abierto"
+        );
+
+
+      contacto.classList.toggle(
+        "roxthal-contacto-cerrado",
+        !abierto
+      );
+
+
+      portada.setAttribute(
+        "aria-expanded",
+        abierto
+          ? "true"
+          : "false"
+      );
+
+
+      portada.setAttribute(
+        "aria-label",
+        abierto
+          ? "Cerrar contacto y redes sociales"
+          : "Abrir contacto y redes sociales"
+      );
+
+
+      const indicador =
+        portada.querySelector(
+          ".roxthal-contacto-indicador"
+        );
+
+
+      if (indicador) {
+
+        indicador.textContent =
+          abierto
+            ? "Toca la imagen para cerrar ↑"
+            : "Toca la imagen para entrar ↓";
+
+      }
+
+    }
+
+
+    portada.addEventListener(
+      "click",
+      cambiarEstado
+    );
+
+
+    /*
+     * Accesibilidad.
+     */
+
+    portada.addEventListener(
+      "keydown",
+      function (evento) {
+
+        if (
+          evento.key === "Enter" ||
+          evento.key === " "
+        ) {
+
+          evento.preventDefault();
+
+          cambiarEstado();
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /*
+   * Ejecutar al cargar.
+   */
+
+  if (
+    document.readyState === "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      iniciarContactoDesplegable
+    );
+
+  } else {
+
+    iniciarContactoDesplegable();
+
+  }
+
+})();
+
+</script>
 </body>
 </html>
