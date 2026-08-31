@@ -13793,5 +13793,511 @@ document.addEventListener('keydown', function(event) {
 })();
 
 </script>
+   <!-- =========================================================
+     ROXTHAL ART DESIGN
+     RADIO ROXTHAL — PORTADA DESPLEGABLE
+     ========================================================= -->
+
+<style>
+
+  /* ================================
+     RADIO CERRADA
+     ================================ */
+
+  #radio.roxthal-radio-cerrada > * {
+    display: none !important;
+  }
+
+  #radio.roxthal-radio-cerrada
+  .roxthal-radio-portada {
+    display: grid !important;
+  }
+
+
+  /* ================================
+     PORTADA
+     ================================ */
+
+  .roxthal-radio-portada {
+
+    width: 100%;
+    min-height: 300px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 22px;
+
+    border: 1px solid var(--line);
+
+    cursor: pointer;
+
+    background: var(--panel);
+
+    box-shadow:
+      0 15px 40px rgba(0,0,0,0.45);
+
+    transition:
+      transform 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+
+  .roxthal-radio-portada:hover {
+
+    transform: translateY(-3px);
+
+    border-color: var(--gold);
+
+  }
+
+
+  /* ================================
+     IMAGEN MÁQUINA
+     ================================ */
+
+  .roxthal-radio-maquina {
+
+    background-image:
+      linear-gradient(
+        rgba(0,0,0,0.08),
+        rgba(0,0,0,0.35)
+      ),
+      url("https://dygtyjqp7pi0m.cloudfront.net/i/71453/55923671_1.jpg?v=8DD624F09FD92B0");
+
+    background-size: cover;
+
+    background-position: center;
+
+    min-height: 300px;
+
+  }
+
+
+  /* ================================
+     IMAGEN PALETA
+     ================================ */
+
+  .roxthal-radio-paleta {
+
+    background-image:
+      linear-gradient(
+        rgba(0,0,0,0.05),
+        rgba(0,0,0,0.35)
+      ),
+      url("https://theatelier.org/images/tiles/paxton-palette-square.jpg");
+
+    background-size: cover;
+
+    background-position: center;
+
+    min-height: 300px;
+
+  }
+
+
+  /* ================================
+     TEXTO CENTRAL
+     ================================ */
+
+  .roxthal-radio-titulo {
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+      translate(-50%, -50%);
+
+    width: min(90%, 520px);
+
+    padding: 22px 26px;
+
+    text-align: center;
+
+    background:
+      rgba(0,0,0,0.78);
+
+    backdrop-filter:
+      blur(8px);
+
+    border:
+      1px solid
+      rgba(215,180,90,0.65);
+
+    border-radius: 18px;
+
+    box-shadow:
+      0 10px 35px
+      rgba(0,0,0,0.55);
+
+  }
+
+
+  .roxthal-radio-titulo h2 {
+
+    margin: 0 0 6px;
+
+    color: #fff;
+
+    font-size:
+      clamp(
+        1.6rem,
+        4vw,
+        2.5rem
+      );
+
+    font-weight: 900;
+
+  }
+
+
+  .roxthal-radio-titulo p {
+
+    margin: 0;
+
+    color: var(--gold2);
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+  }
+
+
+  .roxthal-radio-indicador {
+
+    margin-top: 10px;
+
+    color: #fff;
+
+    font-size: 0.85rem;
+
+    opacity: 0.9;
+
+  }
+
+
+  /* ================================
+     RADIO ABIERTA
+     ================================ */
+
+  #radio.roxthal-radio-abierta
+  .roxthal-radio-portada {
+
+    margin-bottom: 28px;
+
+  }
+
+
+  #radio.roxthal-radio-abierta
+  > .eyebrow {
+
+    display: inline-block !important;
+
+  }
+
+
+  #radio.roxthal-radio-abierta
+  > h2 {
+
+    display: block !important;
+
+  }
+
+
+  #radio.roxthal-radio-abierta
+  > .radio-box {
+
+    display: block !important;
+
+    animation:
+      roxthalRadioEntrada
+      0.35s ease;
+
+  }
+
+
+  @keyframes roxthalRadioEntrada {
+
+    from {
+
+      opacity: 0;
+
+      transform:
+        translateY(-12px);
+
+    }
+
+    to {
+
+      opacity: 1;
+
+      transform:
+        translateY(0);
+
+    }
+
+  }
+
+
+  /* ================================
+     MÓVIL
+     ================================ */
+
+  @media (max-width: 700px) {
+
+    .roxthal-radio-portada {
+
+      grid-template-columns: 1fr;
+
+      min-height: 430px;
+
+    }
+
+    .roxthal-radio-maquina,
+    .roxthal-radio-paleta {
+
+      min-height: 215px;
+
+    }
+
+  }
+
+</style>
+
+
+<script>
+
+(function () {
+
+  "use strict";
+
+
+  function iniciarRadioDesplegable() {
+
+    const radio =
+      document.getElementById("radio");
+
+    if (!radio) return;
+
+
+    /*
+     * Evitar duplicación.
+     */
+
+    if (
+      radio.querySelector(
+        ".roxthal-radio-portada"
+      )
+    ) {
+
+      return;
+
+    }
+
+
+    /*
+     * Crear portada.
+     */
+
+    const portada =
+      document.createElement("div");
+
+    portada.className =
+      "roxthal-radio-portada";
+
+
+    portada.setAttribute(
+      "role",
+      "button"
+    );
+
+
+    portada.setAttribute(
+      "tabindex",
+      "0"
+    );
+
+
+    portada.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+
+    portada.setAttribute(
+      "aria-label",
+      "Abrir Radio RoXThal"
+    );
+
+
+    portada.innerHTML = `
+
+      <div
+        class="roxthal-radio-maquina"
+        aria-hidden="true">
+      </div>
+
+      <div
+        class="roxthal-radio-paleta"
+        aria-hidden="true">
+      </div>
+
+      <div
+        class="roxthal-radio-titulo">
+
+        <h2>
+          📻 Radio RoXThal
+        </h2>
+
+        <p>
+          🎨 ARTE · 🖋️ TATUAJE · 🎵 MÚSICA
+        </p>
+
+        <div
+          class="roxthal-radio-indicador">
+
+          Toca la imagen para entrar
+          ↓
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    /*
+     * Insertar portada
+     * al principio de Radio.
+     */
+
+    radio.insertBefore(
+      portada,
+      radio.firstChild
+    );
+
+
+    /*
+     * Estado inicial:
+     * CERRADO.
+     */
+
+    radio.classList.add(
+      "roxthal-radio-cerrada"
+    );
+
+
+    /*
+     * Abrir / cerrar.
+     */
+
+    function cambiarEstado() {
+
+      const abierta =
+        radio.classList.toggle(
+          "roxthal-radio-abierta"
+        );
+
+
+      radio.classList.toggle(
+        "roxthal-radio-cerrada",
+        !abierta
+      );
+
+
+      portada.setAttribute(
+        "aria-expanded",
+        abierta
+          ? "true"
+          : "false"
+      );
+
+
+      portada.setAttribute(
+        "aria-label",
+        abierta
+          ? "Cerrar Radio RoXThal"
+          : "Abrir Radio RoXThal"
+      );
+
+
+      const indicador =
+        portada.querySelector(
+          ".roxthal-radio-indicador"
+        );
+
+
+      if (indicador) {
+
+        indicador.textContent =
+          abierta
+            ? "Toca la imagen para cerrar ↑"
+            : "Toca la imagen para entrar ↓";
+
+      }
+
+    }
+
+
+    portada.addEventListener(
+      "click",
+      cambiarEstado
+    );
+
+
+    /*
+     * Accesibilidad por teclado.
+     */
+
+    portada.addEventListener(
+      "keydown",
+      function (evento) {
+
+        if (
+          evento.key === "Enter" ||
+          evento.key === " "
+        ) {
+
+          evento.preventDefault();
+
+          cambiarEstado();
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /*
+   * Ejecutar al cargar.
+   */
+
+  if (
+    document.readyState === "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      iniciarRadioDesplegable
+    );
+
+  } else {
+
+    iniciarRadioDesplegable();
+
+  }
+
+})();
+
+</script>
 </body>
 </html>
