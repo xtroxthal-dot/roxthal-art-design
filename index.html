@@ -14720,5 +14720,436 @@ document.addEventListener('keydown', function(event) {
 })();
 
 </script>
+  <!-- =========================================================
+     ROXTHAL ART DESIGN
+     VISÍTANOS — PORTADA DESPLEGABLE
+     ========================================================= -->
+
+<style>
+
+  /* =========================================================
+     ESTADO CERRADO
+     ========================================================= */
+
+  #ubicacion.roxthal-visitanos-cerrado > * {
+    display: none !important;
+  }
+
+  #ubicacion.roxthal-visitanos-cerrado
+  .roxthal-visitanos-portada {
+    display: block !important;
+  }
+
+
+  /* =========================================================
+     PORTADA
+     ========================================================= */
+
+  .roxthal-visitanos-portada {
+
+    width: 100%;
+    min-height: 310px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 22px;
+
+    cursor: pointer;
+
+    border: 1px solid var(--line);
+
+    background-image:
+      linear-gradient(
+        rgba(0,0,0,0.12),
+        rgba(0,0,0,0.72)
+      ),
+      url("https://www.vaudfamille.ch/data/dataimages/Upload/FireShot-Capture-056-Colore-Box-Sarl-Google-Maps-www.google.com.png");
+
+    background-size: cover;
+
+    background-position: center;
+
+    box-shadow:
+      0 15px 40px rgba(0,0,0,0.45);
+
+    transition:
+      transform 0.25s ease,
+      border-color 0.25s ease;
+
+  }
+
+
+  .roxthal-visitanos-portada:hover {
+
+    transform:
+      translateY(-3px);
+
+    border-color:
+      var(--gold);
+
+  }
+
+
+  /* =========================================================
+     CAPA OSCURA
+     ========================================================= */
+
+  .roxthal-visitanos-portada::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+      linear-gradient(
+        rgba(0,0,0,0.08),
+        rgba(0,0,0,0.70)
+      );
+
+  }
+
+
+  /* =========================================================
+     TEXTO
+     ========================================================= */
+
+  .roxthal-visitanos-contenido {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    text-align: center;
+
+    padding: 30px 20px;
+
+  }
+
+
+  .roxthal-visitanos-contenido h2 {
+
+    margin: 0 0 8px;
+
+    color: #fff;
+
+    font-size:
+      clamp(
+        1.7rem,
+        4vw,
+        2.6rem
+      );
+
+    font-weight: 900;
+
+    text-shadow:
+      0 3px 14px
+      rgba(0,0,0,0.9);
+
+  }
+
+
+  .roxthal-visitanos-contenido p {
+
+    margin: 0;
+
+    color: var(--gold2);
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+  }
+
+
+  .roxthal-visitanos-indicador {
+
+    margin-top: 12px;
+
+    color: #fff;
+
+    font-size: 0.9rem;
+
+    opacity: 0.95;
+
+  }
+
+
+  /* =========================================================
+     ESTADO ABIERTO
+     ========================================================= */
+
+  #ubicacion.roxthal-visitanos-abierto
+  .roxthal-visitanos-portada {
+
+    margin-bottom: 28px;
+
+  }
+
+
+  #ubicacion.roxthal-visitanos-abierto
+  .roxthal-location-box {
+
+    display: block !important;
+
+    animation:
+      roxthalVisitanosEntrada
+      0.35s ease;
+
+  }
+
+
+  @keyframes roxthalVisitanosEntrada {
+
+    from {
+
+      opacity: 0;
+
+      transform:
+        translateY(-12px);
+
+    }
+
+    to {
+
+      opacity: 1;
+
+      transform:
+        translateY(0);
+
+    }
+
+  }
+
+</style>
+
+
+<script>
+
+(function () {
+
+  "use strict";
+
+
+  function iniciarVisitanosDesplegable() {
+
+    const ubicacion =
+      document.getElementById("ubicacion");
+
+    if (!ubicacion) return;
+
+
+    /*
+     * Evitar duplicar la portada.
+     */
+
+    if (
+      ubicacion.querySelector(
+        ".roxthal-visitanos-portada"
+      )
+    ) {
+
+      return;
+
+    }
+
+
+    /*
+     * Crear portada.
+     */
+
+    const portada =
+      document.createElement("div");
+
+    portada.className =
+      "roxthal-visitanos-portada";
+
+
+    portada.setAttribute(
+      "role",
+      "button"
+    );
+
+
+    portada.setAttribute(
+      "tabindex",
+      "0"
+    );
+
+
+    portada.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+
+    portada.setAttribute(
+      "aria-label",
+      "Abrir Visítanos"
+    );
+
+
+    portada.innerHTML = `
+
+      <div
+        class="roxthal-visitanos-contenido">
+
+        <h2>
+          📍 VISÍTANOS
+        </h2>
+
+        <p>
+          ROXTHAL ART DESIGN
+        </p>
+
+        <div
+          class="roxthal-visitanos-indicador">
+
+          Toca el mapa para ver nuestra ubicación ↓
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    /*
+     * Insertar la portada
+     * antes del contenido original.
+     */
+
+    ubicacion.insertBefore(
+      portada,
+      ubicacion.firstChild
+    );
+
+
+    /*
+     * Estado inicial:
+     * CERRADO.
+     */
+
+    ubicacion.classList.add(
+      "roxthal-visitanos-cerrado"
+    );
+
+
+    /*
+     * Abrir / cerrar.
+     */
+
+    function cambiarEstado() {
+
+      const abierto =
+        ubicacion.classList.toggle(
+          "roxthal-visitanos-abierto"
+        );
+
+
+      ubicacion.classList.toggle(
+        "roxthal-visitanos-cerrado",
+        !abierto
+      );
+
+
+      portada.setAttribute(
+        "aria-expanded",
+        abierto
+          ? "true"
+          : "false"
+      );
+
+
+      portada.setAttribute(
+        "aria-label",
+        abierto
+          ? "Cerrar Visítanos"
+          : "Abrir Visítanos"
+      );
+
+
+      const indicador =
+        portada.querySelector(
+          ".roxthal-visitanos-indicador"
+        );
+
+
+      if (indicador) {
+
+        indicador.textContent =
+          abierto
+            ? "Toca el mapa para cerrar ↑"
+            : "Toca el mapa para ver nuestra ubicación ↓";
+
+      }
+
+    }
+
+
+    portada.addEventListener(
+      "click",
+      cambiarEstado
+    );
+
+
+    /*
+     * También funciona con teclado.
+     */
+
+    portada.addEventListener(
+      "keydown",
+      function (evento) {
+
+        if (
+          evento.key === "Enter" ||
+          evento.key === " "
+        ) {
+
+          evento.preventDefault();
+
+          cambiarEstado();
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /*
+   * Ejecutar al cargar.
+   */
+
+  if (
+    document.readyState === "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      iniciarVisitanosDesplegable
+    );
+
+  } else {
+
+    iniciarVisitanosDesplegable();
+
+  }
+
+})();
+
+</script>                    
 </body>
 </html>
