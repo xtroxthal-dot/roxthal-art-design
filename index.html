@@ -15841,6 +15841,394 @@ document.addEventListener('keydown', function(event) {
 
 })();
 
-</script><!-- FIN DESPLEGABLES BUSCADORES -->    
+</script><!-- FIN DESPLEGABLES BUSCADORES --> 
+  <!-- =========================================================
+     ROXTHAL ART DESIGN
+     PAGOS Y RESERVAS — DESPLEGABLE
+     
+     IMPORTANTE:
+     NO REEMPLAZA EL BLOQUE EXISTENTE.
+     ACTÚA SOBRE #bloque-cobros
+     ========================================================= --><style>
+
+/* =========================================================
+   BOTÓN DE PAGOS Y RESERVAS
+   ========================================================= */
+
+.roxthal-pagos-toggle {
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  width:82px;
+
+  height:82px;
+
+  margin:20px auto 8px;
+
+  padding:0;
+
+  border:2px solid var(--gold,#d7b45a);
+
+  border-radius:12px;
+
+  overflow:hidden;
+
+  background:#111;
+
+  cursor:pointer;
+
+  box-shadow:
+    0 5px 18px rgba(0,0,0,.45);
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+
+}
+
+
+.roxthal-pagos-toggle:hover {
+
+  transform:scale(1.05);
+
+  box-shadow:
+    0 7px 22px rgba(0,0,0,.55);
+
+}
+
+
+.roxthal-pagos-toggle:active {
+
+  transform:scale(.96);
+
+}
+
+
+.roxthal-pagos-toggle img {
+
+  width:100%;
+
+  height:100%;
+
+  object-fit:cover;
+
+  display:block;
+
+}
+
+
+/* =========================================================
+   PEQUEÑO TEXTO BAJO LA FOTO
+   ========================================================= */
+
+.roxthal-pagos-label {
+
+  display:block;
+
+  width:100%;
+
+  text-align:center;
+
+  margin:0 auto 15px;
+
+  color:var(--muted,#a0a0ab);
+
+  font-size:12px;
+
+}
+
+
+/* =========================================================
+   BLOQUE CERRADO
+   Solo deja visible la foto y el título.
+   ========================================================= */
+
+#bloque-cobros.roxthal-pagos-cerrado
+> *:not(.roxthal-pagos-toggle):not(.roxthal-pagos-label) {
+
+  display:none !important;
+
+}
+
+
+/* =========================================================
+   BLOQUE ABIERTO
+   ========================================================= */
+
+#bloque-cobros.roxthal-pagos-abierto
+.roxthal-pagos-toggle {
+
+  margin-bottom:8px;
+
+}
+
+
+/* =========================================================
+   ANIMACIÓN DEL CONTENIDO ORIGINAL
+   ========================================================= */
+
+#bloque-cobros.roxthal-pagos-abierto
+> *:not(.roxthal-pagos-toggle):not(.roxthal-pagos-label) {
+
+  animation:
+    roxthalPagosEntrada
+    .3s ease;
+
+}
+
+
+@keyframes roxthalPagosEntrada {
+
+  from {
+
+    opacity:0;
+
+    transform:
+      translateY(-8px);
+
+  }
+
+  to {
+
+    opacity:1;
+
+    transform:
+      translateY(0);
+
+  }
+
+}
+
+</style><script>
+
+(function () {
+
+  "use strict";
+
+
+  function iniciarPagosReservas() {
+
+    /*
+     * Este es el bloque EXISTENTE de
+     * PAGOS Y RESERVAS.
+     */
+
+    const bloque =
+      document.getElementById(
+        "bloque-cobros"
+      );
+
+
+    if (!bloque) {
+
+      console.warn(
+        "RoXThal: no se encontró #bloque-cobros"
+      );
+
+      return;
+
+    }
+
+
+    /*
+     * Evitar duplicación.
+     */
+
+    if (
+      bloque.querySelector(
+        ".roxthal-pagos-toggle"
+      )
+    ) {
+
+      return;
+
+    }
+
+
+    /*
+     * Crear botón con imagen.
+     */
+
+    const boton =
+      document.createElement(
+        "button"
+      );
+
+
+    boton.type =
+      "button";
+
+
+    boton.className =
+      "roxthal-pagos-toggle";
+
+
+    boton.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+
+    boton.setAttribute(
+      "aria-label",
+      "Abrir Pagos y Reservas"
+    );
+
+
+    /*
+     * Imagen pequeña.
+     *
+     * Es solamente el botón.
+     * El contenido original NO se toca.
+     */
+
+    const imagen =
+      document.createElement(
+        "img"
+      );
+
+
+    imagen.src =
+      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=300&q=80";
+
+
+    imagen.alt =
+      "Pagos y reservas";
+
+
+    imagen.loading =
+      "lazy";
+
+
+    boton.appendChild(
+      imagen
+    );
+
+
+    /*
+     * Texto pequeño.
+     */
+
+    const etiqueta =
+      document.createElement(
+        "div"
+      );
+
+
+    etiqueta.className =
+      "roxthal-pagos-label";
+
+
+    etiqueta.textContent =
+      "💳 Pagos y Reservas";
+
+
+    /*
+     * Insertar al principio del bloque EXISTENTE.
+     */
+
+    bloque.insertBefore(
+      boton,
+      bloque.firstChild
+    );
+
+
+    bloque.insertBefore(
+      etiqueta,
+      boton.nextSibling
+    );
+
+
+    /*
+     * Estado inicial:
+     * CERRADO.
+     */
+
+    bloque.classList.add(
+      "roxthal-pagos-cerrado"
+    );
+
+
+    /*
+     * Abrir / cerrar.
+     */
+
+    boton.addEventListener(
+      "click",
+      function () {
+
+        const abierto =
+          bloque.classList.toggle(
+            "roxthal-pagos-abierto"
+          );
+
+
+        bloque.classList.toggle(
+          "roxthal-pagos-cerrado",
+          !abierto
+        );
+
+
+        boton.setAttribute(
+          "aria-expanded",
+          abierto
+            ? "true"
+            : "false"
+        );
+
+
+        boton.setAttribute(
+          "aria-label",
+          abierto
+            ? "Cerrar Pagos y Reservas"
+            : "Abrir Pagos y Reservas"
+        );
+
+
+        etiqueta.textContent =
+          abierto
+            ? "💳 Pagos y Reservas — cerrar"
+            : "💳 Pagos y Reservas";
+
+      }
+
+    );
+
+  }
+
+
+  /*
+   * Ejecutar cuando el HTML esté cargado.
+   */
+
+  if (
+    document.readyState ===
+    "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      iniciarPagosReservas,
+      {
+        once:true
+      }
+    );
+
+  } else {
+
+    iniciarPagosReservas();
+
+  }
+
+
+})();
+
+</script><!-- =========================================================
+     FIN DESPLEGABLE PAGOS Y RESERVAS
+     ========================================================= -->      
 </body>
 </html>
