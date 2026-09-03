@@ -31260,5 +31260,549 @@ select:focus{
 </script>
 
 <!-- FIN RoXThal V5 -->
+ <!-- ============================================================
+     RoXThal Art Design — V6
+     HOME PREMIUM / CAPA VISUAL AISLADA
+     
+     REGLA:
+     - NO sustituye #inicio
+     - NO elimina contenido
+     - NO modifica Supabase
+     - NO modifica funciones existentes
+     - NO crea otro cliente Supabase
+     - NO cambia formularios
+============================================================ -->
+
+<style>
+/* ============================================================
+   V6 — VARIABLES
+============================================================ */
+
+#roxthal-v6-home{
+  --v6-gold:#d7b45a;
+  --v6-gold2:#f2da91;
+  --v6-white:#f5f5f5;
+  --v6-muted:#a0a0ab;
+  --v6-bg:#080809;
+  --v6-panel:rgba(20,20,25,.82);
+  --v6-line:rgba(215,180,90,.20);
+
+  position:relative;
+  z-index:1;
+  width:100%;
+  margin:0 auto;
+  padding:14px 14px 22px;
+  box-sizing:border-box;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+
+/* ============================================================
+   HERO VISUAL
+============================================================ */
+
+#roxthal-v6-home .v6-hero{
+  position:relative;
+  overflow:hidden;
+  max-width:1100px;
+  margin:0 auto;
+  min-height:300px;
+  border:1px solid var(--v6-line);
+  border-radius:28px;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(215,180,90,.15),
+      transparent 38%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.035),
+      rgba(255,255,255,.008)
+    ),
+    #0b0b0f;
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.38),
+    inset 0 1px 0 rgba(255,255,255,.035);
+}
+
+/* halo central */
+
+#roxthal-v6-home .v6-hero::before{
+  content:"";
+  position:absolute;
+  width:430px;
+  height:430px;
+  left:50%;
+  top:-260px;
+  transform:translateX(-50%);
+  border-radius:50%;
+  background:radial-gradient(
+    circle,
+    rgba(242,218,145,.16),
+    rgba(215,180,90,.045) 35%,
+    transparent 70%
+  );
+  pointer-events:none;
+}
+
+/* textura lineal */
+
+#roxthal-v6-home .v6-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.18;
+  background:
+    linear-gradient(
+      115deg,
+      transparent 0 46%,
+      rgba(215,180,90,.08) 47%,
+      transparent 48%
+    );
+}
+
+/* ============================================================
+   CONTENIDO HERO
+============================================================ */
+
+#roxthal-v6-home .v6-hero-content{
+  position:relative;
+  z-index:2;
+  min-height:300px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:38px 22px;
+  box-sizing:border-box;
+}
+
+#roxthal-v6-home .v6-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:12px;
+  padding:7px 12px;
+  border:1px solid rgba(215,180,90,.24);
+  border-radius:999px;
+  background:rgba(215,180,90,.055);
+  color:var(--v6-gold2);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+
+#roxthal-v6-home .v6-title{
+  margin:0;
+  color:var(--v6-white);
+  font-size:clamp(32px,8vw,62px);
+  line-height:.98;
+  letter-spacing:-.045em;
+  font-weight:900;
+  text-shadow:
+    0 4px 25px rgba(0,0,0,.6),
+    0 0 30px rgba(215,180,90,.08);
+}
+
+#roxthal-v6-home .v6-title span{
+  color:var(--v6-gold2);
+}
+
+#roxthal-v6-home .v6-subtitle{
+  max-width:650px;
+  margin:16px auto 0;
+  color:var(--v6-muted);
+  font-size:clamp(14px,2.7vw,18px);
+  line-height:1.55;
+}
+
+/* ============================================================
+   ACCESOS RÁPIDOS
+============================================================ */
+
+#roxthal-v6-home .v6-actions{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  width:100%;
+  max-width:650px;
+  margin:25px auto 0;
+}
+
+#roxthal-v6-home .v6-action{
+  min-height:58px;
+  padding:10px 12px;
+  box-sizing:border-box;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:16px;
+  background:rgba(255,255,255,.035);
+  color:var(--v6-white);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:11px;
+  text-align:left;
+  transition:
+    transform .2s ease,
+    border-color .2s ease,
+    background .2s ease,
+    box-shadow .2s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+
+#roxthal-v6-home .v6-action:hover{
+  transform:translateY(-2px);
+  border-color:rgba(215,180,90,.40);
+  background:rgba(215,180,90,.07);
+  box-shadow:0 10px 25px rgba(0,0,0,.28);
+}
+
+#roxthal-v6-home .v6-action:active{
+  transform:scale(.98);
+}
+
+#roxthal-v6-home .v6-action-icon{
+  width:38px;
+  height:38px;
+  flex:0 0 38px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:12px;
+  background:rgba(215,180,90,.09);
+  border:1px solid rgba(215,180,90,.16);
+  font-size:19px;
+}
+
+#roxthal-v6-home .v6-action strong{
+  display:block;
+  font-size:13px;
+  line-height:1.15;
+}
+
+#roxthal-v6-home .v6-action small{
+  display:block;
+  margin-top:3px;
+  color:var(--v6-muted);
+  font-size:10px;
+}
+
+/* ============================================================
+   BLOQUE DE IDENTIDAD
+============================================================ */
+
+#roxthal-v6-home .v6-identity{
+  max-width:1100px;
+  margin:14px auto 0;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+}
+
+#roxthal-v6-home .v6-identity-card{
+  min-height:86px;
+  padding:16px;
+  box-sizing:border-box;
+  border:1px solid rgba(255,255,255,.075);
+  border-radius:18px;
+  background:linear-gradient(
+    145deg,
+    rgba(255,255,255,.035),
+    rgba(255,255,255,.012)
+  );
+}
+
+#roxthal-v6-home .v6-identity-card b{
+  display:block;
+  color:var(--v6-gold2);
+  font-size:12px;
+  margin-bottom:5px;
+}
+
+#roxthal-v6-home .v6-identity-card span{
+  color:var(--v6-muted);
+  font-size:11px;
+  line-height:1.4;
+}
+
+/* ============================================================
+   DIVISOR
+============================================================ */
+
+#roxthal-v6-home .v6-divider{
+  width:min(700px,90%);
+  height:1px;
+  margin:20px auto 0;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(215,180,90,.35),
+    transparent
+  );
+}
+
+/* ============================================================
+   DESKTOP
+============================================================ */
+
+@media(min-width:760px){
+
+  #roxthal-v6-home{
+    padding:20px 24px 30px;
+  }
+
+  #roxthal-v6-home .v6-actions{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  #roxthal-v6-home .v6-action{
+    min-height:82px;
+    flex-direction:column;
+    justify-content:center;
+    text-align:center;
+  }
+
+  #roxthal-v6-home .v6-action-icon{
+    width:42px;
+    height:42px;
+    flex-basis:42px;
+  }
+}
+
+/* ============================================================
+   MÓVIL PEQUEÑO
+============================================================ */
+
+@media(max-width:390px){
+
+  #roxthal-v6-home{
+    padding-left:9px;
+    padding-right:9px;
+  }
+
+  #roxthal-v6-home .v6-hero{
+    border-radius:22px;
+  }
+
+  #roxthal-v6-home .v6-hero-content{
+    padding:32px 15px;
+  }
+
+  #roxthal-v6-home .v6-actions{
+    gap:8px;
+  }
+
+  #roxthal-v6-home .v6-action{
+    min-height:54px;
+    padding:8px;
+  }
+
+  #roxthal-v6-home .v6-action-icon{
+    width:34px;
+    height:34px;
+    flex-basis:34px;
+    font-size:17px;
+  }
+
+  #roxthal-v6-home .v6-action strong{
+    font-size:12px;
+  }
+
+  #roxthal-v6-home .v6-action small{
+    font-size:9px;
+  }
+
+  #roxthal-v6-home .v6-identity{
+    grid-template-columns:1fr;
+  }
+}
+
+/* ============================================================
+   ACCESIBILIDAD
+============================================================ */
+
+@media(prefers-reduced-motion:reduce){
+
+  #roxthal-v6-home *,
+  #roxthal-v6-home *::before,
+  #roxthal-v6-home *::after{
+    animation:none !important;
+    transition:none !important;
+  }
+
+}
+</style>
+
+<!-- ============================================================
+     V6 — HOME VISUAL
+============================================================ -->
+
+<div id="roxthal-v6-home">
+
+  <section class="v6-hero" aria-label="RoXThal Art Design">
+
+    <div class="v6-hero-content">
+
+      <div class="v6-kicker">
+        ✦ ROXTHAL ART DESIGN
+      </div>
+
+      <h2 class="v6-title">
+        Arte que <span>deja marca</span>
+      </h2>
+
+      <p class="v6-subtitle">
+        Diseño · Tatuaje · Dibujo · Pintura · Formación ·
+        Herramientas artísticas e inteligencia creativa.
+      </p>
+
+      <div class="v6-actions">
+
+        <button
+          type="button"
+          class="v6-action"
+          data-v6-go="roxthal-tattoo-designer"
+        >
+          <span class="v6-action-icon">✏️</span>
+          <span>
+            <strong>Diseñador</strong>
+            <small>Crea tu idea</small>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="v6-action"
+          data-v6-go="rx-color-pro"
+        >
+          <span class="v6-action-icon">🎨</span>
+          <span>
+            <strong>Círculo Cromático</strong>
+            <small>Herramientas de color</small>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="v6-action"
+          data-v6-go="roxthal-ia-container"
+        >
+          <span class="v6-action-icon">🤖</span>
+          <span>
+            <strong>RoXThal IA</strong>
+            <small>Inspiración artística</small>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="v6-action"
+          data-v6-go="cursos"
+        >
+          <span class="v6-action-icon">🎓</span>
+          <span>
+            <strong>Formación</strong>
+            <small>Cursos y talleres</small>
+          </span>
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <div class="v6-identity">
+
+    <div class="v6-identity-card">
+      <b>🎨 CREACIÓN</b>
+      <span>
+        Un espacio para desarrollar ideas y convertirlas en arte.
+      </span>
+    </div>
+
+    <div class="v6-identity-card">
+      <b>🧠 INSPIRACIÓN</b>
+      <span>
+        Herramientas digitales para explorar nuevas posibilidades.
+      </span>
+    </div>
+
+    <div class="v6-identity-card">
+      <b>🎓 FORMACIÓN</b>
+      <span>
+        Aprendizaje artístico dentro del universo RoXThal.
+      </span>
+    </div>
+
+  </div>
+
+  <div class="v6-divider"></div>
+
+</div>
+
+<script>
+/* ============================================================
+   V6 — NAVEGACIÓN SEGURA
+============================================================ */
+
+(function(){
+
+  "use strict";
+
+  if(window.__ROXTHAL_V6_HOME__) return;
+  window.__ROXTHAL_V6_HOME__ = true;
+
+  const root = document.getElementById("roxthal-v6-home");
+
+  if(!root) return;
+
+  /*
+   * Solo utilizamos funciones de navegación que ya existen.
+   * Si go() existe, la usamos.
+   * Si no existe, hacemos navegación directa al elemento.
+   */
+
+  root.querySelectorAll("[data-v6-go]").forEach(function(button){
+
+    const targetId = button.getAttribute("data-v6-go");
+
+    button.addEventListener("click",function(){
+
+      const target = document.getElementById(targetId);
+
+      if(!target) return;
+
+      if(typeof window.go === "function"){
+        window.go(targetId);
+      }else{
+        target.scrollIntoView({
+          behavior:"smooth",
+          block:"start"
+        });
+      }
+
+    });
+
+  });
+
+  /*
+   * No manipulamos #inicio ni ningún módulo existente.
+   * La capa queda completamente aislada.
+   */
+
+  root.setAttribute(
+    "data-roxthal-v6",
+    "installed"
+  );
+
+})();
+</script>
+
+<!-- FIN RoXThal V6 -->
 </body>
 </html>
