@@ -36439,5 +36439,1324 @@ select:focus{
 
 })();
 </script>
+  <!-- ============================================================
+     ROXTHAL V11 — CREATIVE DASHBOARD
+     
+     CAPA 100% ADITIVA
+     
+     NO MODIFICA:
+     - Supabase
+     - Auth
+     - tablas
+     - formularios existentes
+     - funciones existentes
+     - V7.1
+     - V8.1
+     - V9.2
+     - V10 Opening Experience
+     
+     SOLO AÑADE UN DASHBOARD VISUAL DENTRO DE #inicio
+     ============================================================ -->
+
+<script>
+(function () {
+  'use strict';
+
+  if (window.__ROXTHAL_V11_INSTALLED__) return;
+  window.__ROXTHAL_V11_INSTALLED__ = true;
+
+  function installRoXThalV11() {
+
+    const home = document.getElementById('inicio');
+
+    if (!home) {
+      console.warn(
+        '[RoXThal V11] #inicio no encontrado. No se instala.'
+      );
+      return;
+    }
+
+    if (
+      document.getElementById(
+        'roxthal-v11-dashboard'
+      )
+    ) {
+      return;
+    }
+
+    /* ==========================================================
+       CSS AISLADO
+       ========================================================== */
+
+    const style = document.createElement('style');
+
+    style.id = 'roxthal-v11-style';
+
+    style.textContent = `
+      #roxthal-v11-dashboard {
+        width: min(1180px, calc(100% - 28px));
+        margin: 32px auto 40px;
+        position: relative;
+        isolation: isolate;
+      }
+
+      #roxthal-v11-dashboard *,
+      #roxthal-v11-dashboard *::before,
+      #roxthal-v11-dashboard *::after {
+        box-sizing: border-box;
+      }
+
+      /* ========================================================
+         CONTENEDOR
+         ======================================================== */
+
+      .rxv11-container {
+        position: relative;
+        overflow: hidden;
+
+        padding: 22px;
+
+        border:
+          1px solid rgba(215,180,90,.22);
+
+        border-radius: 25px;
+
+        background:
+          radial-gradient(
+            circle at 85% 5%,
+            rgba(215,180,90,.12),
+            transparent 34%
+          ),
+          radial-gradient(
+            circle at 5% 95%,
+            rgba(255,255,255,.035),
+            transparent 38%
+          ),
+          rgba(12,12,16,.96);
+
+        box-shadow:
+          0 20px 65px rgba(0,0,0,.30),
+          inset 0 1px 0 rgba(255,255,255,.045);
+      }
+
+      .rxv11-container::before {
+        content: "";
+
+        position: absolute;
+
+        width: 300px;
+        height: 300px;
+
+        right: -170px;
+        top: -170px;
+
+        border-radius: 50%;
+
+        border:
+          1px solid rgba(215,180,90,.08);
+
+        pointer-events: none;
+      }
+
+      /* ========================================================
+         CABECERA
+         ======================================================== */
+
+      .rxv11-header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+
+        gap: 20px;
+
+        margin-bottom: 18px;
+      }
+
+      .rxv11-kicker {
+        margin-bottom: 7px;
+
+        color: var(--gold2, #f2da91);
+
+        font-size: .69rem;
+
+        font-weight: 900;
+
+        letter-spacing: .17em;
+
+        text-transform: uppercase;
+      }
+
+      .rxv11-title {
+        margin: 0;
+
+        color: var(--text, #f5f5f5);
+
+        font-size:
+          clamp(1.35rem, 4vw, 2rem);
+
+        line-height: 1.08;
+
+        font-weight: 950;
+
+        letter-spacing: -.035em;
+      }
+
+      .rxv11-title span {
+        color: var(--gold, #d7b45a);
+      }
+
+      .rxv11-description {
+        max-width: 650px;
+
+        margin: 7px 0 0;
+
+        color: var(--muted, #a0a0ab);
+
+        font-size: .84rem;
+
+        line-height: 1.5;
+      }
+
+      .rxv11-status {
+        flex: 0 0 auto;
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 7px;
+
+        padding: 7px 10px;
+
+        border:
+          1px solid rgba(46,204,113,.20);
+
+        border-radius: 999px;
+
+        background:
+          rgba(46,204,113,.055);
+
+        color: #bcefcf;
+
+        font-size: .67rem;
+
+        font-weight: 800;
+
+        white-space: nowrap;
+      }
+
+      .rxv11-status-dot {
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+
+        background:
+          var(--green, #2ecc71);
+
+        box-shadow:
+          0 0 10px rgba(46,204,113,.55);
+      }
+
+      /* ========================================================
+         DESTACADO PRINCIPAL
+         ======================================================== */
+
+      .rxv11-feature {
+        position: relative;
+
+        min-height: 178px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 20px;
+
+        padding: 23px;
+
+        margin-bottom: 12px;
+
+        overflow: hidden;
+
+        border:
+          1px solid rgba(215,180,90,.25);
+
+        border-radius: 21px;
+
+        background:
+          linear-gradient(
+            120deg,
+            rgba(215,180,90,.105),
+            rgba(215,180,90,.025) 48%,
+            rgba(255,255,255,.018)
+          );
+      }
+
+      .rxv11-feature::before {
+        content: "";
+
+        position: absolute;
+
+        width: 180px;
+        height: 180px;
+
+        right: 9%;
+        top: 50%;
+
+        transform:
+          translateY(-50%);
+
+        border-radius: 50%;
+
+        border:
+          1px solid rgba(215,180,90,.07);
+
+        box-shadow:
+          0 0 55px rgba(215,180,90,.035);
+
+        pointer-events: none;
+      }
+
+      .rxv11-feature-copy {
+        position: relative;
+        z-index: 2;
+
+        max-width: 670px;
+      }
+
+      .rxv11-feature-label {
+        color: var(--gold, #d7b45a);
+
+        font-size: .68rem;
+
+        font-weight: 900;
+
+        letter-spacing: .16em;
+
+        text-transform: uppercase;
+      }
+
+      .rxv11-feature-title {
+        margin: 7px 0 5px;
+
+        color: #fff;
+
+        font-size:
+          clamp(1.25rem, 4vw, 1.7rem);
+
+        line-height: 1.12;
+
+        font-weight: 900;
+      }
+
+      .rxv11-feature-text {
+        margin: 0;
+
+        color: var(--muted, #a0a0ab);
+
+        font-size: .79rem;
+
+        line-height: 1.5;
+      }
+
+      .rxv11-feature-button {
+        position: relative;
+        z-index: 3;
+
+        flex: 0 0 auto;
+
+        min-height: 48px;
+
+        padding: 0 19px;
+
+        border:
+          1px solid rgba(215,180,90,.52);
+
+        border-radius: 999px;
+
+        background:
+          rgba(215,180,90,.09);
+
+        color: var(--gold2, #f2da91);
+
+        font-size: .73rem;
+
+        font-weight: 900;
+
+        letter-spacing: .08em;
+
+        text-transform: uppercase;
+
+        cursor: pointer;
+
+        transition:
+          transform .2s ease,
+          background .2s ease,
+          border-color .2s ease,
+          box-shadow .2s ease;
+      }
+
+      .rxv11-feature-button:hover {
+        transform: translateY(-2px);
+
+        background:
+          rgba(215,180,90,.17);
+
+        border-color:
+          rgba(242,218,145,.78);
+
+        box-shadow:
+          0 8px 24px rgba(0,0,0,.22);
+      }
+
+      .rxv11-feature-button:active {
+        transform: scale(.98);
+      }
+
+      .rxv11-feature-button:focus-visible {
+        outline:
+          2px solid var(--gold, #d7b45a);
+
+        outline-offset: 3px;
+      }
+
+      /* ========================================================
+         GRID DE HERRAMIENTAS
+         ======================================================== */
+
+      .rxv11-section-label {
+        margin:
+          18px 0 10px;
+
+        color:
+          rgba(242,218,145,.78);
+
+        font-size: .67rem;
+
+        font-weight: 900;
+
+        letter-spacing: .15em;
+
+        text-transform: uppercase;
+      }
+
+      .rxv11-grid {
+        display: grid;
+
+        grid-template-columns:
+          repeat(4, minmax(0, 1fr));
+
+        gap: 10px;
+      }
+
+      .rxv11-card {
+        position: relative;
+
+        min-height: 125px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: space-between;
+
+        padding: 15px;
+
+        overflow: hidden;
+
+        border:
+          1px solid rgba(255,255,255,.065);
+
+        border-radius: 17px;
+
+        background:
+          linear-gradient(
+            145deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.016)
+          );
+
+        color: var(--text, #f5f5f5);
+
+        text-align: left;
+
+        cursor: pointer;
+
+        transition:
+          transform .2s ease,
+          border-color .2s ease,
+          background .2s ease,
+          box-shadow .2s ease;
+      }
+
+      .rxv11-card:hover {
+        transform:
+          translateY(-3px);
+
+        border-color:
+          rgba(215,180,90,.35);
+
+        background:
+          linear-gradient(
+            145deg,
+            rgba(215,180,90,.09),
+            rgba(255,255,255,.018)
+          );
+
+        box-shadow:
+          0 12px 28px rgba(0,0,0,.22);
+      }
+
+      .rxv11-card:active {
+        transform:
+          translateY(-1px);
+      }
+
+      .rxv11-card:focus-visible {
+        outline:
+          2px solid var(--gold, #d7b45a);
+
+        outline-offset: 3px;
+      }
+
+      .rxv11-card-top {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+      }
+
+      .rxv11-card-icon {
+        width: 39px;
+        height: 39px;
+
+        display: grid;
+
+        place-items: center;
+
+        border:
+          1px solid rgba(215,180,90,.18);
+
+        border-radius: 12px;
+
+        background:
+          rgba(215,180,90,.075);
+
+        font-size: 1.05rem;
+      }
+
+      .rxv11-card-arrow {
+        color:
+          rgba(242,218,145,.55);
+
+        font-size: .8rem;
+      }
+
+      .rxv11-card-title {
+        margin-top: 10px;
+
+        font-size: .83rem;
+
+        font-weight: 900;
+      }
+
+      .rxv11-card-text {
+        margin-top: 2px;
+
+        color:
+          var(--muted, #a0a0ab);
+
+        font-size: .68rem;
+
+        line-height: 1.35;
+      }
+
+      /* ========================================================
+         BARRA INFERIOR
+         ======================================================== */
+
+      .rxv11-bottom {
+        display: grid;
+
+        grid-template-columns:
+          repeat(3, minmax(0, 1fr));
+
+        gap: 10px;
+
+        margin-top: 12px;
+      }
+
+      .rxv11-bottom-card {
+        display: flex;
+
+        align-items: center;
+
+        gap: 11px;
+
+        min-height: 70px;
+
+        padding: 12px 14px;
+
+        border:
+          1px solid rgba(255,255,255,.06);
+
+        border-radius: 16px;
+
+        background:
+          rgba(255,255,255,.018);
+      }
+
+      .rxv11-bottom-icon {
+        width: 36px;
+        height: 36px;
+
+        flex: 0 0 36px;
+
+        display: grid;
+
+        place-items: center;
+
+        border-radius: 11px;
+
+        background:
+          rgba(215,180,90,.07);
+
+        font-size: .95rem;
+      }
+
+      .rxv11-bottom-title {
+        display: block;
+
+        color:
+          var(--text, #f5f5f5);
+
+        font-size: .73rem;
+
+        font-weight: 850;
+      }
+
+      .rxv11-bottom-text {
+        display: block;
+
+        margin-top: 2px;
+
+        color:
+          var(--muted, #a0a0ab);
+
+        font-size: .63rem;
+
+        line-height: 1.35;
+      }
+
+      /* ========================================================
+         RESPONSIVE
+         ======================================================== */
+
+      @media (max-width: 900px) {
+
+        .rxv11-grid {
+          grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+        }
+
+      }
+
+      @media (max-width: 650px) {
+
+        #roxthal-v11-dashboard {
+          width:
+            min(100% - 18px, 1180px);
+
+          margin:
+            22px auto 30px;
+        }
+
+        .rxv11-container {
+          padding: 15px;
+
+          border-radius: 21px;
+        }
+
+        .rxv11-header {
+          display: block;
+        }
+
+        .rxv11-status {
+          margin-top: 10px;
+        }
+
+        .rxv11-feature {
+          min-height: 0;
+
+          display: block;
+
+          padding: 18px;
+        }
+
+        .rxv11-feature-button {
+          width: 100%;
+
+          margin-top: 16px;
+        }
+
+        .rxv11-grid {
+          gap: 8px;
+        }
+
+        .rxv11-card {
+          min-height: 116px;
+
+          padding: 13px;
+
+          border-radius: 15px;
+        }
+
+        .rxv11-bottom {
+          grid-template-columns: 1fr;
+        }
+
+      }
+
+      @media (max-width: 390px) {
+
+        .rxv11-grid {
+          grid-template-columns:
+            1fr;
+        }
+
+        .rxv11-card {
+          min-height: 92px;
+        }
+
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+
+        #roxthal-v11-dashboard *,
+        #roxthal-v11-dashboard *::before,
+        #roxthal-v11-dashboard *::after {
+          animation: none !important;
+          transition: none !important;
+        }
+
+        .rxv11-card:hover,
+        .rxv11-feature-button:hover {
+          transform: none;
+        }
+
+      }
+    `;
+
+    document.head.appendChild(style);
+
+    /* ==========================================================
+       HTML
+       ========================================================== */
+
+    const root =
+      document.createElement('section');
+
+    root.id =
+      'roxthal-v11-dashboard';
+
+    root.setAttribute(
+      'aria-label',
+      'Centro creativo RoXThal'
+    );
+
+    root.innerHTML = `
+
+      <div class="rxv11-container">
+
+        <div class="rxv11-header">
+
+          <div>
+
+            <div class="rxv11-kicker">
+              ✦ CENTRO CREATIVO
+            </div>
+
+            <h2 class="rxv11-title">
+              Crea. Explora. <span>Transforma.</span>
+            </h2>
+
+            <p class="rxv11-description">
+              Todo el universo creativo de RoXThal Art Design
+              reunido en un solo lugar.
+            </p>
+
+          </div>
+
+          <div class="rxv11-status">
+            <span class="rxv11-status-dot"></span>
+            Sistema activo
+          </div>
+
+        </div>
+
+
+        <!-- ====================================================
+             DESTACADO
+             ==================================================== -->
+
+        <div class="rxv11-feature">
+
+          <div class="rxv11-feature-copy">
+
+            <div class="rxv11-feature-label">
+              HERRAMIENTA DESTACADA
+            </div>
+
+            <div class="rxv11-feature-title">
+              Lleva una idea hasta el diseño.
+            </div>
+
+            <p class="rxv11-feature-text">
+              Empieza creando, experimenta con color,
+              busca inspiración o consulta a RoXThal IA.
+            </p>
+
+          </div>
+
+          <button
+            type="button"
+            class="rxv11-feature-button"
+            data-rxv11-target="roxthal-tattoo-designer">
+
+            Abrir diseñador →
+
+          </button>
+
+        </div>
+
+
+        <!-- ====================================================
+             HERRAMIENTAS
+             ==================================================== -->
+
+        <div class="rxv11-section-label">
+          Herramientas principales
+        </div>
+
+        <div class="rxv11-grid">
+
+
+          <button
+            type="button"
+            class="rxv11-card"
+            data-rxv11-target="roxthal-tattoo-designer">
+
+            <div class="rxv11-card-top">
+
+              <span class="rxv11-card-icon">
+                ✒️
+              </span>
+
+              <span class="rxv11-card-arrow">
+                ↗
+              </span>
+
+            </div>
+
+            <div>
+
+              <div class="rxv11-card-title">
+                Diseñador de tatuajes
+              </div>
+
+              <div class="rxv11-card-text">
+                Convierte una idea en un diseño.
+              </div>
+
+            </div>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="rxv11-card"
+            data-rxv11-target="rx-color-pro">
+
+            <div class="rxv11-card-top">
+
+              <span class="rxv11-card-icon">
+                🌈
+              </span>
+
+              <span class="rxv11-card-arrow">
+                ↗
+              </span>
+
+            </div>
+
+            <div>
+
+              <div class="rxv11-card-title">
+                Laboratorio cromático
+              </div>
+
+              <div class="rxv11-card-text">
+                Color, armonías y combinaciones.
+              </div>
+
+            </div>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="rxv11-card"
+            data-rxv11-target="roxthal-ia-container">
+
+            <div class="rxv11-card-top">
+
+              <span class="rxv11-card-icon">
+                ✦
+              </span>
+
+              <span class="rxv11-card-arrow">
+                ↗
+              </span>
+
+            </div>
+
+            <div>
+
+              <div class="rxv11-card-title">
+                RoXThal IA
+              </div>
+
+              <div class="rxv11-card-text">
+                Inspiración y asistencia creativa.
+              </div>
+
+            </div>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="rxv11-card"
+            data-rxv11-target="buscador-tatuajes">
+
+            <div class="rxv11-card-top">
+
+              <span class="rxv11-card-icon">
+                🔎
+              </span>
+
+              <span class="rxv11-card-arrow">
+                ↗
+              </span>
+
+            </div>
+
+            <div>
+
+              <div class="rxv11-card-title">
+                Inspiración tattoo
+              </div>
+
+              <div class="rxv11-card-text">
+                Explora referencias y estilos.
+              </div>
+
+            </div>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="rxv11-card"
+            data-rxv11-target="buscador-cuadros-artistas">
+
+            <div class="rxv11-card-top">
+
+              <span class="rxv11-card-icon">
+                🖼️
+              </span>
+
+              <span class="rxv11-card-arrow">
+                ↗
+              </span>
+
+            </div>
+
+            <div>
+
+              <div class="rxv11-card-title">
+                Arte y artistas
+              </div>
+
+              <div class="rxv11-card-text">
+                Obras, estilos y referentes.
+              </div>
+
+            </div>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="rxv11-card"
+            data-rxv11-target="roxthal-school-campus">
+
+            <div class="rxv11-card-top">
+
+              <span class="rxv11-card-icon">
+                🎓
+              </span>
+
+              <span class="rxv11-card-arrow">
+                ↗
+              </span>
+
+            </div>
+
+            <div>
+
+              <div class="rxv11-card-title">
+                Formación
+              </div>
+
+              <div class="rxv11-card-text">
+                Cursos y espacio formativo.
+              </div>
+
+            </div>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="rxv11-card"
+            data-rxv11-target="galeria">
+
+            <div class="rxv11-card-top">
+
+              <span class="rxv11-card-icon">
+                📸
+              </span>
+
+              <span class="rxv11-card-arrow">
+                ↗
+              </span>
+
+            </div>
+
+            <div>
+
+              <div class="rxv11-card-title">
+                Galería
+              </div>
+
+              <div class="rxv11-card-text">
+                Trabajos y proyectos RoXThal.
+              </div>
+
+            </div>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="rxv11-card"
+            data-rxv11-target="bloque-cobros">
+
+            <div class="rxv11-card-top">
+
+              <span class="rxv11-card-icon">
+                📅
+              </span>
+
+              <span class="rxv11-card-arrow">
+                ↗
+              </span>
+
+            </div>
+
+            <div>
+
+              <div class="rxv11-card-title">
+                Reservas
+              </div>
+
+              <div class="rxv11-card-text">
+                Servicios, reservas y pagos.
+              </div>
+
+            </div>
+
+          </button>
+
+        </div>
+
+
+        <!-- ====================================================
+             ACCESOS SECUNDARIOS
+             ==================================================== -->
+
+        <div class="rxv11-section-label">
+          También puedes explorar
+        </div>
+
+        <div class="rxv11-bottom">
+
+          <div class="rxv11-bottom-card">
+
+            <div class="rxv11-bottom-icon">
+              📻
+            </div>
+
+            <div>
+
+              <span class="rxv11-bottom-title">
+                Radio RoXThal
+              </span>
+
+              <span class="rxv11-bottom-text">
+                Música y ambiente artístico.
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="rxv11-bottom-card">
+
+            <div class="rxv11-bottom-icon">
+              ⭐
+            </div>
+
+            <div>
+
+              <span class="rxv11-bottom-title">
+                Comunidad
+              </span>
+
+              <span class="rxv11-bottom-text">
+                Reseñas, novedades y participación.
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="rxv11-bottom-card">
+
+            <div class="rxv11-bottom-icon">
+              📍
+            </div>
+
+            <div>
+
+              <span class="rxv11-bottom-title">
+                Visítanos
+              </span>
+
+              <span class="rxv11-bottom-text">
+                Encuentra RoXThal Art Design.
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    `;
+
+    /* ==========================================================
+       INSERTAR
+       
+       MUY IMPORTANTE:
+       appendChild() NO reemplaza nada de #inicio.
+       ========================================================== */
+
+    home.appendChild(root);
+
+    /* ==========================================================
+       NAVEGACIÓN
+       ========================================================== */
+
+    const navigationButtons =
+      root.querySelectorAll(
+        '[data-rxv11-target]'
+      );
+
+    navigationButtons.forEach(function (button) {
+
+      button.addEventListener(
+        'click',
+        function () {
+
+          const targetId =
+            button.getAttribute(
+              'data-rxv11-target'
+            );
+
+          if (!targetId) return;
+
+          const target =
+            document.getElementById(
+              targetId
+            );
+
+          if (!target) {
+
+            console.warn(
+              '[RoXThal V11] Módulo no encontrado:',
+              targetId
+            );
+
+            return;
+          }
+
+          /*
+             Usamos la navegación EXISTENTE.
+             Nunca la redefinimos.
+          */
+
+          if (
+            typeof window.go === 'function'
+          ) {
+
+            try {
+
+              window.go(targetId);
+
+              /*
+                 La galería tiene comportamiento
+                 adicional en la aplicación original.
+              */
+
+              if (
+                targetId === 'galeria' &&
+                typeof window.openGallery === 'function'
+              ) {
+
+                try {
+                  window.openGallery();
+                } catch (galleryError) {
+
+                  console.warn(
+                    '[RoXThal V11] openGallery():',
+                    galleryError
+                  );
+
+                }
+
+              }
+
+              return;
+
+            } catch (navigationError) {
+
+              console.warn(
+                '[RoXThal V11] go():',
+                navigationError
+              );
+
+            }
+
+          }
+
+          /* Fallback */
+
+          try {
+
+            target.scrollIntoView({
+              behavior:
+                window.matchMedia &&
+                window.matchMedia(
+                  '(prefers-reduced-motion: reduce)'
+                ).matches
+                  ? 'auto'
+                  : 'smooth',
+              block: 'start'
+            });
+
+          } catch (scrollError) {
+
+            target.scrollIntoView();
+
+          }
+
+        }
+      );
+
+    });
+
+    /* ==========================================================
+       LIMPIEZA REVERSIBLE
+       ========================================================== */
+
+    window.__ROXTHAL_V11_CLEANUP__ =
+      function () {
+
+        const currentRoot =
+          document.getElementById(
+            'roxthal-v11-dashboard'
+          );
+
+        if (currentRoot) {
+          currentRoot.remove();
+        }
+
+        const currentStyle =
+          document.getElementById(
+            'roxthal-v11-style'
+          );
+
+        if (currentStyle) {
+          currentStyle.remove();
+        }
+
+        delete window.__ROXTHAL_V11_INSTALLED__;
+        delete window.__ROXTHAL_V11_CLEANUP__;
+
+      };
+
+    console.info(
+      '[RoXThal V11] Creative Dashboard instalado.'
+    );
+  }
+
+  /* ==========================================================
+     ARRANQUE SEGURO
+     ========================================================== */
+
+  if (
+    document.readyState === 'loading'
+  ) {
+
+    document.addEventListener(
+      'DOMContentLoaded',
+      installRoXThalV11,
+      { once: true }
+    );
+
+  } else {
+
+    installRoXThalV11();
+
+  }
+
+})();
+</script>
 </body>
 </html>
