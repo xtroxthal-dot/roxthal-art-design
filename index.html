@@ -33922,5 +33922,1431 @@ select:focus{
 <!-- =========================================================
      FIN ROXTHAL V8.1
      ========================================================= -->   
+  <!-- =========================================================
+     ROXTHAL V9.2 — ART PLATFORM STATUS
+     
+     SAFE ADD-ON
+     ---------------------------------------------------------
+     • No Supabase
+     • No Auth
+     • No modifica datos
+     • No redefine funciones existentes
+     • No reemplaza V4 / V5 / V6 / V7 / V8
+     • Posición lateral derecha centrada
+     • Reversible
+     ========================================================= -->
+
+<script>
+(function () {
+
+  'use strict';
+
+  /* ---------------------------------------------------------
+     PROTECCIÓN CONTRA DUPLICADOS
+     --------------------------------------------------------- */
+
+  if (window.__ROXTHAL_V9_INSTALLED__) {
+    return;
+  }
+
+  window.__ROXTHAL_V9_INSTALLED__ = true;
+
+  /* ---------------------------------------------------------
+     CONTENEDOR
+     --------------------------------------------------------- */
+
+  const root = document.createElement('div');
+
+  root.id = 'rxui-v9';
+
+  root.innerHTML = `
+
+    <button
+      type="button"
+      class="rxv9-trigger"
+      aria-label="Abrir estado de RoXThal"
+      aria-expanded="false"
+    >
+      <span class="rxv9-trigger-symbol">◈</span>
+      <span class="rxv9-trigger-label">Estado</span>
+    </button>
+
+    <div
+      class="rxv9-panel"
+      role="dialog"
+      aria-modal="false"
+      aria-label="Estado de la plataforma RoXThal"
+      aria-hidden="true"
+    >
+
+      <div class="rxv9-head">
+
+        <div>
+
+          <div class="rxv9-kicker">
+            ROXTHAL ART DESIGN
+          </div>
+
+          <div class="rxv9-title">
+            Plataforma artística
+          </div>
+
+          <div class="rxv9-subtitle">
+            Herramientas disponibles en tu app
+          </div>
+
+        </div>
+
+        <button
+          type="button"
+          class="rxv9-close"
+          aria-label="Cerrar"
+        >
+          ×
+        </button>
+
+      </div>
+
+      <div class="rxv9-status">
+
+        <span class="rxv9-status-light"></span>
+
+        <span class="rxv9-status-text">
+          Sistema operativo
+        </span>
+
+      </div>
+
+      <div class="rxv9-progress-wrap">
+
+        <div class="rxv9-progress-info">
+
+          <span>
+            Módulos disponibles
+          </span>
+
+          <strong>
+            <span class="rxv9-count">0</span>
+            /
+            <span class="rxv9-total">0</span>
+          </strong>
+
+        </div>
+
+        <div class="rxv9-progress-bar">
+          <span></span>
+        </div>
+
+      </div>
+
+      <div class="rxv9-modules"></div>
+
+      <div class="rxv9-foot">
+
+        <span>
+          RoXThal Art Design
+        </span>
+
+        <span class="rxv9-version">
+          V9
+        </span>
+
+      </div>
+
+    </div>
+  `;
+
+  document.body.appendChild(root);
+
+  /* ---------------------------------------------------------
+     ESTILOS
+     --------------------------------------------------------- */
+
+  const style = document.createElement('style');
+
+  style.id = 'rxui-v9-style';
+
+  style.textContent = `
+
+    /* =======================================================
+       CONTENEDOR
+       ======================================================= */
+
+    #rxui-v9 {
+
+      position:
+        relative;
+
+      z-index:
+        8320;
+
+      pointer-events:
+        none;
+    }
+
+    /* =======================================================
+       BOTÓN V9
+       
+       POSICIÓN REPARADA:
+       DERECHA + CENTRO VERTICAL
+       ======================================================= */
+
+    #rxui-v9 .rxv9-trigger {
+
+      position:
+        fixed;
+
+      right:
+        14px;
+
+      top:
+        50%;
+
+      /*
+       * El transform centra exactamente
+       * el botón respecto a la pantalla.
+       */
+      transform:
+        translateY(-50%);
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      gap:
+        7px;
+
+      min-height:
+        40px;
+
+      padding:
+        0 13px;
+
+      border:
+        1px solid
+        rgba(215,180,90,.42);
+
+      border-radius:
+        999px;
+
+      background:
+        rgba(8,8,9,.90);
+
+      color:
+        var(--gold2,#f2da91);
+
+      box-shadow:
+        0 8px 26px
+        rgba(0,0,0,.34);
+
+      backdrop-filter:
+        blur(12px);
+
+      -webkit-backdrop-filter:
+        blur(12px);
+
+      font:
+        700 10px/1
+        system-ui,
+        sans-serif;
+
+      letter-spacing:
+        .08em;
+
+      text-transform:
+        uppercase;
+
+      cursor:
+        pointer;
+
+      pointer-events:
+        auto;
+
+      transition:
+        transform .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease;
+    }
+
+    #rxui-v9 .rxv9-trigger:hover {
+
+      transform:
+        translateY(-50%)
+        scale(1.03);
+
+      border-color:
+        rgba(215,180,90,.70);
+
+      box-shadow:
+        0 12px 30px
+        rgba(0,0,0,.42),
+
+        0 0 18px
+        rgba(215,180,90,.12);
+    }
+
+    #rxui-v9 .rxv9-trigger:active {
+
+      transform:
+        translateY(-50%)
+        scale(.97);
+    }
+
+    #rxui-v9 .rxv9-trigger-symbol {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      width:
+        19px;
+
+      height:
+        19px;
+
+      border-radius:
+        50%;
+
+      background:
+        rgba(215,180,90,.10);
+
+      font-size:
+        13px;
+    }
+
+    /* =======================================================
+       PANEL
+       
+       También queda centrado verticalmente.
+       ======================================================= */
+
+    #rxui-v9 .rxv9-panel {
+
+      position:
+        fixed;
+
+      right:
+        68px;
+
+      top:
+        50%;
+
+      transform:
+        translateY(-50%)
+        translateX(12px)
+        scale(.98);
+
+      width:
+        min(
+          390px,
+          calc(100vw - 92px)
+        );
+
+      max-height:
+        min(
+          650px,
+          calc(100vh - 40px)
+        );
+
+      overflow-y:
+        auto;
+
+      padding:
+        18px;
+
+      border:
+        1px solid
+        rgba(215,180,90,.23);
+
+      border-radius:
+        21px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(21,21,26,.98),
+          rgba(9,9,11,.98)
+        );
+
+      box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.58),
+
+        0 0 40px
+        rgba(215,180,90,.07);
+
+      backdrop-filter:
+        blur(18px);
+
+      -webkit-backdrop-filter:
+        blur(18px);
+
+      opacity:
+        0;
+
+      visibility:
+        hidden;
+
+      pointer-events:
+        none;
+
+      transition:
+        opacity .22s ease,
+        transform .22s ease,
+        visibility .22s ease;
+
+      overscroll-behavior:
+        contain;
+
+      z-index:
+        8322;
+    }
+
+    /* =======================================================
+       PANEL ABIERTO
+       ======================================================= */
+
+    #rxui-v9.rxv9-open
+    .rxv9-panel {
+
+      opacity:
+        1;
+
+      visibility:
+        visible;
+
+      pointer-events:
+        auto;
+
+      transform:
+        translateY(-50%)
+        translateX(0)
+        scale(1);
+    }
+
+    /* =======================================================
+       HEADER
+       ======================================================= */
+
+    #rxui-v9 .rxv9-head {
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      gap:
+        12px;
+
+      margin-bottom:
+        13px;
+    }
+
+    #rxui-v9 .rxv9-kicker {
+
+      margin-bottom:
+        5px;
+
+      color:
+        var(--gold,#d7b45a);
+
+      font:
+        800 8px/1.2
+        system-ui,
+        sans-serif;
+
+      letter-spacing:
+        .17em;
+    }
+
+    #rxui-v9 .rxv9-title {
+
+      color:
+        var(--text,#f5f5f5);
+
+      font:
+        800 21px/1.15
+        system-ui,
+        sans-serif;
+
+      letter-spacing:
+        -.025em;
+    }
+
+    #rxui-v9 .rxv9-subtitle {
+
+      margin-top:
+        4px;
+
+      color:
+        var(--muted,#a0a0ab);
+
+      font:
+        400 11px/1.35
+        system-ui,
+        sans-serif;
+    }
+
+    /* =======================================================
+       CERRAR
+       ======================================================= */
+
+    #rxui-v9 .rxv9-close {
+
+      flex:
+        0 0 auto;
+
+      width:
+        34px;
+
+      height:
+        34px;
+
+      border:
+        1px solid
+        var(--line,#2e2e38);
+
+      border-radius:
+        50%;
+
+      background:
+        rgba(255,255,255,.035);
+
+      color:
+        var(--text,#f5f5f5);
+
+      font-size:
+        23px;
+
+      line-height:
+        1;
+
+      cursor:
+        pointer;
+    }
+
+    #rxui-v9 .rxv9-close:hover {
+
+      border-color:
+        rgba(215,180,90,.55);
+
+      color:
+        var(--gold2,#f2da91);
+    }
+
+    /* =======================================================
+       ESTADO
+       ======================================================= */
+
+    #rxui-v9 .rxv9-status {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        7px;
+
+      margin-bottom:
+        14px;
+
+      padding:
+        8px 10px;
+
+      border:
+        1px solid
+        rgba(46,204,113,.16);
+
+      border-radius:
+        10px;
+
+      background:
+        rgba(46,204,113,.035);
+
+      color:
+        rgba(245,245,245,.78);
+
+      font:
+        600 10px/1.2
+        system-ui,
+        sans-serif;
+    }
+
+    #rxui-v9 .rxv9-status-light {
+
+      width:
+        6px;
+
+      height:
+        6px;
+
+      border-radius:
+        50%;
+
+      background:
+        var(--green,#2ecc71);
+
+      box-shadow:
+        0 0 9px
+        rgba(46,204,113,.58);
+    }
+
+    /* =======================================================
+       PROGRESO
+       ======================================================= */
+
+    #rxui-v9 .rxv9-progress-info {
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      margin-bottom:
+        6px;
+
+      color:
+        var(--muted,#a0a0ab);
+
+      font:
+        600 9px/1
+        system-ui,
+        sans-serif;
+
+      text-transform:
+        uppercase;
+
+      letter-spacing:
+        .06em;
+    }
+
+    #rxui-v9 .rxv9-progress-info strong {
+
+      color:
+        var(--gold2,#f2da91);
+    }
+
+    #rxui-v9 .rxv9-progress-bar {
+
+      width:
+        100%;
+
+      height:
+        4px;
+
+      overflow:
+        hidden;
+
+      border-radius:
+        999px;
+
+      background:
+        rgba(255,255,255,.07);
+
+      margin-bottom:
+        14px;
+    }
+
+    #rxui-v9 .rxv9-progress-bar span {
+
+      display:
+        block;
+
+      width:
+        0%;
+
+      height:
+        100%;
+
+      border-radius:
+        inherit;
+
+      background:
+        linear-gradient(
+          90deg,
+          var(--gold,#d7b45a),
+          var(--gold2,#f2da91)
+        );
+
+      box-shadow:
+        0 0 8px
+        rgba(215,180,90,.35);
+
+      transition:
+        width .45s ease;
+    }
+
+    /* =======================================================
+       MÓDULOS
+       ======================================================= */
+
+    #rxui-v9 .rxv9-modules {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+      gap:
+        7px;
+    }
+
+    #rxui-v9 .rxv9-module {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        8px;
+
+      min-height:
+        49px;
+
+      padding:
+        8px;
+
+      border:
+        1px solid
+        rgba(255,255,255,.055);
+
+      border-radius:
+        12px;
+
+      background:
+        rgba(255,255,255,.022);
+    }
+
+    #rxui-v9 .rxv9-module-icon {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      width:
+        30px;
+
+      height:
+        30px;
+
+      flex:
+        0 0 30px;
+
+      border-radius:
+        9px;
+
+      background:
+        rgba(215,180,90,.075);
+
+      font-size:
+        14px;
+    }
+
+    #rxui-v9 .rxv9-module-text {
+
+      min-width:
+        0;
+    }
+
+    #rxui-v9 .rxv9-module-name {
+
+      display:
+        block;
+
+      overflow:
+        hidden;
+
+      color:
+        var(--text,#f5f5f5);
+
+      font:
+        700 10px/1.2
+        system-ui,
+        sans-serif;
+
+      white-space:
+        nowrap;
+
+      text-overflow:
+        ellipsis;
+    }
+
+    #rxui-v9 .rxv9-module-state {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        4px;
+
+      margin-top:
+        3px;
+
+      color:
+        var(--muted,#a0a0ab);
+
+      font:
+        500 8px/1
+        system-ui,
+        sans-serif;
+    }
+
+    #rxui-v9 .rxv9-module-state-dot {
+
+      width:
+        5px;
+
+      height:
+        5px;
+
+      border-radius:
+        50%;
+
+      background:
+        var(--green,#2ecc71);
+
+      box-shadow:
+        0 0 6px
+        rgba(46,204,113,.4);
+    }
+
+    /* =======================================================
+       FOOTER
+       ======================================================= */
+
+    #rxui-v9 .rxv9-foot {
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      margin-top:
+        14px;
+
+      padding-top:
+        11px;
+
+      border-top:
+        1px solid
+        rgba(255,255,255,.055);
+
+      color:
+        rgba(160,160,171,.7);
+
+      font:
+        600 8px/1
+        system-ui,
+        sans-serif;
+
+      letter-spacing:
+        .08em;
+
+      text-transform:
+        uppercase;
+    }
+
+    #rxui-v9 .rxv9-version {
+
+      color:
+        rgba(215,180,90,.62);
+    }
+
+    /* =======================================================
+       SCROLLBAR
+       ======================================================= */
+
+    #rxui-v9 .rxv9-panel::-webkit-scrollbar {
+
+      width:
+        4px;
+    }
+
+    #rxui-v9 .rxv9-panel::-webkit-scrollbar-track {
+
+      background:
+        transparent;
+    }
+
+    #rxui-v9 .rxv9-panel::-webkit-scrollbar-thumb {
+
+      background:
+        rgba(215,180,90,.30);
+
+      border-radius:
+        999px;
+    }
+
+    /* =======================================================
+       MÓVIL
+       ======================================================= */
+
+    @media (max-width:600px) {
+
+      #rxui-v9 .rxv9-trigger {
+
+        right:
+          9px;
+
+        top:
+          50%;
+
+        min-height:
+          38px;
+
+        padding:
+          0 10px;
+
+        /*
+         * Se mantiene centrado.
+         */
+        transform:
+          translateY(-50%);
+      }
+
+      #rxui-v9 .rxv9-trigger:hover {
+
+        transform:
+          translateY(-50%)
+          scale(1.03);
+      }
+
+      #rxui-v9 .rxv9-trigger:active {
+
+        transform:
+          translateY(-50%)
+          scale(.97);
+      }
+
+      #rxui-v9 .rxv9-panel {
+
+        right:
+          57px;
+
+        top:
+          50%;
+
+        width:
+          min(
+            330px,
+            calc(100vw - 70px)
+          );
+
+        max-height:
+          calc(100vh - 30px);
+
+        padding:
+          15px;
+
+        border-radius:
+          18px;
+      }
+
+      #rxui-v9.rxv9-open
+      .rxv9-panel {
+
+        transform:
+          translateY(-50%)
+          translateX(0)
+          scale(1);
+      }
+
+      #rxui-v9 .rxv9-modules {
+
+        gap:
+          6px;
+      }
+
+      #rxui-v9 .rxv9-module {
+
+        min-height:
+          46px;
+
+        padding:
+          7px;
+      }
+    }
+
+    /* =======================================================
+       TELÉFONOS MUY PEQUEÑOS
+       ======================================================= */
+
+    @media (max-width:380px) {
+
+      #rxui-v9 .rxv9-trigger-label {
+
+        display:
+          none;
+      }
+
+      #rxui-v9 .rxv9-trigger {
+
+        width:
+          38px;
+
+        padding:
+          0;
+      }
+
+      #rxui-v9 .rxv9-panel {
+
+        right:
+          54px;
+
+        width:
+          calc(100vw - 64px);
+      }
+
+      #rxui-v9 .rxv9-modules {
+
+        grid-template-columns:
+          1fr;
+      }
+    }
+
+    /* =======================================================
+       REDUCED MOTION
+       ======================================================= */
+
+    @media (prefers-reduced-motion:reduce) {
+
+      #rxui-v9 .rxv9-trigger,
+
+      #rxui-v9 .rxv9-panel,
+
+      #rxui-v9 .rxv9-progress-bar span {
+
+        transition:
+          none !important;
+      }
+    }
+
+  `;
+
+  document.head.appendChild(style);
+
+  /* ---------------------------------------------------------
+     REFERENCIAS
+     --------------------------------------------------------- */
+
+  const trigger =
+    root.querySelector(
+      '.rxv9-trigger'
+    );
+
+  const closeButton =
+    root.querySelector(
+      '.rxv9-close'
+    );
+
+  const panel =
+    root.querySelector(
+      '.rxv9-panel'
+    );
+
+  const modulesContainer =
+    root.querySelector(
+      '.rxv9-modules'
+    );
+
+  const countElement =
+    root.querySelector(
+      '.rxv9-count'
+    );
+
+  const totalElement =
+    root.querySelector(
+      '.rxv9-total'
+    );
+
+  const progressBar =
+    root.querySelector(
+      '.rxv9-progress-bar span'
+    );
+
+  /* ---------------------------------------------------------
+     CATÁLOGO
+     --------------------------------------------------------- */
+
+  const moduleDefinitions = [
+
+    {
+      id:
+        'roxthal-tattoo-designer',
+      name:
+        'Diseñador',
+      icon:
+        '🎨'
+    },
+
+    {
+      id:
+        'rx-color-pro',
+      name:
+        'Círculo cromático',
+      icon:
+        '🌈'
+    },
+
+    {
+      id:
+        'roxthal-ia-container',
+      name:
+        'RoXThal IA',
+      icon:
+        '✦'
+    },
+
+    {
+      id:
+        'buscador-tatuajes',
+      name:
+        'Buscador de tatuajes',
+      icon:
+        '🔎'
+    },
+
+    {
+      id:
+        'buscador-cuadros-artistas',
+      name:
+        'Cuadros y artistas',
+      icon:
+        '🖼️'
+    },
+
+    {
+      id:
+        'roxthal-school-campus',
+      name:
+        'Formación',
+      icon:
+        '🎓'
+    },
+
+    {
+      id:
+        'galeria',
+      name:
+        'Galería',
+      icon:
+        '📸'
+    },
+
+    {
+      id:
+        'cursos',
+      name:
+        'Cursos',
+      icon:
+        '📚'
+    },
+
+    {
+      id:
+        'radio',
+      name:
+        'Radio',
+      icon:
+        '📻'
+    },
+
+    {
+      id:
+        'roxthal-resenas',
+      name:
+        'Reseñas',
+      icon:
+        '⭐'
+    },
+
+    {
+      id:
+        'sorteoRoXthal',
+      name:
+        'Sorteo',
+      icon:
+        '🎁'
+    },
+
+    {
+      id:
+        'bloque-cobros',
+      name:
+        'Pagos y reservas',
+      icon:
+        '💳'
+    },
+
+    {
+      id:
+        'ubicacion',
+      name:
+        'Ubicación',
+      icon:
+        '📍'
+    },
+
+    {
+      id:
+        'identidad-roxthal',
+      name:
+        'Identidad',
+      icon:
+        '◈'
+    },
+
+    {
+      id:
+        'servicios',
+      name:
+        'Servicios',
+      icon:
+        '✦'
+    }
+
+  ];
+
+  /* ---------------------------------------------------------
+     CONSTRUIR MÓDULOS
+     --------------------------------------------------------- */
+
+  function buildModules() {
+
+    modulesContainer.innerHTML = '';
+
+    const available =
+      moduleDefinitions.filter(
+        function (definition) {
+
+          return Boolean(
+            document.getElementById(
+              definition.id
+            )
+          );
+
+        }
+      );
+
+    available.forEach(
+      function (definition) {
+
+        const item =
+          document.createElement(
+            'div'
+          );
+
+        item.className =
+          'rxv9-module';
+
+        item.innerHTML = `
+
+          <span
+            class="rxv9-module-icon"
+          >
+            ${definition.icon}
+          </span>
+
+          <span
+            class="rxv9-module-text"
+          >
+
+            <span
+              class="rxv9-module-name"
+            >
+              ${definition.name}
+            </span>
+
+            <span
+              class="rxv9-module-state"
+            >
+
+              <span
+                class="rxv9-module-state-dot"
+              ></span>
+
+              Disponible
+
+            </span>
+
+          </span>
+        `;
+
+        modulesContainer.appendChild(
+          item
+        );
+      }
+    );
+
+    const total =
+      available.length;
+
+    countElement.textContent =
+      total;
+
+    totalElement.textContent =
+      total;
+
+    progressBar.style.width =
+      total > 0
+        ? '100%'
+        : '0%';
+  }
+
+  /* ---------------------------------------------------------
+     ABRIR
+     --------------------------------------------------------- */
+
+  function openPanel() {
+
+    buildModules();
+
+    root.classList.add(
+      'rxv9-open'
+    );
+
+    trigger.setAttribute(
+      'aria-expanded',
+      'true'
+    );
+
+    panel.setAttribute(
+      'aria-hidden',
+      'false'
+    );
+  }
+
+  /* ---------------------------------------------------------
+     CERRAR
+     --------------------------------------------------------- */
+
+  function closePanel() {
+
+    root.classList.remove(
+      'rxv9-open'
+    );
+
+    trigger.setAttribute(
+      'aria-expanded',
+      'false'
+    );
+
+    panel.setAttribute(
+      'aria-hidden',
+      'true'
+    );
+  }
+
+  /* ---------------------------------------------------------
+     CLICK BOTÓN
+     --------------------------------------------------------- */
+
+  trigger.addEventListener(
+    'click',
+    function () {
+
+      if (
+        root.classList.contains(
+          'rxv9-open'
+        )
+      ) {
+
+        closePanel();
+
+      } else {
+
+        openPanel();
+      }
+    }
+  );
+
+  /* ---------------------------------------------------------
+     CERRAR
+     --------------------------------------------------------- */
+
+  closeButton.addEventListener(
+    'click',
+    closePanel
+  );
+
+  /* ---------------------------------------------------------
+     ESCAPE
+     --------------------------------------------------------- */
+
+  function onKeyDown(event) {
+
+    if (
+      event.key === 'Escape' &&
+      root.classList.contains(
+        'rxv9-open'
+      )
+    ) {
+
+      closePanel();
+
+      trigger.focus();
+    }
+  }
+
+  document.addEventListener(
+    'keydown',
+    onKeyDown
+  );
+
+  /* ---------------------------------------------------------
+     LIMPIEZA
+     --------------------------------------------------------- */
+
+  window.__ROXTHAL_V9_CLEANUP__ =
+    function () {
+
+      document.removeEventListener(
+        'keydown',
+        onKeyDown
+      );
+
+      style.remove();
+
+      root.remove();
+
+      delete
+        window.__ROXTHAL_V9_INSTALLED__;
+
+      delete
+        window.__ROXTHAL_V9_CLEANUP__;
+    };
+
+})();
+</script>
+
+<!-- =========================================================
+     FIN ROXTHAL V9.2
+     ========================================================= -->
 </body>
 </html>
