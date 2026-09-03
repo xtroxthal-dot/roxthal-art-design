@@ -43071,5 +43071,560 @@ select:focus{
 <!-- =========================================================
      FIN ROXTHAL PERFORMANCE SAFE LAYER
      ========================================================= -->
+  <script>
+/* ============================================================
+   ROXTHAL — PARCHE DE AUTENTICACIÓN ADMINISTRATIVA
+   v1.0 — PARCHE ADITIVO Y NO DESTRUCTIVO
+
+   IMPORTANTE:
+   Este bloque NO reemplaza el sistema existente.
+   Se ejecuta al final del documento y únicamente refuerza
+   la autenticación administrativa.
+   ============================================================ */
+
+(function () {
+
+  'use strict';
+
+  const RX_ADMIN_PATCH_VERSION = '1.0.0';
+
+  console.log(
+    '🛡️ RoXThal Admin Auth Patch:',
+    RX_ADMIN_PATCH_VERSION
+  );
+
+  /* ------------------------------------------------------------
+     1. MARCAR LA VERSIÓN ACTUAL
+     ------------------------------------------------------------ */
+
+  try {
+    sessionStorage.setItem(
+      'roxthal_admin_patch_version',
+      RX_ADMIN_PATCH_VERSION
+    );
+  } catch (e) {
+    console.warn(
+      'No se pudo guardar versión del parche:',
+      e
+    );
+  }
+
+
+  /* ------------------------------------------------------------
+     2. LIMPIEZA SEGURA DE SESIONES ANTIGUAS
+     
+     NO elimina:
+       - datos de Supabase
+       - cuentas
+       - contraseñas
+       - configuraciones
+       - cuotas
+       - contenido
+     
+     Únicamente elimina claves conocidas de sesión antigua.
+     ------------------------------------------------------------ */
+
+  function limpiarSesionesAntiguas() {
+
+    const clavesAntiguas = [
+      'roxthal_admin_auth',
+      'roxthal_admin_token',
+      'roxthal_admin_access_token',
+      'roxthal_admin_user',
+      'roxthal_old_admin_session'
+    ];
+
+    clavesAntiguas.forEach(function (clave) {
+
+      try {
+
+        localStorage.removeItem(clave);
+
+      } catch (e) {
+
+        console.warn(
+          'No se pudo limpiar:',
+          clave
+        );
+
+      }
+
+    });
+
+  }
+
+  limpiarSesionesAntiguas();
+
+
+  /* ------------------------------------------------------------
+     3. ASEGURAR QUE LA SESIÓN DE RESEÑAS NO TENGA BASURA
+     
+     NO borra una sesión válida.
+     Solo elimina una sesión que esté corrupta.
+     ------------------------------------------------------------ */
+
+  function validarSesionRoXThal() {
+
+    try {
+
+      const raw =
+        localStorage.getItem(
+          'roxthal_admin_session'
+        );
+
+      if (!raw) {
+        return null;
+      }
+
+      const sesion =
+        JSON.parse(raw);
+
+      if (
+        !sesion ||
+        typeof sesion !== 'object' ||
+        !sesion.access_token
+      ) {
+
+        localStorage.removeItem(
+          'roxthal_admin_session'
+        );
+
+        console.log(
+          '🧹 Sesión administrativa inválida eliminada.'
+        );
+
+        return null;
+      }
+
+      return sesion;
+
+    } catch (error) {
+
+      console.warn(
+        'Sesión administrativa corrupta. Limpiando.'
+      );
+
+      try {
+        localStorage.removeItem(
+          'roxthal_admin_session'
+        );
+      } catch (e) {}
+
+      return null;
+
+    }
+
+  }
+
+
+  validarSesionRoXThal();
+
+
+  /* ------------------------------------------------------------
+     4. DIAGNÓSTICO DEL SUPABASE DISPONIBLE
+     ------------------------------------------------------------ */
+
+  function diagnosticoSupabase() {
+
+    try {
+
+      const url =
+        window.SUPABASE_URL ||
+        '';
+
+      if (url) {
+
+        console.log(
+          '🔗 RoXThal Supabase:',
+          url
+        );
+
+      }
+
+      if (
+        window.supabase &&
+        typeof window.supabase.createClient ===
+          'function'
+      ) {
+
+        console.log(
+          '✅ Supabase JS disponible.'
+        );
+
+      } else {
+
+        console.warn(
+          '⚠️ Supabase JS no está disponible en este momento.'
+        );
+
+      }
+
+    } catch (error) {
+
+      console.warn(
+        'Diagnóstico Supabase no disponible:',
+        error
+      );
+
+    }
+
+  }
+
+  diagnosticoSupabase();
+
+
+  /* ------------------------------------------------------------
+     5. REPARACIÓN DEL ADMINISTRADOR DE RESEÑAS
+     
+     Este bloque NO crea un segundo sistema.
+     
+     Si existe:
+       roxthal-admin-login-btn
+     
+     comprueba que el formulario tenga correo y contraseña
+     y proporciona un diagnóstico claro.
+     
+     El listener original continúa existiendo.
+     ------------------------------------------------------------ */
+
+  function prepararAdminResenas() {
+
+    const boton =
+      document.getElementById(
+        'roxthal-admin-login-btn'
+      );
+
+    const email =
+      document.getElementById(
+        'roxthal-admin-email'
+      );
+
+    const password =
+      document.getElementById(
+        'roxthal-admin-password'
+      );
+
+    const mensaje =
+      document.getElementById(
+        'roxthal-admin-login-msg'
+      );
+
+    if (
+      !boton ||
+      !email ||
+      !password
+    ) {
+
+      console.log(
+        'ℹ️ Administrador de reseñas no está presente en esta vista.'
+      );
+
+      return;
+
+    }
+
+    console.log(
+      '🔐 Administrador de reseñas detectado.'
+    );
+
+    /*
+     * Evitamos introducir otro listener de login.
+     *
+     * El login original ya está implementado.
+     *
+     * Solo mejoramos el comportamiento visual si el usuario
+     * intenta enviar campos vacíos.
+     */
+
+    if (!boton.dataset.roxthalAuthPatch) {
+
+      boton.dataset.roxthalAuthPatch = '1';
+
+      boton.addEventListener(
+        'click',
+        function () {
+
+          if (
+            !email.value.trim() ||
+            !password.value
+          ) {
+
+            if (mensaje) {
+
+              mensaje.textContent =
+                '⚠️ Introducí correo y contraseña.';
+
+            }
+
+          }
+
+        },
+        true
+      );
+
+    }
+
+  }
+
+
+  /* ------------------------------------------------------------
+     6. REPARACIÓN DEL ADMINISTRADOR RTM
+     
+     El administrador de talleres/media utiliza:
+       rtm-login-btn
+       rtm-email
+       rtm-password
+     
+     No modificamos su autenticación.
+     Solo detectamos si está presente.
+     ------------------------------------------------------------ */
+
+  function prepararAdminRTM() {
+
+    const boton =
+      document.getElementById(
+        'rtm-login-btn'
+      );
+
+    const email =
+      document.getElementById(
+        'rtm-email'
+      );
+
+    const password =
+      document.getElementById(
+        'rtm-password'
+      );
+
+    if (
+      !boton ||
+      !email ||
+      !password
+    ) {
+
+      return;
+
+    }
+
+    console.log(
+      '🔐 Administrador RTM detectado.'
+    );
+
+    if (!boton.dataset.roxthalAuthPatch) {
+
+      boton.dataset.roxthalAuthPatch = '1';
+
+      boton.addEventListener(
+        'click',
+        function () {
+
+          if (
+            !email.value.trim() ||
+            !password.value
+          ) {
+
+            console.warn(
+              '⚠️ Intento de acceso RTM sin credenciales completas.'
+            );
+
+          }
+
+        },
+        true
+      );
+
+    }
+
+  }
+
+
+  /* ------------------------------------------------------------
+     7. DETECCIÓN DE CARGA DE DOM
+     ------------------------------------------------------------ */
+
+  function iniciarParcheAdmin() {
+
+    prepararAdminResenas();
+
+    prepararAdminRTM();
+
+  }
+
+
+  if (
+    document.readyState ===
+    'loading'
+  ) {
+
+    document.addEventListener(
+      'DOMContentLoaded',
+      iniciarParcheAdmin,
+      {
+        once: true
+      }
+    );
+
+  } else {
+
+    iniciarParcheAdmin();
+
+  }
+
+
+  /* ------------------------------------------------------------
+     8. ACTUALIZACIÓN DEL SERVICE WORKER
+     
+     No elimina datos.
+     Solicita al Service Worker que active inmediatamente
+     la versión nueva cuando sea posible.
+     ------------------------------------------------------------ */
+
+  try {
+
+    if (
+      'serviceWorker' in navigator
+    ) {
+
+      navigator.serviceWorker
+        .getRegistration()
+        .then(function (registration) {
+
+          if (!registration) {
+
+            console.log(
+              'ℹ️ No hay Service Worker registrado.'
+            );
+
+            return;
+
+          }
+
+          console.log(
+            '✅ Service Worker RoXThal detectado.'
+          );
+
+          if (
+            registration.waiting
+          ) {
+
+            registration.waiting.postMessage(
+              'SKIP_WAITING'
+            );
+
+          }
+
+          if (
+            registration.update
+          ) {
+
+            registration.update()
+              .catch(function () {});
+
+          }
+
+        })
+        .catch(function (error) {
+
+          console.warn(
+            'No se pudo actualizar Service Worker:',
+            error
+          );
+
+        });
+
+    }
+
+  } catch (error) {
+
+    console.warn(
+      'Error en actualización del Service Worker:',
+      error
+    );
+
+  }
+
+
+  /* ------------------------------------------------------------
+     9. EXPONER DIAGNÓSTICO PARA PRUEBAS
+     
+     No afecta al funcionamiento normal.
+     ------------------------------------------------------------ */
+
+  window.roxthalAdminAuthPatch = {
+
+    version:
+      RX_ADMIN_PATCH_VERSION,
+
+    checkSession:
+      validarSesionRoXThal,
+
+    clearInvalidSession:
+      function () {
+
+        try {
+
+          const raw =
+            localStorage.getItem(
+              'roxthal_admin_session'
+            );
+
+          if (!raw) {
+
+            console.log(
+              'ℹ️ No existe sesión administrativa.'
+            );
+
+            return false;
+
+          }
+
+          const sesion =
+            JSON.parse(raw);
+
+          if (
+            sesion &&
+            sesion.access_token
+          ) {
+
+            console.log(
+              '✅ Existe una sesión administrativa con token.'
+            );
+
+            return true;
+
+          }
+
+          localStorage.removeItem(
+            'roxthal_admin_session'
+          );
+
+          console.log(
+            '🧹 Sesión inválida eliminada.'
+          );
+
+          return false;
+
+        } catch (error) {
+
+          console.error(
+            'Error comprobando sesión:',
+            error
+          );
+
+          return false;
+
+        }
+
+      }
+
+  };
+
+
+  console.log(
+    '🚀 RoXThal Admin Auth Patch instalado correctamente.'
+  );
+
+})();
+</script>
 </body>
 </html>
