@@ -24673,5 +24673,335 @@ RXC_init();
 <!-- ============================================================
      FIN SCHOOL CAMPUS
      ============================================================ -->
+  <!-- =========================================================
+     RoXThal IA — PATCH REPARADOR DE CONEXIÓN
+     Pegar justo antes de </body>
+     NO sustituye el módulo RoXThal IA existente.
+========================================================= -->
+<script>
+(() => {
+  'use strict';
+
+  const ROXTHAL_IA_URL =
+    'https://lvvhpuedktdmfehvhcwk.supabase.co/functions/v1/roxthal-arte-ia';
+
+  /*
+   * Buscamos cualquier elemento existente relacionado con RoXThal IA.
+   * No creamos una nueva interfaz.
+   */
+  function buscarIA() {
+    const textos = [
+      'RoXThal IA',
+      'roxthal ia',
+      'Asistente de Arte',
+      'asistente de arte'
+    ];
+
+    const elementos = document.querySelectorAll(
+      'button, input, textarea, section, div, article, form'
+    );
+
+    for (const el of elementos) {
+      const texto = (el.innerText || el.placeholder || '').trim();
+
+      if (textos.some(t => texto.toLowerCase().includes(t.toLowerCase()))) {
+        return el.closest('section, article, form, div') || el;
+      }
+    }
+
+    return null;
+  }
+
+  /*
+   * Llamada central reparada a Supabase.
+   * El módulo existente puede utilizarla directamente.
+   */
+  window.RoXThalIARepair = {
+
+    endpoint: ROXTHAL_IA_URL,
+
+    async preguntar(question, history = []) {
+
+      if (!question || !String(question).trim()) {
+        throw new Error('Escribe una pregunta para RoXThal IA.');
+      }
+
+      const respuesta = await fetch(ROXTHAL_IA_URL, {
+        method: 'POST',
+
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+
+        body: JSON.stringify({
+          mode: 'text',
+          question: String(question).trim(),
+          history: Array.isArray(history)
+            ? history.slice(-8)
+            : []
+        })
+      });
+
+      let data = {};
+
+      try {
+        data = await respuesta.json();
+      } catch (_) {
+        throw new Error(
+          'RoXThal IA devolvió una respuesta que no es JSON.'
+        );
+      }
+
+      if (!respuesta.ok || data.ok === false) {
+
+        const mensaje =
+          data.error ||
+          `Error de RoXThal IA (${respuesta.status}).`;
+
+        throw new Error(mensaje);
+      }
+
+      if (!data.answer) {
+        throw new Error(
+          'RoXThal IA se conectó, pero no devolvió una respuesta.'
+        );
+      }
+
+      return data.answer;
+    },
+
+    async generarImagen(prompt) {
+
+      if (!prompt || !String(prompt).trim()) {
+        throw new Error(
+          'Describe la imagen que quieres crear.'
+        );
+      }
+
+      const respuesta = await fetch(ROXTHAL_IA_URL, {
+        method: 'POST',
+
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+
+        body: JSON.stringify({
+          mode: 'image',
+          prompt: String(prompt).trim()
+        })
+      });
+
+      let data = {};
+
+      try {
+        data = await respuesta.json();
+      } catch (_) {
+        throw new Error(
+          'RoXThal IA devolvió una respuesta de imagen no válida.'
+        );
+      }
+
+      if (!respuesta.ok || data.ok === false) {
+        throw new Error(
+          data.error ||
+          `Error de generación de imagen (${respuesta.status}).`
+        );
+      }
+
+      if (!data.image) {
+        throw new Error(
+          'La IA respondió pero no devolvió la imagen.'
+        );
+      }
+
+      return data.image;
+    },
+
+    async diagnostico() {
+
+      const inicio = Date.now();
+
+      try {
+
+        const respuesta = await fetch(ROXTHAL_IA_URL, {
+          method: 'POST',
+
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+
+          body: JSON.stringify({
+            mode: 'text',
+            question:
+              'Responde únicamente: CONEXIÓN ROXTHAL IA OK'
+          })
+        });
+
+        let data = {};
+
+        try {
+          data = await respuesta.json();
+        } catch (_) {}
+
+        const tiempo = Date.now() - inicio;
+
+        if (!respuesta.ok || data.ok === false) {
+
+          return {
+            ok: false,
+            status: respuesta.status,
+            tiempo,
+            error:
+              data.error ||
+              `HTTP ${respuesta.status}`
+          };
+        }
+
+        return {
+          ok: true,
+          status: respuesta.status,
+          tiempo,
+          respuesta: data.answer || ''
+        };
+
+      } catch (error) {
+
+        return {
+          ok: false,
+          status: 0,
+          tiempo: Date.now() - inicio,
+          error: error.message ||
+            'No se pudo contactar con Supabase.'
+        };
+      }
+    }
+  };
+
+
+  /*
+   * Repara automáticamente botones existentes
+   * si el módulo actual utiliza atributos comunes.
+   */
+  function conectarBotonesExistentes() {
+
+    const botones = document.querySelectorAll(
+      '[data-roxthal-ia], ' +
+      '[data-ia], ' +
+      '.roxthal-ia button, ' +
+      '#roxthal-ia button'
+    );
+
+    botones.forEach(boton => {
+
+      if (boton.dataset.roxthalRepair === '1') return;
+
+      const texto =
+        (boton.innerText || '').toLowerCase();
+
+      if (
+        texto.includes('enviar') ||
+        texto.includes('preguntar') ||
+        texto.includes('consultar') ||
+        texto.includes('generar') ||
+        texto.includes('crear')
+      ) {
+
+        boton.dataset.roxthalRepair = '1';
+
+        boton.addEventListener('click', async () => {
+
+          /*
+           * Si el módulo original ya tiene su propia función,
+           * no interferimos.
+           */
+          if (
+            typeof window.roxthalIAEnviar === 'function' ||
+            typeof window.RoXThalIAEnviar === 'function'
+          ) {
+            return;
+          }
+
+        }, true);
+      }
+    });
+  }
+
+
+  /*
+   * Diagnóstico silencioso.
+   * No muestra ventanas ni crea elementos.
+   */
+  async function comprobarConexion() {
+
+    try {
+
+      const resultado =
+        await window.RoXThalIARepair.diagnostico();
+
+      window.RoXThalIAEstado = resultado;
+
+      if (resultado.ok) {
+
+        console.info(
+          '🟢 RoXThal IA conectada correctamente.',
+          resultado.tiempo + ' ms'
+        );
+
+      } else {
+
+        console.warn(
+          '🔴 RoXThal IA:',
+          resultado.error
+        );
+      }
+
+    } catch (error) {
+
+      console.warn(
+        '🔴 RoXThal IA:',
+        error.message
+      );
+    }
+  }
+
+
+  /*
+   * Inicialización.
+   */
+  function iniciarRoXThalIAPatch() {
+
+    conectarBotonesExistentes();
+
+    /*
+     * Esperamos un poco porque algunos elementos
+     * de la aplicación pueden construirse dinámicamente.
+     */
+    setTimeout(conectarBotonesExistentes, 500);
+    setTimeout(conectarBotonesExistentes, 1500);
+
+    /*
+     * Diagnóstico una sola vez.
+     */
+    setTimeout(comprobarConexion, 1200);
+  }
+
+
+  if (document.readyState === 'loading') {
+
+    document.addEventListener(
+      'DOMContentLoaded',
+      iniciarRoXThalIAPatch
+    );
+
+  } else {
+
+    iniciarRoXThalIAPatch();
+  }
+
+})();
+</script>    
 </body>
 </html>
