@@ -25617,5 +25617,4064 @@ RXC_init();
 
 })();
 </script>
+  <!-- ================================================================
+     ROXTHAL ART DESIGN
+     🎨 LABORATORIO CROMÁTICO PRO MAX
+     VERSIÓN DEFINITIVA
+     
+     PEGAR TODO ESTE BLOQUE JUSTO ANTES DE </body>
+     ================================================================ -->
+
+<style>
+/* ================================================================
+   ROXTHAL COLOR LAB — CORE UI
+   ================================================================ */
+
+#rx-color-pro{
+  --rx-bg:#0a0a0d;
+  --rx-panel:#111116;
+  --rx-panel2:#17171e;
+  --rx-border:rgba(255,255,255,.09);
+  --rx-text:#f5f5f7;
+  --rx-muted:#9696a3;
+  --rx-accent:#ffcc00;
+  --rx-accent2:#ff4d00;
+  --rx-radius:20px;
+  position:relative;
+  width:100%;
+  margin:30px auto 0;
+  color:var(--rx-text);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  box-sizing:border-box;
+  z-index:10;
+}
+
+#rx-color-pro *,
+#rx-color-pro *::before,
+#rx-color-pro *::after{
+  box-sizing:border-box;
+}
+
+/* ---------- LAUNCHER ---------- */
+
+#rx-color-pro .rxcp-launch{
+  width:100%;
+  border:1px solid rgba(255,204,0,.22);
+  background:
+    radial-gradient(circle at 15% 20%,rgba(255,204,0,.12),transparent 28%),
+    radial-gradient(circle at 90% 80%,rgba(255,70,0,.10),transparent 30%),
+    linear-gradient(135deg,#101014,#09090c);
+  border-radius:24px;
+  padding:15px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  box-shadow:
+    0 18px 50px rgba(0,0,0,.30),
+    inset 0 1px rgba(255,255,255,.05);
+  transition:.25s ease;
+  overflow:hidden;
+}
+
+#rx-color-pro .rxcp-launch:hover{
+  transform:translateY(-2px);
+  border-color:rgba(255,204,0,.45);
+}
+
+#rx-color-pro .rxcp-launch:active{
+  transform:scale(.99);
+}
+
+#rx-color-pro .rxcp-logo{
+  width:58px;
+  height:58px;
+  min-width:58px;
+  border-radius:50%;
+  position:relative;
+  overflow:hidden;
+  background:
+    conic-gradient(
+      #ff0000,
+      #ff7a00,
+      #ffe600,
+      #37d14b,
+      #00d9ff,
+      #3267ff,
+      #a83cff,
+      #ff1493,
+      #ff0000
+    );
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,.06),
+    0 8px 28px rgba(255,80,0,.22);
+}
+
+#rx-color-pro .rxcp-logo::after{
+  content:"";
+  position:absolute;
+  inset:13px;
+  border-radius:50%;
+  background:#0c0c10;
+  border:1px solid rgba(255,255,255,.12);
+}
+
+#rx-color-pro .rxcp-launch-main{
+  flex:1;
+  min-width:0;
+}
+
+#rx-color-pro .rxcp-kicker{
+  color:var(--rx-accent);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1.7px;
+  text-transform:uppercase;
+  margin-bottom:3px;
+}
+
+#rx-color-pro .rxcp-title{
+  font-size:18px;
+  font-weight:900;
+  line-height:1.15;
+  letter-spacing:-.4px;
+}
+
+#rx-color-pro .rxcp-sub{
+  color:var(--rx-muted);
+  font-size:11px;
+  margin-top:4px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+#rx-color-pro .rxcp-open{
+  width:38px;
+  height:38px;
+  min-width:38px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  background:rgba(255,204,0,.12);
+  color:var(--rx-accent);
+  font-size:20px;
+  font-weight:900;
+}
+
+/* ---------- BODY ---------- */
+
+#rx-color-pro .rxcp-body{
+  display:none;
+  margin-top:12px;
+  background:
+    radial-gradient(circle at 0% 0%,rgba(255,204,0,.045),transparent 28%),
+    linear-gradient(180deg,#0e0e12,#08080b);
+  border:1px solid var(--rx-border);
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.40);
+}
+
+#rx-color-pro.open .rxcp-body{
+  display:block;
+  animation:rxcpIn .28s ease both;
+}
+
+@keyframes rxcpIn{
+  from{
+    opacity:0;
+    transform:translateY(-8px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+#rx-color-pro .rxcp-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px;
+  border-bottom:1px solid var(--rx-border);
+  background:rgba(255,255,255,.015);
+}
+
+#rx-color-pro .rxcp-header-title{
+  font-size:17px;
+  font-weight:900;
+}
+
+#rx-color-pro .rxcp-header-small{
+  color:var(--rx-muted);
+  font-size:10px;
+  margin-top:3px;
+}
+
+#rx-color-pro .rxcp-close{
+  border:0;
+  background:rgba(255,255,255,.07);
+  color:#fff;
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:18px;
+}
+
+/* ---------- TABS ---------- */
+
+#rx-color-pro .rxcp-tabs{
+  display:flex;
+  gap:6px;
+  padding:10px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  border-bottom:1px solid var(--rx-border);
+}
+
+#rx-color-pro .rxcp-tabs::-webkit-scrollbar{
+  display:none;
+}
+
+#rx-color-pro .rxcp-tab{
+  flex:1;
+  min-width:105px;
+  border:1px solid var(--rx-border);
+  border-radius:12px;
+  background:#111116;
+  color:#aaaab5;
+  padding:10px 8px;
+  font-size:10px;
+  font-weight:900;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+#rx-color-pro .rxcp-tab.active{
+  background:linear-gradient(135deg,rgba(255,204,0,.17),rgba(255,90,0,.09));
+  border-color:rgba(255,204,0,.42);
+  color:#fff;
+}
+
+/* ---------- GRID ---------- */
+
+#rx-color-pro .rxcp-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+  padding:12px;
+}
+
+#rx-color-pro .rxcp-card{
+  background:linear-gradient(180deg,#131318,#0e0e12);
+  border:1px solid var(--rx-border);
+  border-radius:18px;
+  padding:13px;
+  min-width:0;
+}
+
+#rx-color-pro .rxcp-card-title{
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.8px;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+
+#rx-color-pro .rxcp-muted{
+  color:var(--rx-muted);
+}
+
+/* ---------- WHEEL ---------- */
+
+#rx-color-pro .rxcp-wheel-wrap{
+  position:relative;
+  width:min(100%,360px);
+  margin:0 auto;
+  aspect-ratio:1;
+}
+
+#rx-color-pro #rxcp-wheel{
+  width:100%;
+  height:100%;
+  display:block;
+  border-radius:50%;
+  touch-action:none;
+  cursor:crosshair;
+}
+
+#rx-color-pro .rxcp-wheel-center{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:76px;
+  height:76px;
+  border-radius:50%;
+  background:#ff0000;
+  border:5px solid rgba(255,255,255,.90);
+  box-shadow:
+    0 5px 20px rgba(0,0,0,.45),
+    inset 0 0 0 1px rgba(0,0,0,.20);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+
+#rx-color-pro .rxcp-center-hex{
+  font-size:10px;
+  font-weight:900;
+  color:#fff;
+  text-shadow:0 1px 3px rgba(0,0,0,.7);
+}
+
+#rx-color-pro .rxcp-center-copy{
+  font-size:8px;
+  color:rgba(255,255,255,.75);
+  margin-top:2px;
+}
+
+/* ---------- COLOR PREVIEW ---------- */
+
+#rx-color-pro .rxcp-preview{
+  height:74px;
+  border-radius:15px;
+  background:#ff0000;
+  border:1px solid rgba(255,255,255,.12);
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  padding:10px;
+  overflow:hidden;
+  margin-bottom:10px;
+}
+
+#rx-color-pro .rxcp-preview span{
+  padding:5px 8px;
+  border-radius:8px;
+  background:rgba(0,0,0,.38);
+  backdrop-filter:blur(8px);
+  color:#fff;
+  font-size:12px;
+  font-weight:900;
+}
+
+/* ---------- SLIDERS ---------- */
+
+#rx-color-pro .rxcp-slider-row{
+  margin:10px 0;
+}
+
+#rx-color-pro .rxcp-slider-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:5px;
+  font-size:10px;
+  font-weight:800;
+}
+
+#rx-color-pro input[type="range"]{
+  width:100%;
+  accent-color:#ffcc00;
+}
+
+#rx-color-pro .rxcp-hue{
+  background:linear-gradient(
+    90deg,
+    red,
+    yellow,
+    lime,
+    cyan,
+    blue,
+    magenta,
+    red
+  );
+  border-radius:10px;
+}
+
+#rx-color-pro .rxcp-sat{
+  border-radius:10px;
+}
+
+#rx-color-pro .rxcp-light{
+  border-radius:10px;
+}
+
+/* ---------- DATA ---------- */
+
+#rx-color-pro .rxcp-values{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:7px;
+}
+
+#rx-color-pro .rxcp-value{
+  background:#0a0a0e;
+  border:1px solid var(--rx-border);
+  border-radius:11px;
+  padding:8px;
+}
+
+#rx-color-pro .rxcp-value small{
+  display:block;
+  color:#777784;
+  font-size:8px;
+  text-transform:uppercase;
+  margin-bottom:3px;
+}
+
+#rx-color-pro .rxcp-value strong{
+  font-size:11px;
+  word-break:break-all;
+}
+
+/* ---------- BUTTONS ---------- */
+
+#rx-color-pro .rxcp-buttons{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:7px;
+}
+
+#rx-color-pro button{
+  font-family:inherit;
+}
+
+#rx-color-pro .rxcp-btn{
+  border:1px solid var(--rx-border);
+  background:#17171d;
+  color:#eee;
+  border-radius:11px;
+  padding:9px 8px;
+  font-size:10px;
+  font-weight:800;
+  cursor:pointer;
+  transition:.18s ease;
+}
+
+#rx-color-pro .rxcp-btn:hover{
+  border-color:rgba(255,204,0,.38);
+  background:#1c1c23;
+}
+
+#rx-color-pro .rxcp-btn.primary{
+  background:linear-gradient(135deg,#ffcc00,#ff7b00);
+  color:#090909;
+  border:0;
+  font-weight:950;
+}
+
+#rx-color-pro .rxcp-btn.danger{
+  background:rgba(255,50,50,.09);
+  border-color:rgba(255,70,70,.20);
+}
+
+#rx-color-pro .rxcp-btn.full{
+  grid-column:1/-1;
+}
+
+/* ---------- HARMONY ---------- */
+
+#rx-color-pro .rxcp-harmony{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:5px;
+}
+
+#rx-color-pro .rxcp-harmony-swatch{
+  aspect-ratio:1;
+  border-radius:9px;
+  border:1px solid rgba(255,255,255,.13);
+  cursor:pointer;
+  position:relative;
+}
+
+#rx-color-pro .rxcp-harmony-swatch span{
+  position:absolute;
+  left:2px;
+  right:2px;
+  bottom:2px;
+  background:rgba(0,0,0,.55);
+  border-radius:5px;
+  padding:2px 1px;
+  font-size:6px;
+  text-align:center;
+  color:#fff;
+}
+
+/* ---------- MIXER ---------- */
+
+#rx-color-pro .rxcp-mixer{
+  display:grid;
+  grid-template-columns:1fr 42px 1fr 42px 1fr;
+  align-items:center;
+  gap:6px;
+}
+
+#rx-color-pro .rxcp-mix-color{
+  height:62px;
+  border-radius:13px;
+  border:1px solid rgba(255,255,255,.12);
+  cursor:pointer;
+}
+
+#rx-color-pro .rxcp-mix-op{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:#19191f;
+  font-weight:900;
+  color:#ffcc00;
+}
+
+#rx-color-pro .rxcp-mix-result{
+  height:72px;
+  border-radius:15px;
+  border:2px solid rgba(255,255,255,.18);
+  box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+/* ---------- RECIPES ---------- */
+
+#rx-color-pro .rxcp-recipe{
+  padding:11px;
+  background:#0a0a0e;
+  border:1px solid var(--rx-border);
+  border-radius:13px;
+  margin-top:8px;
+}
+
+#rx-color-pro .rxcp-recipe strong{
+  font-size:12px;
+}
+
+#rx-color-pro .rxcp-recipe-line{
+  height:8px;
+  border-radius:8px;
+  margin-top:7px;
+  overflow:hidden;
+  display:flex;
+}
+
+#rx-color-pro .rxcp-recipe-line i{
+  display:block;
+  height:100%;
+}
+
+/* ---------- PALETTES ---------- */
+
+#rx-color-pro .rxcp-presets{
+  display:flex;
+  gap:6px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  padding-bottom:2px;
+}
+
+#rx-color-pro .rxcp-presets::-webkit-scrollbar{
+  display:none;
+}
+
+#rx-color-pro .rxcp-preset{
+  flex:0 0 auto;
+  border:1px solid var(--rx-border);
+  background:#15151b;
+  border-radius:12px;
+  padding:8px 10px;
+  color:#ddd;
+  font-size:9px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+#rx-color-pro .rxcp-palette{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+}
+
+#rx-color-pro .rxcp-palette-swatch{
+  width:43px;
+  height:43px;
+  border-radius:11px;
+  border:1px solid rgba(255,255,255,.14);
+  position:relative;
+  cursor:pointer;
+}
+
+#rx-color-pro .rxcp-palette-swatch span{
+  position:absolute;
+  left:2px;
+  right:2px;
+  bottom:2px;
+  font-size:6px;
+  text-align:center;
+  padding:2px;
+  background:rgba(0,0,0,.52);
+  color:#fff;
+  border-radius:5px;
+}
+
+/* ---------- HISTORY ---------- */
+
+#rx-color-pro .rxcp-history{
+  display:grid;
+  grid-template-columns:repeat(8,1fr);
+  gap:5px;
+}
+
+#rx-color-pro .rxcp-history-item{
+  aspect-ratio:1;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,.10);
+  cursor:pointer;
+}
+
+/* ---------- IMAGE PICKER ---------- */
+
+#rx-color-pro .rxcp-image-stage{
+  background:#08080b;
+  border:1px dashed rgba(255,255,255,.12);
+  border-radius:14px;
+  min-height:160px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  position:relative;
+}
+
+#rx-color-pro #rxcp-image{
+  max-width:100%;
+  max-height:330px;
+  display:none;
+  cursor:crosshair;
+}
+
+#rx-color-pro .rxcp-image-help{
+  text-align:center;
+  color:#777784;
+  padding:30px;
+  font-size:11px;
+}
+
+/* ---------- CONTRAST ---------- */
+
+#rx-color-pro .rxcp-contrast{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+}
+
+#rx-color-pro .rxcp-contrast-box{
+  min-height:80px;
+  border-radius:12px;
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  font-size:11px;
+  font-weight:900;
+}
+
+/* ---------- VALUE SCALE ---------- */
+
+#rx-color-pro .rxcp-value-scale{
+  display:grid;
+  grid-template-columns:repeat(11,1fr);
+  height:30px;
+  border-radius:9px;
+  overflow:hidden;
+}
+
+#rx-color-pro .rxcp-value-scale div{
+  display:grid;
+  place-items:center;
+  font-size:7px;
+  color:#777;
+}
+
+/* ---------- INPUTS ---------- */
+
+#rx-color-pro input[type="text"],
+#rx-color-pro input[type="number"]{
+  width:100%;
+  background:#09090c;
+  color:#fff;
+  border:1px solid var(--rx-border);
+  border-radius:11px;
+  padding:10px;
+  outline:none;
+}
+
+#rx-color-pro input[type="text"]:focus,
+#rx-color-pro input[type="number"]:focus{
+  border-color:rgba(255,204,0,.42);
+}
+
+#rx-color-pro input[type="file"]{
+  width:100%;
+  font-size:10px;
+  color:#999;
+}
+
+/* ---------- CLOUD PALETTES ---------- */
+
+#rx-color-pro .rxcp-cloud-list{
+  display:grid;
+  gap:7px;
+}
+
+#rx-color-pro .rxcp-cloud-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:9px;
+  border-radius:12px;
+  background:#0a0a0e;
+  border:1px solid var(--rx-border);
+}
+
+#rx-color-pro .rxcp-cloud-preview{
+  display:flex;
+  flex:1;
+  height:28px;
+  overflow:hidden;
+  border-radius:7px;
+}
+
+#rx-color-pro .rxcp-cloud-preview i{
+  flex:1;
+}
+
+/* ---------- FOOTER ---------- */
+
+#rx-color-pro .rxcp-footer{
+  padding:14px;
+  border-top:1px solid var(--rx-border);
+  color:#686873;
+  text-align:center;
+  font-size:9px;
+}
+
+/* ---------- TOAST ---------- */
+
+#rxcp-toast{
+  position:fixed;
+  left:50%;
+  bottom:20px;
+  transform:translate(-50%,20px);
+  z-index:999999;
+  background:#111116;
+  border:1px solid rgba(255,204,0,.30);
+  color:#fff;
+  padding:11px 15px;
+  border-radius:13px;
+  box-shadow:0 15px 45px rgba(0,0,0,.40);
+  font-size:11px;
+  font-weight:800;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s ease;
+  max-width:calc(100vw - 30px);
+  text-align:center;
+}
+
+#rxcp-toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+/* ---------- DESKTOP ---------- */
+
+@media(min-width:760px){
+  #rx-color-pro .rxcp-grid{
+    grid-template-columns:1.05fr .95fr;
+  }
+
+  #rx-color-pro .rxcp-card.wide{
+    grid-column:1/-1;
+  }
+
+  #rx-color-pro .rxcp-harmony{
+    grid-template-columns:repeat(6,1fr);
+  }
+}
+
+@media(min-width:1100px){
+  #rx-color-pro .rxcp-grid{
+    grid-template-columns:1fr 1fr 1fr;
+  }
+
+  #rx-color-pro .rxcp-card.wide{
+    grid-column:span 2;
+  }
+}
+</style>
+
+
+<section id="rx-color-pro">
+
+  <!-- ============================================================
+       VISOR / APERTURA
+       ============================================================ -->
+
+  <button class="rxcp-launch" type="button" id="rxcpLauncher">
+
+    <div class="rxcp-logo"></div>
+
+    <div class="rxcp-launch-main">
+      <div class="rxcp-kicker">RoXThal Art Design · Pro Tools</div>
+      <div class="rxcp-title">🎨 Laboratorio Cromático PRO</div>
+      <div class="rxcp-sub">
+        RYB · RGB · Armonías · Pigmentos · Paletas · Tatuaje
+      </div>
+    </div>
+
+    <div class="rxcp-open">⌄</div>
+
+  </button>
+
+
+  <!-- ============================================================
+       CUERPO
+       ============================================================ -->
+
+  <div class="rxcp-body">
+
+    <header class="rxcp-header">
+
+      <div>
+        <div class="rxcp-header-title">
+          🎨 Laboratorio Cromático
+        </div>
+
+        <div class="rxcp-header-small">
+          Herramienta profesional de color RoXThal
+        </div>
+      </div>
+
+      <button
+        type="button"
+        class="rxcp-close"
+        id="rxcpClose">
+        ×
+      </button>
+
+    </header>
+
+
+    <!-- ============================================================
+         MODOS
+         ============================================================ -->
+
+    <div class="rxcp-tabs">
+
+      <button
+        type="button"
+        class="rxcp-tab active"
+        data-mode="paint">
+        🖌️ PINTURA RYB
+      </button>
+
+      <button
+        type="button"
+        class="rxcp-tab"
+        data-mode="digital">
+        💻 DIGITAL RGB
+      </button>
+
+      <button
+        type="button"
+        class="rxcp-tab"
+        data-mode="tattoo">
+        🖋️ TATUAJE
+      </button>
+
+    </div>
+
+
+    <div class="rxcp-grid">
+
+
+      <!-- ==========================================================
+           RUEDA
+           ========================================================== -->
+
+      <section class="rxcp-card">
+
+        <div class="rxcp-card-title">
+          🌈 Rueda cromática interactiva
+        </div>
+
+        <div class="rxcp-wheel-wrap">
+
+          <canvas
+            id="rxcp-wheel"
+            width="720"
+            height="720">
+          </canvas>
+
+          <button
+            type="button"
+            class="rxcp-wheel-center"
+            id="rxcpCenter">
+
+            <span
+              class="rxcp-center-hex"
+              id="rxcpCenterHex">
+              #FF0000
+            </span>
+
+            <span class="rxcp-center-copy">
+              COPIAR
+            </span>
+
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- ==========================================================
+           COLOR ACTUAL
+           ========================================================== -->
+
+      <section class="rxcp-card">
+
+        <div class="rxcp-card-title">
+          🎯 Color seleccionado
+        </div>
+
+        <div
+          class="rxcp-preview"
+          id="rxcpPreview">
+
+          <span id="rxcpHexBig">
+            #FF0000
+          </span>
+
+          <span id="rxcpModeLabel">
+            RYB
+          </span>
+
+        </div>
+
+
+        <div class="rxcp-slider-row">
+
+          <div class="rxcp-slider-head">
+            <span>MATIZ · H</span>
+            <strong id="rxcpHVal">0°</strong>
+          </div>
+
+          <input
+            id="rxcpHue"
+            class="rxcp-hue"
+            type="range"
+            min="0"
+            max="360"
+            value="0">
+
+        </div>
+
+
+        <div class="rxcp-slider-row">
+
+          <div class="rxcp-slider-head">
+            <span>SATURACIÓN · S</span>
+            <strong id="rxcpSVal">100%</strong>
+          </div>
+
+          <input
+            id="rxcpSat"
+            type="range"
+            min="0"
+            max="100"
+            value="100">
+
+        </div>
+
+
+        <div class="rxcp-slider-row">
+
+          <div class="rxcp-slider-head">
+            <span>VALOR / LUMINANCIA</span>
+            <strong id="rxcpVVal">100%</strong>
+          </div>
+
+          <input
+            id="rxcpLight"
+            type="range"
+            min="0"
+            max="100"
+            value="50">
+
+        </div>
+
+
+        <div class="rxcp-values">
+
+          <div class="rxcp-value">
+            <small>HEX</small>
+            <strong id="rxcpHEX">#FF0000</strong>
+          </div>
+
+          <div class="rxcp-value">
+            <small>RGB</small>
+            <strong id="rxcpRGB">255, 0, 0</strong>
+          </div>
+
+          <div class="rxcp-value">
+            <small>HSL</small>
+            <strong id="rxcpHSL">0°, 100%, 50%</strong>
+          </div>
+
+          <div class="rxcp-value">
+            <small>HSV</small>
+            <strong id="rxcpHSV">0°, 100%, 100%</strong>
+          </div>
+
+          <div class="rxcp-value">
+            <small>RYB</small>
+            <strong id="rxcpRYB">0°</strong>
+          </div>
+
+          <div class="rxcp-value">
+            <small>LUMINANCIA</small>
+            <strong id="rxcpLum">0.2126</strong>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ==========================================================
+           ARMONÍAS
+           ========================================================== -->
+
+      <section class="rxcp-card wide">
+
+        <div class="rxcp-card-title">
+          🎼 Armonías automáticas
+        </div>
+
+        <div class="rxcp-buttons">
+
+          <button class="rxcp-btn" data-harmony="complementary">
+            Complementario
+          </button>
+
+          <button class="rxcp-btn" data-harmony="analogous">
+            Análogo
+          </button>
+
+          <button class="rxcp-btn" data-harmony="triadic">
+            Tríada
+          </button>
+
+          <button class="rxcp-btn" data-harmony="tetradic">
+            Tétrada
+          </button>
+
+          <button class="rxcp-btn" data-harmony="split">
+            Split
+          </button>
+
+          <button class="rxcp-btn" data-harmony="monochrome">
+            Monocromo
+          </button>
+
+        </div>
+
+        <div
+          class="rxcp-harmony"
+          id="rxcpHarmony"
+          style="margin-top:10px">
+        </div>
+
+      </section>
+
+
+      <!-- ==========================================================
+           MEZCLA DE PIGMENTOS
+           ========================================================== -->
+
+      <section class="rxcp-card wide">
+
+        <div class="rxcp-card-title">
+          🧪 Mezcla pictórica · RYB
+        </div>
+
+        <div class="rxcp-mixer">
+
+          <div
+            class="rxcp-mix-color"
+            id="rxcpMixA"
+            title="Pulsa para usar el color actual">
+          </div>
+
+          <div class="rxcp-mix-op">+</div>
+
+          <div
+            class="rxcp-mix-color"
+            id="rxcpMixB"
+            title="Pulsa para seleccionar otro color">
+          </div>
+
+          <div class="rxcp-mix-op">=</div>
+
+          <div
+            class="rxcp-mix-result"
+            id="rxcpMixResult">
+          </div>
+
+        </div>
+
+
+        <div class="rxcp-slider-row">
+
+          <div class="rxcp-slider-head">
+            <span>PROPORCIÓN COLOR A</span>
+            <strong id="rxcpMixPct">50%</strong>
+          </div>
+
+          <input
+            id="rxcpMixRange"
+            type="range"
+            min="0"
+            max="100"
+            value="50">
+
+        </div>
+
+
+        <div
+          class="rxcp-recipe"
+          id="rxcpRecipe">
+        </div>
+
+      </section>
+
+
+      <!-- ==========================================================
+           PRESETS ARTÍSTICOS
+           ========================================================== -->
+
+      <section class="rxcp-card wide">
+
+        <div class="rxcp-card-title">
+          🧑‍🎨 Paletas artísticas
+        </div>
+
+        <div class="rxcp-presets">
+
+          <button class="rxcp-preset" data-preset="portrait">
+            Retrato
+          </button>
+
+          <button class="rxcp-preset" data-preset="landscape">
+            Paisaje
+          </button>
+
+          <button class="rxcp-preset" data-preset="tattoo">
+            Tatuaje
+          </button>
+
+          <button class="rxcp-preset" data-preset="warm">
+            Cálida
+          </button>
+
+          <button class="rxcp-preset" data-preset="cold">
+            Fría
+          </button>
+
+          <button class="rxcp-preset" data-preset="earth">
+            Tierra
+          </button>
+
+        </div>
+
+        <div
+          class="rxcp-palette"
+          id="rxcpPresetPalette"
+          style="margin-top:10px">
+        </div>
+
+      </section>
+
+
+      <!-- ==========================================================
+           ESCALA DE VALORES
+           ========================================================== -->
+
+      <section class="rxcp-card">
+
+        <div class="rxcp-card-title">
+          ◼ Escala de valores
+        </div>
+
+        <div
+          class="rxcp-value-scale"
+          id="rxcpValueScale">
+        </div>
+
+      </section>
+
+
+      <!-- ==========================================================
+           HISTORIAL
+           ========================================================== -->
+
+      <section class="rxcp-card">
+
+        <div class="rxcp-card-title">
+          🕘 Historial
+        </div>
+
+        <div
+          class="rxcp-history"
+          id="rxcpHistory">
+        </div>
+
+        <button
+          type="button"
+          class="rxcp-btn danger full"
+          id="rxcpClearHistory"
+          style="margin-top:8px">
+          Limpiar historial
+        </button>
+
+      </section>
+
+
+      <!-- ==========================================================
+           PALETA PERSONAL
+           ========================================================== -->
+
+      <section class="rxcp-card wide">
+
+        <div class="rxcp-card-title">
+          ⭐ Mi paleta
+        </div>
+
+        <input
+          id="rxcpPaletteName"
+          type="text"
+          maxlength="60"
+          value="Paleta RoXThal">
+
+        <div
+          class="rxcp-palette"
+          id="rxcpPalette"
+          style="margin-top:10px">
+        </div>
+
+        <div
+          class="rxcp-buttons"
+          style="margin-top:10px">
+
+          <button
+            type="button"
+            class="rxcp-btn primary"
+            id="rxcpAddCurrent">
+            + Color actual
+          </button>
+
+          <button
+            type="button"
+            class="rxcp-btn"
+            id="rxcpAddHarmony">
+            + Armonía
+          </button>
+
+          <button
+            type="button"
+            class="rxcp-btn"
+            id="rxcpSavePalette">
+            ☁ Guardar
+          </button>
+
+          <button
+            type="button"
+            class="rxcp-btn"
+            id="rxcpExportJSON">
+            JSON
+          </button>
+
+          <button
+            type="button"
+            class="rxcp-btn"
+            id="rxcpExportASE">
+            ASE
+          </button>
+
+          <button
+            type="button"
+            class="rxcp-btn"
+            id="rxcpExportPAL">
+            PAL
+          </button>
+
+          <button
+            type="button"
+            class="rxcp-btn danger full"
+            id="rxcpClearPalette">
+            Vaciar paleta
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- ==========================================================
+           PALETAS EN LA NUBE
+           ========================================================== -->
+
+      <section class="rxcp-card wide">
+
+        <div class="rxcp-card-title">
+          ☁️ Paletas guardadas en RoXThal
+        </div>
+
+        <div
+          class="rxcp-cloud-list"
+          id="rxcpCloudList">
+        </div>
+
+        <button
+          type="button"
+          class="rxcp-btn"
+          id="rxcpLoadCloud"
+          style="margin-top:8px">
+          ↻ Actualizar paletas
+        </button>
+
+      </section>
+
+
+      <!-- ==========================================================
+           CUENTAGOTAS
+           ========================================================== -->
+
+      <section class="rxcp-card wide">
+
+        <div class="rxcp-card-title">
+          👁️ Cuentagotas digital
+        </div>
+
+        <input
+          type="file"
+          id="rxcpImageFile"
+          accept="image/*">
+
+        <div
+          class="rxcp-image-stage"
+          style="margin-top:10px">
+
+          <div
+            class="rxcp-image-help"
+            id="rxcpImageHelp">
+            Carga una imagen y pulsa sobre ella para extraer cualquier color.
+          </div>
+
+          <img
+            id="rxcpImage"
+            alt="Imagen para extracción de color">
+
+        </div>
+
+      </section>
+
+
+      <!-- ==========================================================
+           CONTRASTE
+           ========================================================== -->
+
+      <section class="rxcp-card">
+
+        <div class="rxcp-card-title">
+          👁️ Contraste digital
+        </div>
+
+        <div class="rxcp-contrast">
+
+          <div
+            class="rxcp-contrast-box"
+            id="rxcpContrastBlack">
+            Negro
+          </div>
+
+          <div
+            class="rxcp-contrast-box"
+            id="rxcpContrastWhite">
+            Blanco
+          </div>
+
+        </div>
+
+        <div
+          id="rxcpContrastText"
+          style="margin-top:10px;font-size:10px;line-height:1.5">
+        </div>
+
+      </section>
+
+
+      <!-- ==========================================================
+           SIMULACIÓN DE VISIÓN
+           ========================================================== -->
+
+      <section class="rxcp-card">
+
+        <div class="rxcp-card-title">
+          👓 Simulación de visión
+        </div>
+
+        <div class="rxcp-buttons">
+
+          <button
+            class="rxcp-btn"
+            data-vision="normal">
+            Normal
+          </button>
+
+          <button
+            class="rxcp-btn"
+            data-vision="protanopia">
+            Protanopia
+          </button>
+
+          <button
+            class="rxcp-btn"
+            data-vision="deuteranopia">
+            Deuteranopia
+          </button>
+
+          <button
+            class="rxcp-btn"
+            data-vision="tritanopia">
+            Tritanopia
+          </button>
+
+        </div>
+
+        <div
+          id="rxcpVisionPreview"
+          style="
+            margin-top:10px;
+            height:55px;
+            border-radius:13px;
+            background:#ff0000;
+            border:1px solid rgba(255,255,255,.12);
+          ">
+        </div>
+
+      </section>
+
+
+    </div>
+
+
+    <footer class="rxcp-footer">
+      RoXThal Art Design · Laboratorio Cromático PRO · RYB / RGB
+    </footer>
+
+  </div>
+</section>
+
+
+<div id="rxcp-toast"></div>
+
+
+<script>
+(function(){
+
+"use strict";
+
+/* ================================================================
+   PROTECCIÓN — NO DUPLICAR EL MÓDULO
+   ================================================================ */
+
+if(window.__ROXTHAL_COLOR_PRO_LOADED__) return;
+window.__ROXTHAL_COLOR_PRO_LOADED__ = true;
+
+
+/* ================================================================
+   UTILIDADES
+   ================================================================ */
+
+const $ = id => document.getElementById(id);
+
+const root = $("rx-color-pro");
+
+const canvas = $("rxcp-wheel");
+const ctx = canvas.getContext("2d");
+
+let mode = "paint";
+
+let color = {
+  h:0,
+  s:100,
+  v:100
+};
+
+let mixA = "#ff0000";
+let mixB = "#0000ff";
+let mixPct = 50;
+
+let harmonyType = "complementary";
+
+let harmonyColors = [];
+
+let palette = [];
+
+let history = [];
+
+let currentVision = "normal";
+
+const HISTORY_KEY = "roxthal_color_history_v3";
+const PALETTE_KEY = "roxthal_color_palette_v3";
+
+const TAU = Math.PI * 2;
+
+
+/* ================================================================
+   TOAST
+   ================================================================ */
+
+function toast(message){
+
+  const el = $("rxcp-toast");
+
+  if(!el) return;
+
+  el.textContent = message;
+
+  el.classList.add("show");
+
+  clearTimeout(el.__timer);
+
+  el.__timer = setTimeout(()=>{
+    el.classList.remove("show");
+  },2200);
+}
+
+
+/* ================================================================
+   CLAMP
+   ================================================================ */
+
+function clamp(v,min,max){
+  return Math.max(min,Math.min(max,v));
+}
+
+
+/* ================================================================
+   HEX
+   ================================================================ */
+
+function rgbToHex(r,g,b){
+
+  return "#" + [r,g,b]
+    .map(v=>Math.round(v)
+    .toString(16)
+    .padStart(2,"0"))
+    .join("")
+    .toUpperCase();
+}
+
+
+function hexToRgb(hex){
+
+  hex = hex.replace("#","");
+
+  if(hex.length===3){
+    hex = hex.split("").map(x=>x+x).join("");
+  }
+
+  const n = parseInt(hex,16);
+
+  return {
+    r:(n>>16)&255,
+    g:(n>>8)&255,
+    b:n&255
+  };
+}
+
+
+/* ================================================================
+   HSV → RGB
+   ================================================================ */
+
+function hsvToRgb(h,s,v){
+
+  h = ((h%360)+360)%360;
+  s = clamp(s,0,100)/100;
+  v = clamp(v,0,100)/100;
+
+  const c=v*s;
+  const x=c*(1-Math.abs((h/60)%2-1));
+  const m=v-c;
+
+  let r=0,g=0,b=0;
+
+  if(h<60){
+    r=c;g=x;b=0;
+  }else if(h<120){
+    r=x;g=c;b=0;
+  }else if(h<180){
+    r=0;g=c;b=x;
+  }else if(h<240){
+    r=0;g=x;b=c;
+  }else if(h<300){
+    r=x;g=0;b=c;
+  }else{
+    r=c;g=0;b=x;
+  }
+
+  return {
+    r:Math.round((r+m)*255),
+    g:Math.round((g+m)*255),
+    b:Math.round((b+m)*255)
+  };
+}
+
+
+/* ================================================================
+   RGB → HSV
+   ================================================================ */
+
+function rgbToHsv(r,g,b){
+
+  r/=255;
+  g/=255;
+  b/=255;
+
+  const max=Math.max(r,g,b);
+  const min=Math.min(r,g,b);
+  const d=max-min;
+
+  let h=0;
+
+  if(d!==0){
+
+    if(max===r){
+      h=60*((g-b)/d%6);
+    }else if(max===g){
+      h=60*((b-r)/d+2);
+    }else{
+      h=60*((r-g)/d+4);
+    }
+
+  }
+
+  if(h<0) h+=360;
+
+  const s=max===0?0:d/max;
+
+  return {
+    h,
+    s:s*100,
+    v:max*100
+  };
+}
+
+
+/* ================================================================
+   RGB → HSL
+   ================================================================ */
+
+function rgbToHsl(r,g,b){
+
+  r/=255;
+  g/=255;
+  b/=255;
+
+  const max=Math.max(r,g,b);
+  const min=Math.min(r,g,b);
+
+  let h=0;
+  let s=0;
+
+  const l=(max+min)/2;
+
+  if(max!==min){
+
+    const d=max-min;
+
+    s=l>.5
+      ?d/(2-max-min)
+      :d/(max+min);
+
+    switch(max){
+
+      case r:
+        h=(g-b)/d+(g<b?6:0);
+        break;
+
+      case g:
+        h=(b-r)/d+2;
+        break;
+
+      case b:
+        h=(r-g)/d+4;
+        break;
+    }
+
+    h/=6;
+  }
+
+  return {
+    h:h*360,
+    s:s*100,
+    l:l*100
+  };
+}
+
+
+/* ================================================================
+   HSL → RGB
+   ================================================================ */
+
+function hslToRgb(h,s,l){
+
+  h=((h%360)+360)%360/360;
+  s/=100;
+  l/=100;
+
+  if(s===0){
+
+    const v=Math.round(l*255);
+
+    return {r:v,g:v,b:v};
+  }
+
+  const q=l<.5
+    ?l*(1+s)
+    :l+s-l*s;
+
+  const p=2*l-q;
+
+  function hue(t){
+
+    if(t<0)t+=1;
+    if(t>1)t-=1;
+
+    if(t<1/6)return p+(q-p)*6*t;
+    if(t<1/2)return q;
+    if(t<2/3)return p+(q-p)*(2/3-t)*6;
+
+    return p;
+  }
+
+  return {
+    r:Math.round(hue(h+1/3)*255),
+    g:Math.round(hue(h)*255),
+    b:Math.round(hue(h-1/3)*255)
+  };
+}
+
+
+/* ================================================================
+   RGB → LUMINANCIA
+   ================================================================ */
+
+function luminance(rgb){
+
+  function f(v){
+
+    v/=255;
+
+    return v<=.03928
+      ?v/12.92
+      :Math.pow((v+.055)/1.055,2.4);
+  }
+
+  return (
+    .2126*f(rgb.r)+
+    .7152*f(rgb.g)+
+    .0722*f(rgb.b)
+  );
+}
+
+
+/* ================================================================
+   CONTRASTE
+   ================================================================ */
+
+function contrastRatio(a,b){
+
+  const l1=luminance(a);
+  const l2=luminance(b);
+
+  return (Math.max(l1,l2)+.05)/
+         (Math.min(l1,l2)+.05);
+}
+
+
+/* ================================================================
+   RYB APPROXIMATION
+   ================================================================ */
+
+function rgbToRybHue(rgb){
+
+  const hsv=rgbToHsv(rgb.r,rgb.g,rgb.b);
+
+  /*
+   Mapeo artístico aproximado del círculo RGB
+   al círculo RYB.
+  */
+
+  const map=[
+    [0,0],
+    [30,20],
+    [60,55],
+    [90,90],
+    [120,120],
+    [150,145],
+    [180,165],
+    [210,185],
+    [240,220],
+    [270,260],
+    [300,300],
+    [330,330],
+    [360,360]
+  ];
+
+  let h=hsv.h;
+
+  for(let i=0;i<map.length-1;i++){
+
+    if(h>=map[i][0] && h<=map[i+1][0]){
+
+      const a=map[i];
+      const b=map[i+1];
+
+      const t=(h-a[0])/(b[0]-a[0]);
+
+      return a[1]+(b[1]-a[1])*t;
+    }
+  }
+
+  return h;
+}
+
+
+/* ================================================================
+   RYB HUE → RGB HUE
+   ================================================================ */
+
+function rybToRgbHue(h){
+
+  h=((h%360)+360)%360;
+
+  const map=[
+    [0,0],
+    [20,30],
+    [55,60],
+    [90,90],
+    [120,120],
+    [145,150],
+    [165,180],
+    [185,210],
+    [220,240],
+    [260,270],
+    [300,300],
+    [330,330],
+    [360,360]
+  ];
+
+  for(let i=0;i<map.length-1;i++){
+
+    if(h>=map[i][0] && h<=map[i+1][0]){
+
+      const a=map[i];
+      const b=map[i+1];
+
+      const t=(h-a[0])/(b[0]-a[0]);
+
+      return a[1]+(b[1]-a[1])*t;
+    }
+  }
+
+  return h;
+}
+
+
+/* ================================================================
+   PIGMENT MIX
+   ================================================================ */
+
+function pigmentMix(hexA,hexB,pct){
+
+  const a=hexToRgb(hexA);
+  const b=hexToRgb(hexB);
+
+  const t=clamp(pct,0,100)/100;
+
+  /*
+   Modelo artístico:
+   interpolación en espacio linealizado,
+   reduciendo saturación para aproximar mezcla
+   sustractiva de pigmentos.
+  */
+
+  function lin(v){
+    return Math.pow(v/255,2.2);
+  }
+
+  function srgb(v){
+    return Math.pow(clamp(v,0,1),1/2.2)*255;
+  }
+
+  let r=(1-t)*lin(a.r)+t*lin(b.r);
+  let g=(1-t)*lin(a.g)+t*lin(b.g);
+  let bl=(1-t)*lin(a.b)+t*lin(b.b);
+
+  let out={
+    r:srgb(r),
+    g:srgb(g),
+    b:srgb(bl)
+  };
+
+  const hsv=rgbToHsv(out.r,out.g,out.b);
+
+  const saturationLoss=
+    Math.sin(Math.PI*t)*20;
+
+  hsv.s=clamp(hsv.s-saturationLoss,0,100);
+
+  out=hsvToRgb(hsv.h,hsv.s,hsv.v);
+
+  return rgbToHex(out.r,out.g,out.b);
+}
+
+
+/* ================================================================
+   RECIPE ENGINE
+   ================================================================ */
+
+function buildRecipe(hexA,hexB,pct){
+
+  const a=hexToRgb(hexA);
+  const b=hexToRgb(hexB);
+
+  const p=Math.round(pct);
+  const q=100-p;
+
+  let result;
+
+  if(p===50){
+
+    result="1 parte de "+hexA+
+      " + 1 parte de "+hexB;
+
+  }else if(p>50){
+
+    result=
+      Math.max(1,Math.round(p/q*10)/10)+
+      " partes de "+hexA+
+      " + 1 parte de "+hexB;
+
+  }else{
+
+    result=
+      "1 parte de "+hexA+
+      " + "+
+      Math.max(1,Math.round(q/p*10)/10)+
+      " partes de "+hexB;
+  }
+
+  const mixed=pigmentMix(hexA,hexB,pct);
+
+  $("rxcpRecipe").innerHTML=
+    "<strong>🎨 Receta aproximada</strong>"+
+    "<div style='margin-top:5px;color:#aaa;font-size:10px'>"+
+    result+
+    "</div>"+
+    "<div class='rxcp-recipe-line'>"+
+      "<i style='width:"+p+"%;background:"+hexA+"'></i>"+
+      "<i style='width:"+q+"%;background:"+hexB+"'></i>"+
+    "</div>"+
+    "<div style='margin-top:7px;font-size:10px'>"+
+      "Resultado: <b>"+mixed+"</b>"+
+    "</div>";
+
+}
+
+
+/* ================================================================
+   CURRENT RGB
+   ================================================================ */
+
+function currentRgb(){
+
+  return hsvToRgb(
+    color.h,
+    color.s,
+    color.v
+  );
+}
+
+
+/* ================================================================
+   CURRENT HEX
+   ================================================================ */
+
+function currentHex(){
+
+  const rgb=currentRgb();
+
+  return rgbToHex(rgb.r,rgb.g,rgb.b);
+}
+
+
+/* ================================================================
+   HARMONIES
+   ================================================================ */
+
+function hueColor(h,s=color.s,v=color.v){
+
+  const rgb=hsvToRgb(h,s,v);
+
+  return rgbToHex(rgb.r,rgb.g,rgb.b);
+}
+
+
+function makeHarmony(type){
+
+  const h=color.h;
+
+  switch(type){
+
+    case "complementary":
+      return [
+        hueColor(h),
+        hueColor(h+180)
+      ];
+
+    case "analogous":
+      return [
+        hueColor(h-30),
+        hueColor(h-15),
+        hueColor(h),
+        hueColor(h+15),
+        hueColor(h+30)
+      ];
+
+    case "triadic":
+      return [
+        hueColor(h),
+        hueColor(h+120),
+        hueColor(h+240)
+      ];
+
+    case "tetradic":
+      return [
+        hueColor(h),
+        hueColor(h+90),
+        hueColor(h+180),
+        hueColor(h+270)
+      ];
+
+    case "split":
+      return [
+        hueColor(h),
+        hueColor(h+150),
+        hueColor(h+210)
+      ];
+
+    case "monochrome":
+
+      return [
+        hueColor(h,color.s,25),
+        hueColor(h,color.s,40),
+        hueColor(h,color.s,55),
+        hueColor(h,color.s,70),
+        hueColor(h,color.s,85),
+        hueColor(h,color.s,100)
+      ];
+
+    default:
+      return [currentHex()];
+  }
+}
+
+
+function renderHarmony(){
+
+  harmonyColors=makeHarmony(harmonyType);
+
+  const el=$("rxcpHarmony");
+
+  el.innerHTML="";
+
+  harmonyColors.forEach(hex=>{
+
+    const item=document.createElement("button");
+
+    item.type="button";
+    item.className="rxcp-harmony-swatch";
+
+    item.style.background=hex;
+
+    item.title=hex;
+
+    item.innerHTML="<span>"+hex+"</span>";
+
+    item.addEventListener("click",()=>{
+
+      setColorFromHex(hex);
+
+    });
+
+    el.appendChild(item);
+
+  });
+}
+
+
+/* ================================================================
+   SET COLOR FROM HEX
+   ================================================================ */
+
+function setColorFromHex(hex){
+
+  const rgb=hexToRgb(hex);
+
+  color=rgbToHsv(
+    rgb.r,
+    rgb.g,
+    rgb.b
+  );
+
+  $("rxcpHue").value=Math.round(color.h);
+  $("rxcpSat").value=Math.round(color.s);
+  $("rxcpLight").value=Math.round(
+    rgbToHsl(rgb.r,rgb.g,rgb.b).l
+  );
+
+  addHistory(hex);
+
+  render();
+
+  toast("Color seleccionado · "+hex);
+}
+
+
+/* ================================================================
+   RENDER COLOR DATA
+   ================================================================ */
+
+function render(){
+
+  const rgb=currentRgb();
+
+  const hex=currentHex();
+
+  const hsl=rgbToHsl(
+    rgb.r,
+    rgb.g,
+    rgb.b
+  );
+
+  const lum=luminance(rgb);
+
+  const ryb=rgbToRybHue(rgb);
+
+  $("rxcpPreview").style.background=hex;
+  $("rxcpCenter").style.background=hex;
+
+  $("rxcpCenterHex").textContent=hex;
+  $("rxcpHexBig").textContent=hex;
+
+  $("rxcpHEX").textContent=hex;
+
+  $("rxcpRGB").textContent=
+    rgb.r+", "+rgb.g+", "+rgb.b;
+
+  $("rxcpHSL").textContent=
+    Math.round(hsl.h)+"°, "+
+    Math.round(hsl.s)+"%, "+
+    Math.round(hsl.l)+"%";
+
+  $("rxcpHSV").textContent=
+    Math.round(color.h)+"°, "+
+    Math.round(color.s)+"%, "+
+    Math.round(color.v)+"%";
+
+  $("rxcpRYB").textContent=
+    Math.round(ryb)+"°";
+
+  $("rxcpLum").textContent=
+    lum.toFixed(4);
+
+  $("rxcpHVal").textContent=
+    Math.round(color.h)+"°";
+
+  $("rxcpSVal").textContent=
+    Math.round(color.s)+"%";
+
+  $("rxcpVVal").textContent=
+    Math.round(color.v)+"%";
+
+  $("rxcpModeLabel").textContent=
+    mode==="paint"
+      ?"RYB"
+      :mode==="digital"
+        ?"RGB"
+        :"TATTOO";
+
+  renderHarmony();
+
+  updateMixer();
+
+  renderValueScale();
+
+  renderContrast();
+
+  renderVision();
+
+  renderPalette();
+
+}
+
+
+/* ================================================================
+   WHEEL DRAW
+   ================================================================ */
+
+function drawWheel(){
+
+  const w=canvas.width;
+  const h=canvas.height;
+
+  const cx=w/2;
+  const cy=h/2;
+
+  const radius=Math.min(w,h)*.46;
+
+  ctx.clearRect(0,0,w,h);
+
+  /*
+   Rueda de matices.
+  */
+
+  for(let i=0;i<360;i++){
+
+    const a1=(i-1)*Math.PI/180;
+    const a2=(i+1)*Math.PI/180;
+
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.arc(
+      cx,
+      cy,
+      radius,
+      a1,
+      a2
+    );
+    ctx.closePath();
+
+    ctx.fillStyle=
+      "hsl("+i+" 100% 50%)";
+
+    ctx.fill();
+  }
+
+  /*
+   Saturación radial.
+  */
+
+  const gradient=ctx.createRadialGradient(
+    cx,
+    cy,
+    radius*.02,
+    cx,
+    cy,
+    radius
+  );
+
+  gradient.addColorStop(
+    0,
+    "rgba(255,255,255,.98)"
+  );
+
+  gradient.addColorStop(
+    .50,
+    "rgba(255,255,255,.05)"
+  );
+
+  gradient.addColorStop(
+    1,
+    "rgba(255,255,255,0)"
+  );
+
+  ctx.beginPath();
+
+  ctx.arc(
+    cx,
+    cy,
+    radius,
+    0,
+    TAU
+  );
+
+  ctx.fillStyle=gradient;
+  ctx.fill();
+
+  /*
+   Indicador.
+  */
+
+  const angle=
+    (color.h-90)*
+    Math.PI/180;
+
+  const satRadius=
+    radius*(color.s/100);
+
+  const px=
+    cx+Math.cos(angle)*satRadius;
+
+  const py=
+    cy+Math.sin(angle)*satRadius;
+
+  ctx.beginPath();
+
+  ctx.arc(
+    px,
+    py,
+    17,
+    0,
+    TAU
+  );
+
+  ctx.strokeStyle="#fff";
+  ctx.lineWidth=5;
+  ctx.stroke();
+
+  ctx.beginPath();
+
+  ctx.arc(
+    px,
+    py,
+    10,
+    0,
+    TAU
+  );
+
+  ctx.fillStyle=currentHex();
+  ctx.fill();
+
+  ctx.strokeStyle="rgba(0,0,0,.7)";
+  ctx.lineWidth=2;
+  ctx.stroke();
+
+}
+
+
+/* ================================================================
+   WHEEL INPUT
+   ================================================================ */
+
+function wheelPointer(event){
+
+  const rect=canvas.getBoundingClientRect();
+
+  const x=
+    event.clientX-rect.left;
+
+  const y=
+    event.clientY-rect.top;
+
+  const scaleX=canvas.width/rect.width;
+  const scaleY=canvas.height/rect.height;
+
+  const px=x*scaleX;
+  const py=y*scaleY;
+
+  const cx=canvas.width/2;
+  const cy=canvas.height/2;
+
+  const dx=px-cx;
+  const dy=py-cy;
+
+  const dist=Math.sqrt(dx*dx+dy*dy);
+
+  const radius=
+    Math.min(canvas.width,canvas.height)*.46;
+
+  const sat=clamp(
+    dist/radius*100,
+    0,
+    100
+  );
+
+  let angle=
+    Math.atan2(dy,dx)*
+    180/Math.PI;
+
+  angle+=90;
+
+  if(angle<0) angle+=360;
+
+  color.h=angle;
+  color.s=sat;
+
+  $("rxcpHue").value=Math.round(angle);
+  $("rxcpSat").value=Math.round(sat);
+
+  render();
+}
+
+
+canvas.addEventListener(
+  "pointerdown",
+  event=>{
+    canvas.setPointerCapture?.(event.pointerId);
+    wheelPointer(event);
+  }
+);
+
+canvas.addEventListener(
+  "pointermove",
+  event=>{
+    if(event.buttons){
+      wheelPointer(event);
+    }
+  }
+);
+
+
+/* ================================================================
+   MIXER
+   ================================================================ */
+
+function updateMixer(){
+
+  $("rxcpMixA").style.background=mixA;
+  $("rxcpMixB").style.background=mixB;
+
+  const result=
+    pigmentMix(
+      mixA,
+      mixB,
+      mixPct
+    );
+
+  $("rxcpMixResult").style.background=result;
+
+  $("rxcpMixPct").textContent=
+    mixPct+"%";
+
+  buildRecipe(
+    mixA,
+    mixB,
+    mixPct
+  );
+}
+
+
+/* ================================================================
+   VALUE SCALE
+   ================================================================ */
+
+function renderValueScale(){
+
+  const el=$("rxcpValueScale");
+
+  el.innerHTML="";
+
+  for(let i=0;i<=10;i++){
+
+    const v=100-(i*10);
+
+    const rgb=hsvToRgb(
+      color.h,
+      color.s,
+      v
+    );
+
+    const div=document.createElement("div");
+
+    div.style.background=
+      rgbToHex(rgb.r,rgb.g,rgb.b);
+
+    div.textContent=i;
+
+    el.appendChild(div);
+  }
+}
+
+
+/* ================================================================
+   HISTORY
+   ================================================================ */
+
+function loadHistory(){
+
+  try{
+
+    const data=
+      JSON.parse(
+        localStorage.getItem(HISTORY_KEY)
+      );
+
+    if(Array.isArray(data)){
+      history=data.slice(0,40);
+    }
+
+  }catch(e){
+
+    history=[];
+
+  }
+}
+
+
+function addHistory(hex){
+
+  history=[
+    hex,
+    ...history.filter(x=>x!==hex)
+  ].slice(0,40);
+
+  try{
+    localStorage.setItem(
+      HISTORY_KEY,
+      JSON.stringify(history)
+    );
+  }catch(e){}
+
+  renderHistory();
+}
+
+
+function renderHistory(){
+
+  const el=$("rxcpHistory");
+
+  el.innerHTML="";
+
+  history.forEach(hex=>{
+
+    const item=document.createElement("button");
+
+    item.type="button";
+    item.className="rxcp-history-item";
+
+    item.style.background=hex;
+    item.title=hex;
+
+    item.addEventListener(
+      "click",
+      ()=>setColorFromHex(hex)
+    );
+
+    el.appendChild(item);
+  });
+}
+
+
+/* ================================================================
+   PALETTE
+   ================================================================ */
+
+function loadPalette(){
+
+  try{
+
+    const data=
+      JSON.parse(
+        localStorage.getItem(PALETTE_KEY)
+      );
+
+    if(Array.isArray(data)){
+      palette=data;
+    }
+
+  }catch(e){
+
+    palette=[];
+
+  }
+
+  renderPalette();
+}
+
+
+function saveLocalPalette(){
+
+  try{
+
+    localStorage.setItem(
+      PALETTE_KEY,
+      JSON.stringify(palette)
+    );
+
+  }catch(e){}
+}
+
+
+function renderPalette(){
+
+  const el=$("rxcpPalette");
+
+  el.innerHTML="";
+
+  palette.forEach(hex=>{
+
+    const item=document.createElement("button");
+
+    item.type="button";
+
+    item.className=
+      "rxcp-palette-swatch";
+
+    item.style.background=hex;
+    item.title=
+      hex+" · pulsa para seleccionar";
+
+    item.innerHTML=
+      "<span>"+hex+"</span>";
+
+    item.addEventListener(
+      "click",
+      ()=>setColorFromHex(hex)
+    );
+
+    item.addEventListener(
+      "contextmenu",
+      event=>{
+        event.preventDefault();
+
+        palette=
+          palette.filter(x=>x!==hex);
+
+        saveLocalPalette();
+        renderPalette();
+
+        toast("Color eliminado");
+      }
+    );
+
+    el.appendChild(item);
+  });
+}
+
+
+/* ================================================================
+   PRESETS
+   ================================================================ */
+
+const PRESETS={
+
+  portrait:[
+    "#F1C7A8",
+    "#D99A72",
+    "#B96F4B",
+    "#8A4D35",
+    "#633A2A",
+    "#E8B18A",
+    "#F5D6C0",
+    "#2D211D"
+  ],
+
+  landscape:[
+    "#123B2A",
+    "#2F6B45",
+    "#6D9C58",
+    "#B7B35A",
+    "#D9A441",
+    "#6C91A8",
+    "#314D69",
+    "#1B2B24"
+  ],
+
+  tattoo:[
+    "#080808",
+    "#202020",
+    "#4A4A4A",
+    "#777777",
+    "#B5B5B5",
+    "#D8D8D8",
+    "#8E2424",
+    "#D19B28"
+  ],
+
+  warm:[
+    "#7A1F1F",
+    "#B73820",
+    "#E15B25",
+    "#F19A2A",
+    "#F4C542",
+    "#FFE29A"
+  ],
+
+  cold:[
+    "#102A43",
+    "#174A68",
+    "#176B87",
+    "#24A0A8",
+    "#76C7C0",
+    "#C9F0E9"
+  ],
+
+  earth:[
+    "#3A251B",
+    "#62412B",
+    "#876342",
+    "#A77B50",
+    "#C3A27A",
+    "#E0C9A6"
+  ]
+
+};
+
+
+function renderPreset(name){
+
+  const colors=
+    PRESETS[name] || [];
+
+  const el=$("rxcpPresetPalette");
+
+  el.innerHTML="";
+
+  colors.forEach(hex=>{
+
+    const item=document.createElement("button");
+
+    item.type="button";
+
+    item.className=
+      "rxcp-palette-swatch";
+
+    item.style.background=hex;
+
+    item.innerHTML=
+      "<span>"+hex+"</span>";
+
+    item.addEventListener(
+      "click",
+      ()=>{
+        setColorFromHex(hex);
+      }
+    );
+
+    el.appendChild(item);
+  });
+}
+
+
+/* ================================================================
+   CLOUD / SUPABASE
+   ================================================================ */
+
+function getSupabase(){
+
+  /*
+   No se crea un cliente nuevo.
+   Se intenta localizar el cliente que ya utiliza
+   RoXThal Art Design.
+  */
+
+  return window.supabaseClient ||
+         window.supabase ||
+         null;
+}
+
+
+async function getCurrentUser(){
+
+  const sb=getSupabase();
+
+  if(!sb || !sb.auth) return null;
+
+  try{
+
+    const result=
+      await sb.auth.getUser();
+
+    return result?.data?.user || null;
+
+  }catch(e){
+
+    return null;
+  }
+}
+
+
+async function savePaletteCloud(){
+
+  const sb=getSupabase();
+
+  if(!sb){
+
+    toast("Supabase no está disponible · guardada localmente");
+
+    return;
+  }
+
+  const user=
+    await getCurrentUser();
+
+  if(!user){
+
+    toast("Sin sesión · guardada localmente");
+
+    return;
+  }
+
+  try{
+
+    const name=
+      $("rxcpPaletteName").value.trim()
+      ||"Paleta RoXThal";
+
+    const payload={
+      user_id:user.id,
+      name:name,
+      colors:palette,
+      mode:mode
+    };
+
+    const {error}=await sb
+      .from("roxthal_color_palettes")
+      .insert(payload);
+
+    if(error) throw error;
+
+    toast("☁ Paleta guardada en RoXThal");
+
+    await loadCloudPalettes();
+
+  }catch(error){
+
+    console.error(
+      "RoXThal Color Cloud:",
+      error
+    );
+
+    toast(
+      "No se pudo guardar en la nube · guardada localmente"
+    );
+  }
+}
+
+
+async function loadCloudPalettes(){
+
+  const el=$("rxcpCloudList");
+
+  el.innerHTML=
+    "<div class='rxcp-muted' style='font-size:10px'>"+
+    "Buscando paletas…"+
+    "</div>";
+
+  const sb=getSupabase();
+
+  if(!sb){
+
+    el.innerHTML=
+      "<div class='rxcp-muted' style='font-size:10px'>"+
+      "Supabase no disponible. Puedes trabajar con almacenamiento local."+
+      "</div>";
+
+    return;
+  }
+
+  const user=
+    await getCurrentUser();
+
+  if(!user){
+
+    el.innerHTML=
+      "<div class='rxcp-muted' style='font-size:10px'>"+
+      "Inicia sesión para utilizar las paletas en la nube."+
+      "</div>";
+
+    return;
+  }
+
+  try{
+
+    const {data,error}=await sb
+      .from("roxthal_color_palettes")
+      .select("id,name,colors,mode,created_at")
+      .eq("user_id",user.id)
+      .order("created_at",{ascending:false})
+      .limit(30);
+
+    if(error) throw error;
+
+    el.innerHTML="";
+
+    if(!data || !data.length){
+
+      el.innerHTML=
+        "<div class='rxcp-muted' style='font-size:10px'>"+
+        "Todavía no tienes paletas guardadas."+
+        "</div>";
+
+      return;
+    }
+
+    data.forEach(row=>{
+
+      const item=
+        document.createElement("div");
+
+      item.className=
+        "rxcp-cloud-item";
+
+      const preview=
+        document.createElement("div");
+
+      preview.className=
+        "rxcp-cloud-preview";
+
+      const colors=
+        Array.isArray(row.colors)
+          ?row.colors
+          :[];
+
+      colors.slice(0,12).forEach(hex=>{
+
+        const i=
+          document.createElement("i");
+
+        i.style.background=hex;
+
+        preview.appendChild(i);
+      });
+
+      const info=
+        document.createElement("div");
+
+      info.style.minWidth="80px";
+
+      info.innerHTML=
+        "<div style='font-size:10px;font-weight:900'>"+
+        escapeHtml(row.name)+
+        "</div>"+
+        "<div style='font-size:8px;color:#777'>"+
+        escapeHtml(row.mode||"paint")+
+        "</div>";
+
+      const load=
+        document.createElement("button");
+
+      load.type="button";
+      load.className="rxcp-btn";
+
+      load.textContent="Cargar";
+
+      load.addEventListener(
+        "click",
+        ()=>{
+          palette=
+            Array.isArray(row.colors)
+              ?row.colors.slice()
+              :[];
+
+          $("rxcpPaletteName").value=
+            row.name||"Paleta RoXThal";
+
+          saveLocalPalette();
+          renderPalette();
+
+          toast("☁ Paleta cargada");
+        }
+      );
+
+      const remove=
+        document.createElement("button");
+
+      remove.type="button";
+      remove.className=
+        "rxcp-btn danger";
+
+      remove.textContent="×";
+
+      remove.addEventListener(
+        "click",
+        ()=>deleteCloudPalette(row.id)
+      );
+
+      item.appendChild(info);
+      item.appendChild(preview);
+      item.appendChild(load);
+      item.appendChild(remove);
+
+      el.appendChild(item);
+    });
+
+  }catch(error){
+
+    console.error(
+      "RoXThal Cloud Load:",
+      error
+    );
+
+    el.innerHTML=
+      "<div class='rxcp-muted' style='font-size:10px'>"+
+      "No se pudieron cargar las paletas."+
+      "</div>";
+  }
+}
+
+
+async function deleteCloudPalette(id){
+
+  const sb=getSupabase();
+
+  const user=
+    await getCurrentUser();
+
+  if(!sb || !user) return;
+
+  if(!confirm("¿Eliminar esta paleta de RoXThal?")){
+    return;
+  }
+
+  try{
+
+    const {error}=await sb
+      .from("roxthal_color_palettes")
+      .delete()
+      .eq("id",id)
+      .eq("user_id",user.id);
+
+    if(error) throw error;
+
+    toast("Paleta eliminada");
+
+    loadCloudPalettes();
+
+  }catch(error){
+
+    console.error(error);
+
+    toast("No se pudo eliminar");
+  }
+}
+
+
+function escapeHtml(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+
+/* ================================================================
+   EXPORT JSON
+   ================================================================ */
+
+function exportJSON(){
+
+  const data={
+    app:"RoXThal Art Design",
+    tool:"Laboratorio Cromático PRO",
+    version:"3.0",
+    name:
+      $("rxcpPaletteName").value||
+      "Paleta RoXThal",
+    mode,
+    colors:palette,
+    createdAt:new Date().toISOString()
+  };
+
+  downloadBlob(
+    JSON.stringify(data,null,2),
+    "roxthal-paleta.json",
+    "application/json"
+  );
+
+  toast("JSON exportado");
+}
+
+
+/* ================================================================
+   EXPORT PAL
+   ================================================================ */
+
+function exportPAL(){
+
+  let text=
+    "JASC-PAL\n"+
+    "0100\n"+
+    palette.length+"\n";
+
+  palette.forEach(hex=>{
+
+    const rgb=hexToRgb(hex);
+
+    text+=
+      rgb.r+" "+
+      rgb.g+" "+
+      rgb.b+"\n";
+  });
+
+  downloadBlob(
+    text,
+    "roxthal-paleta.pal",
+    "text/plain"
+  );
+
+  toast("PAL exportado");
+}
+
+
+/* ================================================================
+   EXPORT ASE
+   ================================================================ */
+
+function exportASE(){
+
+  /*
+   Adobe Swatch Exchange:
+   encabezado + bloques de color RGB.
+  */
+
+  const bytes=[];
+
+  function pushAscii(str){
+
+    for(let i=0;i<str.length;i++){
+      bytes.push(str.charCodeAt(i));
+    }
+  }
+
+  function pushU16(n){
+
+    bytes.push(
+      (n>>8)&255,
+      n&255
+    );
+  }
+
+  function pushU32(n){
+
+    bytes.push(
+      (n>>>24)&255,
+      (n>>>16)&255,
+      (n>>>8)&255,
+      n&255
+    );
+  }
+
+  function pushFloat(v){
+
+    const buf=
+      new ArrayBuffer(4);
+
+    new DataView(buf)
+      .setFloat32(0,v,false);
+
+    const arr=
+      new Uint8Array(buf);
+
+    arr.forEach(x=>bytes.push(x));
+  }
+
+  pushAscii("ASEF");
+  pushU16(1);
+  pushU16(0);
+
+  pushU32(palette.length);
+
+  palette.forEach(hex=>{
+
+    const rgb=hexToRgb(hex);
+
+    const name=hex;
+
+    const block=[];
+
+    function bU16(n){
+      block.push((n>>8)&255,n&255);
+    }
+
+    function bU32(n){
+      block.push(
+        (n>>>24)&255,
+        (n>>>16)&255,
+        (n>>>8)&255,
+        n&255
+      );
+    }
+
+    function bFloat(v){
+
+      const buf=
+        new ArrayBuffer(4);
+
+      new DataView(buf)
+        .setFloat32(0,v,false);
+
+      new Uint8Array(buf)
+        .forEach(x=>block.push(x));
+    }
+
+    bU16(1);
+
+    /*
+      Nombre Unicode UTF-16BE
+      + null terminator.
+    */
+
+    bU16(name.length+1);
+
+    for(let i=0;i<name.length;i++){
+
+      const c=name.charCodeAt(i);
+
+      bU16(c);
+    }
+
+    bU16(0);
+
+    /*
+      RGB float 0..1
+    */
+
+    block.push(
+      82,71,66,32
+    );
+
+    bFloat(rgb.r/255);
+    bFloat(rgb.g/255);
+    bFloat(rgb.b/255);
+
+    bU16(0);
+
+    bU32(0);
+
+    pushU16(0x0001);
+    pushU32(block.length);
+
+    block.forEach(x=>bytes.push(x));
+  });
+
+  downloadBlob(
+    new Uint8Array(bytes),
+    "roxthal-paleta.ase",
+    "application/octet-stream"
+  );
+
+  toast("ASE exportado");
+}
+
+
+/* ================================================================
+   DOWNLOAD
+   ================================================================ */
+
+function downloadBlob(data,name,type){
+
+  const blob=
+    new Blob([data],{type});
+
+  const url=
+    URL.createObjectURL(blob);
+
+  const a=
+    document.createElement("a");
+
+  a.href=url;
+  a.download=name;
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  a.remove();
+
+  setTimeout(
+    ()=>URL.revokeObjectURL(url),
+    1000
+  );
+}
+
+
+/* ================================================================
+   IMAGE PICKER
+   ================================================================ */
+
+let imageCanvas=
+  document.createElement("canvas");
+
+let imageCtx=
+  imageCanvas.getContext("2d");
+
+$("rxcpImageFile")
+  .addEventListener(
+    "change",
+    event=>{
+
+      const file=
+        event.target.files?.[0];
+
+      if(!file) return;
+
+      const url=
+        URL.createObjectURL(file);
+
+      const img=
+        $("rxcpImage");
+
+      img.onload=()=>{
+
+        imageCanvas.width=
+          img.naturalWidth;
+
+        imageCanvas.height=
+          img.naturalHeight;
+
+        imageCtx.drawImage(
+          img,
+          0,
+          0
+        );
+
+        img.style.display="block";
+
+        $("rxcpImageHelp").style.display=
+          "none";
+
+        URL.revokeObjectURL(url);
+
+        toast("Imagen lista · pulsa sobre ella");
+      };
+
+      img.src=url;
+    }
+  );
+
+
+$("rxcpImage")
+  .addEventListener(
+    "click",
+    event=>{
+
+      const img=
+        $("rxcpImage");
+
+      const rect=
+        img.getBoundingClientRect();
+
+      const x=
+        Math.floor(
+          (event.clientX-rect.left)/
+          rect.width*
+          imageCanvas.width
+        );
+
+      const y=
+        Math.floor(
+          (event.clientY-rect.top)/
+          rect.height*
+          imageCanvas.height
+        );
+
+      const pixel=
+        imageCtx.getImageData(
+          clamp(x,0,imageCanvas.width-1),
+          clamp(y,0,imageCanvas.height-1),
+          1,
+          1
+        ).data;
+
+      const hex=
+        rgbToHex(
+          pixel[0],
+          pixel[1],
+          pixel[2]
+        );
+
+      setColorFromHex(hex);
+
+      toast(
+        "Cuentagotas · "+hex
+      );
+    }
+  );
+
+
+/* ================================================================
+   CONTRASTE
+   ================================================================ */
+
+function renderContrast(){
+
+  const hex=currentHex();
+
+  const black={r:0,g:0,b:0};
+
+  const white={r:255,g:255,b:255};
+
+  const rgb=currentRgb();
+
+  const blackRatio=
+    contrastRatio(rgb,black);
+
+  const whiteRatio=
+    contrastRatio(rgb,white);
+
+  $("rxcpContrastBlack").style.background=
+    hex;
+
+  $("rxcpContrastBlack").style.color=
+    whiteRatio>4.5
+      ?"white"
+      :"black";
+
+  $("rxcpContrastWhite").style.background=
+    hex;
+
+  $("rxcpContrastWhite").style.color=
+    blackRatio>4.5
+      ?"white"
+      :"black";
+
+  const best=
+    blackRatio>whiteRatio
+      ?"NEGRO"
+      :"BLANCO";
+
+  const ratio=
+    Math.max(
+      blackRatio,
+      whiteRatio
+    );
+
+  $("rxcpContrastText").innerHTML=
+    "Mejor contraste: <b>"+
+    best+
+    "</b><br>"+
+    "Ratio: <b>"+
+    ratio.toFixed(2)+
+    ":1</b><br>"+
+    "<span style='color:#777'>"+
+    "Referencia WCAG: 4.5:1 para texto normal."
+    +"</span>";
+}
+
+
+/* ================================================================
+   VISION SIMULATION
+   ================================================================ */
+
+function simulateVision(rgb,type){
+
+  const r=rgb.r;
+  const g=rgb.g;
+  const b=rgb.b;
+
+  let R=r,G=g,B=b;
+
+  if(type==="protanopia"){
+
+    R=
+      .567*r+
+      .433*g;
+
+    G=
+      .558*r+
+      .442*g;
+
+    B=b;
+
+  }else if(type==="deuteranopia"){
+
+    R=
+      .625*r+
+      .375*g;
+
+    G=
+      .700*r+
+      .300*g;
+
+    B=b;
+
+  }else if(type==="tritanopia"){
+
+    R=r;
+
+    G=
+      .950*g+
+      .050*b;
+
+    B=
+      .433*g+
+      .567*b;
+  }
+
+  return {
+    r:clamp(R,0,255),
+    g:clamp(G,0,255),
+    b:clamp(B,0,255)
+  };
+}
+
+
+function renderVision(){
+
+  const rgb=
+    simulateVision(
+      currentRgb(),
+      currentVision
+    );
+
+  $("rxcpVisionPreview").style.background=
+    rgbToHex(
+      rgb.r,
+      rgb.g,
+      rgb.b
+    );
+}
+
+
+/* ================================================================
+   OPEN / CLOSE
+   ================================================================ */
+
+$("rxcpLauncher")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      root.classList.toggle("open");
+
+      if(root.classList.contains("open")){
+
+        setTimeout(
+          ()=>{
+            drawWheel();
+            render();
+          },
+          50
+        );
+      }
+    }
+  );
+
+
+$("rxcpClose")
+  .addEventListener(
+    "click",
+    ()=>{
+      root.classList.remove("open");
+    }
+  );
+
+
+/* ================================================================
+   TABS
+   ================================================================ */
+
+document
+  .querySelectorAll(
+    "#rx-color-pro .rxcp-tab"
+  )
+  .forEach(tab=>{
+
+    tab.addEventListener(
+      "click",
+      ()=>{
+
+        document
+          .querySelectorAll(
+            "#rx-color-pro .rxcp-tab"
+          )
+          .forEach(x=>
+            x.classList.remove("active")
+          );
+
+        tab.classList.add("active");
+
+        mode=
+          tab.dataset.mode||
+          "paint";
+
+        render();
+
+        toast(
+          "Modo "+mode.toUpperCase()
+        );
+      }
+    );
+  });
+
+
+/* ================================================================
+   SLIDERS
+   ================================================================ */
+
+$("rxcpHue")
+  .addEventListener(
+    "input",
+    e=>{
+
+      color.h=
+        Number(e.target.value);
+
+      render();
+    }
+  );
+
+
+$("rxcpSat")
+  .addEventListener(
+    "input",
+    e=>{
+
+      color.s=
+        Number(e.target.value);
+
+      render();
+    }
+  );
+
+
+$("rxcpLight")
+  .addEventListener(
+    "input",
+    e=>{
+
+      const hsl=
+        rgbToHsl(
+          ...Object.values(
+            currentRgb()
+          )
+        );
+
+      const rgb=
+        hslToRgb(
+          color.h,
+          color.s,
+          Number(e.target.value)
+        );
+
+      color=
+        rgbToHsv(
+          rgb.r,
+          rgb.g,
+          rgb.b
+        );
+
+      $("rxcpHue").value=
+        Math.round(color.h);
+
+      $("rxcpSat").value=
+        Math.round(color.s);
+
+      render();
+    }
+  );
+
+
+/* ================================================================
+   CENTER COPY
+   ================================================================ */
+
+$("rxcpCenter")
+  .addEventListener(
+    "click",
+    async event=>{
+
+      event.stopPropagation();
+
+      const hex=currentHex();
+
+      try{
+
+        await navigator.clipboard.writeText(hex);
+
+        toast("HEX copiado · "+hex);
+
+      }catch(e){
+
+        toast(hex);
+      }
+    }
+  );
+
+
+/* ================================================================
+   HARMONY BUTTONS
+   ================================================================ */
+
+document
+  .querySelectorAll(
+    "#rx-color-pro [data-harmony]"
+  )
+  .forEach(button=>{
+
+    button.addEventListener(
+      "click",
+      ()=>{
+
+        harmonyType=
+          button.dataset.harmony;
+
+        renderHarmony();
+
+        toast(
+          "Armonía · "+
+          button.textContent.trim()
+        );
+      }
+    );
+  });
+
+
+/* ================================================================
+   MIX A
+   ================================================================ */
+
+$("rxcpMixA")
+  .addEventListener(
+    "click",
+    ()=>{
+      mixA=currentHex();
+      updateMixer();
+      toast("Color A actualizado");
+    }
+  );
+
+
+$("rxcpMixB")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      /*
+       Si el usuario pulsa B,
+       utilizamos automáticamente
+       el complementario del actual.
+      */
+
+      mixB=
+        makeHarmony("complementary")[1];
+
+      updateMixer();
+
+      toast(
+        "Color B · "+mixB
+      );
+    }
+  );
+
+
+$("rxcpMixRange")
+  .addEventListener(
+    "input",
+    e=>{
+
+      mixPct=
+        Number(e.target.value);
+
+      updateMixer();
+    }
+  );
+
+
+/* ================================================================
+   PRESETS
+   ================================================================ */
+
+document
+  .querySelectorAll(
+    "#rx-color-pro [data-preset]"
+  )
+  .forEach(button=>{
+
+    button.addEventListener(
+      "click",
+      ()=>{
+
+        renderPreset(
+          button.dataset.preset
+        );
+
+        toast(
+          "Paleta · "+
+          button.textContent.trim()
+        );
+      }
+    );
+  });
+
+
+/* ================================================================
+   PALETTE BUTTONS
+   ================================================================ */
+
+$("rxcpAddCurrent")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      const hex=currentHex();
+
+      if(!palette.includes(hex)){
+
+        palette.push(hex);
+
+        saveLocalPalette();
+        renderPalette();
+
+        toast(
+          "Añadido · "+hex
+        );
+
+      }else{
+
+        toast(
+          "Ese color ya está en la paleta"
+        );
+      }
+    }
+  );
+
+
+$("rxcpAddHarmony")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      harmonyColors.forEach(hex=>{
+
+        if(!palette.includes(hex)){
+          palette.push(hex);
+        }
+
+      });
+
+      saveLocalPalette();
+      renderPalette();
+
+      toast(
+        "Armonía añadida a la paleta"
+      );
+    }
+  );
+
+
+$("rxcpClearPalette")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      palette=[];
+
+      saveLocalPalette();
+      renderPalette();
+
+      toast("Paleta vaciada");
+    }
+  );
+
+
+$("rxcpSavePalette")
+  .addEventListener(
+    "click",
+    savePaletteCloud
+  );
+
+
+$("rxcpLoadCloud")
+  .addEventListener(
+    "click",
+    loadCloudPalettes
+  );
+
+
+$("rxcpExportJSON")
+  .addEventListener(
+    "click",
+    exportJSON
+  );
+
+
+$("rxcpExportPAL")
+  .addEventListener(
+    "click",
+    exportPAL
+  );
+
+
+$("rxcpExportASE")
+  .addEventListener(
+    "click",
+    exportASE
+  );
+
+
+/* ================================================================
+   HISTORY CLEAR
+   ================================================================ */
+
+$("rxcpClearHistory")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      history=[];
+
+      try{
+        localStorage.removeItem(
+          HISTORY_KEY
+        );
+      }catch(e){}
+
+      renderHistory();
+
+      toast("Historial limpiado");
+    }
+  );
+
+
+/* ================================================================
+   VISION BUTTONS
+   ================================================================ */
+
+document
+  .querySelectorAll(
+    "#rx-color-pro [data-vision]"
+  )
+  .forEach(button=>{
+
+    button.addEventListener(
+      "click",
+      ()=>{
+
+        currentVision=
+          button.dataset.vision;
+
+        renderVision();
+
+        toast(
+          "Simulación · "+
+          button.textContent.trim()
+        );
+      }
+    );
+  });
+
+
+/* ================================================================
+   KEYBOARD
+   ================================================================ */
+
+document.addEventListener(
+  "keydown",
+  event=>{
+
+    if(!root.classList.contains("open")){
+      return;
+    }
+
+    /*
+     Escape cierra.
+    */
+
+    if(event.key==="Escape"){
+
+      root.classList.remove("open");
+
+    }
+
+    /*
+     C copia HEX.
+    */
+
+    if(
+      event.key.toLowerCase()==="c" &&
+      !["INPUT","TEXTAREA"].includes(
+        document.activeElement?.tagName
+      )
+    ){
+
+      navigator.clipboard
+        ?.writeText(currentHex());
+
+      toast(
+        "HEX copiado · "+currentHex()
+      );
+    }
+  }
+);
+
+
+/* ================================================================
+   LOCAL STORAGE
+   ================================================================ */
+
+loadHistory();
+
+loadPalette();
+
+renderPreset("portrait");
+
+render();
+
+
+/* ================================================================
+   INICIALIZACIÓN
+   ================================================================ */
+
+drawWheel();
+
+updateMixer();
+
+renderHistory();
+
+renderPalette();
+
+renderHarmony();
+
+
+/*
+   Carga las paletas cloud sólo si
+   hay cliente Supabase disponible.
+*/
+
+setTimeout(
+  ()=>{
+    if(getSupabase()){
+      loadCloudPalettes();
+    }
+  },
+  1200
+);
+
+
+})();
+</script>
+
+<!-- ================================================================
+     FIN ROXTHAL ART DESIGN
+     🎨 LABORATORIO CROMÁTICO PRO MAX
+     ================================================================ -->
 </body>
 </html>
