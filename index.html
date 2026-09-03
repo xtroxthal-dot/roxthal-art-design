@@ -29676,5 +29676,1060 @@ setTimeout(
      FIN ROXTHAL ART DESIGN
      🎨 LABORATORIO CROMÁTICO PRO MAX
      ================================================================ -->
+  <!-- ============================================================
+     RoXThal UI — CAPA VISUAL Y NAVEGACIÓN SEGURA
+     V4 — NO SUSTITUYE NI MODIFICA LOS MÓDULOS EXISTENTES
+============================================================ -->
+
+<style>
+/* ---------- CONTENEDOR AISLADO ---------- */
+#rxui-v4{
+  --ui-bg:rgba(8,8,9,.97);
+  --ui-panel:rgba(21,21,26,.98);
+  --ui-panel2:#1e1e26;
+  --ui-line:#2e2e38;
+  --ui-gold:#d7b45a;
+  --ui-gold2:#f2da91;
+  --ui-text:#f5f5f5;
+  --ui-muted:#a0a0ab;
+
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+
+/* ---------- BARRA DE PROGRESO ---------- */
+#rxui-v4-progress{
+  position:fixed;
+  top:0;
+  left:0;
+  width:0;
+  height:3px;
+  background:linear-gradient(90deg,var(--ui-gold),var(--ui-gold2),#fff);
+  box-shadow:0 0 12px rgba(215,180,90,.55);
+  z-index:8500;
+  pointer-events:none;
+  transition:width .08s linear;
+}
+
+/* ---------- BOTÓN MENÚ ---------- */
+#rxui-v4-menu{
+  position:fixed;
+  right:16px;
+  bottom:18px;
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  border:1px solid rgba(215,180,90,.65);
+  background:rgba(8,8,9,.94);
+  color:var(--ui-gold2);
+  box-shadow:
+    0 8px 30px rgba(0,0,0,.55),
+    0 0 20px rgba(215,180,90,.12);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+  z-index:8750;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    border-color .2s ease;
+}
+
+#rxui-v4-menu:hover{
+  transform:translateY(-2px) scale(1.03);
+  background:var(--ui-panel2);
+  border-color:var(--ui-gold);
+}
+
+#rxui-v4-menu:active{
+  transform:scale(.95);
+}
+
+/* ---------- BOTÓN ARRIBA ---------- */
+#rxui-v4-top{
+  position:fixed;
+  right:18px;
+  bottom:88px;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:rgba(21,21,26,.94);
+  border:1px solid var(--ui-line);
+  color:var(--ui-gold2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(8px);
+  transition:
+    opacity .25s ease,
+    transform .25s ease,
+    border-color .2s ease;
+  z-index:8750;
+}
+
+#rxui-v4-top.rx-show{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
+}
+
+#rxui-v4-top:hover{
+  border-color:var(--ui-gold);
+}
+
+/* ---------- OVERLAY ---------- */
+#rxui-v4-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.62);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .25s ease;
+  z-index:8790;
+}
+
+#rxui-v4-overlay.rx-open{
+  opacity:1;
+  pointer-events:auto;
+}
+
+/* ---------- DRAWER ---------- */
+#rxui-v4-drawer{
+  position:fixed;
+  top:0;
+  right:0;
+  width:min(390px,92vw);
+  height:100dvh;
+  height:100vh;
+  background:
+    radial-gradient(circle at top right,rgba(215,180,90,.10),transparent 35%),
+    var(--ui-bg);
+  border-left:1px solid var(--ui-line);
+  box-shadow:-20px 0 60px rgba(0,0,0,.55);
+  transform:translateX(105%);
+  transition:transform .28s cubic-bezier(.22,.61,.36,1);
+  z-index:8800;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+}
+
+#rxui-v4-drawer.rx-open{
+  transform:translateX(0);
+}
+
+/* ---------- CABECERA DRAWER ---------- */
+.rxui-v4-head{
+  position:sticky;
+  top:0;
+  z-index:2;
+  padding:20px 18px 16px;
+  background:rgba(8,8,9,.94);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--ui-line);
+}
+
+.rxui-v4-brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+
+.rxui-v4-logo{
+  width:44px;
+  height:44px;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:none;
+  background:
+    linear-gradient(145deg,rgba(215,180,90,.22),rgba(215,180,90,.04));
+  border:1px solid rgba(215,180,90,.45);
+  color:var(--ui-gold2);
+  font-size:22px;
+  box-shadow:0 0 22px rgba(215,180,90,.10);
+}
+
+.rxui-v4-title{
+  min-width:0;
+}
+
+.rxui-v4-title strong{
+  display:block;
+  color:#fff;
+  font-size:1.02rem;
+  font-weight:900;
+  letter-spacing:.2px;
+}
+
+.rxui-v4-title span{
+  display:block;
+  color:var(--ui-muted);
+  font-size:.76rem;
+  margin-top:2px;
+}
+
+#rxui-v4-close{
+  margin-left:auto;
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  border:1px solid var(--ui-line);
+  background:var(--ui-panel);
+  color:#fff;
+  font-size:22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+
+/* ---------- CUERPO ---------- */
+.rxui-v4-body{
+  padding:16px;
+}
+
+.rxui-v4-section{
+  margin-bottom:20px;
+}
+
+.rxui-v4-section-title{
+  padding:0 5px 8px;
+  color:var(--ui-muted);
+  text-transform:uppercase;
+  letter-spacing:1.4px;
+  font-size:.68rem;
+  font-weight:900;
+}
+
+/* ---------- BOTONES ---------- */
+.rxui-v4-list{
+  display:grid;
+  gap:7px;
+}
+
+.rxui-v4-item{
+  width:100%;
+  min-height:52px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 12px;
+  border:1px solid var(--ui-line);
+  border-radius:14px;
+  background:rgba(21,21,26,.76);
+  color:var(--ui-text);
+  text-align:left;
+  cursor:pointer;
+  transition:
+    background .18s ease,
+    border-color .18s ease,
+    transform .18s ease;
+}
+
+.rxui-v4-item:hover{
+  background:var(--ui-panel2);
+  border-color:rgba(215,180,90,.52);
+  transform:translateX(-2px);
+}
+
+.rxui-v4-item:active{
+  transform:scale(.985);
+}
+
+.rxui-v4-icon{
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:none;
+  background:rgba(215,180,90,.09);
+  border:1px solid rgba(215,180,90,.18);
+  font-size:18px;
+}
+
+.rxui-v4-label{
+  flex:1;
+  min-width:0;
+}
+
+.rxui-v4-label strong{
+  display:block;
+  font-size:.91rem;
+  font-weight:800;
+  color:#fff;
+}
+
+.rxui-v4-label small{
+  display:block;
+  margin-top:1px;
+  color:var(--ui-muted);
+  font-size:.69rem;
+}
+
+.rxui-v4-arrow{
+  color:#6f6f79;
+  font-size:17px;
+}
+
+/* ---------- DESTACADOS ---------- */
+.rxui-v4-item.rx-feature{
+  border-color:rgba(215,180,90,.30);
+  background:
+    linear-gradient(135deg,rgba(215,180,90,.12),rgba(21,21,26,.82));
+}
+
+.rxui-v4-item.rx-ai{
+  border-color:rgba(215,180,90,.38);
+  background:
+    linear-gradient(135deg,rgba(215,180,90,.15),rgba(30,30,38,.88));
+}
+
+.rxui-v4-item.rx-admin{
+  border-color:rgba(215,180,90,.42);
+}
+
+/* ---------- PIE ---------- */
+.rxui-v4-footer{
+  margin-top:22px;
+  padding:14px 5px 30px;
+  color:#666671;
+  font-size:.67rem;
+  text-align:center;
+  line-height:1.5;
+}
+
+/* ---------- DESKTOP ---------- */
+@media (min-width:900px){
+  #rxui-v4-menu{
+    right:24px;
+    bottom:24px;
+  }
+
+  #rxui-v4-top{
+    right:28px;
+    bottom:96px;
+  }
+}
+
+/* ---------- REDUCED MOTION ---------- */
+@media (prefers-reduced-motion:reduce){
+  #rxui-v4-drawer,
+  #rxui-v4-overlay,
+  #rxui-v4-menu,
+  #rxui-v4-top,
+  .rxui-v4-item{
+    transition:none !important;
+  }
+}
+</style>
+
+<div id="rxui-v4" aria-label="Navegación RoXThal">
+
+  <div id="rxui-v4-progress"></div>
+
+  <button
+    id="rxui-v4-top"
+    type="button"
+    aria-label="Volver arriba"
+    title="Volver arriba">
+    ↑
+  </button>
+
+  <button
+    id="rxui-v4-menu"
+    type="button"
+    aria-label="Abrir menú RoXThal"
+    title="Menú RoXThal">
+    ☰
+  </button>
+
+  <div id="rxui-v4-overlay"></div>
+
+  <aside
+    id="rxui-v4-drawer"
+    aria-hidden="true"
+    aria-label="Menú principal">
+
+    <div class="rxui-v4-head">
+
+      <div class="rxui-v4-brand">
+
+        <div class="rxui-v4-logo">R</div>
+
+        <div class="rxui-v4-title">
+          <strong>RoXThal Art Design</strong>
+          <span>Arte · Tatuaje · Formación · Diseño</span>
+        </div>
+
+        <button
+          id="rxui-v4-close"
+          type="button"
+          aria-label="Cerrar menú">
+          ×
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="rxui-v4-body">
+
+      <!-- PRINCIPAL -->
+      <div class="rxui-v4-section">
+
+        <div class="rxui-v4-section-title">
+          Principal
+        </div>
+
+        <div class="rxui-v4-list">
+
+          <button
+            class="rxui-v4-item"
+            type="button"
+            data-rxui-target="inicio">
+            <span class="rxui-v4-icon">🏠</span>
+            <span class="rxui-v4-label">
+              <strong>Inicio</strong>
+              <small>Portada de RoXThal</small>
+            </span>
+            <span class="rxui-v4-arrow">›</span>
+          </button>
+
+          <button
+            class="rxui-v4-item"
+            type="button"
+            data-rxui-target="servicios">
+            <span class="rxui-v4-icon">🎨</span>
+            <span class="rxui-v4-label">
+              <strong>Servicios</strong>
+              <small>Arte, tatuaje y trabajos</small>
+            </span>
+            <span class="rxui-v4-arrow">›</span>
+          </button>
+
+          <button
+            class="rxui-v4-item rx-feature"
+            type="button"
+            data-rxui-action="gallery">
+            <span class="rxui-v4-icon">🖼️</span>
+            <span class="rxui-v4-label">
+              <strong>Galería</strong>
+              <small>Trabajos y obras de RoXThal</small>
+            </span>
+            <span class="rxui-v4-arrow">›</span>
+          </button>
+
+          <button
+            class="rxui-v4-item"
+            type="button"
+            data-rxui-target="cursos">
+            <span class="rxui-v4-icon">📚</span>
+            <span class="rxui-v4-label">
+              <strong>Formación</strong>
+              <small>Cursos y talleres</small>
+            </span>
+            <span class="rxui-v4-arrow">›</span>
+          </button>
+
+          <button
+            class="rxui-v4-item"
+            type="button"
+            data-rxui-target="contacto">
+            <span class="rxui-v4-icon">📞</span>
+            <span class="rxui-v4-label">
+              <strong>Contacto</strong>
+              <small>Redes y comunicación</small>
+            </span>
+            <span class="rxui-v4-arrow">›</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- HERRAMIENTAS ARTÍSTICAS -->
+      <div class="rxui-v4-section">
+
+        <div class="rxui-v4-section-title">
+          Herramientas artísticas
+        </div>
+
+        <div class="rxui-v4-list">
+
+          <button
+            class="rxui-v4-item rx-feature"
+            type="button"
+            data-rxui-target="roxthal-tattoo-designer">
+            <span class="rxui-v4-icon">🖋️</span>
+            <span class="rxui-v4-label">
+              <strong>Diseñador de Tatuajes</strong>
+              <small>Crea y trabaja tus diseños</small>
+            </span>
+            <span class="rxui-v4-arrow">›</span>
+          </button>
+
+          <button
+            class="rxui-v4-item rx-feature"
+            type="button"
+            data-rxui-target="rx-color-pro">
+            <span class="rxui-v4-icon">🌈</span>
+            <span class="rxui-v4-label">
+              <strong>Círculo Cromático</strong>
+              <small>Laboratorio Cromático Pro</small>
+            </span>
+            <span class="rxui-v4-arrow">›</span>
+          </button>
+
+          <button
+            class="rxui-v4-item"
+            type="button"
+            data-rxui-target="buscador-tatuajes">
+            <span class="rxui-v4-icon">🔎</span>
+            <span class="rxui-v4-label">
+              <strong>Buscador de Tatuajes</strong>
+              <small>Inspiración y referencias</small>
+            </span>
+            <span class="rxui-v4-arrow">›</span>
+          </button>
+
+          <button
+            class="rxui-v4-item"
+            type="button"
+            data-rxui-target="buscador-cuadros-artistas">
+            <span class="rxui-v4-icon">🖼️</span>
+            <span class="rxui-v4-label">
+              <strong>Cuadros y Artistas</strong>
+              <small>Explora arte y referencias</small>
+            </span>
+            <span class="rxui-v4-arrow">›</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- FORMACIÓN -->
+      <div class="rxui-v4-section">
+
+        <div class="rxui-v4-section-title">
+          Formación
+        </div>
+
+        <div class="rxui-v4-list">
+
+          <button
+            class="rxui-v4-item rx-feature"
+            type="button"
+            data-rxui-target="roxthal-school-campus">
+            <span class="rxui-v4-icon">🎓</span>
+            <span class="rxui-v4-label">
+              <strong>School Campus</strong>
+              <small>Espacio de formación RoXThal</small>
+            </span>
+            <span class="rxui-v4-arrow">›</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- INTELIGENCIA -->
+      <div class="rxui-v4-section">
+
+        <div class="rxui-v4-section-title">
+          Inteligencia artística
+        </div>
+
+        <div class="rxui-v4-list">
+
+          <button
+            class="rxui-v4-item rx-ai"
+            type="button"
+            data-rxui-target="roxthal-ia-container">
+            <span class="rxui-v4-icon">🤖</span>
+            <span class="rxui-v4-label">
+              <strong>RoXThal IA</strong>
+              <small>Inspiración · estilos · diseños</small>
+            </span>
+            <span class="rxui-v4-arrow">›</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- COMUNIDAD -->
+      <div class="rxui-v4-section">
+
+        <div class="rxui-v4-section-title">
+          Comunidad
+        </div>
+
+        <div class="rxui-v4-list">
+
+          <button
+            class="rxui-v4-item"
+            type="button"
+            data-rxui-target="roxthal-resenas">
+            <span class="rxui-v4-icon">⭐</span>
+            <span class="rxui-v4-label">
+              <strong>Reseñas</strong>
+              <small>Opiniones de nuestra comunidad</small>
+            </span>
+            <span class="rxui-v4-arrow">›</span>
+          </button>
+
+          <button
+            class="rxui-v4-item rx-feature"
+            type="button"
+            data-rxui-target="sorteoRoXthal">
+            <span class="rxui-v4-icon">🎁</span>
+            <span class="rxui-v4-label">
+              <strong>Sorteo RoXThal</strong>
+              <small>Participa en los sorteos</small>
+            </span>
+            <span class="rxui-v4-arrow">›</span>
+          </button>
+
+          <button
+            class="rxui-v4-item"
+            type="button"
+            data-rxui-target="identidad-roxthal">
+            <span class="rxui-v4-icon">🌀</span>
+            <span class="rxui-v4-label">
+              <strong>Nuestra Identidad</strong>
+              <small>Conoce RoXThal Art Design</small>
+            </span>
+            <span class="rxui-v4-arrow">›</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- SERVICIOS -->
+      <div class="rxui-v4-section">
+
+        <div class="rxui-v4-section-title">
+          Servicios
+        </div>
+
+        <div class="rxui-v4-list">
+
+          <button
+            class="rxui-v4-item"
+            type="button"
+            data-rxui-action="radio">
+            <span class="rxui-v4-icon">📻</span>
+            <span class="rxui-v4-label">
+              <strong>Radio RoXThal</strong>
+              <small>Radio y reproducción</small>
+            </span>
+            <span class="rxui-v4-arrow">›</span>
+          </button>
+
+          <button
+            class="rxui-v4-item"
+            type="button"
+            data-rxui-target="bloque-cobros">
+            <span class="rxui-v4-icon">💳</span>
+            <span class="rxui-v4-label">
+              <strong>Pagos y Reservas</strong>
+              <small>Gestión de servicios</small>
+            </span>
+            <span class="rxui-v4-arrow">›</span>
+          </button>
+
+          <button
+            class="rxui-v4-item"
+            type="button"
+            data-rxui-target="ubicacion">
+            <span class="rxui-v4-icon">📍</span>
+            <span class="rxui-v4-label">
+              <strong>Visítanos</strong>
+              <small>Ubicación y cómo llegar</small>
+            </span>
+            <span class="rxui-v4-arrow">›</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- GESTIÓN -->
+      <div class="rxui-v4-section">
+
+        <div class="rxui-v4-section-title">
+          Gestión
+        </div>
+
+        <div class="rxui-v4-list">
+
+          <button
+            class="rxui-v4-item rx-admin"
+            type="button"
+            data-rxui-target="admin">
+            <span class="rxui-v4-icon">⚙️</span>
+            <span class="rxui-v4-label">
+              <strong>Administrador</strong>
+              <small>Gestión interna de la aplicación</small>
+            </span>
+            <span class="rxui-v4-arrow">›</span>
+          </button>
+
+        </div>
+      </div>
+
+      <div class="rxui-v4-footer">
+        RoXThal Art Design<br>
+        Arte que se transforma.
+      </div>
+
+    </div>
+  </aside>
+</div>
+
+<script>
+(function(){
+
+  "use strict";
+
+  /* ==========================================================
+     PROTECCIÓN CONTRA DOBLE INSTALACIÓN
+  ========================================================== */
+
+  if(window.__ROXTHAL_UI_V4_INSTALLED__) return;
+
+  window.__ROXTHAL_UI_V4_INSTALLED__ = true;
+
+  const root = document.getElementById("rxui-v4");
+
+  if(!root) return;
+
+  const drawer = document.getElementById("rxui-v4-drawer");
+  const overlay = document.getElementById("rxui-v4-overlay");
+  const menu = document.getElementById("rxui-v4-menu");
+  const close = document.getElementById("rxui-v4-close");
+  const top = document.getElementById("rxui-v4-top");
+  const progress = document.getElementById("rxui-v4-progress");
+
+  let previousOverflow = "";
+
+  /* ==========================================================
+     MENÚ
+  ========================================================== */
+
+  function openMenu(){
+
+    if(!drawer) return;
+
+    previousOverflow = document.body.style.overflow || "";
+
+    drawer.classList.add("rx-open");
+    overlay?.classList.add("rx-open");
+
+    drawer.setAttribute("aria-hidden","false");
+
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeMenu(){
+
+    if(!drawer) return;
+
+    drawer.classList.remove("rx-open");
+    overlay?.classList.remove("rx-open");
+
+    drawer.setAttribute("aria-hidden","true");
+
+    document.body.style.overflow = previousOverflow;
+  }
+
+  menu?.addEventListener("click",openMenu);
+  close?.addEventListener("click",closeMenu);
+  overlay?.addEventListener("click",closeMenu);
+
+  /* ==========================================================
+     ESCAPE
+  ========================================================== */
+
+  document.addEventListener("keydown",function(event){
+
+    if(event.key === "Escape"){
+      closeMenu();
+    }
+
+  });
+
+  /* ==========================================================
+     NAVEGACIÓN SEGURA A MÓDULOS EXISTENTES
+  ========================================================== */
+
+  function navigateTo(id){
+
+    if(!id) return false;
+
+    const element = document.getElementById(id);
+
+    if(!element){
+
+      console.warn(
+        "[RoXThal UI V4] Módulo no encontrado:",
+        id
+      );
+
+      return false;
+    }
+
+    closeMenu();
+
+    /*
+      Preferimos la función go() YA EXISTENTE.
+      Si no existe, usamos scrollIntoView directamente.
+    */
+
+    if(typeof window.go === "function"){
+
+      try{
+
+        window.go(id);
+
+        return true;
+
+      }catch(error){
+
+        console.warn(
+          "[RoXThal UI V4] go() no disponible:",
+          error
+        );
+
+      }
+
+    }
+
+    element.scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+
+    return true;
+  }
+
+  /* ==========================================================
+     GALERÍA EXISTENTE
+  ========================================================== */
+
+  function openExistingGallery(){
+
+    closeMenu();
+
+    if(typeof window.openGallery === "function"){
+
+      try{
+
+        window.openGallery();
+
+        return;
+
+      }catch(error){
+
+        console.warn(
+          "[RoXThal UI V4] openGallery() falló:",
+          error
+        );
+
+      }
+
+    }
+
+    navigateTo("galeria");
+  }
+
+  /* ==========================================================
+     RADIO EXISTENTE
+  ========================================================== */
+
+  function openExistingRadio(){
+
+    closeMenu();
+
+    if(typeof window.openRadio === "function"){
+
+      try{
+
+        window.openRadio();
+
+        return;
+
+      }catch(error){
+
+        console.warn(
+          "[RoXThal UI V4] openRadio() falló:",
+          error
+        );
+
+      }
+
+    }
+
+    navigateTo("radio");
+  }
+
+  /* ==========================================================
+     BOTONES DE DESTINO
+  ========================================================== */
+
+  root.querySelectorAll("[data-rxui-target]").forEach(function(button){
+
+    button.addEventListener("click",function(){
+
+      const target = button.getAttribute("data-rxui-target");
+
+      navigateTo(target);
+
+    });
+
+  });
+
+  /* ==========================================================
+     GALERÍA
+  ========================================================== */
+
+  root.querySelectorAll('[data-rxui-action="gallery"]').forEach(function(button){
+
+    button.addEventListener("click",openExistingGallery);
+
+  });
+
+  /* ==========================================================
+     RADIO
+  ========================================================== */
+
+  root.querySelectorAll('[data-rxui-action="radio"]').forEach(function(button){
+
+    button.addEventListener("click",openExistingRadio);
+
+  });
+
+  /* ==========================================================
+     OCULTAR DESTINOS QUE NO EXISTAN
+     Esto evita botones muertos si un módulo cambia en el futuro.
+  ========================================================== */
+
+  root.querySelectorAll("[data-rxui-target]").forEach(function(button){
+
+    const target = button.getAttribute("data-rxui-target");
+
+    if(!document.getElementById(target)){
+
+      button.style.display = "none";
+
+      console.warn(
+        "[RoXThal UI V4] Botón ocultado; destino inexistente:",
+        target
+      );
+
+    }
+
+  });
+
+  /* ==========================================================
+     BARRA DE PROGRESO DE LECTURA
+  ========================================================== */
+
+  function updateScrollUI(){
+
+    const scrollTop =
+      window.scrollY ||
+      document.documentElement.scrollTop ||
+      0;
+
+    const documentHeight =
+      document.documentElement.scrollHeight -
+      window.innerHeight;
+
+    let percent = 0;
+
+    if(documentHeight > 0){
+
+      percent =
+        Math.min(
+          100,
+          Math.max(
+            0,
+            (scrollTop / documentHeight) * 100
+          )
+        );
+
+    }
+
+    if(progress){
+
+      progress.style.width = percent + "%";
+
+    }
+
+    if(top){
+
+      if(scrollTop > 500){
+
+        top.classList.add("rx-show");
+
+      }else{
+
+        top.classList.remove("rx-show");
+
+      }
+
+    }
+
+  }
+
+  window.addEventListener(
+    "scroll",
+    updateScrollUI,
+    {passive:true}
+  );
+
+  window.addEventListener(
+    "resize",
+    updateScrollUI,
+    {passive:true}
+  );
+
+  /* ==========================================================
+     VOLVER ARRIBA
+  ========================================================== */
+
+  top?.addEventListener("click",function(){
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
+  });
+
+  /* ==========================================================
+     INICIALIZACIÓN
+  ========================================================== */
+
+  updateScrollUI();
+
+  closeMenu();
+
+  console.log(
+    "✅ RoXThal UI V4 instalada: capa visual independiente."
+  );
+
+})();
+</script>
 </body>
 </html>
