@@ -39569,5 +39569,1903 @@ select:focus{
 
 })();
 </script>  
+    <!-- =========================================================
+     ROXTHAL V13 — CENTRO DE NOVEDADES INTELIGENTE
+     
+     CAPA INDEPENDIENTE Y REVERSIBLE
+
+     NO MODIFICA:
+     - SUPABASE
+     - AUTH
+     - DATOS
+     - V4
+     - V5
+     - V6
+     - V7
+     - V8
+     - V9
+     - V10
+     - V11
+     - V12
+     - DISEÑADOR
+     - ROXTHAL IA
+     ========================================================= -->
+
+<script>
+(function(){
+
+  'use strict';
+
+  if(window.__ROXTHAL_V13_INSTALLED__){
+    return;
+  }
+
+  window.__ROXTHAL_V13_INSTALLED__ = true;
+
+
+  /* =========================================================
+     CONFIGURACIÓN
+     ========================================================= */
+
+  const STORAGE_KEY =
+    'roxthal_v13_seen_activity';
+
+  const MAX_ITEMS = 8;
+
+
+  /* =========================================================
+     ESTILOS
+     ========================================================= */
+
+  const style = document.createElement('style');
+
+  style.id = 'roxthal-v13-style';
+
+  style.textContent = `
+
+    #roxthal-v13-news{
+
+      width:100%;
+      box-sizing:border-box;
+
+      margin:22px auto 0;
+      padding:0 14px;
+
+      color:var(--text,#f5f5f5);
+
+      font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    }
+
+
+    #roxthal-v13-news *{
+      box-sizing:border-box;
+    }
+
+
+    .rxv13-shell{
+
+      width:100%;
+      max-width:1200px;
+
+      margin:0 auto;
+
+      padding:18px;
+
+      border-radius:22px;
+
+      border:1px solid
+        rgba(215,180,90,.22);
+
+      background:
+
+        radial-gradient(
+          circle at 100% 0%,
+          rgba(215,180,90,.12),
+          transparent 35%
+        ),
+
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.045),
+          rgba(255,255,255,.012)
+        );
+
+      box-shadow:
+        0 18px 55px rgba(0,0,0,.28);
+
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+
+    }
+
+
+    /* HEADER */
+
+    .rxv13-header{
+
+      display:flex;
+
+      align-items:center;
+      justify-content:space-between;
+
+      gap:14px;
+
+      margin-bottom:15px;
+
+    }
+
+
+    .rxv13-kicker{
+
+      font-size:10px;
+
+      letter-spacing:.18em;
+
+      text-transform:uppercase;
+
+      color:var(--gold2,#f2da91);
+
+      font-weight:950;
+
+      margin-bottom:5px;
+
+    }
+
+
+    .rxv13-title{
+
+      margin:0;
+
+      font-size:
+        clamp(22px,4vw,30px);
+
+      line-height:1.05;
+
+      font-weight:950;
+
+      letter-spacing:-.035em;
+
+    }
+
+
+    .rxv13-subtitle{
+
+      margin:6px 0 0;
+
+      color:var(--muted,#a0a0ab);
+
+      font-size:12px;
+
+      line-height:1.45;
+
+    }
+
+
+    /* CONTROLES */
+
+    .rxv13-controls{
+
+      display:flex;
+
+      align-items:center;
+
+      gap:7px;
+
+      flex:0 0 auto;
+
+    }
+
+
+    .rxv13-status{
+
+      display:flex;
+
+      align-items:center;
+
+      gap:6px;
+
+      padding:7px 10px;
+
+      border-radius:999px;
+
+      border:1px solid
+        rgba(46,204,113,.25);
+
+      background:
+        rgba(46,204,113,.07);
+
+      color:#dfffe9;
+
+      font-size:10px;
+
+      font-weight:850;
+
+      white-space:nowrap;
+
+    }
+
+
+    .rxv13-status-dot{
+
+      width:7px;
+      height:7px;
+
+      border-radius:50%;
+
+      background:
+        var(--green,#2ecc71);
+
+      box-shadow:
+        0 0 9px
+        rgba(46,204,113,.65);
+
+    }
+
+
+    .rxv13-refresh{
+
+      width:36px;
+      height:36px;
+
+      display:flex;
+
+      align-items:center;
+      justify-content:center;
+
+      border-radius:11px;
+
+      border:1px solid
+        rgba(255,255,255,.10);
+
+      background:
+        rgba(255,255,255,.035);
+
+      color:var(--gold2,#f2da91);
+
+      cursor:pointer;
+
+      font-size:17px;
+
+      transition:
+        transform .18s ease,
+        background .18s ease;
+
+    }
+
+
+    .rxv13-refresh:hover{
+
+      transform:rotate(25deg);
+
+      background:
+        rgba(215,180,90,.09);
+
+    }
+
+
+    .rxv13-refresh.rxv13-spin{
+
+      animation:
+        rxv13Spin .6s ease;
+
+    }
+
+
+    @keyframes rxv13Spin{
+
+      from{
+        transform:rotate(0deg);
+      }
+
+      to{
+        transform:rotate(360deg);
+      }
+
+    }
+
+
+    /* RESUMEN */
+
+    .rxv13-summary{
+
+      display:grid;
+
+      grid-template-columns:
+        repeat(3,minmax(0,1fr));
+
+      gap:8px;
+
+      margin-bottom:13px;
+
+    }
+
+
+    .rxv13-stat{
+
+      padding:11px;
+
+      border-radius:14px;
+
+      border:1px solid
+        rgba(255,255,255,.07);
+
+      background:
+        rgba(255,255,255,.025);
+
+    }
+
+
+    .rxv13-stat-value{
+
+      display:block;
+
+      font-size:19px;
+
+      line-height:1;
+
+      font-weight:950;
+
+      color:var(--gold2,#f2da91);
+
+      margin-bottom:4px;
+
+    }
+
+
+    .rxv13-stat-label{
+
+      font-size:10px;
+
+      color:var(--muted,#a0a0ab);
+
+    }
+
+
+    /* FEED */
+
+    .rxv13-feed{
+
+      display:flex;
+
+      flex-direction:column;
+
+      gap:8px;
+
+    }
+
+
+    .rxv13-item{
+
+      position:relative;
+
+      display:flex;
+
+      align-items:center;
+
+      gap:12px;
+
+      padding:13px;
+
+      border-radius:15px;
+
+      border:1px solid
+        rgba(255,255,255,.07);
+
+      background:
+        rgba(255,255,255,.022);
+
+      cursor:pointer;
+
+      transition:
+        transform .18s ease,
+        border-color .18s ease,
+        background .18s ease;
+
+      overflow:hidden;
+
+    }
+
+
+    .rxv13-item:hover{
+
+      transform:translateX(3px);
+
+      border-color:
+        rgba(215,180,90,.30);
+
+      background:
+        rgba(215,180,90,.045);
+
+    }
+
+
+    .rxv13-item.rxv13-new{
+
+      border-color:
+        rgba(215,180,90,.35);
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(215,180,90,.07),
+          rgba(255,255,255,.02)
+        );
+
+    }
+
+
+    .rxv13-item.rxv13-new::before{
+
+      content:"";
+
+      position:absolute;
+
+      left:0;
+      top:0;
+      bottom:0;
+
+      width:3px;
+
+      background:
+        var(--gold,#d7b45a);
+
+      box-shadow:
+        0 0 12px
+        rgba(215,180,90,.45);
+
+    }
+
+
+    .rxv13-icon{
+
+      width:42px;
+      height:42px;
+
+      flex:0 0 42px;
+
+      display:flex;
+
+      align-items:center;
+      justify-content:center;
+
+      border-radius:12px;
+
+      border:1px solid
+        rgba(215,180,90,.18);
+
+      background:
+        rgba(215,180,90,.07);
+
+      font-size:20px;
+
+    }
+
+
+    .rxv13-copy{
+
+      flex:1;
+
+      min-width:0;
+
+    }
+
+
+    .rxv13-item-title{
+
+      display:flex;
+
+      align-items:center;
+
+      gap:7px;
+
+      font-size:13px;
+
+      font-weight:900;
+
+      margin-bottom:2px;
+
+    }
+
+
+    .rxv13-item-text{
+
+      font-size:11px;
+
+      line-height:1.4;
+
+      color:var(--muted,#a0a0ab);
+
+    }
+
+
+    .rxv13-arrow{
+
+      flex:0 0 auto;
+
+      color:var(--gold2,#f2da91);
+
+      font-size:17px;
+
+      opacity:.75;
+
+    }
+
+
+    .rxv13-new-badge{
+
+      display:inline-flex;
+
+      align-items:center;
+
+      padding:3px 6px;
+
+      border-radius:999px;
+
+      background:
+        rgba(215,180,90,.13);
+
+      border:1px solid
+        rgba(215,180,90,.25);
+
+      color:var(--gold2,#f2da91);
+
+      font-size:8px;
+
+      font-weight:950;
+
+      letter-spacing:.08em;
+
+    }
+
+
+    /* VACÍO */
+
+    .rxv13-empty{
+
+      padding:20px;
+
+      text-align:center;
+
+      border-radius:15px;
+
+      border:1px dashed
+        rgba(255,255,255,.10);
+
+      color:var(--muted,#a0a0ab);
+
+      font-size:12px;
+
+    }
+
+
+    /* FOOTER */
+
+    .rxv13-footer{
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:space-between;
+
+      gap:10px;
+
+      margin-top:13px;
+
+      padding-top:11px;
+
+      border-top:1px solid
+        rgba(255,255,255,.07);
+
+      color:var(--muted,#a0a0ab);
+
+      font-size:9px;
+
+    }
+
+
+    .rxv13-footer strong{
+
+      color:var(--gold2,#f2da91);
+
+    }
+
+
+    /* MOBILE */
+
+    @media(max-width:600px){
+
+      #roxthal-v13-news{
+
+        padding:0 9px;
+
+        margin-top:18px;
+
+      }
+
+
+      .rxv13-shell{
+
+        padding:14px;
+
+        border-radius:19px;
+
+      }
+
+
+      .rxv13-header{
+
+        align-items:flex-start;
+
+      }
+
+
+      .rxv13-status{
+
+        font-size:0;
+
+        padding:8px;
+
+      }
+
+
+      .rxv13-status-dot{
+
+        width:8px;
+        height:8px;
+
+      }
+
+
+      .rxv13-summary{
+
+        grid-template-columns:
+          repeat(3,minmax(0,1fr));
+
+      }
+
+
+      .rxv13-stat{
+
+        padding:9px;
+
+      }
+
+
+      .rxv13-stat-value{
+
+        font-size:17px;
+
+      }
+
+
+      .rxv13-stat-label{
+
+        font-size:9px;
+
+      }
+
+
+      .rxv13-item{
+
+        padding:11px;
+
+      }
+
+
+      .rxv13-icon{
+
+        width:38px;
+        height:38px;
+
+        flex-basis:38px;
+
+        font-size:18px;
+
+      }
+
+
+      .rxv13-footer{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+      }
+
+    }
+
+
+    @media(prefers-reduced-motion:reduce){
+
+      .rxv13-item,
+      .rxv13-refresh{
+
+        transition:none;
+      }
+
+      .rxv13-refresh.rxv13-spin{
+
+        animation:none;
+      }
+
+    }
+
+  `;
+
+  document.head.appendChild(style);
+
+
+  /* =========================================================
+     CREAR CONTENEDOR
+     ========================================================= */
+
+  const root =
+    document.createElement('section');
+
+  root.id =
+    'roxthal-v13-news';
+
+  root.setAttribute(
+    'aria-label',
+    'Centro de novedades RoXThal'
+  );
+
+
+  root.innerHTML = `
+
+    <div class="rxv13-shell">
+
+      <div class="rxv13-header">
+
+        <div>
+
+          <div class="rxv13-kicker">
+            ✦ ROXTHAL ART DESIGN
+          </div>
+
+          <h2 class="rxv13-title">
+            Novedades
+          </h2>
+
+          <p class="rxv13-subtitle">
+            Descubre lo que está disponible
+            ahora mismo en RoXThal.
+          </p>
+
+        </div>
+
+
+        <div class="rxv13-controls">
+
+          <div class="rxv13-status">
+
+            <span class="rxv13-status-dot"></span>
+
+            <span>
+              ACTIVO
+            </span>
+
+          </div>
+
+
+          <button
+            type="button"
+            class="rxv13-refresh"
+            id="rxv13-refresh"
+            aria-label="Actualizar novedades">
+
+            ↻
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="rxv13-summary">
+
+        <div class="rxv13-stat">
+
+          <span
+            class="rxv13-stat-value"
+            id="rxv13-total">
+            0
+          </span>
+
+          <span class="rxv13-stat-label">
+            Actividades
+          </span>
+
+        </div>
+
+
+        <div class="rxv13-stat">
+
+          <span
+            class="rxv13-stat-value"
+            id="rxv13-new">
+            0
+          </span>
+
+          <span class="rxv13-stat-label">
+            Nuevas
+          </span>
+
+        </div>
+
+
+        <div class="rxv13-stat">
+
+          <span
+            class="rxv13-stat-value"
+            id="rxv13-modules">
+            0
+          </span>
+
+          <span class="rxv13-stat-label">
+            Módulos
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="rxv13-feed"
+        id="rxv13-feed">
+
+      </div>
+
+
+      <div class="rxv13-footer">
+
+        <span>
+          Estado actualizado:
+          <strong id="rxv13-time">
+            ahora
+          </strong>
+        </span>
+
+        <span>
+          ✦ RoXThal
+        </span>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  /* =========================================================
+     INSERTAR DESPUÉS DE V12
+     ========================================================= */
+
+  const v12 =
+    document.getElementById(
+      'roxthal-v12-activity'
+    );
+
+  const inicio =
+    document.getElementById('inicio');
+
+
+  if(v12 && v12.parentNode){
+
+    v12.parentNode.insertBefore(
+      root,
+      v12.nextSibling
+    );
+
+  }else if(inicio){
+
+    inicio.appendChild(root);
+
+  }else{
+
+    document.body.appendChild(root);
+
+  }
+
+
+  /* =========================================================
+     ESTADO LOCAL
+     ========================================================= */
+
+  function leerVistos(){
+
+    try{
+
+      const raw =
+        localStorage.getItem(
+          STORAGE_KEY
+        );
+
+      const parsed =
+        raw ? JSON.parse(raw) : [];
+
+      return Array.isArray(parsed)
+        ? parsed
+        : [];
+
+    }catch(e){
+
+      return [];
+
+    }
+
+  }
+
+
+  function guardarVistos(ids){
+
+    try{
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(
+          ids.slice(-30)
+        )
+      );
+
+    }catch(e){}
+
+  }
+
+
+  /* =========================================================
+     UTILIDADES
+     ========================================================= */
+
+  function existe(id){
+
+    return !!document.getElementById(id);
+
+  }
+
+
+  function contarElementos(selector){
+
+    try{
+
+      return document.querySelectorAll(
+        selector
+      ).length;
+
+    }catch(e){
+
+      return 0;
+
+    }
+
+  }
+
+
+  function crearId(prefix){
+
+    return 'roxthal-v13-' + prefix;
+
+  }
+
+
+  /* =========================================================
+     DETECCIÓN DE ACTIVIDAD REAL
+     ========================================================= */
+
+  function construirActividad(){
+
+    const items = [];
+
+
+    /*
+     * DISEÑADOR
+     */
+
+    if(existe('roxthal-tattoo-designer')){
+
+      items.push({
+
+        id:crearId('designer'),
+
+        icon:'🎨',
+
+        title:'Diseñador de tatuajes',
+
+        text:
+          'Tu herramienta creativa para desarrollar nuevas ideas.',
+
+        target:
+          'roxthal-tattoo-designer'
+
+      });
+
+    }
+
+
+    /*
+     * CÍRCULO CROMÁTICO
+     */
+
+    if(existe('rx-color-pro')){
+
+      items.push({
+
+        id:crearId('color'),
+
+        icon:'🌈',
+
+        title:'Laboratorio cromático',
+
+        text:
+          'Experimenta con color, armonías y paletas.',
+
+        target:
+          'rx-color-pro'
+
+      });
+
+    }
+
+
+    /*
+     * IA
+     */
+
+    if(existe('roxthal-ia-container')){
+
+      items.push({
+
+        id:crearId('ia'),
+
+        icon:'🤖',
+
+        title:'RoXThal IA',
+
+        text:
+          'Inspiración y asistencia para tus proyectos artísticos.',
+
+        target:
+          'roxthal-ia-container'
+
+      });
+
+    }
+
+
+    /*
+     * GALERÍA
+     */
+
+    if(existe('galeria')){
+
+      let cantidad =
+        contarElementos(
+          '#galeria img'
+        );
+
+      items.push({
+
+        id:
+          crearId(
+            'gallery-' +
+            cantidad
+          ),
+
+        icon:'🖼️',
+
+        title:
+          cantidad > 0
+            ? 'Galería actualizada'
+            : 'Galería RoXThal',
+
+        text:
+          cantidad > 0
+            ? cantidad +
+              ' elemento' +
+              (cantidad === 1 ? '' : 's') +
+              ' visible' +
+              (cantidad === 1 ? '' : 's') +
+              ' en la galería.'
+            : 'Explora las obras y trabajos de RoXThal.',
+
+        target:'galeria'
+
+      });
+
+    }
+
+
+    /*
+     * RESEÑAS
+     */
+
+    if(existe('roxthal-resenas')){
+
+      const cantidad =
+        contarElementos(
+          '#roxthal-resenas [data-review], ' +
+          '#roxthal-resenas .review, ' +
+          '#roxthal-resenas .resena, ' +
+          '#roxthal-resenas article'
+        );
+
+      items.push({
+
+        id:
+          crearId(
+            'reviews-' +
+            cantidad
+          ),
+
+        icon:'⭐',
+
+        title:'Comunidad RoXThal',
+
+        text:
+          cantidad > 0
+            ? 'La comunidad ya tiene actividad en reseñas.'
+            : 'Consulta y participa en la comunidad.',
+
+        target:'roxthal-resenas'
+
+      });
+
+    }
+
+
+    /*
+     * FORMACIÓN
+     */
+
+    if(
+      existe('cursos') ||
+      existe('roxthal-school-campus')
+    ){
+
+      items.push({
+
+        id:crearId('training'),
+
+        icon:'🎓',
+
+        title:'Formación artística',
+
+        text:
+          'Cursos, talleres y aprendizaje dentro de RoXThal.',
+
+        target:
+          existe('roxthal-school-campus')
+            ? 'roxthal-school-campus'
+            : 'cursos'
+
+      });
+
+    }
+
+
+    /*
+     * INSPIRACIÓN
+     */
+
+    if(existe('buscador-tatuajes')){
+
+      items.push({
+
+        id:crearId('tattoo-search'),
+
+        icon:'🔎',
+
+        title:'Nueva inspiración',
+
+        text:
+          'Busca referencias y estilos para tus próximos proyectos.',
+
+        target:'buscador-tatuajes'
+
+      });
+
+    }
+
+
+    /*
+     * ARTE Y ARTISTAS
+     */
+
+    if(
+      existe(
+        'buscador-cuadros-artistas'
+      )
+    ){
+
+      items.push({
+
+        id:crearId('artists'),
+
+        icon:'🖌️',
+
+        title:'Arte y artistas',
+
+        text:
+          'Explora obras, estilos y referencias artísticas.',
+
+        target:
+          'buscador-cuadros-artistas'
+
+      });
+
+    }
+
+
+    /*
+     * RADIO
+     */
+
+    if(existe('radio')){
+
+      items.push({
+
+        id:crearId('radio'),
+
+        icon:'📻',
+
+        title:'Radio RoXThal',
+
+        text:
+          'Música y ambiente para acompañar tu experiencia artística.',
+
+        target:'radio'
+
+      });
+
+    }
+
+
+    /*
+     * SORTEO
+     */
+
+    if(existe('sorteoRoXthal')){
+
+      items.push({
+
+        id:crearId('raffle'),
+
+        icon:'🎟️',
+
+        title:'Sorteo RoXThal',
+
+        text:
+          'Consulta el estado y participa cuando esté disponible.',
+
+        target:'sorteoRoXthal'
+
+      });
+
+    }
+
+
+    /*
+     * UBICACIÓN
+     */
+
+    if(existe('ubicacion')){
+
+      items.push({
+
+        id:crearId('location'),
+
+        icon:'📍',
+
+        title:'Visítanos',
+
+        text:
+          'Encuentra RoXThal Art Design.',
+
+        target:'ubicacion'
+
+      });
+
+    }
+
+
+    return items.slice(
+      0,
+      MAX_ITEMS
+    );
+
+  }
+
+
+  /* =========================================================
+     NAVEGACIÓN
+     ========================================================= */
+
+  function abrir(target){
+
+    if(!target){
+      return;
+    }
+
+
+    /*
+     * DISEÑADOR:
+     * utilizar siempre el mecanismo original.
+     */
+
+    if(
+      target ===
+      'roxthal-tattoo-designer'
+    ){
+
+      const designer =
+        document.getElementById(
+          'roxthal-tattoo-designer'
+        );
+
+      const toggle =
+        document.getElementById(
+          'roxthal-designer-toggle'
+        );
+
+      if(!designer){
+        return;
+      }
+
+
+      if(toggle){
+
+        const visible =
+          window.getComputedStyle(
+            designer
+          ).display !== 'none';
+
+        if(!visible){
+
+          toggle.click();
+
+        }
+
+
+        setTimeout(function(){
+
+          designer.scrollIntoView({
+
+            behavior:'smooth',
+
+            block:'start'
+
+          });
+
+        },100);
+
+      }else{
+
+        designer.style.display =
+          'block';
+
+        designer.scrollIntoView({
+
+          behavior:'smooth',
+
+          block:'start'
+
+        });
+
+      }
+
+      return;
+
+    }
+
+
+    /*
+     * GALERÍA
+     */
+
+    if(
+      target === 'galeria' &&
+      typeof window.openGallery ===
+        'function'
+    ){
+
+      window.openGallery();
+
+      return;
+
+    }
+
+
+    /*
+     * RADIO
+     */
+
+    if(
+      target === 'radio' &&
+      typeof window.openRadio ===
+        'function'
+    ){
+
+      window.openRadio();
+
+      return;
+
+    }
+
+
+    /*
+     * RESTO
+     */
+
+    if(
+      typeof window.go ===
+        'function'
+    ){
+
+      window.go(target);
+
+      return;
+
+    }
+
+
+    const destination =
+      document.getElementById(
+        target
+      );
+
+    if(destination){
+
+      destination.scrollIntoView({
+
+        behavior:'smooth',
+
+        block:'start'
+
+      });
+
+    }
+
+  }
+
+
+  /* =========================================================
+     RENDER
+     ========================================================= */
+
+  function render(){
+
+    const feed =
+      document.getElementById(
+        'rxv13-feed'
+      );
+
+    if(!feed){
+      return;
+    }
+
+
+    const items =
+      construirActividad();
+
+
+    const vistos =
+      leerVistos();
+
+
+    let nuevas = 0;
+
+
+    feed.innerHTML = '';
+
+
+    if(!items.length){
+
+      feed.innerHTML = `
+
+        <div class="rxv13-empty">
+
+          ✦
+
+          <br><br>
+
+          El Centro de Novedades está
+          esperando actividad de RoXThal.
+
+        </div>
+
+      `;
+
+    }else{
+
+      items.forEach(function(item){
+
+        const isNew =
+          !vistos.includes(item.id);
+
+        if(isNew){
+          nuevas++;
+        }
+
+
+        const element =
+          document.createElement('div');
+
+
+        element.className =
+          'rxv13-item' +
+          (isNew
+            ? ' rxv13-new'
+            : '');
+
+
+        element.tabIndex = 0;
+
+        element.setAttribute(
+          'role',
+          'button'
+        );
+
+
+        element.innerHTML = `
+
+          <div class="rxv13-icon">
+            ${item.icon}
+          </div>
+
+          <div class="rxv13-copy">
+
+            <div class="rxv13-item-title">
+
+              <span>
+                ${item.title}
+              </span>
+
+              ${
+                isNew
+                  ? `
+                    <span
+                      class="rxv13-new-badge">
+                      NUEVO
+                    </span>
+                  `
+                  : ''
+              }
+
+            </div>
+
+            <div class="rxv13-item-text">
+              ${item.text}
+            </div>
+
+          </div>
+
+          <div class="rxv13-arrow">
+            →
+          </div>
+
+        `;
+
+
+        function activate(){
+
+          /*
+           * Marcar como visto.
+           */
+
+          const current =
+            leerVistos();
+
+          if(!current.includes(item.id)){
+
+            current.push(item.id);
+
+            guardarVistos(current);
+
+          }
+
+
+          abrir(item.target);
+
+
+          /*
+           * Actualizar indicador
+           * inmediatamente.
+           */
+
+          render();
+
+        }
+
+
+        element.addEventListener(
+          'click',
+          activate
+        );
+
+
+        element.addEventListener(
+          'keydown',
+          function(event){
+
+            if(
+              event.key === 'Enter' ||
+              event.key === ' '
+            ){
+
+              event.preventDefault();
+
+              activate();
+
+            }
+
+          }
+        );
+
+
+        feed.appendChild(element);
+
+      });
+
+    }
+
+
+    const total =
+      document.getElementById(
+        'rxv13-total'
+      );
+
+    const fresh =
+      document.getElementById(
+        'rxv13-new'
+      );
+
+    const modules =
+      document.getElementById(
+        'rxv13-modules'
+      );
+
+
+    if(total){
+
+      total.textContent =
+        items.length;
+
+    }
+
+
+    if(fresh){
+
+      fresh.textContent =
+        nuevas;
+
+    }
+
+
+    if(modules){
+
+      const moduleIds = [
+
+        'roxthal-tattoo-designer',
+
+        'rx-color-pro',
+
+        'roxthal-ia-container',
+
+        'buscador-tatuajes',
+
+        'buscador-cuadros-artistas',
+
+        'roxthal-school-campus',
+
+        'galeria',
+
+        'radio',
+
+        'roxthal-resenas',
+
+        'sorteoRoXthal',
+
+        'ubicacion',
+
+        'cursos'
+
+      ];
+
+
+      modules.textContent =
+        moduleIds.filter(
+          existe
+        ).length;
+
+    }
+
+
+    const time =
+      document.getElementById(
+        'rxv13-time'
+      );
+
+
+    if(time){
+
+      time.textContent =
+        new Date().toLocaleTimeString(
+          'es-AR',
+          {
+            hour:'2-digit',
+            minute:'2-digit'
+          }
+        );
+
+    }
+
+  }
+
+
+  /* =========================================================
+     ACTUALIZAR
+     ========================================================= */
+
+  const refresh =
+    document.getElementById(
+      'rxv13-refresh'
+    );
+
+
+  if(refresh){
+
+    refresh.addEventListener(
+      'click',
+      function(){
+
+        refresh.classList.remove(
+          'rxv13-spin'
+        );
+
+        void refresh.offsetWidth;
+
+        refresh.classList.add(
+          'rxv13-spin'
+        );
+
+        render();
+
+      }
+    );
+
+  }
+
+
+  /* =========================================================
+     OBSERVADOR
+     
+     Si la galería u otro módulo termina
+     de cargar contenido posteriormente,
+     el centro puede actualizarse sin
+     modificar ese módulo.
+     ========================================================= */
+
+  let observerTimer = null;
+
+
+  if(
+    typeof MutationObserver !==
+    'undefined'
+  ){
+
+    const observer =
+      new MutationObserver(
+        function(){
+
+          clearTimeout(
+            observerTimer
+          );
+
+          observerTimer =
+            setTimeout(
+              function(){
+
+                render();
+
+              },
+              700
+            );
+
+        }
+      );
+
+
+    observer.observe(
+      document.body,
+      {
+        childList:true,
+        subtree:true
+      }
+    );
+
+
+    window.__ROXTHAL_V13_OBSERVER__ =
+      observer;
+
+  }
+
+
+  /* =========================================================
+     INICIO
+     ========================================================= */
+
+  render();
+
+
+  /*
+   * Segunda pasada después de que
+   * los módulos dinámicos hayan tenido
+   * tiempo de cargar.
+   */
+
+  setTimeout(
+    render,
+    1200
+  );
+
+
+  setTimeout(
+    render,
+    3000
+  );
+
+
+  /* =========================================================
+     LIMPIEZA
+     ========================================================= */
+
+  window.__ROXTHAL_V13_CLEANUP__ =
+    function(){
+
+      if(
+        window.__ROXTHAL_V13_OBSERVER__
+      ){
+
+        window.__ROXTHAL_V13_OBSERVER__
+          .disconnect();
+
+      }
+
+
+      clearTimeout(
+        observerTimer
+      );
+
+
+      root.remove();
+
+      style.remove();
+
+
+      delete
+        window.__ROXTHAL_V13_OBSERVER__;
+
+
+      delete
+        window.__ROXTHAL_V13_INSTALLED__;
+
+
+      delete
+        window.__ROXTHAL_V13_CLEANUP__;
+
+    };
+
+
+})();
+</script>    
 </body>
 </html>
