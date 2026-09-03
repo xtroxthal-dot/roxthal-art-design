@@ -30731,5 +30731,534 @@ setTimeout(
 
 })();
 </script>
+  <!-- ============================================================
+     RoXThal Art Design — V5
+     MEJORA VISUAL GLOBAL + PORTADA
+     CAPA ADITIVA — NO ELIMINA NI SUSTITUYE FUNCIONES
+============================================================ -->
+
+<style>
+/* ============================================================
+   V5 — IDENTIDAD VISUAL GLOBAL
+============================================================ */
+
+:root{
+  --rx5-gold:#d7b45a;
+  --rx5-gold2:#f2da91;
+  --rx5-bg:#080809;
+  --rx5-panel:#111116;
+  --rx5-panel2:#18181f;
+  --rx5-line:rgba(215,180,90,.20);
+  --rx5-glow:rgba(215,180,90,.18);
+}
+
+/* ------------------------------------------------------------
+   SUAVIZADO GENERAL
+------------------------------------------------------------ */
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:
+    radial-gradient(
+      circle at 50% -10%,
+      rgba(215,180,90,.055),
+      transparent 32%
+    ),
+    var(--bg,#080809);
+}
+
+/* ------------------------------------------------------------
+   CABECERA EXISTENTE — SOLO REFINAMIENTO VISUAL
+------------------------------------------------------------ */
+
+header.top{
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  background:rgba(8,8,9,.86);
+  border-bottom:1px solid rgba(215,180,90,.10);
+  box-shadow:0 8px 30px rgba(0,0,0,.20);
+}
+
+header.top .brand{
+  text-shadow:
+    0 0 12px rgba(215,180,90,.20);
+}
+
+/* ------------------------------------------------------------
+   PORTADA / INICIO
+------------------------------------------------------------ */
+
+#inicio{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  border-radius:0 0 28px 28px;
+}
+
+/* Halo decorativo */
+#inicio::before{
+  content:"";
+  position:absolute;
+  width:520px;
+  height:520px;
+  left:50%;
+  top:-280px;
+  transform:translateX(-50%);
+  border-radius:50%;
+  background:radial-gradient(
+    circle,
+    rgba(215,180,90,.12) 0%,
+    rgba(215,180,90,.045) 32%,
+    transparent 70%
+  );
+  pointer-events:none;
+  z-index:-1;
+}
+
+/* Línea artística inferior */
+#inicio::after{
+  content:"";
+  position:absolute;
+  left:8%;
+  right:8%;
+  bottom:0;
+  height:1px;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(215,180,90,.45),
+    transparent
+  );
+  pointer-events:none;
+}
+
+/* ------------------------------------------------------------
+   TITULARES DE INICIO
+------------------------------------------------------------ */
+
+#inicio h1,
+#inicio h2{
+  text-wrap:balance;
+  letter-spacing:-.025em;
+}
+
+#inicio h1{
+  text-shadow:
+    0 3px 20px rgba(0,0,0,.65),
+    0 0 22px rgba(215,180,90,.08);
+}
+
+#inicio h2{
+  color:var(--rx5-gold2);
+}
+
+/* ------------------------------------------------------------
+   IMÁGENES DE PORTADA
+------------------------------------------------------------ */
+
+#inicio img{
+  transition:
+    transform .45s cubic-bezier(.22,.61,.36,1),
+    filter .45s ease,
+    box-shadow .45s ease;
+}
+
+#inicio img:hover{
+  transform:scale(1.015);
+  filter:saturate(1.05) contrast(1.02);
+}
+
+/* ------------------------------------------------------------
+   BOTONES EXISTENTES
+   No cambia onclick ni funcionalidad
+------------------------------------------------------------ */
+
+#inicio button,
+#inicio a,
+#servicios button,
+#servicios a,
+#cursos button,
+#cursos a{
+  transition:
+    transform .20s ease,
+    box-shadow .20s ease,
+    border-color .20s ease,
+    background .20s ease;
+}
+
+#inicio button:hover,
+#inicio a:hover,
+#servicios button:hover,
+#servicios a:hover,
+#cursos button:hover,
+#cursos a:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    0 8px 24px rgba(0,0,0,.30),
+    0 0 18px rgba(215,180,90,.08);
+}
+
+#inicio button:active,
+#inicio a:active,
+#servicios button:active,
+#servicios a:active,
+#cursos button:active,
+#cursos a:active{
+  transform:translateY(0) scale(.985);
+}
+
+/* ------------------------------------------------------------
+   TARJETAS — SOLO SI YA EXISTEN
+------------------------------------------------------------ */
+
+#servicios > *,
+#cursos > *,
+#galeria > *,
+#radio > *,
+#contacto > *,
+#roxthal-resenas > *,
+#ubicacion > *,
+#identidad-roxthal > *{
+  transition:
+    border-color .25s ease,
+    box-shadow .25s ease,
+    transform .25s ease;
+}
+
+/* Evita transformar contenedores principales de forma agresiva.
+   Solo mejora elementos que ya tengan apariencia de tarjeta. */
+
+#servicios .card:hover,
+#cursos .card:hover,
+#galeria .card:hover,
+#radio .card:hover,
+#contacto .card:hover,
+#roxthal-resenas .card:hover{
+  border-color:rgba(215,180,90,.28);
+  box-shadow:
+    0 12px 32px rgba(0,0,0,.30),
+    0 0 22px rgba(215,180,90,.06);
+}
+
+/* ------------------------------------------------------------
+   GALERÍA
+------------------------------------------------------------ */
+
+#galeria img{
+  transition:
+    transform .35s cubic-bezier(.22,.61,.36,1),
+    filter .35s ease,
+    box-shadow .35s ease;
+}
+
+#galeria img:hover{
+  transform:scale(1.025);
+  filter:brightness(1.06) saturate(1.04);
+  box-shadow:
+    0 14px 32px rgba(0,0,0,.40);
+}
+
+/* ------------------------------------------------------------
+   CURSOS
+------------------------------------------------------------ */
+
+#cursos{
+  position:relative;
+}
+
+#cursos h2,
+#cursos h3{
+  text-wrap:balance;
+}
+
+/* ------------------------------------------------------------
+   SECCIONES — SEPARACIÓN MÁS PREMIUM
+------------------------------------------------------------ */
+
+#servicios,
+#galeria,
+#cursos,
+#radio,
+#contacto,
+#roxthal-resenas,
+#ubicacion,
+#identidad-roxthal,
+#roxthal-school-campus,
+#rx-color-pro,
+#buscador-tatuajes,
+#buscador-cuadros-artistas,
+#roxthal-tattoo-designer,
+#roxthal-ia-container,
+#sorteoRoXthal,
+#bloque-cobros,
+#admin{
+  scroll-margin-top:82px;
+}
+
+/* ------------------------------------------------------------
+   TÍTULOS DE SECCIÓN
+------------------------------------------------------------ */
+
+#servicios h2,
+#galeria h2,
+#cursos h2,
+#radio h2,
+#contacto h2,
+#roxthal-resenas h2,
+#ubicacion h2,
+#identidad-roxthal h2,
+#roxthal-school-campus h2,
+#rx-color-pro h2,
+#buscador-tatuajes h2,
+#buscador-cuadros-artistas h2,
+#roxthal-tattoo-designer h2,
+#sorteoRoXthal h2,
+#bloque-cobros h2{
+  text-wrap:balance;
+  text-shadow:0 2px 14px rgba(0,0,0,.35);
+}
+
+/* ------------------------------------------------------------
+   CAMPOS DE FORMULARIO
+   Refinamiento sin alterar funcionamiento
+------------------------------------------------------------ */
+
+input,
+textarea,
+select{
+  transition:
+    border-color .20s ease,
+    box-shadow .20s ease,
+    background .20s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  outline:none;
+  border-color:rgba(215,180,90,.60) !important;
+  box-shadow:
+    0 0 0 3px rgba(215,180,90,.08),
+    0 0 18px rgba(215,180,90,.06);
+}
+
+/* ------------------------------------------------------------
+   SCROLLBAR MODERNO
+------------------------------------------------------------ */
+
+*{
+  scrollbar-width:thin;
+  scrollbar-color:rgba(215,180,90,.55) rgba(255,255,255,.035);
+}
+
+*::-webkit-scrollbar{
+  width:7px;
+  height:7px;
+}
+
+*::-webkit-scrollbar-track{
+  background:rgba(255,255,255,.025);
+}
+
+*::-webkit-scrollbar-thumb{
+  background:linear-gradient(
+    180deg,
+    rgba(242,218,145,.70),
+    rgba(215,180,90,.35)
+  );
+  border-radius:999px;
+}
+
+*::-webkit-scrollbar-thumb:hover{
+  background:rgba(242,218,145,.85);
+}
+
+/* ------------------------------------------------------------
+   MICRO-ANIMACIÓN SEGURA
+------------------------------------------------------------ */
+
+@keyframes rx5-soft-glow{
+  0%,100%{
+    box-shadow:0 0 0 rgba(215,180,90,0);
+  }
+  50%{
+    box-shadow:0 0 24px rgba(215,180,90,.07);
+  }
+}
+
+/* Solo aplica al contenedor principal si existe */
+#inicio{
+  animation:rx5-soft-glow 6s ease-in-out infinite;
+}
+
+/* ------------------------------------------------------------
+   MÓVIL
+------------------------------------------------------------ */
+
+@media(max-width:700px){
+
+  #inicio{
+    border-radius:0 0 22px 22px;
+  }
+
+  #inicio::before{
+    width:380px;
+    height:380px;
+    top:-210px;
+  }
+
+  #inicio h1{
+    line-height:1.04;
+  }
+
+  #inicio h2{
+    line-height:1.15;
+  }
+
+  #inicio button,
+  #inicio a{
+    min-height:44px;
+  }
+
+}
+
+/* ------------------------------------------------------------
+   REDUCIR MOVIMIENTO
+------------------------------------------------------------ */
+
+@media(prefers-reduced-motion:reduce){
+
+  html{
+    scroll-behavior:auto;
+  }
+
+  *,
+  *::before,
+  *::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+
+}
+</style>
+
+<script>
+/* ============================================================
+   RoXThal V5 — CONTROL SEGURO
+   No sustituye funciones existentes.
+============================================================ */
+
+(function(){
+
+  "use strict";
+
+  if(window.__ROXTHAL_V5_VISUAL__) return;
+  window.__ROXTHAL_V5_VISUAL__ = true;
+
+  /*
+   * Esta capa solamente añade comportamiento visual.
+   * No toca:
+   * - Supabase
+   * - tablas
+   * - RLS
+   * - datos
+   * - formularios
+   * - funciones existentes
+   * - navegación existente
+   */
+
+  const sections = [
+    "inicio",
+    "servicios",
+    "galeria",
+    "cursos",
+    "radio",
+    "contacto",
+    "roxthal-resenas",
+    "ubicacion",
+    "identidad-roxthal",
+    "roxthal-school-campus",
+    "rx-color-pro",
+    "buscador-tatuajes",
+    "buscador-cuadros-artistas",
+    "roxthal-tattoo-designer",
+    "roxthal-ia-container",
+    "sorteoRoXthal",
+    "bloque-cobros",
+    "admin"
+  ];
+
+  /*
+   * Marca las secciones existentes para permitir futuras
+   * mejoras visuales sin depender de que estén todas presentes.
+   */
+  sections.forEach(function(id){
+
+    const el = document.getElementById(id);
+
+    if(!el) return;
+
+    el.setAttribute("data-roxthal-v5","true");
+
+  });
+
+  /*
+   * Si el navegador soporta IntersectionObserver,
+   * añadimos una marca visual de sección visible.
+   * No se modifica display, opacity ni contenido.
+   */
+
+  if("IntersectionObserver" in window){
+
+    const observer = new IntersectionObserver(
+      function(entries){
+
+        entries.forEach(function(entry){
+
+          if(entry.isIntersecting){
+
+            entry.target.classList.add("rx-v5-active");
+
+          }
+
+        });
+
+      },
+      {
+        threshold:0.08
+      }
+    );
+
+    sections.forEach(function(id){
+
+      const el = document.getElementById(id);
+
+      if(el){
+        observer.observe(el);
+      }
+
+    });
+
+  }
+
+  /*
+   * Seguridad adicional:
+   * si el bloque V4 existe, no hacemos nada con él.
+   */
+  if(document.getElementById("rxui-v4")){
+    document.documentElement.setAttribute(
+      "data-roxthal-ui",
+      "v4-v5"
+    );
+  }
+
+})();
+</script>
+
+<!-- FIN RoXThal V5 -->
 </body>
 </html>
