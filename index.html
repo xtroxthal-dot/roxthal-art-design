@@ -41467,5 +41467,1335 @@ select:focus{
 
 })();
 </script>    
+  <!-- =========================================================
+     ROXTHAL V14 FINAL
+     CENTRO DE NOVEDADES INTELIGENTE
+     
+     - No crea cliente Supabase
+     - No modifica datos
+     - No modifica RLS
+     - Solo operaciones SELECT
+     - Compatible con el cliente Supabase existente
+     - Funciona independientemente del ámbito de "sb"
+     ========================================================= -->
+
+<style id="roxthal-v14-final-style">
+
+#roxthal-v14-real-news{
+  margin:28px 12px;
+  padding:18px;
+  border:1px solid rgba(215,180,90,.28);
+  border-radius:24px;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(215,180,90,.13),
+      transparent 38%
+    ),
+    linear-gradient(
+      145deg,
+      #101014,
+      #17171d
+    );
+  box-shadow:
+    0 18px 55px rgba(0,0,0,.32);
+  color:var(--text,#f5f5f5);
+}
+
+#roxthal-v14-real-news *{
+  box-sizing:border-box;
+}
+
+.rxv14-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:16px;
+}
+
+.rxv14-kicker{
+  font-size:10px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--gold,#d7b45a);
+  font-weight:900;
+}
+
+.rxv14-title{
+  margin:5px 0 4px;
+  font-size:25px;
+  line-height:1.05;
+}
+
+.rxv14-sub{
+  margin:0;
+  color:var(--muted,#a0a0ab);
+  font-size:13px;
+}
+
+.rxv14-refresh{
+  border:1px solid rgba(215,180,90,.4);
+  background:rgba(215,180,90,.08);
+  color:var(--gold2,#f2da91);
+  border-radius:12px;
+  padding:9px 11px;
+  cursor:pointer;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.rxv14-refresh:active{
+  transform:scale(.96);
+}
+
+.rxv14-refresh:disabled{
+  opacity:.55;
+  cursor:wait;
+}
+
+.rxv14-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin:15px 0;
+}
+
+.rxv14-stat{
+  padding:12px 8px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:15px;
+  background:rgba(255,255,255,.035);
+}
+
+.rxv14-stat strong{
+  display:block;
+  font-size:21px;
+  color:var(--gold2,#f2da91);
+}
+
+.rxv14-stat span{
+  display:block;
+  margin-top:3px;
+  font-size:9px;
+  letter-spacing:.6px;
+  color:var(--muted,#a0a0ab);
+}
+
+.rxv14-feed{
+  display:grid;
+  gap:10px;
+}
+
+.rxv14-item{
+  position:relative;
+  padding:14px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:17px;
+  background:rgba(255,255,255,.035);
+  overflow:hidden;
+}
+
+.rxv14-item.new{
+  border-color:rgba(215,180,90,.48);
+  box-shadow:
+    0 0 24px rgba(215,180,90,.07);
+}
+
+.rxv14-topline{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:7px;
+}
+
+.rxv14-icon{
+  font-size:20px;
+}
+
+.rxv14-tag{
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:1.2px;
+  color:var(--gold,#d7b45a);
+  font-weight:900;
+}
+
+.rxv14-new{
+  margin-left:auto;
+  padding:4px 7px;
+  border-radius:999px;
+  background:rgba(215,180,90,.16);
+  color:var(--gold2,#f2da91);
+  font-size:8px;
+  letter-spacing:.7px;
+  font-weight:900;
+}
+
+.rxv14-item h4{
+  margin:0 0 5px;
+  font-size:15px;
+  line-height:1.25;
+}
+
+.rxv14-item p{
+  margin:0;
+  color:#c1c1ca;
+  font-size:12px;
+  line-height:1.45;
+}
+
+.rxv14-time{
+  margin-top:9px;
+  color:#858590;
+  font-size:10px;
+}
+
+.rxv14-actions{
+  display:flex;
+  gap:8px;
+  margin-top:11px;
+  flex-wrap:wrap;
+}
+
+.rxv14-action{
+  border:1px solid rgba(215,180,90,.25);
+  background:rgba(215,180,90,.07);
+  color:var(--gold2,#f2da91);
+  border-radius:10px;
+  padding:7px 9px;
+  font-size:11px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.rxv14-action:active{
+  transform:scale(.97);
+}
+
+.rxv14-empty{
+  padding:18px;
+  text-align:center;
+  color:var(--muted,#a0a0ab);
+  border:1px dashed rgba(255,255,255,.12);
+  border-radius:15px;
+  font-size:12px;
+  line-height:1.5;
+}
+
+.rxv14-status{
+  margin-top:12px;
+  min-height:16px;
+  color:#8e8e98;
+  font-size:10px;
+  text-align:center;
+}
+
+@media(max-width:420px){
+
+  #roxthal-v14-real-news{
+    margin-left:8px;
+    margin-right:8px;
+    padding:15px;
+  }
+
+  .rxv14-title{
+    font-size:22px;
+  }
+
+  .rxv14-refresh{
+    padding:8px 9px;
+    font-size:11px;
+  }
+}
+
+</style>
+
+
+<section
+  id="roxthal-v14-real-news"
+  aria-label="Centro de novedades RoXThal">
+
+  <div class="rxv14-head">
+
+    <div>
+
+      <div class="rxv14-kicker">
+        RoXThal Intelligence
+      </div>
+
+      <h2 class="rxv14-title">
+        Centro de novedades
+      </h2>
+
+      <p class="rxv14-sub">
+        Actividad real de tu plataforma
+      </p>
+
+    </div>
+
+    <button
+      id="rxv14-refresh"
+      class="rxv14-refresh"
+      type="button">
+      ↻ Actualizar
+    </button>
+
+  </div>
+
+
+  <div class="rxv14-stats">
+
+    <div class="rxv14-stat">
+      <strong id="rxv14-total">—</strong>
+      <span>NOVEDADES</span>
+    </div>
+
+    <div class="rxv14-stat">
+      <strong id="rxv14-new">—</strong>
+      <span>NUEVAS</span>
+    </div>
+
+    <div class="rxv14-stat">
+      <strong id="rxv14-source">—</strong>
+      <span>FUENTES</span>
+    </div>
+
+  </div>
+
+
+  <div
+    id="rxv14-feed"
+    class="rxv14-feed">
+
+    <div class="rxv14-empty">
+      Conectando con RoXThal…
+    </div>
+
+  </div>
+
+
+  <div
+    id="rxv14-status"
+    class="rxv14-status">
+  </div>
+
+</section>
+
+
+<script id="roxthal-v14-final-script">
+
+(function(){
+
+  'use strict';
+
+
+  if(window.__ROXTHAL_V14_FINAL_INSTALLED__){
+    return;
+  }
+
+  window.__ROXTHAL_V14_FINAL_INSTALLED__ = true;
+
+
+  /*
+   ==========================================================
+   CONFIGURACIÓN
+   ==========================================================
+  */
+
+  const SUPABASE_URL =
+    'https://lvvhpuedktdmfehvhcwk.supabase.co';
+
+  const SUPABASE_KEY =
+    'sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp';
+
+
+  const SEEN_KEY =
+    'roxthal_v14_seen_notifications';
+
+
+  /*
+   ==========================================================
+   DOM
+   ==========================================================
+  */
+
+  const feed =
+    document.getElementById(
+      'rxv14-feed'
+    );
+
+  const total =
+    document.getElementById(
+      'rxv14-total'
+    );
+
+  const fresh =
+    document.getElementById(
+      'rxv14-new'
+    );
+
+  const sources =
+    document.getElementById(
+      'rxv14-source'
+    );
+
+  const status =
+    document.getElementById(
+      'rxv14-status'
+    );
+
+  const refresh =
+    document.getElementById(
+      'rxv14-refresh'
+    );
+
+
+  if(!feed){
+    return;
+  }
+
+
+  /*
+   ==========================================================
+   UTILIDADES
+   ==========================================================
+  */
+
+  function escapeHTML(value){
+
+    return String(value ?? '')
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;')
+      .replace(/'/g,'&#039;');
+
+  }
+
+
+  function getSeen(){
+
+    try{
+
+      const value =
+        JSON.parse(
+          localStorage.getItem(
+            SEEN_KEY
+          ) || '[]'
+        );
+
+      return Array.isArray(value)
+        ? value
+        : [];
+
+    }catch(error){
+
+      return [];
+
+    }
+
+  }
+
+
+  function saveSeen(value){
+
+    try{
+
+      localStorage.setItem(
+        SEEN_KEY,
+        JSON.stringify(
+          value.slice(-200)
+        )
+      );
+
+    }catch(error){}
+
+  }
+
+
+  function formatDate(value){
+
+    if(!value){
+      return '';
+    }
+
+    try{
+
+      return new Intl.DateTimeFormat(
+        'es-AR',
+        {
+          dateStyle:'medium',
+          timeStyle:'short'
+        }
+      ).format(
+        new Date(value)
+      );
+
+    }catch(error){
+
+      return '';
+
+    }
+
+  }
+
+
+  /*
+   ==========================================================
+   API REST SUPABASE
+   ==========================================================
+
+   IMPORTANTE:
+
+   No usamos createClient().
+   No creamos un segundo cliente.
+   No dependemos de la variable privada "sb".
+
+   Son consultas SELECT protegidas por las políticas
+   existentes de Supabase.
+   ==========================================================
+  */
+
+  async function supabaseSelect(
+    table,
+    columns,
+    params
+  ){
+
+    const url =
+      new URL(
+        SUPABASE_URL +
+        '/rest/v1/' +
+        table
+      );
+
+
+    url.searchParams.set(
+      'select',
+      columns
+    );
+
+
+    Object.keys(params || {})
+      .forEach(key => {
+
+        url.searchParams.set(
+          key,
+          params[key]
+        );
+
+      });
+
+
+    const response =
+      await fetch(
+        url.toString(),
+        {
+          method:'GET',
+          headers:{
+            'apikey':SUPABASE_KEY,
+            'Accept':'application/json'
+          },
+          cache:'no-store'
+        }
+      );
+
+
+    if(!response.ok){
+
+      const text =
+        await response.text();
+
+      throw new Error(
+        table +
+        ' · HTTP ' +
+        response.status +
+        ' · ' +
+        text
+      );
+
+    }
+
+
+    return await response.json();
+
+  }
+
+
+  /*
+   ==========================================================
+   GALERÍA
+   ==========================================================
+  */
+
+  async function loadImages(){
+
+    try{
+
+      const data =
+        await supabaseSelect(
+          'images',
+          'id,title,category,description,url,created_at',
+          {
+            visible:'eq.true',
+            order:'created_at.desc',
+            limit:'4'
+          }
+        );
+
+
+      return (data || [])
+        .map(item => ({
+
+          id:
+            'image-' +
+            item.id,
+
+          type:
+            'gallery',
+
+          icon:
+            '🖼️',
+
+          tag:
+            'Galería',
+
+          title:
+            item.title ||
+            'Nueva obra',
+
+          description:
+            item.description ||
+            (
+              item.category
+                ? 'Nueva publicación en ' +
+                  item.category
+                : 'Nueva obra publicada'
+            ),
+
+          date:
+            item.created_at,
+
+          action:
+            'Ver galería',
+
+          actionType:
+            'gallery'
+
+        }));
+
+    }catch(error){
+
+      console.warn(
+        'V14 · images:',
+        error
+      );
+
+      return [];
+
+    }
+
+  }
+
+
+  /*
+   ==========================================================
+   RESEÑAS
+   ==========================================================
+  */
+
+  async function loadReviews(){
+
+    try{
+
+      const data =
+        await supabaseSelect(
+          'resenas',
+          'id,nombre,comentario,fecha',
+          {
+            aprobada:'eq.true',
+            order:'fecha.desc',
+            limit:'3'
+          }
+        );
+
+
+      return (data || [])
+        .map(item => ({
+
+          id:
+            'review-' +
+            item.id,
+
+          type:
+            'reviews',
+
+          icon:
+            '⭐',
+
+          tag:
+            'Comunidad',
+
+          title:
+            'Nueva reseña de ' +
+            (
+              item.nombre ||
+              'cliente'
+            ),
+
+          description:
+            item.comentario ||
+            'Nueva reseña publicada',
+
+          date:
+            item.fecha,
+
+          action:
+            'Ver reseñas',
+
+          actionType:
+            'roxthal-resenas'
+
+        }));
+
+    }catch(error){
+
+      console.warn(
+        'V14 · resenas:',
+        error
+      );
+
+      return [];
+
+    }
+
+  }
+
+
+  /*
+   ==========================================================
+   TALLERES / MEDIA
+   ==========================================================
+  */
+
+  async function loadWorkshopMedia(){
+
+    try{
+
+      const data =
+        await supabaseSelect(
+          'roxthal_talleres_media',
+          'id,titulo,descripcion,categoria,tipo,url,created_at',
+          {
+            order:'created_at.desc',
+            limit:'3'
+          }
+        );
+
+
+      return (data || [])
+        .map(item => ({
+
+          id:
+            'media-' +
+            item.id,
+
+          type:
+            'training',
+
+          icon:
+            item.tipo === 'video'
+              ? '🎬'
+              : '📸',
+
+          tag:
+            item.categoria ||
+            'Taller',
+
+          title:
+            item.titulo ||
+            'Nuevo material',
+
+          description:
+            item.descripcion ||
+            'Nuevo contenido de formación',
+
+          date:
+            item.created_at,
+
+          action:
+            'Ver formación',
+
+          actionType:
+            'roxthal-school-campus'
+
+        }));
+
+    }catch(error){
+
+      console.warn(
+        'V14 · talleres media:',
+        error
+      );
+
+      return [];
+
+    }
+
+  }
+
+
+  /*
+   ==========================================================
+   SORTEOS
+   ==========================================================
+  */
+
+  async function loadRaffles(){
+
+    try{
+
+      const data =
+        await supabaseSelect(
+          'sorteos_tatuaje',
+          'id,estado,creado_en,finalizado_en',
+          {
+            order:'creado_en.desc',
+            limit:'3'
+          }
+        );
+
+
+      return (data || [])
+        .map(item => ({
+
+          id:
+            'raffle-' +
+            item.id,
+
+          type:
+            'raffle',
+
+          icon:
+            '🎟️',
+
+          tag:
+            'Sorteo',
+
+          title:
+            'Sorteo RoXThal',
+
+          description:
+            item.estado
+              ? 'Estado actual: ' +
+                item.estado
+              : 'Nueva actividad de sorteo',
+
+          date:
+            item.creado_en,
+
+          action:
+            'Ver sorteo',
+
+          actionType:
+            'sorteoRoXthal'
+
+        }));
+
+    }catch(error){
+
+      console.warn(
+        'V14 · sorteos:',
+        error
+      );
+
+      return [];
+
+    }
+
+  }
+
+
+  /*
+   ==========================================================
+   NAVEGACIÓN EXISTENTE
+   ==========================================================
+  */
+
+  function navigate(type){
+
+    try{
+
+      if(
+        type === 'gallery' &&
+        typeof window.openGallery ===
+        'function'
+      ){
+
+        window.openGallery();
+        return;
+
+      }
+
+
+      if(
+        type === 'radio' &&
+        typeof window.openRadio ===
+        'function'
+      ){
+
+        window.openRadio();
+        return;
+
+      }
+
+
+      if(
+        type === 'designer'
+      ){
+
+        const toggle =
+          document.getElementById(
+            'roxthal-designer-toggle'
+          );
+
+
+        if(toggle){
+
+          toggle.click();
+          return;
+
+        }
+
+
+        if(
+          typeof window.abrirDisenadorReal ===
+          'function'
+        ){
+
+          window.abrirDisenadorReal();
+          return;
+
+        }
+
+      }
+
+
+      if(
+        typeof window.go ===
+        'function'
+      ){
+
+        window.go(type);
+
+      }
+
+    }catch(error){
+
+      console.warn(
+        'V14 navigation:',
+        error
+      );
+
+    }
+
+  }
+
+
+  /*
+   ==========================================================
+   RENDER
+   ==========================================================
+  */
+
+  function render(items){
+
+    const alreadySeen =
+      getSeen();
+
+
+    const prepared =
+      items
+        .map(item => ({
+
+          ...item,
+
+          isNew:
+            !alreadySeen.includes(
+              item.id
+            )
+
+        }))
+        .sort(
+          (a,b) =>
+            new Date(
+              b.date || 0
+            ).getTime() -
+            new Date(
+              a.date || 0
+            ).getTime()
+        );
+
+
+    total.textContent =
+      prepared.length;
+
+
+    fresh.textContent =
+      prepared.filter(
+        item => item.isNew
+      ).length;
+
+
+    sources.textContent =
+      new Set(
+        prepared.map(
+          item => item.type
+        )
+      ).size;
+
+
+    if(!prepared.length){
+
+      feed.innerHTML =
+        '<div class="rxv14-empty">'+
+        'No hay novedades disponibles todavía.'+
+        '<br>'+
+        'Cuando publiques contenido nuevo aparecerá aquí.'+
+        '</div>';
+
+      return;
+
+    }
+
+
+    feed.innerHTML =
+      prepared
+        .map(item => `
+
+          <article
+            class="rxv14-item ${
+              item.isNew
+                ? 'new'
+                : ''
+            }"
+            data-v14-id="${
+              escapeHTML(item.id)
+            }">
+
+            <div class="rxv14-topline">
+
+              <span class="rxv14-icon">
+                ${item.icon}
+              </span>
+
+              <span class="rxv14-tag">
+                ${escapeHTML(item.tag)}
+              </span>
+
+              ${
+                item.isNew
+                  ? `
+                    <span class="rxv14-new">
+                      NUEVO
+                    </span>
+                  `
+                  : ''
+              }
+
+            </div>
+
+
+            <h4>
+              ${escapeHTML(
+                item.title
+              )}
+            </h4>
+
+
+            <p>
+              ${escapeHTML(
+                item.description
+              )}
+            </p>
+
+
+            ${
+              item.date
+                ? `
+                  <div class="rxv14-time">
+                    ${escapeHTML(
+                      formatDate(
+                        item.date
+                      )
+                    )}
+                  </div>
+                `
+                : ''
+            }
+
+
+            ${
+              item.action
+                ? `
+                  <div class="rxv14-actions">
+
+                    <button
+                      type="button"
+                      class="rxv14-action"
+                      data-v14-action="${
+                        escapeHTML(
+                          item.actionType
+                        )
+                      }"
+                      data-v14-id="${
+                        escapeHTML(
+                          item.id
+                        )
+                      }">
+
+                      ${escapeHTML(
+                        item.action
+                      )}
+
+                    </button>
+
+                  </div>
+                `
+                : ''
+            }
+
+          </article>
+
+        `)
+        .join('');
+
+
+    feed
+      .querySelectorAll(
+        '[data-v14-action]'
+      )
+      .forEach(button => {
+
+        button.addEventListener(
+          'click',
+          function(){
+
+            const id =
+              this.dataset.v14Id;
+
+            const action =
+              this.dataset.v14Action;
+
+
+            const current =
+              getSeen();
+
+
+            if(
+              id &&
+              !current.includes(id)
+            ){
+
+              current.push(id);
+
+              saveSeen(
+                current
+              );
+
+            }
+
+
+            const card =
+              this.closest(
+                '.rxv14-item'
+              );
+
+
+            if(card){
+
+              card.classList.remove(
+                'new'
+              );
+
+
+              const badge =
+                card.querySelector(
+                  '.rxv14-new'
+                );
+
+
+              if(badge){
+                badge.remove();
+              }
+
+            }
+
+
+            fresh.textContent =
+              Math.max(
+                0,
+                Number(
+                  fresh.textContent || 0
+                ) - 1
+              );
+
+
+            navigate(action);
+
+          }
+        );
+
+      });
+
+  }
+
+
+  /*
+   ==========================================================
+   CARGA FINAL
+   ==========================================================
+  */
+
+  async function load(){
+
+    refresh.disabled =
+      true;
+
+
+    feed.innerHTML =
+      '<div class="rxv14-empty">'+
+      'Sincronizando novedades…'+
+      '</div>';
+
+
+    status.textContent =
+      'Consultando actividad de RoXThal…';
+
+
+    try{
+
+      const results =
+        await Promise.all([
+
+          loadImages(),
+
+          loadReviews(),
+
+          loadWorkshopMedia(),
+
+          loadRaffles()
+
+        ]);
+
+
+      const all = [];
+
+
+      results.forEach(
+        result => {
+
+          if(
+            Array.isArray(result)
+          ){
+
+            all.push(
+              ...result
+            );
+
+          }
+
+        }
+      );
+
+
+      render(all);
+
+
+      status.textContent =
+        'Sincronizado · ' +
+        new Intl.DateTimeFormat(
+          'es-AR',
+          {
+            hour:'2-digit',
+            minute:'2-digit',
+            second:'2-digit'
+          }
+        ).format(
+          new Date()
+        );
+
+
+    }catch(error){
+
+      console.error(
+        'RoXThal V14 FINAL:',
+        error
+      );
+
+
+      feed.innerHTML =
+        '<div class="rxv14-empty">'+
+        'No se pudieron actualizar las novedades en este momento.'+
+        '<br>'+
+        'La aplicación principal continúa funcionando normalmente.'+
+        '</div>';
+
+
+      status.textContent =
+        'Centro de novedades temporalmente no disponible.';
+
+    }finally{
+
+      refresh.disabled =
+        false;
+
+    }
+
+  }
+
+
+  /*
+   ==========================================================
+   BOTÓN ACTUALIZAR
+   ==========================================================
+  */
+
+  if(refresh){
+
+    refresh.addEventListener(
+      'click',
+      load
+    );
+
+  }
+
+
+  /*
+   ==========================================================
+   ARRANQUE
+   ==========================================================
+  */
+
+  setTimeout(
+    load,
+    1200
+  );
+
+
+  /*
+   Función pública para poder actualizar V14
+   sin tocar ninguna otra función de la app.
+  */
+
+  window.roxthalV14Refresh =
+    load;
+
+
+})();
+
+</script>
 </body>
 </html>
