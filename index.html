@@ -37758,5 +37758,431 @@ select:focus{
 
 })();
 </script>
+  <!-- =========================================================
+     ROXTHAL V11 — REPARACIÓN DE NAVEGACIÓN
+     CORRECCIÓN SEGURA
+     NO MODIFICA EL DISEÑADOR NI SUPABASE
+     ========================================================= -->
+
+<script>
+(function () {
+  'use strict';
+
+  if (window.__ROXTHAL_V11_NAV_FIX__) return;
+  window.__ROXTHAL_V11_NAV_FIX__ = true;
+
+  function get(id) {
+    return document.getElementById(id);
+  }
+
+  /*
+   * ---------------------------------------------------------
+   * ABRIR EL DISEÑADOR REAL
+   * ---------------------------------------------------------
+   *
+   * El módulo original utiliza:
+   * #roxthal-designer-toggle
+   *
+   * No intentamos reconstruir el funcionamiento del diseñador.
+   * Simplemente pulsamos su botón original.
+   */
+
+  function abrirDisenadorReal() {
+
+    const designer = get('roxthal-tattoo-designer');
+    const toggle = get('roxthal-designer-toggle');
+
+    if (!designer) {
+      console.warn(
+        'RoXThal V11: no se encontró #roxthal-tattoo-designer'
+      );
+      return;
+    }
+
+    if (toggle) {
+
+      const estilo = window.getComputedStyle(designer);
+
+      const estaOculto =
+        estilo.display === 'none' ||
+        designer.hidden === true;
+
+      /*
+       * Solo pulsamos el botón original si el diseñador
+       * está cerrado.
+       */
+      if (estaOculto) {
+        toggle.click();
+      }
+
+      /*
+       * Esperamos un instante para que el botón original
+       * termine de mostrar el módulo.
+       */
+      setTimeout(function () {
+
+        designer.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+
+      }, 80);
+
+      return;
+    }
+
+    /*
+     * Fallback extremadamente seguro.
+     * Solo se utiliza si el botón original no existe.
+     */
+    designer.style.display = 'block';
+
+    designer.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+
+
+  /*
+   * ---------------------------------------------------------
+   * NAVEGACIÓN GENERAL
+   * ---------------------------------------------------------
+   */
+
+  function abrirModulo(id) {
+
+    if (!id) return;
+
+    /*
+     * El Diseñador tiene un mecanismo especial.
+     */
+    if (id === 'roxthal-tattoo-designer') {
+      abrirDisenadorReal();
+      return;
+    }
+
+    /*
+     * Galería conserva su mecanismo original.
+     */
+    if (id === 'galeria' && typeof window.openGallery === 'function') {
+      window.openGallery();
+      return;
+    }
+
+    /*
+     * Radio conserva su mecanismo original.
+     */
+    if (id === 'radio' && typeof window.openRadio === 'function') {
+      window.openRadio();
+      return;
+    }
+
+    /*
+     * Para el resto utilizamos la navegación existente.
+     */
+    if (typeof window.go === 'function') {
+      window.go(id);
+      return;
+    }
+
+    const destino = get(id);
+
+    if (destino) {
+      destino.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  }
+
+
+  /*
+   * ---------------------------------------------------------
+   * BOTONES V11 CON data-rxv11-target
+   * ---------------------------------------------------------
+   */
+
+  function repararBotonesV11() {
+
+    const dashboard = get('roxthal-v11-dashboard');
+
+    if (!dashboard) {
+      return;
+    }
+
+    dashboard
+      .querySelectorAll('[data-rxv11-target]')
+      .forEach(function (button) {
+
+        /*
+         * Evitamos registrar dos veces la reparación.
+         */
+        if (button.dataset.rxv11NavFix === '1') {
+          return;
+        }
+
+        button.dataset.rxv11NavFix = '1';
+
+        button.addEventListener(
+          'click',
+          function (event) {
+
+            const target =
+              button.getAttribute('data-rxv11-target');
+
+            if (!target) return;
+
+            /*
+             * Para el diseñador detenemos la navegación
+             * anterior de V11 y usamos el mecanismo original.
+             */
+            if (target === 'roxthal-tattoo-designer') {
+
+              event.preventDefault();
+              event.stopImmediatePropagation();
+
+              abrirDisenadorReal();
+
+              return;
+            }
+
+            /*
+             * Los demás módulos mantienen su comportamiento.
+             */
+            if (target === 'radio') {
+
+              event.preventDefault();
+              event.stopImmediatePropagation();
+
+              abrirModulo('radio');
+
+              return;
+            }
+
+            if (target === 'galeria') {
+
+              event.preventDefault();
+              event.stopImmediatePropagation();
+
+              abrirModulo('galeria');
+
+              return;
+            }
+
+            /*
+             * Para todos los demás:
+             * dejamos que la navegación existente funcione.
+             */
+          },
+          true
+        );
+
+      });
+  }
+
+
+  /*
+   * ---------------------------------------------------------
+   * TARJETAS INFERIORES V11
+   * ---------------------------------------------------------
+   *
+   * Como estas tres tarjetas son visuales y no tenían una
+   * acción funcional, las convertimos en zonas táctiles
+   * sin cambiar su diseño.
+   */
+
+  function repararTarjetasInferiores() {
+
+    const dashboard = get('roxthal-v11-dashboard');
+
+    if (!dashboard) {
+      return;
+    }
+
+    const elementos =
+      dashboard.querySelectorAll('*');
+
+    elementos.forEach(function (elemento) {
+
+      if (elemento.dataset.rxv11BottomFix === '1') {
+        return;
+      }
+
+      const texto =
+        (elemento.textContent || '')
+          .replace(/\s+/g, ' ')
+          .trim();
+
+      /*
+       * RADIO
+       */
+      if (
+        texto.includes('Radio RoXThal') &&
+        texto.includes('Música y ambiente artístico')
+      ) {
+
+        elemento.dataset.rxv11BottomFix = '1';
+        elemento.setAttribute('role', 'button');
+        elemento.setAttribute('tabindex', '0');
+
+        elemento.addEventListener('click', function () {
+          abrirModulo('radio');
+        });
+
+        elemento.addEventListener('keydown', function (event) {
+          if (
+            event.key === 'Enter' ||
+            event.key === ' '
+          ) {
+            event.preventDefault();
+            abrirModulo('radio');
+          }
+        });
+
+        return;
+      }
+
+
+      /*
+       * COMUNIDAD / RESEÑAS
+       */
+      if (
+        texto.includes('Comunidad') &&
+        texto.includes('Reseñas')
+      ) {
+
+        elemento.dataset.rxv11BottomFix = '1';
+        elemento.setAttribute('role', 'button');
+        elemento.setAttribute('tabindex', '0');
+
+        elemento.addEventListener('click', function () {
+          abrirModulo('roxthal-resenas');
+        });
+
+        elemento.addEventListener('keydown', function (event) {
+          if (
+            event.key === 'Enter' ||
+            event.key === ' '
+          ) {
+            event.preventDefault();
+            abrirModulo('roxthal-resenas');
+          }
+        });
+
+        return;
+      }
+
+
+      /*
+       * VISÍTANOS
+       */
+      if (
+        texto.includes('Visítanos') &&
+        texto.includes('Encuentra RoXThal Art Design')
+      ) {
+
+        elemento.dataset.rxv11BottomFix = '1';
+        elemento.setAttribute('role', 'button');
+        elemento.setAttribute('tabindex', '0');
+
+        elemento.addEventListener('click', function () {
+          abrirModulo('ubicacion');
+        });
+
+        elemento.addEventListener('keydown', function (event) {
+          if (
+            event.key === 'Enter' ||
+            event.key === ' '
+          ) {
+            event.preventDefault();
+            abrirModulo('ubicacion');
+          }
+        });
+
+        return;
+      }
+
+    });
+  }
+
+
+  /*
+   * ---------------------------------------------------------
+   * INICIALIZACIÓN
+   * ---------------------------------------------------------
+   */
+
+  function iniciar() {
+
+    repararBotonesV11();
+    repararTarjetasInferiores();
+
+  }
+
+
+  /*
+   * V11 puede cargarse antes o después de este bloque.
+   * Por eso hacemos varios intentos muy cortos.
+   */
+
+  if (
+    document.readyState === 'loading'
+  ) {
+
+    document.addEventListener(
+      'DOMContentLoaded',
+      iniciar,
+      { once: true }
+    );
+
+  } else {
+
+    iniciar();
+
+  }
+
+
+  setTimeout(iniciar, 300);
+  setTimeout(iniciar, 1000);
+
+
+  /*
+   * API interna para diagnóstico, sin interferir
+   * con ninguna función existente.
+   */
+
+  window.__ROXTHAL_V11_NAV_DIAGNOSTIC__ = function () {
+
+    return {
+      dashboard:
+        !!get('roxthal-v11-dashboard'),
+
+      designer:
+        !!get('roxthal-tattoo-designer'),
+
+      designerToggle:
+        !!get('roxthal-designer-toggle'),
+
+      color:
+        !!get('rx-color-pro'),
+
+      ia:
+        !!get('roxthal-ia-container'),
+
+      radio:
+        !!get('radio'),
+
+      reviews:
+        !!get('roxthal-resenas'),
+
+      location:
+        !!get('ubicacion')
+    };
+
+  };
+
+})();
+</script>
 </body>
 </html>
