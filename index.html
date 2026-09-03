@@ -32617,5 +32617,1310 @@ select:focus{
 <!-- =========================================================
      FIN ROXTHAL V7.1
      ========================================================= -->
+   <!-- =========================================================
+     ROXTHAL V8.1 — CENTRO DE ACCIONES
+     SAFE ADD-ON
+     
+     No Supabase
+     No Auth
+     No modifica datos
+     No reemplaza funciones existentes
+     Compatible con V4 / V5 / V6 / V7
+     ========================================================= -->
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------------------------------------------------------
+     PROTECCIÓN CONTRA DUPLICADOS
+     --------------------------------------------------------- */
+
+  if (window.__ROXTHAL_V8_INSTALLED__) return;
+
+  window.__ROXTHAL_V8_INSTALLED__ = true;
+
+  /* ---------------------------------------------------------
+     CONTENEDOR
+     --------------------------------------------------------- */
+
+  const root = document.createElement('div');
+
+  root.id = 'rxui-v8';
+
+  root.innerHTML = `
+    <button
+      type="button"
+      class="rxv8-trigger"
+      aria-label="Abrir Centro de Acciones RoXThal"
+      aria-expanded="false"
+    >
+      <span class="rxv8-trigger-icon">✦</span>
+      <span class="rxv8-trigger-text">RoXThal</span>
+    </button>
+
+    <div
+      class="rxv8-overlay"
+      aria-hidden="true"
+    ></div>
+
+    <aside
+      class="rxv8-panel"
+      aria-hidden="true"
+      role="dialog"
+      aria-label="Centro de Acciones RoXThal"
+    >
+
+      <div class="rxv8-header">
+
+        <div>
+          <div class="rxv8-kicker">
+            ROXTHAL ART DESIGN
+          </div>
+
+          <h2>
+            Centro de acciones
+          </h2>
+
+          <p>
+            Accede directamente a las herramientas de la app.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          class="rxv8-close"
+          aria-label="Cerrar"
+        >
+          ×
+        </button>
+
+      </div>
+
+      <div class="rxv8-grid">
+
+        <button
+          type="button"
+          class="rxv8-action rxv8-primary"
+          data-target="roxthal-tattoo-designer"
+        >
+          <span class="rxv8-icon">🎨</span>
+          <span>
+            <strong>Diseñador</strong>
+            <small>Crea tu diseño</small>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="rxv8-action"
+          data-target="rx-color-pro"
+        >
+          <span class="rxv8-icon">🌈</span>
+          <span>
+            <strong>Círculo cromático</strong>
+            <small>Color y armonías</small>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="rxv8-action"
+          data-target="roxthal-ia-container"
+        >
+          <span class="rxv8-icon">✦</span>
+          <span>
+            <strong>RoXThal IA</strong>
+            <small>Inspiración artística</small>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="rxv8-action"
+          data-target="buscador-tatuajes"
+        >
+          <span class="rxv8-icon">🔎</span>
+          <span>
+            <strong>Tatuajes</strong>
+            <small>Busca inspiración</small>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="rxv8-action"
+          data-target="buscador-cuadros-artistas"
+        >
+          <span class="rxv8-icon">🖼️</span>
+          <span>
+            <strong>Arte y artistas</strong>
+            <small>Explora referencias</small>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="rxv8-action"
+          data-target="cursos"
+        >
+          <span class="rxv8-icon">🎓</span>
+          <span>
+            <strong>Formación</strong>
+            <small>Cursos y talleres</small>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="rxv8-action"
+          data-target="galeria"
+        >
+          <span class="rxv8-icon">📸</span>
+          <span>
+            <strong>Galería</strong>
+            <small>Trabajos RoXThal</small>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="rxv8-action"
+          data-target="roxthal-resenas"
+        >
+          <span class="rxv8-icon">⭐</span>
+          <span>
+            <strong>Reseñas</strong>
+            <small>Opiniones de clientes</small>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="rxv8-action"
+          data-target="bloque-cobros"
+        >
+          <span class="rxv8-icon">💳</span>
+          <span>
+            <strong>Reservas y pagos</strong>
+            <small>Gestiona tu reserva</small>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="rxv8-action"
+          data-target="ubicacion"
+        >
+          <span class="rxv8-icon">📍</span>
+          <span>
+            <strong>Visítanos</strong>
+            <small>Encuentra el atelier</small>
+          </span>
+        </button>
+
+      </div>
+
+      <div class="rxv8-footer">
+
+        <span class="rxv8-status-dot"></span>
+
+        <span>
+          RoXThal Art Design
+        </span>
+
+        <span class="rxv8-version">
+          V8
+        </span>
+
+      </div>
+
+    </aside>
+  `;
+
+  document.body.appendChild(root);
+
+  /* ---------------------------------------------------------
+     ESTILOS
+     --------------------------------------------------------- */
+
+  const style = document.createElement('style');
+
+  style.id = 'rxui-v8-style';
+
+  style.textContent = `
+
+    /* =======================================================
+       CONTENEDOR
+       ======================================================= */
+
+    #rxui-v8 {
+      position: relative;
+      z-index: 8350;
+      pointer-events: none;
+    }
+
+    /* =======================================================
+       BOTÓN PRINCIPAL
+       ======================================================= */
+
+    #rxui-v8 .rxv8-trigger {
+
+      position: fixed;
+
+      left: 14px;
+      bottom: 14px;
+
+      display: flex;
+      align-items: center;
+      gap: 7px;
+
+      min-height: 42px;
+
+      padding: 0 14px;
+
+      border:
+        1px solid
+        rgba(215,180,90,.55);
+
+      border-radius: 999px;
+
+      background:
+        rgba(8,8,9,.88);
+
+      color:
+        var(--gold2,#f2da91);
+
+      box-shadow:
+        0 8px 28px
+        rgba(0,0,0,.35),
+
+        0 0 18px
+        rgba(215,180,90,.12);
+
+      backdrop-filter:
+        blur(12px);
+
+      -webkit-backdrop-filter:
+        blur(12px);
+
+      font:
+        700 11px/1
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      letter-spacing:
+        .08em;
+
+      text-transform:
+        uppercase;
+
+      cursor:
+        pointer;
+
+      pointer-events:
+        auto;
+
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+    }
+
+    #rxui-v8 .rxv8-trigger:hover {
+
+      transform:
+        translateY(-2px);
+
+      box-shadow:
+        0 12px 32px
+        rgba(0,0,0,.42),
+
+        0 0 22px
+        rgba(215,180,90,.20);
+    }
+
+    #rxui-v8 .rxv8-trigger:active {
+
+      transform:
+        scale(.97);
+    }
+
+    #rxui-v8 .rxv8-trigger-icon {
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      width:
+        20px;
+
+      height:
+        20px;
+
+      border-radius:
+        50%;
+
+      background:
+        rgba(215,180,90,.12);
+
+      color:
+        var(--gold2,#f2da91);
+
+      font-size:
+        13px;
+    }
+
+    #rxui-v8 .rxv8-trigger-text {
+
+      white-space:
+        nowrap;
+    }
+
+    /* =======================================================
+       OVERLAY
+       ======================================================= */
+
+    #rxui-v8 .rxv8-overlay {
+
+      position: fixed;
+
+      inset: 0;
+
+      background:
+        rgba(0,0,0,.56);
+
+      backdrop-filter:
+        blur(2px);
+
+      -webkit-backdrop-filter:
+        blur(2px);
+
+      opacity:
+        0;
+
+      visibility:
+        hidden;
+
+      transition:
+        opacity .25s ease,
+        visibility .25s ease;
+
+      pointer-events:
+        none;
+
+      z-index:
+        8351;
+    }
+
+    /* =======================================================
+       PANEL
+       ======================================================= */
+
+    #rxui-v8 .rxv8-panel {
+
+      position: fixed;
+
+      left: 14px;
+      bottom: 68px;
+
+      width:
+        min(
+          430px,
+          calc(100vw - 28px)
+        );
+
+      max-height:
+        min(
+          720px,
+          calc(100vh - 94px)
+        );
+
+      overflow-y:
+        auto;
+
+      padding:
+        20px;
+
+      border:
+        1px solid
+        rgba(215,180,90,.25);
+
+      border-radius:
+        22px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(21,21,26,.98),
+          rgba(10,10,12,.98)
+        );
+
+      box-shadow:
+        0 24px 70px
+        rgba(0,0,0,.58),
+
+        0 0 40px
+        rgba(215,180,90,.08);
+
+      backdrop-filter:
+        blur(18px);
+
+      -webkit-backdrop-filter:
+        blur(18px);
+
+      opacity:
+        0;
+
+      visibility:
+        hidden;
+
+      transform:
+        translateY(14px)
+        scale(.98);
+
+      transition:
+        opacity .25s ease,
+        transform .25s ease,
+        visibility .25s ease;
+
+      pointer-events:
+        none;
+
+      z-index:
+        8352;
+
+      overscroll-behavior:
+        contain;
+    }
+
+    /* =======================================================
+       ESTADO ABIERTO
+       ======================================================= */
+
+    #rxui-v8.rxv8-open
+    .rxv8-overlay {
+
+      opacity:
+        1;
+
+      visibility:
+        visible;
+
+      pointer-events:
+        auto;
+    }
+
+    #rxui-v8.rxv8-open
+    .rxv8-panel {
+
+      opacity:
+        1;
+
+      visibility:
+        visible;
+
+      transform:
+        translateY(0)
+        scale(1);
+
+      pointer-events:
+        auto;
+    }
+
+    /* =======================================================
+       HEADER
+       ======================================================= */
+
+    #rxui-v8 .rxv8-header {
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      gap:
+        14px;
+
+      margin-bottom:
+        18px;
+    }
+
+    #rxui-v8 .rxv8-kicker {
+
+      margin-bottom:
+        5px;
+
+      color:
+        var(--gold,#d7b45a);
+
+      font:
+        800 9px/1.2
+        system-ui,
+        sans-serif;
+
+      letter-spacing:
+        .16em;
+    }
+
+    #rxui-v8 h2 {
+
+      margin:
+        0;
+
+      color:
+        var(--text,#f5f5f5);
+
+      font:
+        800 24px/1.1
+        system-ui,
+        sans-serif;
+
+      letter-spacing:
+        -.03em;
+    }
+
+    #rxui-v8 .rxv8-header p {
+
+      margin:
+        7px 0 0;
+
+      color:
+        var(--muted,#a0a0ab);
+
+      font:
+        400 12px/1.45
+        system-ui,
+        sans-serif;
+    }
+
+    /* =======================================================
+       CERRAR
+       ======================================================= */
+
+    #rxui-v8 .rxv8-close {
+
+      flex:
+        0 0 auto;
+
+      width:
+        36px;
+
+      height:
+        36px;
+
+      border:
+        1px solid
+        var(--line,#2e2e38);
+
+      border-radius:
+        50%;
+
+      background:
+        rgba(255,255,255,.035);
+
+      color:
+        var(--text,#f5f5f5);
+
+      font-size:
+        25px;
+
+      line-height:
+        1;
+
+      cursor:
+        pointer;
+
+      pointer-events:
+        auto;
+    }
+
+    #rxui-v8 .rxv8-close:hover {
+
+      border-color:
+        rgba(215,180,90,.55);
+
+      color:
+        var(--gold2,#f2da91);
+    }
+
+    /* =======================================================
+       GRID
+       ======================================================= */
+
+    #rxui-v8 .rxv8-grid {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0,1fr));
+
+      gap:
+        10px;
+    }
+
+    /* =======================================================
+       ACCIONES
+       ======================================================= */
+
+    #rxui-v8 .rxv8-action {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        10px;
+
+      min-width:
+        0;
+
+      min-height:
+        70px;
+
+      padding:
+        11px;
+
+      border:
+        1px solid
+        rgba(255,255,255,.07);
+
+      border-radius:
+        15px;
+
+      background:
+        rgba(255,255,255,.025);
+
+      color:
+        var(--text,#f5f5f5);
+
+      text-align:
+        left;
+
+      cursor:
+        pointer;
+
+      pointer-events:
+        auto;
+
+      transition:
+        transform .18s ease,
+        border-color .18s ease,
+        background .18s ease,
+        box-shadow .18s ease;
+    }
+
+    #rxui-v8 .rxv8-action:hover {
+
+      transform:
+        translateY(-2px);
+
+      border-color:
+        rgba(215,180,90,.42);
+
+      background:
+        rgba(215,180,90,.055);
+
+      box-shadow:
+        0 10px 24px
+        rgba(0,0,0,.24);
+    }
+
+    #rxui-v8 .rxv8-action:active {
+
+      transform:
+        scale(.985);
+    }
+
+    #rxui-v8
+    .rxv8-action.rxv8-primary {
+
+      border-color:
+        rgba(215,180,90,.45);
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(215,180,90,.10),
+          rgba(215,180,90,.025)
+        );
+    }
+
+    /* =======================================================
+       ICONOS
+       ======================================================= */
+
+    #rxui-v8 .rxv8-icon {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      width:
+        38px;
+
+      height:
+        38px;
+
+      flex:
+        0 0 38px;
+
+      border-radius:
+        12px;
+
+      background:
+        rgba(255,255,255,.055);
+
+      font-size:
+        18px;
+    }
+
+    #rxui-v8 .rxv8-action strong {
+
+      display:
+        block;
+
+      overflow:
+        hidden;
+
+      color:
+        var(--text,#f5f5f5);
+
+      font:
+        700 12px/1.25
+        system-ui,
+        sans-serif;
+
+      white-space:
+        nowrap;
+
+      text-overflow:
+        ellipsis;
+    }
+
+    #rxui-v8 .rxv8-action small {
+
+      display:
+        block;
+
+      margin-top:
+        3px;
+
+      color:
+        var(--muted,#a0a0ab);
+
+      font:
+        400 10px/1.25
+        system-ui,
+        sans-serif;
+
+      white-space:
+        nowrap;
+
+      overflow:
+        hidden;
+
+      text-overflow:
+        ellipsis;
+    }
+
+    /* =======================================================
+       FOOTER
+       ======================================================= */
+
+    #rxui-v8 .rxv8-footer {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        7px;
+
+      margin-top:
+        16px;
+
+      padding-top:
+        13px;
+
+      border-top:
+        1px solid
+        rgba(255,255,255,.06);
+
+      color:
+        var(--muted,#a0a0ab);
+
+      font:
+        600 9px/1
+        system-ui,
+        sans-serif;
+
+      letter-spacing:
+        .08em;
+
+      text-transform:
+        uppercase;
+    }
+
+    #rxui-v8 .rxv8-status-dot {
+
+      width:
+        6px;
+
+      height:
+        6px;
+
+      flex:
+        0 0 auto;
+
+      border-radius:
+        50%;
+
+      background:
+        var(--green,#2ecc71);
+
+      box-shadow:
+        0 0 8px
+        rgba(46,204,113,.55);
+    }
+
+    #rxui-v8 .rxv8-version {
+
+      margin-left:
+        auto;
+
+      color:
+        rgba(215,180,90,.65);
+    }
+
+    /* =======================================================
+       SCROLLBAR DEL PANEL
+       ======================================================= */
+
+    #rxui-v8 .rxv8-panel::-webkit-scrollbar {
+
+      width:
+        5px;
+    }
+
+    #rxui-v8 .rxv8-panel::-webkit-scrollbar-track {
+
+      background:
+        transparent;
+    }
+
+    #rxui-v8 .rxv8-panel::-webkit-scrollbar-thumb {
+
+      background:
+        rgba(215,180,90,.35);
+
+      border-radius:
+        999px;
+    }
+
+    /* =======================================================
+       MÓVIL
+       ======================================================= */
+
+    @media (max-width: 600px) {
+
+      #rxui-v8 .rxv8-trigger {
+
+        left:
+          10px;
+
+        bottom:
+          10px;
+
+        min-height:
+          40px;
+
+        padding:
+          0 12px;
+      }
+
+      #rxui-v8 .rxv8-panel {
+
+        left:
+          10px;
+
+        bottom:
+          62px;
+
+        width:
+          calc(100vw - 20px);
+
+        max-height:
+          calc(100vh - 82px);
+
+        padding:
+          16px;
+
+        border-radius:
+          19px;
+      }
+
+      #rxui-v8 .rxv8-grid {
+
+        gap:
+          8px;
+      }
+
+      #rxui-v8 .rxv8-action {
+
+        min-height:
+          64px;
+
+        padding:
+          9px;
+      }
+
+      #rxui-v8 .rxv8-icon {
+
+        width:
+          34px;
+
+        height:
+          34px;
+
+        flex-basis:
+          34px;
+
+        font-size:
+          16px;
+      }
+
+      #rxui-v8 h2 {
+
+        font-size:
+          21px;
+      }
+    }
+
+    /* =======================================================
+       PANTALLAS MUY PEQUEÑAS
+       ======================================================= */
+
+    @media (max-width: 380px) {
+
+      #rxui-v8 .rxv8-grid {
+
+        grid-template-columns:
+          1fr;
+      }
+
+      #rxui-v8 .rxv8-action {
+
+        min-height:
+          58px;
+      }
+    }
+
+    /* =======================================================
+       REDUCED MOTION
+       ======================================================= */
+
+    @media (prefers-reduced-motion: reduce) {
+
+      #rxui-v8 .rxv8-overlay,
+
+      #rxui-v8 .rxv8-panel,
+
+      #rxui-v8 .rxv8-trigger,
+
+      #rxui-v8 .rxv8-action {
+
+        transition:
+          none !important;
+      }
+
+      #rxui-v8 .rxv8-trigger:hover,
+
+      #rxui-v8 .rxv8-action:hover {
+
+        transform:
+          none;
+      }
+    }
+
+  `;
+
+  document.head.appendChild(style);
+
+  /* ---------------------------------------------------------
+     REFERENCIAS
+     --------------------------------------------------------- */
+
+  const trigger =
+    root.querySelector('.rxv8-trigger');
+
+  const closeButton =
+    root.querySelector('.rxv8-close');
+
+  const overlay =
+    root.querySelector('.rxv8-overlay');
+
+  const panel =
+    root.querySelector('.rxv8-panel');
+
+  const actions =
+    root.querySelectorAll('.rxv8-action');
+
+  /* ---------------------------------------------------------
+     ABRIR
+     --------------------------------------------------------- */
+
+  function openV8() {
+
+    root.classList.add('rxv8-open');
+
+    trigger.setAttribute(
+      'aria-expanded',
+      'true'
+    );
+
+    overlay.setAttribute(
+      'aria-hidden',
+      'false'
+    );
+
+    panel.setAttribute(
+      'aria-hidden',
+      'false'
+    );
+
+    document.body.classList.add(
+      'rxv8-panel-open'
+    );
+  }
+
+  /* ---------------------------------------------------------
+     CERRAR
+     --------------------------------------------------------- */
+
+  function closeV8() {
+
+    root.classList.remove(
+      'rxv8-open'
+    );
+
+    trigger.setAttribute(
+      'aria-expanded',
+      'false'
+    );
+
+    overlay.setAttribute(
+      'aria-hidden',
+      'true'
+    );
+
+    panel.setAttribute(
+      'aria-hidden',
+      'true'
+    );
+
+    document.body.classList.remove(
+      'rxv8-panel-open'
+    );
+  }
+
+  /* ---------------------------------------------------------
+     TOGGLE
+     --------------------------------------------------------- */
+
+  trigger.addEventListener(
+    'click',
+    function () {
+
+      if (
+        root.classList.contains(
+          'rxv8-open'
+        )
+      ) {
+
+        closeV8();
+
+      } else {
+
+        openV8();
+      }
+    }
+  );
+
+  /* ---------------------------------------------------------
+     CERRAR
+     --------------------------------------------------------- */
+
+  closeButton.addEventListener(
+    'click',
+    closeV8
+  );
+
+  overlay.addEventListener(
+    'click',
+    closeV8
+  );
+
+  /* ---------------------------------------------------------
+     ACCIONES
+     
+     Utilizamos los mecanismos existentes.
+     No redefinimos funciones.
+     --------------------------------------------------------- */
+
+  actions.forEach(
+    function (button) {
+
+      button.addEventListener(
+        'click',
+        function () {
+
+          const targetId =
+            button.getAttribute(
+              'data-target'
+            );
+
+          if (!targetId) {
+            return;
+          }
+
+          const target =
+            document.getElementById(
+              targetId
+            );
+
+          if (!target) {
+
+            closeV8();
+
+            return;
+          }
+
+          closeV8();
+
+          /*
+           * Si existe la función original go(),
+           * se utiliza sin modificarla.
+           */
+
+          if (
+            typeof window.go ===
+            'function'
+          ) {
+
+            window.go(targetId);
+
+          } else {
+
+            target.scrollIntoView({
+              behavior:
+                window.matchMedia(
+                  '(prefers-reduced-motion: reduce)'
+                ).matches
+                  ? 'auto'
+                  : 'smooth',
+
+              block:
+                'start'
+            });
+          }
+
+          /*
+           * Galería y radio pueden necesitar
+           * sus funciones originales para abrirse.
+           */
+
+          if (
+            targetId === 'galeria' &&
+            typeof window.openGallery ===
+              'function'
+          ) {
+
+            window.openGallery();
+
+          }
+
+        }
+      );
+
+    }
+  );
+
+  /* ---------------------------------------------------------
+     ESCAPE
+     --------------------------------------------------------- */
+
+  function onKeyDown(event) {
+
+    if (
+      event.key === 'Escape' &&
+      root.classList.contains(
+        'rxv8-open'
+      )
+    ) {
+
+      closeV8();
+
+      trigger.focus();
+    }
+  }
+
+  document.addEventListener(
+    'keydown',
+    onKeyDown
+  );
+
+  /* ---------------------------------------------------------
+     LIMPIEZA / REVERSIÓN
+     --------------------------------------------------------- */
+
+  window.__ROXTHAL_V8_CLEANUP__ =
+    function () {
+
+      document.removeEventListener(
+        'keydown',
+        onKeyDown
+      );
+
+      document.body.classList.remove(
+        'rxv8-panel-open'
+      );
+
+      style.remove();
+
+      root.remove();
+
+      delete
+        window.__ROXTHAL_V8_INSTALLED__;
+
+      delete
+        window.__ROXTHAL_V8_CLEANUP__;
+    };
+
+})();
+</script>
+
+<!-- =========================================================
+     FIN ROXTHAL V8.1
+     ========================================================= -->   
 </body>
 </html>
