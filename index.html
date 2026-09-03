@@ -25003,5 +25003,619 @@ RXC_init();
 
 })();
 </script>    
+  <!-- =========================================================
+     RoXThal IA — REPARACIÓN REAL DEL MÓDULO INDEPENDIENTE
+     
+     OBJETIVO:
+     Reparar ÚNICAMENTE:
+     "RoXThal IA — Asistente de Arte
+      Inspiración · Diseños · Estilos · Tatuajes"
+
+     NO TOCA:
+     - Diseñador de Tatuajes
+     - Su IA
+     - Sus funciones
+     - Sus botones
+     - Sus conexiones
+     - Supabase Database
+========================================================= -->
+
+<script>
+(() => {
+
+  "use strict";
+
+  /* Evitar que el parche se instale dos veces */
+  if (window.__ROXTHAL_IA_REPAIR_V2__) {
+    return;
+  }
+
+  window.__ROXTHAL_IA_REPAIR_V2__ = true;
+
+
+  /* =========================================================
+     CONFIGURACIÓN
+  ========================================================= */
+
+  const ENDPOINT =
+    "https://lvvhpuedktdmfehvhcwk.supabase.co/functions/v1/roxthal-arte-ia";
+
+
+  /* =========================================================
+     BUSCAR LOS ELEMENTOS REALES DEL MÓDULO
+  ========================================================= */
+
+  function iniciar() {
+
+    const question =
+      document.getElementById(
+        "roxthal-ia-question"
+      );
+
+    const send =
+      document.getElementById(
+        "roxthal-ia-send"
+      );
+
+    const answer =
+      document.getElementById(
+        "roxthal-ia-answer"
+      );
+
+
+    /*
+     * Si estos elementos no existen todavía,
+     * esperamos a que la aplicación termine de cargar.
+     */
+
+    if (
+      !question ||
+      !send ||
+      !answer
+    ) {
+
+      setTimeout(
+        iniciar,
+        500
+      );
+
+      return;
+    }
+
+
+    /* =======================================================
+       MARCAR QUE ESTA INSTANCIA YA ESTÁ REPARADA
+    ======================================================= */
+
+    if (
+      send.dataset.roxthalIaRepaired === "1"
+    ) {
+
+      return;
+    }
+
+    send.dataset.roxthalIaRepaired = "1";
+
+
+    /* =======================================================
+       HISTORIAL LOCAL
+    ======================================================= */
+
+    let history = [];
+
+
+    function guardarHistorial() {
+
+      try {
+
+        localStorage.setItem(
+          "roxthal_ia_history",
+          JSON.stringify(
+            history.slice(-8)
+          )
+        );
+
+      } catch (_) {}
+
+    }
+
+
+    function cargarHistorial() {
+
+      try {
+
+        const saved =
+          localStorage.getItem(
+            "roxthal_ia_history"
+          );
+
+        if (!saved) {
+          return;
+        }
+
+        const parsed =
+          JSON.parse(saved);
+
+        if (
+          Array.isArray(parsed)
+        ) {
+
+          history =
+            parsed.slice(-8);
+
+        }
+
+      } catch (_) {
+
+        history = [];
+
+      }
+
+    }
+
+
+    cargarHistorial();
+
+
+    /* =======================================================
+       MOSTRAR RESPUESTA
+    ======================================================= */
+
+    function mostrar(
+      texto,
+      tipo
+    ) {
+
+      answer.className =
+        "show" +
+        (
+          tipo === "loading"
+            ? " loading"
+            : ""
+        );
+
+      answer.textContent =
+        texto;
+    }
+
+
+    /* =======================================================
+       CONSULTA REAL A SUPABASE EDGE FUNCTION
+    ======================================================= */
+
+    async function consultar(
+      texto
+    ) {
+
+      const response =
+        await fetch(
+          ENDPOINT,
+          {
+
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "application/json",
+
+              "Accept":
+                "application/json"
+            },
+
+            body:
+              JSON.stringify({
+
+                mode: "text",
+
+                question:
+                  texto,
+
+                history:
+                  history.slice(-8)
+
+              })
+
+          }
+        );
+
+
+      /* -----------------------------------------------------
+         LEER RESPUESTA
+      ----------------------------------------------------- */
+
+      const raw =
+        await response.text();
+
+
+      let data = null;
+
+
+      try {
+
+        data =
+          JSON.parse(raw);
+
+      } catch (_) {
+
+        throw new Error(
+          "El servidor devolvió una respuesta no válida."
+        );
+
+      }
+
+
+      /* -----------------------------------------------------
+         ERROR REAL DEL BACKEND
+      ----------------------------------------------------- */
+
+      if (
+        !response.ok ||
+        data?.ok === false
+      ) {
+
+        const detalle =
+          data?.error ||
+          (
+            "Error HTTP " +
+            response.status
+          );
+
+        throw new Error(
+          detalle
+        );
+
+      }
+
+
+      /* -----------------------------------------------------
+         RESPUESTA CORRECTA
+      ----------------------------------------------------- */
+
+      const resultado =
+        String(
+          data?.answer || ""
+        ).trim();
+
+
+      if (!resultado) {
+
+        throw new Error(
+          "La IA se conectó correctamente, pero no devolvió texto."
+        );
+
+      }
+
+
+      return resultado;
+    }
+
+
+    /* =======================================================
+       MANEJADOR REPARADO
+       
+       CAPTURE = TRUE
+       
+       Esto hace que nuestro controlador se ejecute antes
+       del controlador defectuoso que ya tiene el módulo.
+    ======================================================= */
+
+    send.addEventListener(
+      "click",
+      async function (event) {
+
+        /*
+         * Detener ÚNICAMENTE el evento de este botón.
+         *
+         * No afecta ningún otro botón de la aplicación.
+         */
+
+        event.preventDefault();
+
+        event.stopImmediatePropagation();
+
+
+        const texto =
+          question.value.trim();
+
+
+        /* ---------------------------------------------------
+           VALIDACIÓN
+        --------------------------------------------------- */
+
+        if (!texto) {
+
+          mostrar(
+            "✏️ Escribe primero tu pregunta o idea.",
+            ""
+          );
+
+          question.focus();
+
+          return;
+        }
+
+
+        /* ---------------------------------------------------
+           BLOQUEAR BOTÓN
+        --------------------------------------------------- */
+
+        send.disabled = true;
+
+        send.textContent =
+          "⏳ CONSULTANDO...";
+
+
+        mostrar(
+          "🎨 RoXThal IA está preparando tu respuesta...",
+          "loading"
+        );
+
+
+        try {
+
+          /* -------------------------------------------------
+             LLAMADA
+          ------------------------------------------------- */
+
+          const resultado =
+            await consultar(
+              texto
+            );
+
+
+          /* -------------------------------------------------
+             GUARDAR CONVERSACIÓN
+          ------------------------------------------------- */
+
+          history.push({
+
+            role: "user",
+
+            content:
+              texto
+
+          });
+
+
+          history.push({
+
+            role: "assistant",
+
+            content:
+              resultado
+
+          });
+
+
+          history =
+            history.slice(-8);
+
+
+          guardarHistorial();
+
+
+          /* -------------------------------------------------
+             MOSTRAR
+          ------------------------------------------------- */
+
+          mostrar(
+            resultado,
+            ""
+          );
+
+
+        } catch (error) {
+
+          console.error(
+            "RoXThal IA ERROR:",
+            error
+          );
+
+
+          /*
+           * AQUÍ MOSTRAMOS EL ERROR REAL.
+           *
+           * Esto es importante porque si Gemini,
+           * Supabase o la Edge Function falla,
+           * veremos la causa concreta.
+           */
+
+          mostrar(
+            "❌ RoXThal IA no pudo completar la consulta.\n\n" +
+            "Detalle:\n" +
+            (
+              error?.message ||
+              "Error desconocido."
+            ),
+            ""
+          );
+
+
+        } finally {
+
+          send.disabled = false;
+
+          send.textContent =
+            "🤖 CONSULTAR A ROXTHAL IA";
+
+        }
+
+      },
+
+      true
+    );
+
+
+    /* =======================================================
+       ENTER + CTRL/ENTER
+       
+       Enter normal:
+       permite escribir normalmente.
+       
+       Ctrl + Enter:
+       ejecuta la consulta.
+    ======================================================= */
+
+    question.addEventListener(
+      "keydown",
+      function (event) {
+
+        if (
+          event.key === "Enter" &&
+          event.ctrlKey
+        ) {
+
+          event.preventDefault();
+
+          send.click();
+
+        }
+
+      }
+    );
+
+
+    /* =======================================================
+       EXPONER API DE DIAGNÓSTICO
+    ======================================================= */
+
+    window.RoXThalIARepairV2 = {
+
+      endpoint: ENDPOINT,
+
+      async test() {
+
+        const inicio =
+          Date.now();
+
+        try {
+
+          const response =
+            await fetch(
+              ENDPOINT,
+              {
+
+                method: "POST",
+
+                headers: {
+                  "Content-Type":
+                    "application/json",
+
+                  "Accept":
+                    "application/json"
+                },
+
+                body:
+                  JSON.stringify({
+
+                    mode: "text",
+
+                    question:
+                      "Responde únicamente: CONEXIÓN ROXTHAL IA OK"
+
+                  })
+
+              }
+            );
+
+
+          const raw =
+            await response.text();
+
+
+          let data = null;
+
+          try {
+
+            data =
+              JSON.parse(raw);
+
+          } catch (_) {}
+
+
+          return {
+
+            ok:
+              response.ok &&
+              data?.ok !== false,
+
+            status:
+              response.status,
+
+            tiempo:
+              Date.now() - inicio,
+
+            respuesta:
+              data?.answer || "",
+
+            error:
+              data?.error || ""
+
+          };
+
+
+        } catch (error) {
+
+          return {
+
+            ok: false,
+
+            status: 0,
+
+            tiempo:
+              Date.now() - inicio,
+
+            respuesta: "",
+
+            error:
+              error?.message ||
+              "No se pudo contactar con Supabase."
+
+          };
+
+        }
+
+      }
+
+    };
+
+
+    /* =======================================================
+       CONFIRMACIÓN EN CONSOLA
+    ======================================================= */
+
+    console.info(
+      "🟢 RoXThal IA V2 reparada.",
+      "Endpoint:",
+      ENDPOINT
+    );
+
+  }
+
+
+  /* =========================================================
+     ARRANQUE SEGURO
+  ========================================================= */
+
+  if (
+    document.readyState === "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      iniciar,
+      {
+        once: true
+      }
+    );
+
+  } else {
+
+    iniciar();
+
+  }
+
+})();
+</script>
 </body>
 </html>
