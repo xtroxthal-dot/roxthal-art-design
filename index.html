@@ -35348,5 +35348,1096 @@ select:focus{
 <!-- =========================================================
      FIN ROXTHAL V9.2
      ========================================================= -->
+  <!-- ============================================================
+     ROXTHAL V10 — OPENING EXPERIENCE
+     PRESENTACIÓN INICIAL DE MARCA
+     
+     SEGURIDAD:
+     - NO toca Supabase
+     - NO toca autenticación
+     - NO modifica módulos existentes
+     - NO redefine go()
+     - NO redefine openGallery()
+     - NO modifica #inicio
+     - NO sustituye ningún contenido existente
+     - SOLO añade una capa visual inicial
+     ============================================================ -->
+
+<script>
+(function () {
+  'use strict';
+
+  if (window.__ROXTHAL_V10_OPENING_INSTALLED__) return;
+  window.__ROXTHAL_V10_OPENING_INSTALLED__ = true;
+
+  function installRoXThalOpening() {
+
+    /* Evitar duplicación */
+    if (document.getElementById('roxthal-opening-experience')) {
+      return;
+    }
+
+    /* ==========================================================
+       CSS AISLADO
+       ========================================================== */
+
+    const style = document.createElement('style');
+    style.id = 'roxthal-opening-style';
+
+    style.textContent = `
+      /* --------------------------------------------------------
+         CONTENEDOR PRINCIPAL
+         -------------------------------------------------------- */
+
+      #roxthal-opening-experience {
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        overflow: hidden;
+
+        background:
+          radial-gradient(
+            circle at 50% 42%,
+            rgba(215,180,90,.095) 0%,
+            rgba(215,180,90,.035) 22%,
+            transparent 48%
+          ),
+          radial-gradient(
+            circle at 50% 50%,
+            #15151a 0%,
+            #080809 58%,
+            #050506 100%
+          );
+
+        opacity: 1;
+
+        transition:
+          opacity .85s cubic-bezier(.22,.61,.36,1),
+          visibility .85s ease;
+      }
+
+      #roxthal-opening-experience.rx-opening-leaving {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      /* --------------------------------------------------------
+         TEXTURA / HALO
+         -------------------------------------------------------- */
+
+      #roxthal-opening-experience::before {
+        content: "";
+
+        position: absolute;
+        left: 50%;
+        top: 50%;
+
+        width: min(82vw, 560px);
+        height: min(82vw, 560px);
+
+        transform: translate(-50%, -50%);
+
+        border-radius: 50%;
+
+        border:
+          1px solid rgba(215,180,90,.10);
+
+        box-shadow:
+          0 0 70px rgba(215,180,90,.055),
+          inset 0 0 70px rgba(215,180,90,.025);
+
+        animation:
+          rxOpeningHalo 7s ease-in-out infinite;
+
+        pointer-events: none;
+      }
+
+      #roxthal-opening-experience::after {
+        content: "";
+
+        position: absolute;
+        inset: 0;
+
+        background:
+          linear-gradient(
+            115deg,
+            transparent 0%,
+            transparent 42%,
+            rgba(255,255,255,.025) 50%,
+            transparent 58%,
+            transparent 100%
+          );
+
+        background-size: 250% 100%;
+
+        animation:
+          rxOpeningSweep 5s ease-in-out infinite;
+
+        pointer-events: none;
+      }
+
+      /* --------------------------------------------------------
+         CONTENIDO
+         -------------------------------------------------------- */
+
+      .rx-opening-content {
+        position: relative;
+        z-index: 2;
+
+        width: min(92vw, 620px);
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        text-align: center;
+
+        padding:
+          max(24px, env(safe-area-inset-top))
+          20px
+          max(28px, env(safe-area-inset-bottom));
+      }
+
+      /* --------------------------------------------------------
+         LOGO
+         -------------------------------------------------------- */
+
+      .rx-opening-logo-wrap {
+        position: relative;
+
+        width: min(62vw, 300px);
+        height: min(62vw, 300px);
+
+        min-width: 170px;
+        min-height: 170px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        margin-bottom: 20px;
+
+        animation:
+          rxOpeningLogoIn 1.25s
+          cubic-bezier(.16,1,.3,1)
+          both;
+      }
+
+      .rx-opening-logo-wrap::before {
+        content: "";
+
+        position: absolute;
+        inset: 8%;
+
+        border-radius: 50%;
+
+        background:
+          radial-gradient(
+            circle,
+            rgba(215,180,90,.13),
+            rgba(215,180,90,.035) 48%,
+            transparent 72%
+          );
+
+        filter: blur(8px);
+
+        animation:
+          rxOpeningGlow 3.8s ease-in-out infinite;
+      }
+
+      .rx-opening-logo-wrap::after {
+        content: "";
+
+        position: absolute;
+        inset: 2%;
+
+        border-radius: 50%;
+
+        border:
+          1px solid rgba(215,180,90,.13);
+
+        opacity: .75;
+
+        animation:
+          rxOpeningRing 8s linear infinite;
+      }
+
+      .rx-opening-logo {
+        position: relative;
+        z-index: 2;
+
+        width: 72%;
+        height: 72%;
+
+        object-fit: contain;
+
+        display: block;
+
+        filter:
+          drop-shadow(0 0 10px rgba(215,180,90,.18))
+          drop-shadow(0 0 30px rgba(215,180,90,.10));
+
+        animation:
+          rxOpeningLogoFloat 4s
+          ease-in-out
+          1.25s
+          infinite;
+      }
+
+      /* --------------------------------------------------------
+         NOMBRE
+         -------------------------------------------------------- */
+
+      .rx-opening-name {
+        margin: 0;
+
+        color: #f5f5f5;
+
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+
+        font-size:
+          clamp(1.55rem, 7vw, 2.55rem);
+
+        line-height: 1.05;
+
+        font-weight: 950;
+
+        letter-spacing:
+          clamp(.12em, 1.2vw, .22em);
+
+        text-transform: uppercase;
+
+        text-shadow:
+          0 0 24px rgba(215,180,90,.12);
+
+        animation:
+          rxOpeningNameIn .9s
+          cubic-bezier(.16,1,.3,1)
+          .45s
+          both;
+      }
+
+      .rx-opening-name span {
+        color: #d7b45a;
+
+        text-shadow:
+          0 0 18px rgba(215,180,90,.20);
+      }
+
+      .rx-opening-tagline {
+        margin: 12px 0 0;
+
+        color: #a0a0ab;
+
+        font-size:
+          clamp(.68rem, 2.5vw, .82rem);
+
+        font-weight: 700;
+
+        letter-spacing:
+          clamp(.14em, .8vw, .2em);
+
+        text-transform: uppercase;
+
+        animation:
+          rxOpeningTagIn .8s ease .75s both;
+      }
+
+      /* --------------------------------------------------------
+         LÍNEA DECORATIVA
+         -------------------------------------------------------- */
+
+      .rx-opening-line {
+        width: min(180px, 42vw);
+        height: 1px;
+
+        margin: 23px 0 25px;
+
+        background:
+          linear-gradient(
+            90deg,
+            transparent,
+            rgba(215,180,90,.75),
+            transparent
+          );
+
+        transform-origin: center;
+
+        animation:
+          rxOpeningLineIn 1s
+          cubic-bezier(.16,1,.3,1)
+          .9s
+          both;
+      }
+
+      /* --------------------------------------------------------
+         BOTÓN
+         -------------------------------------------------------- */
+
+      .rx-opening-enter {
+        position: relative;
+
+        min-width: 190px;
+
+        min-height: 54px;
+
+        padding: 0 28px;
+
+        border:
+          1px solid rgba(215,180,90,.58);
+
+        border-radius: 999px;
+
+        background:
+          linear-gradient(
+            135deg,
+            rgba(215,180,90,.16),
+            rgba(215,180,90,.055)
+          );
+
+        color: #f2da91;
+
+        font-size: .82rem;
+
+        font-weight: 900;
+
+        letter-spacing: .16em;
+
+        text-transform: uppercase;
+
+        box-shadow:
+          0 8px 30px rgba(0,0,0,.28),
+          0 0 25px rgba(215,180,90,.06),
+          inset 0 1px 0 rgba(255,255,255,.07);
+
+        backdrop-filter: blur(10px);
+
+        cursor: pointer;
+
+        overflow: hidden;
+
+        opacity: 0;
+
+        animation:
+          rxOpeningButtonIn .85s
+          cubic-bezier(.16,1,.3,1)
+          1.05s
+          forwards;
+
+        transition:
+          transform .22s ease,
+          background .22s ease,
+          border-color .22s ease,
+          box-shadow .22s ease;
+      }
+
+      .rx-opening-enter::before {
+        content: "";
+
+        position: absolute;
+
+        top: 0;
+        bottom: 0;
+
+        left: -55%;
+
+        width: 35%;
+
+        background:
+          linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.20),
+            transparent
+          );
+
+        transform: skewX(-18deg);
+
+        animation:
+          rxOpeningButtonSweep 3.8s
+          ease-in-out
+          2.2s
+          infinite;
+      }
+
+      .rx-opening-enter:hover {
+        transform: translateY(-2px) scale(1.015);
+
+        border-color:
+          rgba(242,218,145,.9);
+
+        background:
+          linear-gradient(
+            135deg,
+            rgba(215,180,90,.24),
+            rgba(215,180,90,.08)
+          );
+
+        box-shadow:
+          0 12px 34px rgba(0,0,0,.35),
+          0 0 32px rgba(215,180,90,.13),
+          inset 0 1px 0 rgba(255,255,255,.10);
+      }
+
+      .rx-opening-enter:active {
+        transform: scale(.98);
+      }
+
+      .rx-opening-enter:focus-visible {
+        outline:
+          2px solid #d7b45a;
+
+        outline-offset: 4px;
+      }
+
+      .rx-opening-enter-label {
+        position: relative;
+        z-index: 2;
+      }
+
+      .rx-opening-enter-arrow {
+        position: relative;
+        z-index: 2;
+
+        display: inline-block;
+
+        margin-left: 9px;
+
+        font-size: .95rem;
+
+        transition:
+          transform .2s ease;
+      }
+
+      .rx-opening-enter:hover
+      .rx-opening-enter-arrow {
+        transform: translateX(4px);
+      }
+
+      /* --------------------------------------------------------
+         MICRO TEXTO
+         -------------------------------------------------------- */
+
+      .rx-opening-footer {
+        margin-top: 19px;
+
+        color: rgba(160,160,171,.62);
+
+        font-size: .62rem;
+
+        letter-spacing: .12em;
+
+        text-transform: uppercase;
+
+        animation:
+          rxOpeningTagIn .7s ease 1.3s both;
+      }
+
+      /* --------------------------------------------------------
+         ANIMACIONES
+         -------------------------------------------------------- */
+
+      @keyframes rxOpeningLogoIn {
+        0% {
+          opacity: 0;
+          transform:
+            scale(.72)
+            rotate(-4deg);
+          filter:
+            blur(12px);
+        }
+
+        65% {
+          opacity: 1;
+          transform:
+            scale(1.035)
+            rotate(1deg);
+          filter:
+            blur(0);
+        }
+
+        100% {
+          opacity: 1;
+          transform:
+            scale(1)
+            rotate(0);
+          filter:
+            blur(0);
+        }
+      }
+
+      @keyframes rxOpeningLogoFloat {
+        0%, 100% {
+          transform:
+            translateY(0)
+            scale(1);
+        }
+
+        50% {
+          transform:
+            translateY(-5px)
+            scale(1.008);
+        }
+      }
+
+      @keyframes rxOpeningGlow {
+        0%, 100% {
+          opacity: .45;
+          transform: scale(.92);
+        }
+
+        50% {
+          opacity: .82;
+          transform: scale(1.04);
+        }
+      }
+
+      @keyframes rxOpeningRing {
+        from {
+          transform: rotate(0deg);
+        }
+
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes rxOpeningNameIn {
+        0% {
+          opacity: 0;
+          transform:
+            translateY(18px);
+          letter-spacing: .34em;
+          filter: blur(7px);
+        }
+
+        100% {
+          opacity: 1;
+          transform:
+            translateY(0);
+          letter-spacing:
+            clamp(.12em, 1.2vw, .22em);
+          filter: blur(0);
+        }
+      }
+
+      @keyframes rxOpeningTagIn {
+        from {
+          opacity: 0;
+          transform:
+            translateY(9px);
+        }
+
+        to {
+          opacity: 1;
+          transform:
+            translateY(0);
+        }
+      }
+
+      @keyframes rxOpeningLineIn {
+        from {
+          opacity: 0;
+          transform: scaleX(0);
+        }
+
+        to {
+          opacity: 1;
+          transform: scaleX(1);
+        }
+      }
+
+      @keyframes rxOpeningButtonIn {
+        from {
+          opacity: 0;
+          transform:
+            translateY(18px)
+            scale(.94);
+        }
+
+        to {
+          opacity: 1;
+          transform:
+            translateY(0)
+            scale(1);
+        }
+      }
+
+      @keyframes rxOpeningButtonSweep {
+        0%,
+        55%,
+        100% {
+          left: -55%;
+        }
+
+        72% {
+          left: 125%;
+        }
+      }
+
+      @keyframes rxOpeningHalo {
+        0%, 100% {
+          transform:
+            translate(-50%, -50%)
+            scale(.96);
+          opacity: .65;
+        }
+
+        50% {
+          transform:
+            translate(-50%, -50%)
+            scale(1.025);
+          opacity: 1;
+        }
+      }
+
+      @keyframes rxOpeningSweep {
+        0% {
+          background-position: 180% 0;
+          opacity: 0;
+        }
+
+        30% {
+          opacity: .55;
+        }
+
+        60% {
+          opacity: 0;
+        }
+
+        100% {
+          background-position: -80% 0;
+          opacity: 0;
+        }
+      }
+
+      /* --------------------------------------------------------
+         MÓVIL
+         -------------------------------------------------------- */
+
+      @media (max-width: 560px) {
+
+        .rx-opening-content {
+          width: 100%;
+          padding-left: 14px;
+          padding-right: 14px;
+        }
+
+        .rx-opening-logo-wrap {
+          width: min(68vw, 270px);
+          height: min(68vw, 270px);
+
+          min-width: 155px;
+          min-height: 155px;
+
+          margin-bottom: 15px;
+        }
+
+        .rx-opening-name {
+          max-width: 95vw;
+        }
+
+        .rx-opening-tagline {
+          max-width: 90vw;
+          line-height: 1.5;
+        }
+
+        .rx-opening-line {
+          margin-top: 19px;
+          margin-bottom: 21px;
+        }
+
+        .rx-opening-enter {
+          width: min(86vw, 250px);
+          min-height: 56px;
+        }
+      }
+
+      /* --------------------------------------------------------
+         PANTALLAS MUY PEQUEÑAS
+         -------------------------------------------------------- */
+
+      @media (max-height: 620px) {
+
+        .rx-opening-logo-wrap {
+          width: 180px;
+          height: 180px;
+          min-width: 180px;
+          min-height: 180px;
+          margin-bottom: 8px;
+        }
+
+        .rx-opening-tagline {
+          margin-top: 7px;
+        }
+
+        .rx-opening-line {
+          margin-top: 12px;
+          margin-bottom: 13px;
+        }
+
+        .rx-opening-footer {
+          margin-top: 10px;
+        }
+      }
+
+      /* --------------------------------------------------------
+         REDUCIR ANIMACIONES
+         -------------------------------------------------------- */
+
+      @media (prefers-reduced-motion: reduce) {
+
+        #roxthal-opening-experience::before,
+        #roxthal-opening-experience::after,
+        .rx-opening-logo-wrap,
+        .rx-opening-logo-wrap::before,
+        .rx-opening-logo-wrap::after,
+        .rx-opening-logo,
+        .rx-opening-name,
+        .rx-opening-tagline,
+        .rx-opening-line,
+        .rx-opening-enter,
+        .rx-opening-footer,
+        .rx-opening-enter::before {
+          animation: none !important;
+        }
+
+        .rx-opening-logo-wrap,
+        .rx-opening-logo,
+        .rx-opening-name,
+        .rx-opening-tagline,
+        .rx-opening-line,
+        .rx-opening-enter,
+        .rx-opening-footer {
+          opacity: 1 !important;
+          transform: none !important;
+          filter: none !important;
+        }
+      }
+    `;
+
+    document.head.appendChild(style);
+
+    /* ==========================================================
+       CAPA HTML
+       ========================================================== */
+
+    const opening = document.createElement('div');
+
+    opening.id = 'roxthal-opening-experience';
+
+    opening.setAttribute(
+      'role',
+      'dialog'
+    );
+
+    opening.setAttribute(
+      'aria-modal',
+      'true'
+    );
+
+    opening.setAttribute(
+      'aria-label',
+      'Bienvenido a RoXThal Art Design'
+    );
+
+    opening.innerHTML = `
+      <div class="rx-opening-content">
+
+        <div class="rx-opening-logo-wrap">
+
+          <img
+            class="rx-opening-logo"
+            src="https://raw.githubusercontent.com/xtroxthal-dot/roxthal-art-design/main/logo-roxthal.png"
+            alt="RoXThal Art Design"
+            decoding="async"
+          >
+
+        </div>
+
+        <h1 class="rx-opening-name">
+          RoXThal <span>Art Design</span>
+        </h1>
+
+        <p class="rx-opening-tagline">
+          Arte · Diseño · Tatuaje · Formación
+        </p>
+
+        <div
+          class="rx-opening-line"
+          aria-hidden="true">
+        </div>
+
+        <button
+          type="button"
+          class="rx-opening-enter"
+          id="roxthal-opening-enter"
+          aria-label="Entrar a RoXThal Art Design">
+
+          <span class="rx-opening-enter-label">
+            INICIAR
+          </span>
+
+          <span
+            class="rx-opening-enter-arrow"
+            aria-hidden="true">
+            →
+          </span>
+
+        </button>
+
+        <div class="rx-opening-footer">
+          Tu espacio creativo
+        </div>
+
+      </div>
+    `;
+
+    /* ==========================================================
+       INSERTAR AL PRINCIPIO DEL BODY
+       
+       Esto garantiza que la presentación esté por encima
+       de toda la aplicación existente.
+       ========================================================== */
+
+    document.body.insertBefore(
+      opening,
+      document.body.firstChild
+    );
+
+    /* ==========================================================
+       BLOQUEAR SCROLL MIENTRAS ESTÁ LA PRESENTACIÓN
+       ========================================================== */
+
+    const previousOverflow =
+      document.documentElement.style.overflow;
+
+    const previousBodyOverflow =
+      document.body.style.overflow;
+
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+
+    /* ==========================================================
+       ELEMENTOS
+       ========================================================== */
+
+    const enterButton =
+      document.getElementById(
+        'roxthal-opening-enter'
+      );
+
+    let closing = false;
+
+    /* ==========================================================
+       ENTRAR
+       ========================================================== */
+
+    function enterApp() {
+
+      if (closing) return;
+
+      closing = true;
+
+      /* Animación de salida */
+      opening.classList.add(
+        'rx-opening-leaving'
+      );
+
+      /* Restaurar scroll */
+      document.documentElement.style.overflow =
+        previousOverflow;
+
+      document.body.style.overflow =
+        previousBodyOverflow;
+
+      /*
+        Eliminamos la pantalla después de la transición.
+        No tocamos absolutamente nada de la app.
+      */
+
+      window.setTimeout(
+        function () {
+
+          if (opening.parentNode) {
+            opening.parentNode.removeChild(
+              opening
+            );
+          }
+
+          const currentStyle =
+            document.getElementById(
+              'roxthal-opening-style'
+            );
+
+          if (currentStyle) {
+            currentStyle.remove();
+          }
+
+          window.dispatchEvent(
+            new CustomEvent(
+              'roxthal:opening-complete'
+            )
+          );
+
+        },
+        900
+      );
+    }
+
+    /* ==========================================================
+       EVENTO BOTÓN
+       ========================================================== */
+
+    if (enterButton) {
+
+      enterButton.addEventListener(
+        'click',
+        enterApp,
+        { once: true }
+      );
+
+    }
+
+    /* ==========================================================
+       ACCESIBILIDAD
+       
+       ENTER / SPACE sobre el botón ya funciona de forma nativa.
+       ESC NO cierra la presentación:
+       el usuario debe pulsar INICIAR.
+       ========================================================== */
+
+    /* ==========================================================
+       FALLBACK DEL LOGO
+       
+       Si por algún motivo GitHub no entrega el PNG,
+       mostramos igualmente una presentación elegante
+       sin tocar el resto de la aplicación.
+       ========================================================== */
+
+    const logo =
+      opening.querySelector(
+        '.rx-opening-logo'
+      );
+
+    if (logo) {
+
+      logo.addEventListener(
+        'error',
+        function () {
+
+          logo.style.display = 'none';
+
+          const wrap =
+            logo.closest(
+              '.rx-opening-logo-wrap'
+            );
+
+          if (!wrap) return;
+
+          const fallback =
+            document.createElement('div');
+
+          fallback.style.cssText = `
+            position:relative;
+            z-index:3;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            width:72%;
+            height:72%;
+            border:1px solid rgba(215,180,90,.45);
+            border-radius:50%;
+            color:#d7b45a;
+            font-size:clamp(2.4rem,10vw,4.5rem);
+            font-weight:950;
+            letter-spacing:-.08em;
+            text-shadow:0 0 25px rgba(215,180,90,.25);
+          `;
+
+          fallback.textContent = 'R';
+
+          fallback.setAttribute(
+            'aria-hidden',
+            'true'
+          );
+
+          wrap.appendChild(
+            fallback
+          );
+
+        },
+        { once: true }
+      );
+
+    }
+
+    /* ==========================================================
+       LIMPIEZA GLOBAL
+       ========================================================== */
+
+    window.__ROXTHAL_V10_OPENING_CLEANUP__ =
+      function () {
+
+        if (opening.parentNode) {
+          opening.parentNode.removeChild(
+            opening
+          );
+        }
+
+        if (style.parentNode) {
+          style.parentNode.removeChild(
+            style
+          );
+        }
+
+        document.documentElement.style.overflow =
+          previousOverflow;
+
+        document.body.style.overflow =
+          previousBodyOverflow;
+
+        delete window.__ROXTHAL_V10_OPENING_INSTALLED__;
+        delete window.__ROXTHAL_V10_OPENING_CLEANUP__;
+      };
+
+    console.info(
+      '[RoXThal V10] Opening Experience instalada correctamente.'
+    );
+  }
+
+  /* ============================================================
+     ARRANQUE
+     ============================================================ */
+
+  if (
+    document.readyState === 'loading'
+  ) {
+
+    document.addEventListener(
+      'DOMContentLoaded',
+      installRoXThalOpening,
+      { once: true }
+    );
+
+  } else {
+
+    installRoXThalOpening();
+
+  }
+
+})();
+</script>
 </body>
 </html>
