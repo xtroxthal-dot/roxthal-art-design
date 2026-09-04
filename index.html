@@ -42953,5 +42953,214 @@ select:focus{
 <!-- =========================================================
      FIN RoXThal Egress Optimizer V1
      ========================================================= -->
+  <!-- ============================================================
+     ROXTHAL — GALERÍA RESILIENTE V1
+     No modifica Supabase ni operaciones administrativas.
+     Solo guarda en localStorage respuestas GET públicas de
+     roxthal_talleres_media.
+============================================================ -->
+<script>
+(function () {
+  "use strict";
+
+  const CACHE_KEY =
+    "roxthal_public_media_gallery_v1";
+
+  const SUPABASE_HOST =
+    "lvvhpuedktdmfehvhcwk.supabase.co";
+
+  const MEDIA_PATH =
+    "/rest/v1/roxthal_talleres_media";
+
+  /*
+   * ==========================================================
+   * UTILIDADES
+   * ==========================================================
+   */
+
+  function isMediaRequest(input) {
+    try {
+      const url = new URL(
+        typeof input === "string"
+          ? input
+          : input.url
+      );
+
+      return (
+        url.hostname === SUPABASE_HOST &&
+        url.pathname === MEDIA_PATH &&
+        (
+          typeof input === "string" ||
+          !input.method ||
+          input.method.toUpperCase() === "GET"
+        )
+      );
+
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function saveGallery(data) {
+    try {
+      if (!Array.isArray(data)) return;
+
+      localStorage.setItem(
+        CACHE_KEY,
+        JSON.stringify({
+          savedAt: Date.now(),
+          data: data
+        })
+      );
+
+    } catch (_) {}
+  }
+
+  function loadGallery() {
+    try {
+      const raw =
+        localStorage.getItem(CACHE_KEY);
+
+      if (!raw) return null;
+
+      const parsed =
+        JSON.parse(raw);
+
+      if (
+        !parsed ||
+        !Array.isArray(parsed.data)
+      ) {
+        return null;
+      }
+
+      return parsed.data;
+
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /*
+   * ==========================================================
+   * FETCH RESILIENTE
+   * ==========================================================
+   */
+
+  const originalFetch =
+    window.fetch.bind(window);
+
+  window.fetch = async function (
+    input,
+    init
+  ) {
+
+    if (!isMediaRequest(input)) {
+      return originalFetch(input, init);
+    }
+
+    try {
+
+      const response =
+        await originalFetch(
+          input,
+          init
+        );
+
+      /*
+       * Supabase respondió correctamente.
+       * Guardamos únicamente el JSON de la galería.
+       */
+
+      if (response && response.ok) {
+
+        try {
+
+          const clone =
+            response.clone();
+
+          const json =
+            await clone.json();
+
+          saveGallery(json);
+
+        } catch (_) {}
+
+      }
+
+      return response;
+
+    } catch (error) {
+
+      /*
+       * Si no hay red, intentamos construir
+       * una respuesta desde la caché local.
+       */
+
+      const cached =
+        loadGallery();
+
+      if (cached) {
+
+        return new Response(
+          JSON.stringify(cached),
+          {
+            status: 200,
+            headers: {
+              "Content-Type":
+                "application/json",
+              "X-RoXThal-Cache":
+                "local-fallback"
+            }
+          }
+        );
+      }
+
+      throw error;
+    }
+  };
+
+  /*
+   * ==========================================================
+   * DIAGNÓSTICO VISUAL
+   * ==========================================================
+   */
+
+  window.__ROXTHAL_GALLERY_CACHE__ = {
+    key: CACHE_KEY,
+
+    get: function () {
+      return loadGallery();
+    },
+
+    clear: function () {
+      try {
+        localStorage.removeItem(
+          CACHE_KEY
+        );
+      } catch (_) {}
+    },
+
+    status: function () {
+      const data =
+        loadGallery();
+
+      return {
+        available:
+          Array.isArray(data),
+
+        items:
+          Array.isArray(data)
+            ? data.length
+            : 0
+      };
+    }
+  };
+
+  console.log(
+    "RoXThal Gallery Resilience V1 activada."
+  );
+
+})();
+</script>
 </body>
 </html>
