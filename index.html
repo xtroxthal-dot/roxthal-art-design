@@ -41467,5 +41467,402 @@ select:focus{
 
 })();
 </script>    
+  <!-- =========================================================
+     ROXTHAL — REPARADOR ADMIN RTM / TALLERES
+     Pegar justo antes de </body>
+     No modifica Supabase, RLS ni datos.
+========================================================= -->
+<script>
+(function () {
+  "use strict";
+
+  if (window.__ROXTHAL_RTM_AUTH_REPAIR__) return;
+  window.__ROXTHAL_RTM_AUTH_REPAIR__ = true;
+
+  const ADMIN_EMAIL = "xtroxthal@gmail.com";
+
+  function $(id) {
+    return document.getElementById(id);
+  }
+
+  function msg(text, type) {
+    const el = $("rtm-login-status");
+    if (!el) return;
+
+    el.textContent = text;
+
+    el.classList.remove("err", "error", "ok", "success", "info");
+
+    if (type === "ok") {
+      el.classList.add("ok", "success");
+    } else if (type === "err") {
+      el.classList.add("err", "error");
+    } else {
+      el.classList.add("info");
+    }
+  }
+
+  function getClient() {
+    try {
+      if (typeof window.rtmGetClient === "function") {
+        return window.rtmGetClient();
+      }
+    } catch (e) {
+      console.warn("RTM: no se pudo reutilizar rtmGetClient()", e);
+    }
+
+    try {
+      if (
+        window.supabase &&
+        typeof window.supabase.createClient === "function"
+      ) {
+        const url =
+          window.RTM_SUPABASE_URL ||
+          window.SUPABASE_URL ||
+          "https://lvvhpuedktdmfehvhcwk.supabase.co";
+
+        const key =
+          window.RTM_SUPABASE_KEY ||
+          window.SUPABASE_KEY ||
+          "sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp";
+
+        return window.supabase.createClient(url, key);
+      }
+    } catch (e) {
+      console.error("RTM: error creando cliente Supabase", e);
+    }
+
+    return null;
+  }
+
+  function mostrarAdmin(user) {
+    const login = $("rtm-login");
+    const admin = $("rtm-admin");
+
+    if (login) login.classList.add("hidden");
+    if (admin) admin.classList.remove("hidden");
+
+    const emailField = $("rtm-admin-email");
+    if (emailField && user && user.email) {
+      emailField.textContent = user.email;
+      emailField.value = user.email;
+    }
+
+    try {
+      if (typeof window.rtmShowPanel === "function") {
+        window.rtmShowPanel(user);
+      }
+    } catch (e) {
+      console.warn("RTM: rtmShowPanel no disponible", e);
+    }
+
+    try {
+      if (typeof window.rtmLoadAdminList === "function") {
+        window.rtmLoadAdminList();
+      }
+    } catch (e) {
+      console.warn("RTM: rtmLoadAdminList no disponible", e);
+    }
+
+    try {
+      if (typeof window.rtmCargarAdmin === "function") {
+        window.rtmCargarAdmin();
+      }
+    } catch (e) {
+      console.warn("RTM: rtmCargarAdmin no disponible", e);
+    }
+  }
+
+  function ocultarAdmin() {
+    const login = $("rtm-login");
+    const admin = $("rtm-admin");
+
+    if (admin) admin.classList.add("hidden");
+    if (login) login.classList.remove("hidden");
+  }
+
+  async function loginRTM() {
+    const emailInput = $("rtm-email");
+    const passwordInput = $("rtm-password");
+    const button = $("rtm-login-btn");
+
+    const email = String(
+      emailInput ? emailInput.value : ""
+    ).trim().toLowerCase();
+
+    const password = String(
+      passwordInput ? passwordInput.value : ""
+    );
+
+    if (!email || !password) {
+      msg("⚠️ Introducí correo y contraseña.", "err");
+      return;
+    }
+
+    if (email !== ADMIN_EMAIL.toLowerCase()) {
+      msg(
+        "❌ Esta cuenta no está autorizada para administrar este módulo.",
+        "err"
+      );
+      return;
+    }
+
+    const client = getClient();
+
+    if (!client || !client.auth) {
+      msg(
+        "❌ No se pudo inicializar la conexión con Supabase.",
+        "err"
+      );
+      console.error("ROXTHAL RTM: cliente Supabase no disponible.");
+      return;
+    }
+
+    if (button) {
+      button.disabled = true;
+      button.dataset.roxthalRepairBusy = "1";
+      button.textContent = "Verificando...";
+    }
+
+    msg("🔐 Verificando acceso...", "info");
+
+    try {
+      const result =
+        await client.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
+
+      const data = result && result.data;
+      const error = result && result.error;
+
+      if (error) {
+        console.error(
+          "ROXTHAL RTM — error Supabase Auth:",
+          error
+        );
+
+        const code =
+          error.code ||
+          error.status ||
+          "";
+
+        const detail =
+          error.message ||
+          error.error_description ||
+          "Error de autenticación.";
+
+        msg(
+          "❌ " +
+          detail +
+          (code ? " [" + code + "]" : ""),
+          "err"
+        );
+
+        return;
+      }
+
+      const session = data && data.session;
+      const user = data && data.user;
+
+      if (!session || !session.access_token || !user) {
+        msg(
+          "❌ Supabase no devolvió una sesión válida.",
+          "err"
+        );
+
+        console.error(
+          "ROXTHAL RTM — respuesta de Auth sin sesión:",
+          data
+        );
+
+        return;
+      }
+
+      const authenticatedEmail =
+        String(user.email || "").trim().toLowerCase();
+
+      if (authenticatedEmail !== ADMIN_EMAIL.toLowerCase()) {
+        await client.auth.signOut().catch(function () {});
+
+        msg(
+          "❌ La cuenta autenticada no corresponde al administrador.",
+          "err"
+        );
+
+        return;
+      }
+
+      msg("✅ Acceso autorizado.", "ok");
+
+      console.log(
+        "ROXTHAL RTM — autenticación correcta:",
+        authenticatedEmail
+      );
+
+      mostrarAdmin(user);
+
+    } catch (error) {
+      console.error(
+        "ROXTHAL RTM — excepción durante login:",
+        error
+      );
+
+      msg(
+        "❌ Error de conexión/autenticación: " +
+        (
+          error && error.message
+            ? error.message
+            : "Error desconocido."
+        ),
+        "err"
+      );
+
+    } finally {
+      if (button) {
+        button.disabled = false;
+        button.dataset.roxthalRepairBusy = "0";
+        button.textContent = "Iniciar sesión";
+      }
+    }
+  }
+
+  /*
+   * IMPORTANTE:
+   * Usamos CAPTURE para interceptar el botón antes
+   * de que el antiguo listener pueda ejecutarse.
+   * Así evitamos dos intentos de login simultáneos.
+   */
+  document.addEventListener(
+    "click",
+    function (event) {
+      const button =
+        event.target &&
+        event.target.closest
+          ? event.target.closest("#rtm-login-btn")
+          : null;
+
+      if (!button) return;
+
+      if (button.dataset.roxthalRepairBusy === "1") {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+
+      loginRTM();
+    },
+    true
+  );
+
+  /*
+   * Permitir también ENTER dentro del formulario/campos.
+   */
+  document.addEventListener(
+    "keydown",
+    function (event) {
+      if (event.key !== "Enter") return;
+
+      const target = event.target;
+
+      if (
+        !target ||
+        !(
+          target.id === "rtm-email" ||
+          target.id === "rtm-password"
+        )
+      ) {
+        return;
+      }
+
+      const button = $("rtm-login-btn");
+
+      if (!button) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+
+      loginRTM();
+    },
+    true
+  );
+
+  /*
+   * Recuperación automática de una sesión RTM válida.
+   * No abre nada si no existe una sesión.
+   */
+  async function comprobarSesionRTM() {
+    const client = getClient();
+
+    if (!client || !client.auth) return;
+
+    try {
+      const result =
+        await client.auth.getSession();
+
+      const session =
+        result &&
+        result.data &&
+        result.data.session;
+
+      const user =
+        session &&
+        session.user;
+
+      if (!session || !user) return;
+
+      const email =
+        String(user.email || "")
+          .trim()
+          .toLowerCase();
+
+      if (email !== ADMIN_EMAIL.toLowerCase()) {
+        await client.auth.signOut().catch(function () {});
+        ocultarAdmin();
+        return;
+      }
+
+      console.log(
+        "ROXTHAL RTM — sesión administrativa recuperada."
+      );
+
+      mostrarAdmin(user);
+
+    } catch (error) {
+      console.warn(
+        "ROXTHAL RTM — no se pudo recuperar la sesión:",
+        error
+      );
+    }
+  }
+
+  /*
+   * Esperamos a que el HTML existente esté completamente disponible.
+   */
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      comprobarSesionRTM,
+      { once: true }
+    );
+  } else {
+    comprobarSesionRTM();
+  }
+
+  console.log(
+    "🛠️ ROXTHAL RTM AUTH REPAIR instalado correctamente."
+  );
+
+})();
+</script>
+<!-- =========================================================
+     FIN REPARADOR ADMIN RTM
+========================================================= -->
 </body>
 </html>
