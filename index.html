@@ -42689,5 +42689,269 @@ select:focus{
 <!-- =========================================================
  FIN ROXTHAL AUTH DIAGNOSTIC
 ========================================================= -->
+  <!-- =========================================================
+     RoXThal Egress Optimizer V1
+     SAFE / ADDITIVE
+     No elimina archivos ni modifica Supabase DB/Auth/RLS
+     ========================================================= -->
+<script>
+(function () {
+  'use strict';
+
+  if (window.__ROXTHAL_EGRESS_OPTIMIZER_V1__) return;
+  window.__ROXTHAL_EGRESS_OPTIMIZER_V1__ = true;
+
+  const SUPABASE_STORAGE_HOST =
+    'lvvhpuedktdmfehvhcwk.supabase.co';
+
+  /*
+   * Elimina únicamente el parámetro artificial ?v=
+   * utilizado como cache-buster.
+   *
+   * NO elimina otros parámetros legítimos.
+   */
+  function cleanStorageUrl(value) {
+    if (!value || typeof value !== 'string') return value;
+
+    try {
+      const url = new URL(value, window.location.href);
+
+      if (
+        url.hostname !== SUPABASE_STORAGE_HOST ||
+        !url.pathname.startsWith('/storage/v1/object/')
+      ) {
+        return value;
+      }
+
+      if (!url.searchParams.has('v')) {
+        return value;
+      }
+
+      url.searchParams.delete('v');
+
+      return url.toString();
+    } catch (e) {
+      return value;
+    }
+  }
+
+  function optimizeImage(img) {
+    if (!img) return;
+
+    const current = img.getAttribute('src');
+
+    if (current) {
+      const clean = cleanStorageUrl(current);
+
+      if (clean && clean !== current) {
+        img.setAttribute('src', clean);
+      }
+    }
+
+    /*
+     * No forzamos loading="lazy" globalmente.
+     * Así no perjudicamos hero, logos ni imágenes críticas.
+     */
+    if (!img.hasAttribute('decoding')) {
+      img.setAttribute('decoding', 'async');
+    }
+  }
+
+  function optimizeSource(source) {
+    if (!source) return;
+
+    const current = source.getAttribute('src');
+
+    if (current) {
+      const clean = cleanStorageUrl(current);
+
+      if (clean && clean !== current) {
+        source.setAttribute('src', clean);
+      }
+    }
+  }
+
+  function optimizeVideo(video) {
+    if (!video) return;
+
+    /*
+     * Solamente optimizamos miniaturas/listados administrativos.
+     *
+     * NO tocamos autoplay.
+     * NO tocamos reproductores principales.
+     */
+    if (
+      video.classList.contains('rtm-admin-thumb') &&
+      !video.hasAttribute('autoplay')
+    ) {
+      video.setAttribute('preload', 'none');
+    }
+  }
+
+  function optimizeBackground(element) {
+    if (!element || !element.style) return;
+
+    const bg = element.style.backgroundImage;
+
+    if (!bg || bg === 'none') return;
+
+    const matches = bg.match(/url\((['"]?)(.*?)\1\)/gi);
+
+    if (!matches) return;
+
+    let changed = false;
+    let optimized = bg;
+
+    matches.forEach(function (match) {
+      const urlMatch = match.match(/url\((['"]?)(.*?)\1\)/i);
+
+      if (!urlMatch) return;
+
+      const originalUrl = urlMatch[2];
+      const cleanUrl = cleanStorageUrl(originalUrl);
+
+      if (cleanUrl && cleanUrl !== originalUrl) {
+        optimized = optimized.replace(
+          originalUrl,
+          cleanUrl
+        );
+
+        changed = true;
+      }
+    });
+
+    if (changed) {
+      element.style.backgroundImage = optimized;
+    }
+  }
+
+  function optimizeElement(element) {
+    if (!element || element.nodeType !== 1) return;
+
+    const tag = element.tagName;
+
+    if (tag === 'IMG') {
+      optimizeImage(element);
+    }
+
+    if (tag === 'SOURCE') {
+      optimizeSource(element);
+    }
+
+    if (tag === 'VIDEO') {
+      optimizeVideo(element);
+    }
+
+    optimizeBackground(element);
+
+    /*
+     * Procesamos elementos hijos creados dinámicamente.
+     */
+    if (element.querySelectorAll) {
+      element.querySelectorAll(
+        'img, source, video, [style*="background-image"]'
+      ).forEach(function (child) {
+
+        if (child.tagName === 'IMG') {
+          optimizeImage(child);
+        }
+
+        if (child.tagName === 'SOURCE') {
+          optimizeSource(child);
+        }
+
+        if (child.tagName === 'VIDEO') {
+          optimizeVideo(child);
+        }
+
+        optimizeBackground(child);
+      });
+    }
+  }
+
+  function optimizeDocument() {
+    document.querySelectorAll(
+      'img, source, video, [style*="background-image"]'
+    ).forEach(optimizeElement);
+  }
+
+  /*
+   * Primera pasada.
+   */
+  if (document.readyState === 'loading') {
+    document.addEventListener(
+      'DOMContentLoaded',
+      optimizeDocument,
+      { once: true }
+    );
+  } else {
+    optimizeDocument();
+  }
+
+  /*
+   * Vigila módulos que generan contenido dinámicamente.
+   * Esto es especialmente importante para:
+   * - Galería
+   * - Talleres
+   * - Fotos
+   * - Vídeos
+   * - Cursos
+   * - Admin
+   */
+  const observer = new MutationObserver(function (mutations) {
+
+    mutations.forEach(function (mutation) {
+
+      mutation.addedNodes.forEach(function (node) {
+
+        if (node.nodeType === 1) {
+          optimizeElement(node);
+        }
+      });
+
+      /*
+       * Si algún módulo cambia src/style dinámicamente,
+       * volvemos a optimizar únicamente ese elemento.
+       */
+      if (
+        mutation.type === 'attributes' &&
+        mutation.target &&
+        mutation.target.nodeType === 1
+      ) {
+        optimizeElement(mutation.target);
+      }
+    });
+  });
+
+  function startObserver() {
+    if (!document.body) return;
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['src', 'style']
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener(
+      'DOMContentLoaded',
+      startObserver,
+      { once: true }
+    );
+  } else {
+    startObserver();
+  }
+
+  console.log(
+    '✅ RoXThal Egress Optimizer V1 activo — modo seguro'
+  );
+
+})();
+</script>
+<!-- =========================================================
+     FIN RoXThal Egress Optimizer V1
+     ========================================================= -->
 </body>
 </html>
