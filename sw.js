@@ -1,10 +1,22 @@
-const CACHE_NAME = "roxthal-storage-v4";
-const STATIC_CACHE = "roxthal-static-v4";
+const CACHE_NAME = "roxthal-storage-v5";
+const STATIC_CACHE = "roxthal-static-v5";
+const MEDIA_API_CACHE = "roxthal-media-api-v1";
+
+const SUPABASE_HOST = "lvvhpuedktdmfehvhcwk.supabase.co";
+const MEDIA_TABLE = "/rest/v1/roxthal_talleres_media";
 
 function isSupabaseStorage(url) {
   return (
-    url.hostname.includes("supabase.co") &&
+    url.hostname === SUPABASE_HOST &&
     url.pathname.includes("/storage/v1/object/public/")
+  );
+}
+
+function isPublicMediaApi(url, request) {
+  return (
+    request.method === "GET" &&
+    url.hostname === SUPABASE_HOST &&
+    url.pathname === MEDIA_TABLE
   );
 }
 
@@ -12,8 +24,7 @@ function normalizeStorageRequest(request) {
   try {
     const url = new URL(request.url);
 
-    // Evita que ?v=Date.now(), ?v=timestamp, etc.
-    // conviertan el mismo archivo en una URL diferente.
+    // Elimina únicamente nuestro cache-buster ?v=
     url.searchParams.delete("v");
 
     return new Request(url.toString(), {
@@ -40,7 +51,8 @@ self.addEventListener("activate", event => {
           .filter(
             key =>
               key !== CACHE_NAME &&
-              key !== STATIC_CACHE
+              key !== STATIC_CACHE &&
+              key !== MEDIA_API_CACHE
           )
           .map(key => caches.delete(key))
       )
@@ -51,22 +63,65 @@ self.addEventListener("activate", event => {
 self.addEventListener("fetch", event => {
   const request = event.request;
 
-  // Solo interceptamos peticiones GET.
   if (request.method !== "GET") return;
 
   const url = new URL(request.url);
 
   /*
-   * ==========================================
-   * SUPABASE STORAGE
-   * ==========================================
+   * ==========================================================
+   * GALERÍA PÚBLICA — roxthal_talleres_media
+   * ==========================================================
+   *
+   * SOLO GET.
+   *
+   * Nunca intercepta INSERT, UPDATE, DELETE ni operaciones
+   * administrativas.
    *
    * Estrategia:
    *   CACHE FIRST + actualización silenciosa
-   *
-   * Esto evita descargar repetidamente las mismas
-   * imágenes/vídeos desde Supabase.
    */
+
+  if (isPublicMediaApi(url, request)) {
+    event.respondWith(
+      caches.open(MEDIA_API_CACHE).then(async cache => {
+        const cached = await cache.match(request);
+
+        const networkRequest = fetch(request)
+          .then(response => {
+            if (response && response.ok) {
+              cache.put(request, response.clone());
+            }
+
+            return response;
+          })
+          .catch(() => null);
+
+        if (cached) {
+          event.waitUntil(networkRequest);
+          return cached;
+        }
+
+        const fresh = await networkRequest;
+
+        if (fresh) {
+          return fresh;
+        }
+
+        throw new Error(
+          "Galería de RoXThal no disponible"
+        );
+      })
+    );
+
+    return;
+  }
+
+  /*
+   * ==========================================================
+   * SUPABASE STORAGE
+   * ==========================================================
+   */
+
   if (isSupabaseStorage(url)) {
     const cacheRequest = normalizeStorageRequest(request);
 
@@ -87,15 +142,11 @@ self.addEventListener("fetch", event => {
           })
           .catch(() => null);
 
-        // Si ya tenemos el archivo:
-        // devolverlo inmediatamente y actualizar
-        // la caché en segundo plano.
         if (cached) {
           event.waitUntil(networkRequest);
           return cached;
         }
 
-        // Primera visita: necesitamos Internet.
         const fresh = await networkRequest;
 
         if (fresh) {
@@ -112,18 +163,11 @@ self.addEventListener("fetch", event => {
   }
 
   /*
-   * ==========================================
-   * ARCHIVOS DE LA APLICACIÓN
-   * ==========================================
-   *
-   * HTML / JS / CSS / manifest:
-   *
-   * Primero Internet para garantizar que la app
-   * esté actualizada.
-   *
-   * Si no hay conexión:
-   * usar caché como respaldo.
+   * ==========================================================
+   * ARCHIVOS DE LA APP
+   * ==========================================================
    */
+
   const isNavigation =
     request.mode === "navigate";
 
@@ -147,8 +191,11 @@ self.addEventListener("fetch", event => {
           }
 
           return response;
+
         } catch (error) {
-          const cached = await cache.match(request);
+
+          const cached =
+            await cache.match(request);
 
           if (cached) {
             return cached;
@@ -163,9 +210,9 @@ self.addEventListener("fetch", event => {
   }
 
   /*
-   * ==========================================
-   * RESTO DE PETICIONES
-   * ==========================================
+   * ==========================================================
+   * RESTO
+   * ==========================================================
    */
 
   event.respondWith(
@@ -175,10 +222,6 @@ self.addEventListener("fetch", event => {
   );
 });
 
-/*
- * Permite actualizar el Service Worker
- * inmediatamente cuando la aplicación lo solicite.
- */
 self.addEventListener("message", event => {
   if (event.data === "SKIP_WAITING") {
     self.skipWaiting();
