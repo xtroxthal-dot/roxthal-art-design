@@ -42205,5 +42205,489 @@ select:focus{
 <!-- =========================================================
  FIN REPARADOR GLOBAL DE AUTENTICACIÓN
  ========================================================= -->
+  <!-- =========================================================
+ ROXTHAL — DIAGNÓSTICO ÚNICO DE AUTENTICACIÓN
+ No modifica Supabase ni sustituye ningún login.
+ Pegar justo antes de </body>
+========================================================= -->
+<script>
+(function () {
+  "use strict";
+
+  if (window.__ROXTHAL_AUTH_DIAGNOSTIC__) return;
+  window.__ROXTHAL_AUTH_DIAGNOSTIC__ = true;
+
+  const START = Date.now();
+
+  function log() {
+    try {
+      console.log(
+        "%c[ROXTHAL AUTH DIAGNÓSTICO]",
+        "font-weight:bold;font-size:13px;",
+        ...arguments
+      );
+    } catch (e) {}
+  }
+
+  function get(id) {
+    return document.getElementById(id);
+  }
+
+  function visible(id) {
+    const el = get(id);
+    if (!el) return false;
+
+    const style = window.getComputedStyle(el);
+
+    return (
+      style.display !== "none" &&
+      style.visibility !== "hidden" &&
+      !el.classList.contains("hidden")
+    );
+  }
+
+  function showDiagnostic(message) {
+
+    let box = get("roxthal-auth-diagnostic-box");
+
+    if (!box) {
+
+      box = document.createElement("div");
+      box.id = "roxthal-auth-diagnostic-box";
+
+      box.style.cssText = `
+        position:fixed;
+        left:10px;
+        right:10px;
+        bottom:10px;
+        z-index:2147483647;
+        padding:14px;
+        border:1px solid rgba(255,255,255,.25);
+        border-radius:12px;
+        background:#111;
+        color:#fff;
+        font-family:Arial,sans-serif;
+        font-size:13px;
+        line-height:1.45;
+        box-shadow:0 8px 30px rgba(0,0,0,.45);
+      `;
+
+      document.body.appendChild(box);
+    }
+
+    box.innerHTML =
+      "<strong>🔎 RoXThal Auth Diagnostic</strong><br>" +
+      String(message)
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+
+    log(message);
+  }
+
+  function inspectPage() {
+
+    const elements = {
+
+      rtmLogin:
+        !!get("rtm-login"),
+
+      rtmButton:
+        !!get("rtm-login-btn"),
+
+      rtmEmail:
+        !!get("rtm-email"),
+
+      rtmPassword:
+        !!get("rtm-password"),
+
+      rtmStatus:
+        !!get("rtm-login-status"),
+
+      reviewLogin:
+        !!get("roxthal-admin-login"),
+
+      reviewButton:
+        !!get("roxthal-admin-login-btn"),
+
+      reviewEmail:
+        !!get("roxthal-admin-email"),
+
+      reviewPassword:
+        !!get("roxthal-admin-password"),
+
+      reviewStatus:
+        !!get("roxthal-admin-login-msg"),
+
+      rxci:
+        !!get("rxci-login"),
+
+      rxciButton:
+        !!get("rxci-login-btn"),
+
+      rxciMessage:
+        !!get("rxci-login-message")
+    };
+
+    log("Elementos detectados:", elements);
+
+    const visibleModules = [];
+
+    if (visible("rtm-login")) {
+      visibleModules.push("RTM / TALLERES");
+    }
+
+    if (visible("roxthal-admin-login")) {
+      visibleModules.push("ADMIN RESEÑAS");
+    }
+
+    if (visible("rxci-login")) {
+      visibleModules.push("RXCI / CAMPUS");
+    }
+
+    log(
+      "Módulos de login visibles:",
+      visibleModules
+    );
+
+    return {
+      elements,
+      visibleModules
+    };
+  }
+
+  /* ---------------------------------------------------------
+     CAPTURA DE CAMBIOS EN MENSAJES DE LOGIN
+  --------------------------------------------------------- */
+
+  function watchMessage(id, label) {
+
+    const el = get(id);
+
+    if (!el) return;
+
+    const observer =
+      new MutationObserver(function () {
+
+        const text =
+          String(
+            el.textContent || ""
+          ).trim();
+
+        if (!text) return;
+
+        log(
+          "MENSAJE DE LOGIN [" +
+          label +
+          "]:",
+          text
+        );
+
+        if (
+          /acceso rechazado/i.test(text) ||
+          /acceso denegado/i.test(text) ||
+          /correo o contraseña/i.test(text) ||
+          /credenciales/i.test(text)
+        ) {
+
+          showDiagnostic(
+            "Módulo: " +
+            label +
+            "<br>" +
+            "Mensaje detectado: " +
+            text
+          );
+        }
+      });
+
+    observer.observe(
+      el,
+      {
+        childList: true,
+        subtree: true,
+        characterData: true
+      }
+    );
+  }
+
+  /* ---------------------------------------------------------
+     CAPTURA DE CLICS SIN BLOQUEARLOS
+  --------------------------------------------------------- */
+
+  document.addEventListener(
+    "click",
+    function (event) {
+
+      const target = event.target;
+
+      if (!target) return;
+
+      let button = null;
+
+      try {
+        button =
+          target.closest
+            ? target.closest(
+                "#rtm-login-btn," +
+                "#roxthal-admin-login-btn," +
+                "#rxci-login-btn"
+              )
+            : null;
+      } catch (e) {}
+
+      if (!button) return;
+
+      log(
+        "CLICK LOGIN:",
+        button.id
+      );
+
+      const info = {
+        button: button.id,
+        time: new Date().toISOString(),
+        rtmVisible: visible("rtm-login"),
+        reviewVisible: visible("roxthal-admin-login"),
+        rxciVisible: visible("rxci-login")
+      };
+
+      log(
+        "CONTEXTO DEL LOGIN:",
+        info
+      );
+
+      /*
+       * NO hacemos preventDefault().
+       * NO hacemos stopPropagation().
+       * El login original continúa funcionando.
+       */
+    },
+    false
+  );
+
+  /* ---------------------------------------------------------
+     INTERCEPTAR FETCH SOLO PARA OBSERVAR RESPUESTAS
+     --------------------------------------------------------- */
+
+  if (
+    window.fetch &&
+    !window.__ROXTHAL_FETCH_DIAGNOSTIC__
+  ) {
+
+    window.__ROXTHAL_FETCH_DIAGNOSTIC__ = true;
+
+    const originalFetch =
+      window.fetch.bind(window);
+
+    window.fetch =
+      async function () {
+
+        const args =
+          Array.from(arguments);
+
+        let url = "";
+
+        try {
+
+          if (
+            args[0] &&
+            typeof args[0] === "string"
+          ) {
+            url = args[0];
+          } else if (
+            args[0] &&
+            args[0].url
+          ) {
+            url = args[0].url;
+          }
+
+        } catch (e) {}
+
+        const isAuth =
+          /\/auth\/v1\//i.test(url) ||
+          /grant_type=password/i.test(url);
+
+        const started =
+          Date.now();
+
+        const response =
+          await originalFetch(...args);
+
+        if (isAuth) {
+
+          let body = "";
+
+          try {
+
+            const clone =
+              response.clone();
+
+            body =
+              await clone.text();
+
+          } catch (e) {
+            body =
+              "(No se pudo leer la respuesta)";
+          }
+
+          let parsed = null;
+
+          try {
+            parsed =
+              JSON.parse(body);
+          } catch (e) {}
+
+          const diagnostic = {
+
+            url: url,
+
+            status:
+              response.status,
+
+            ok:
+              response.ok,
+
+            duration:
+              Date.now() - started,
+
+            response:
+              parsed || body
+          };
+
+          log(
+            "SUPABASE AUTH RESPONSE:",
+            diagnostic
+          );
+
+          if (
+            !response.ok ||
+            (
+              parsed &&
+              (
+                parsed.error ||
+                parsed.error_code ||
+                parsed.msg ||
+                parsed.message
+              )
+            )
+          ) {
+
+            const errorCode =
+              parsed &&
+              (
+                parsed.error_code ||
+                parsed.code ||
+                parsed.error
+              );
+
+            const errorMessage =
+              parsed &&
+              (
+                parsed.msg ||
+                parsed.message ||
+                parsed.error_description ||
+                parsed.error
+              );
+
+            showDiagnostic(
+              "Supabase Auth respondió " +
+              response.status +
+              "<br>" +
+              "Código: " +
+              (errorCode || "sin código") +
+              "<br>" +
+              "Mensaje: " +
+              (errorMessage || "sin mensaje")
+            );
+          }
+        }
+
+        return response;
+      };
+  }
+
+  /* ---------------------------------------------------------
+     CAPTURA DE ERRORES JAVASCRIPT
+  --------------------------------------------------------- */
+
+  window.addEventListener(
+    "error",
+    function (event) {
+
+      log(
+        "ERROR JAVASCRIPT:",
+        event.message,
+        event.filename,
+        event.lineno,
+        event.colno
+      );
+    }
+  );
+
+  window.addEventListener(
+    "unhandledrejection",
+    function (event) {
+
+      log(
+        "PROMESA RECHAZADA:",
+        event.reason
+      );
+    }
+  );
+
+  /* ---------------------------------------------------------
+     OBSERVADORES DE LOS TRES LOGIN
+  --------------------------------------------------------- */
+
+  function installObservers() {
+
+    watchMessage(
+      "rtm-login-status",
+      "RTM / TALLERES"
+    );
+
+    watchMessage(
+      "roxthal-admin-login-msg",
+      "ADMIN RESEÑAS"
+    );
+
+    watchMessage(
+      "rxci-login-message",
+      "RXCI / CAMPUS"
+    );
+
+    inspectPage();
+
+    showDiagnostic(
+      "Diagnóstico instalado correctamente.<br>" +
+      "Ahora pulsa el botón de acceso que produce «Acceso rechazado»."
+    );
+  }
+
+  if (
+    document.readyState ===
+    "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      installObservers,
+      { once: true }
+    );
+
+  } else {
+
+    installObservers();
+  }
+
+  log(
+    "Diagnóstico iniciado hace",
+    Date.now() - START,
+    "ms"
+  );
+
+})();
+</script>
+<!-- =========================================================
+ FIN ROXTHAL AUTH DIAGNOSTIC
+========================================================= -->
 </body>
 </html>
