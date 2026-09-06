@@ -1,4 +1,4 @@
-const CACHE_NAME = "roxthal-storage-v6";
+const CACHE_NAME = "roxthal-storage-v7";
 const STATIC_CACHE = "roxthal-static-v5";
 const MEDIA_API_CACHE = "roxthal-media-api-v1";
 
@@ -20,11 +20,24 @@ function isPublicMediaApi(url, request) {
   );
 }
 
+/*
+ * Normaliza las URLs de Storage.
+ *
+ * Elimina parámetros utilizados únicamente
+ * para romper caché desde el HTML.
+ *
+ * De esta manera:
+ *
+ * imagen.jpg?v=123
+ * imagen.jpg?v=456
+ *
+ * utilizan exactamente la misma entrada
+ * de caché del Service Worker.
+ */
 function normalizeStorageRequest(request) {
   try {
     const url = new URL(request.url);
 
-    // Elimina únicamente nuestro cache-buster ?v=
     url.searchParams.delete("v");
 
     return new Request(url.toString(), {
@@ -74,11 +87,8 @@ self.addEventListener("fetch", event => {
    *
    * SOLO GET.
    *
-   * Nunca intercepta INSERT, UPDATE, DELETE ni operaciones
-   * administrativas.
-   *
-   * Estrategia:
-   *   CACHE FIRST + actualización silenciosa
+   * Nunca intercepta INSERT, UPDATE, DELETE
+   * ni operaciones administrativas.
    */
 
   if (isPublicMediaApi(url, request)) {
@@ -86,30 +96,33 @@ self.addEventListener("fetch", event => {
       caches.open(MEDIA_API_CACHE).then(async cache => {
         const cached = await cache.match(request);
 
-        const networkRequest = fetch(request)
-          .then(response => {
-            if (response && response.ok) {
-              cache.put(request, response.clone());
-            }
-
-            return response;
-          })
-          .catch(() => null);
-
+        /*
+         * Si existe una copia local, devolverla directamente.
+         *
+         * NO hacer una petición silenciosa adicional
+         * en cada visita.
+         */
         if (cached) {
-          event.waitUntil(networkRequest);
           return cached;
         }
 
-        const fresh = await networkRequest;
+        try {
+          const fresh = await fetch(request);
 
-        if (fresh) {
+          if (fresh && fresh.ok) {
+            await cache.put(
+              request,
+              fresh.clone()
+            );
+          }
+
           return fresh;
-        }
 
-        throw new Error(
-          "Galería de RoXThal no disponible"
-        );
+        } catch (error) {
+          throw new Error(
+            "Galería de RoXThal no disponible"
+          );
+        }
       })
     );
 
@@ -120,41 +133,67 @@ self.addEventListener("fetch", event => {
    * ==========================================================
    * SUPABASE STORAGE
    * ==========================================================
+   *
+   * CACHE FIRST REAL.
+   *
+   * Si la imagen ya existe localmente:
+   *
+   *     NO se conecta a Supabase.
+   *
+   * Solo descarga la imagen la primera vez.
    */
 
   if (isSupabaseStorage(url)) {
-  if (request.headers.has("range")) {
-    event.respondWith(fetch(request));
+
+    /*
+     * Las peticiones Range se mantienen directas.
+     * Esto evita romper reproducción de vídeo/audio.
+     */
+    if (request.headers.has("range")) {
+      event.respondWith(fetch(request));
+      return;
+    }
+
+    const cacheRequest =
+      normalizeStorageRequest(request);
+
+    event.respondWith(
+      caches.open(CACHE_NAME).then(async cache => {
+
+        const cached =
+          await cache.match(cacheRequest);
+
+        /*
+         * IMAGEN YA CACHÉ:
+         * devolver inmediatamente.
+         *
+         * MUY IMPORTANTE:
+         * no hacemos fetch() en segundo plano.
+         */
+        if (cached) {
+          return cached;
+        }
+
+        /*
+         * IMAGEN NO CACHÉ:
+         * descargar una sola vez.
+         */
+        const fresh =
+          await fetch(cacheRequest);
+
+        if (fresh && fresh.ok) {
+          await cache.put(
+            cacheRequest,
+            fresh.clone()
+          );
+        }
+
+        return fresh;
+      })
+    );
+
     return;
   }
-
-  const cacheRequest = normalizeStorageRequest(request);
-
-  event.respondWith(
-    caches.open(CACHE_NAME).then(async cache => {
-      const cached = await cache.match(cacheRequest);
-
-      // Si ya está en caché, NO volver a pedirlo a Supabase.
-      if (cached) {
-        return cached;
-      }
-
-      // Solo descarga desde Supabase la primera vez.
-      const fresh = await fetch(cacheRequest);
-
-      if (fresh && fresh.ok) {
-        await cache.put(
-          cacheRequest,
-          fresh.clone()
-        );
-      }
-
-      return fresh;
-    })
-  );
-
-  return;
-}
 
   /*
    * ==========================================================
@@ -172,13 +211,17 @@ self.addEventListener("fetch", event => {
     request.destination === "manifest";
 
   if (isNavigation || isStatic) {
+
     event.respondWith(
       caches.open(STATIC_CACHE).then(async cache => {
+
         try {
-          const response = await fetch(request);
+
+          const response =
+            await fetch(request);
 
           if (response && response.ok) {
-            cache.put(
+            await cache.put(
               request,
               response.clone()
             );
@@ -205,7 +248,7 @@ self.addEventListener("fetch", event => {
 
   /*
    * ==========================================================
-   * RESTO
+   * RESTO DE PETICIONES
    * ==========================================================
    */
 
@@ -217,7 +260,9 @@ self.addEventListener("fetch", event => {
 });
 
 self.addEventListener("message", event => {
+
   if (event.data === "SKIP_WAITING") {
     self.skipWaiting();
   }
+
 });
