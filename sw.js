@@ -1,4 +1,4 @@
-const CACHE_NAME = "roxthal-storage-v5";
+const CACHE_NAME = "roxthal-storage-v6";
 const STATIC_CACHE = "roxthal-static-v5";
 const MEDIA_API_CACHE = "roxthal-media-api-v1";
 
