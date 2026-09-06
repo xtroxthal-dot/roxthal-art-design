@@ -123,44 +123,38 @@ self.addEventListener("fetch", event => {
    */
 
   if (isSupabaseStorage(url)) {
-    const cacheRequest = normalizeStorageRequest(request);
-
-    event.respondWith(
-      caches.open(CACHE_NAME).then(async cache => {
-        const cached = await cache.match(cacheRequest);
-
-        const networkRequest = fetch(cacheRequest)
-          .then(response => {
-            if (response && response.ok) {
-              cache.put(
-                cacheRequest,
-                response.clone()
-              );
-            }
-
-            return response;
-          })
-          .catch(() => null);
-
-        if (cached) {
-          event.waitUntil(networkRequest);
-          return cached;
-        }
-
-        const fresh = await networkRequest;
-
-        if (fresh) {
-          return fresh;
-        }
-
-        throw new Error(
-          "Recurso de Supabase no disponible"
-        );
-      })
-    );
-
+  if (request.headers.has("range")) {
+    event.respondWith(fetch(request));
     return;
   }
+
+  const cacheRequest = normalizeStorageRequest(request);
+
+  event.respondWith(
+    caches.open(CACHE_NAME).then(async cache => {
+      const cached = await cache.match(cacheRequest);
+
+      // Si ya está en caché, NO volver a pedirlo a Supabase.
+      if (cached) {
+        return cached;
+      }
+
+      // Solo descarga desde Supabase la primera vez.
+      const fresh = await fetch(cacheRequest);
+
+      if (fresh && fresh.ok) {
+        await cache.put(
+          cacheRequest,
+          fresh.clone()
+        );
+      }
+
+      return fresh;
+    })
+  );
+
+  return;
+}
 
   /*
    * ==========================================================
