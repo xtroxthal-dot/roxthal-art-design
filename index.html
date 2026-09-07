@@ -43122,126 +43122,385 @@ select:focus{
 
 })();
 </script>
-    <!-- =========================================================
-     ROXTHAL RTM — CONTROL DE RESCATE DE INTERFAZ
-     No modifica Supabase ni elimina la lógica existente.
-     ========================================================= -->
-<script>
+    <script>
+/* ============================================================
+   RoXThal RTM — RESCUE V2
+   Reparación integral de controles de Fotos y Videos
+   No modifica Supabase ni elimina datos.
+   ============================================================ */
 (function () {
   "use strict";
 
-  function rtmRescueInit() {
+  function el(id) {
+    return document.getElementById(id);
+  }
 
-    const launcher = document.getElementById("rtm-launcher");
-    const openBtn = document.getElementById("rtm-open-module");
-    const module = document.getElementById("roxthal-talleres-media");
-    const closeBtn = document.getElementById("rtm-close-module");
+  function show(node) {
+    if (!node) return;
+    node.classList.remove("hidden");
+    node.classList.remove("rtm-module-hidden");
+    node.style.removeProperty("display");
+  }
 
-    if (!launcher || !openBtn || !module) {
-      console.warn(
-        "RoXThal RTM Rescue: elementos no encontrados.",
-        {
-          launcher: !!launcher,
-          openBtn: !!openBtn,
-          module: !!module,
-          closeBtn: !!closeBtn
-        }
-      );
+  function hide(node) {
+    if (!node) return;
+    node.classList.add("hidden");
+  }
+
+  function openRTM() {
+    const launcher = el("rtm-launcher");
+    const module = el("roxthal-talleres-media");
+
+    if (!module) {
+      console.error("RoXThal RTM: módulo no encontrado.");
       return;
     }
 
-    /* -------------------------------------------------------
-       ABRIR MÓDULO
-       ------------------------------------------------------- */
-    openBtn.onclick = function (event) {
+    module.classList.remove("rtm-module-hidden");
+    module.classList.remove("hidden");
+    module.style.removeProperty("display");
 
-      event.preventDefault();
-      event.stopPropagation();
-
-      module.classList.remove("rtm-module-hidden");
-
-      module.style.removeProperty("display");
-
+    if (launcher) {
       launcher.style.display = "none";
+    }
 
+    try {
       module.scrollIntoView({
         behavior: "smooth",
         block: "start"
       });
+    } catch (_) {}
 
-      console.log(
-        "RoXThal RTM: módulo abierto correctamente."
-      );
+    /*
+     * Utilizamos la función original si existe.
+     * Así no duplicamos la lógica de Supabase.
+     */
+    try {
+      if (typeof window.rtmLoadGallery === "function") {
+        window.rtmLoadGallery();
+      }
+    } catch (error) {
+      console.warn("RoXThal RTM: no se pudo recargar la galería.", error);
+    }
 
-    };
+    console.log("RoXThal RTM: módulo abierto.");
+  }
 
-    /* -------------------------------------------------------
-       CERRAR MÓDULO
-       ------------------------------------------------------- */
-    if (closeBtn) {
+  function closeRTM() {
+    const launcher = el("rtm-launcher");
+    const module = el("roxthal-talleres-media");
+    const admin = el("rtm-admin");
+    const lightbox = el("rtm-lightbox");
 
-      closeBtn.onclick = function (event) {
+    if (!module) return;
 
-        event.preventDefault();
-        event.stopPropagation();
+    module.classList.add("rtm-module-hidden");
+    module.classList.remove("hidden");
 
-        module.classList.add("rtm-module-hidden");
+    if (launcher) {
+      launcher.style.display = "";
+    }
 
-        module.style.removeProperty("display");
+    if (admin) {
+      admin.classList.add("hidden");
+    }
 
-        launcher.style.display = "";
+    if (lightbox) {
+      lightbox.classList.remove("open");
+    }
 
-        const admin =
-          document.getElementById("rtm-admin");
-
-        if (admin) {
-          admin.classList.add("hidden");
-        }
-
-        const lightbox =
-          document.getElementById("rtm-lightbox");
-
-        if (lightbox) {
-          lightbox.classList.remove("open");
-        }
-
+    if (launcher) {
+      try {
         launcher.scrollIntoView({
           behavior: "smooth",
           block: "center"
         });
-
-        console.log(
-          "RoXThal RTM: módulo cerrado correctamente."
-        );
-
-      };
-
+      } catch (_) {}
     }
 
-    /* -------------------------------------------------------
-       MARCA DE CONTROL
-       ------------------------------------------------------- */
+    console.log("RoXThal RTM: módulo cerrado.");
+  }
 
-    document.documentElement.dataset.roxthalRtm =
-      "rescue-active";
+  function openAdmin() {
+    const admin = el("rtm-admin");
+    if (!admin) {
+      console.error("RoXThal RTM: administrador no encontrado.");
+      return;
+    }
+
+    show(admin);
+
+    /*
+     * Dejamos que el sistema original compruebe la sesión.
+     * Si no consigue hacerlo, mostramos igualmente el formulario
+     * para que el usuario pueda intentar iniciar sesión.
+     */
+    const login = el("rtm-login");
+    const panel = el("rtm-panel");
+
+    if (login && panel) {
+      const email = el("rtm-email");
+      const password = el("rtm-password");
+
+      if (!email || !password) {
+        show(login);
+        hide(panel);
+      }
+    }
+
+    try {
+      if (typeof window.rtmCheckSession === "function") {
+        window.rtmCheckSession();
+      }
+    } catch (error) {
+      console.warn(
+        "RoXThal RTM: comprobación de sesión no disponible.",
+        error
+      );
+      show(login);
+      hide(panel);
+    }
+
+    try {
+      admin.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    } catch (_) {}
+
+    console.log("RoXThal RTM: administrador abierto.");
+  }
+
+  function closeAdmin() {
+    const admin = el("rtm-admin");
+    if (admin) {
+      admin.classList.add("hidden");
+    }
+
+    console.log("RoXThal RTM: administrador cerrado.");
+  }
+
+  function activateFilter(button) {
+    if (!button) return;
+
+    const filters = el("rtm-filters");
+    if (!filters) return;
+
+    filters.querySelectorAll(".rtm-filter").forEach(function (item) {
+      item.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    /*
+     * El listener original se ocupa de actualizar rtmCategory
+     * y volver a pintar la galería.
+     *
+     * Si está disponible, generamos el click normal.
+     */
+    try {
+      button.dispatchEvent(
+        new MouseEvent("click", {
+          bubbles: true,
+          cancelable: true,
+          view: window
+        })
+      );
+    } catch (_) {}
 
     console.log(
-      "✅ RoXThal RTM Rescue activo."
+      "RoXThal RTM: filtro:",
+      button.dataset.category || "todos"
     );
   }
 
-  if (
-    document.readyState === "loading"
-  ) {
+  function openLightboxFromButton(button) {
+    if (!button) return;
+
+    const id = button.dataset.id;
+    if (!id) return;
+
+    /*
+     * El render original ya registra .rtm-view.
+     * Provocamos su click para conservar exactamente
+     * la lógica existente.
+     */
+    try {
+      button.click();
+    } catch (_) {}
+  }
+
+  function closeLightbox() {
+    const box = el("rtm-lightbox");
+    const content = el("rtm-lightbox-content");
+
+    if (box) {
+      box.classList.remove("open");
+    }
+
+    if (content) {
+      content.innerHTML = "";
+    }
+  }
+
+  function initialise() {
+    const openButton = el("rtm-open-module");
+    const closeButton = el("rtm-close-module");
+    const adminButton = el("rtm-admin-open");
+    const adminCloseButton = el("rtm-admin-close");
+    const filters = el("rtm-filters");
+    const gallery = el("rtm-gallery");
+    const lightboxClose = el("rtm-lightbox-close");
+    const lightbox = el("rtm-lightbox");
+
+    /*
+     * IMPORTANTE:
+     * usamos onclick para que esta capa tenga prioridad sobre
+     * listeners antiguos que puedan haber quedado registrados.
+     */
+
+    if (openButton) {
+      openButton.onclick = function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        openRTM();
+      };
+    }
+
+    if (closeButton) {
+      closeButton.onclick = function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        closeRTM();
+      };
+    }
+
+    if (adminButton) {
+      adminButton.onclick = function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        openAdmin();
+      };
+    }
+
+    if (adminCloseButton) {
+      adminCloseButton.onclick = function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        closeAdmin();
+      };
+    }
+
+    if (filters) {
+      filters.addEventListener(
+        "click",
+        function (event) {
+          const button = event.target.closest(".rtm-filter");
+          if (!button) return;
+
+          /*
+           * No bloqueamos el listener original.
+           * Solamente garantizamos el estado visual.
+           */
+          filters.querySelectorAll(".rtm-filter").forEach(function (item) {
+            item.classList.remove("active");
+          });
+
+          button.classList.add("active");
+        },
+        true
+      );
+    }
+
+    if (gallery) {
+      gallery.addEventListener(
+        "click",
+        function (event) {
+          const button = event.target.closest(".rtm-view");
+          if (!button) return;
+
+          /*
+           * El listener original del botón permanece encargado
+           * de abrir el contenido correcto.
+           */
+          console.log(
+            "RoXThal RTM: publicación seleccionada:",
+            button.dataset.id
+          );
+        },
+        true
+      );
+    }
+
+    if (lightboxClose) {
+      lightboxClose.onclick = function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        closeLightbox();
+      };
+    }
+
+    if (lightbox) {
+      lightbox.onclick = function (event) {
+        if (event.target === lightbox) {
+          closeLightbox();
+        }
+      };
+    }
+
+    document.addEventListener(
+      "keydown",
+      function (event) {
+        if (event.key === "Escape") {
+          closeLightbox();
+        }
+      },
+      true
+    );
+
+    /*
+     * Garantizamos el estado inicial:
+     * módulo cerrado y administrador cerrado.
+     */
+    const module = el("roxthal-talleres-media");
+    const admin = el("rtm-admin");
+
+    if (module) {
+      module.classList.add("rtm-module-hidden");
+    }
+
+    if (admin) {
+      admin.classList.add("hidden");
+    }
+
+    /*
+     * Si existen filtros, Todos queda activo inicialmente.
+     */
+    const defaultFilter =
+      filters && filters.querySelector('[data-category="todos"]');
+
+    if (defaultFilter) {
+      filters.querySelectorAll(".rtm-filter").forEach(function (item) {
+        item.classList.remove("active");
+      });
+
+      defaultFilter.classList.add("active");
+    }
+
+    document.documentElement.dataset.roxthalRtm = "rescue-v2";
+
+    console.log("✅ RoXThal RTM Rescue V2 activo.");
+  }
+
+  if (document.readyState === "loading") {
     document.addEventListener(
       "DOMContentLoaded",
-      rtmRescueInit,
+      initialise,
       { once: true }
     );
   } else {
-    rtmRescueInit();
+    initialise();
   }
-
 })();
 </script>
 </body>
