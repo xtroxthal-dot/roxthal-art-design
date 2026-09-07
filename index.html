@@ -43122,5 +43122,127 @@ select:focus{
 
 })();
 </script>
+    <!-- =========================================================
+     ROXTHAL RTM — CONTROL DE RESCATE DE INTERFAZ
+     No modifica Supabase ni elimina la lógica existente.
+     ========================================================= -->
+<script>
+(function () {
+  "use strict";
+
+  function rtmRescueInit() {
+
+    const launcher = document.getElementById("rtm-launcher");
+    const openBtn = document.getElementById("rtm-open-module");
+    const module = document.getElementById("roxthal-talleres-media");
+    const closeBtn = document.getElementById("rtm-close-module");
+
+    if (!launcher || !openBtn || !module) {
+      console.warn(
+        "RoXThal RTM Rescue: elementos no encontrados.",
+        {
+          launcher: !!launcher,
+          openBtn: !!openBtn,
+          module: !!module,
+          closeBtn: !!closeBtn
+        }
+      );
+      return;
+    }
+
+    /* -------------------------------------------------------
+       ABRIR MÓDULO
+       ------------------------------------------------------- */
+    openBtn.onclick = function (event) {
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      module.classList.remove("rtm-module-hidden");
+
+      module.style.removeProperty("display");
+
+      launcher.style.display = "none";
+
+      module.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+      console.log(
+        "RoXThal RTM: módulo abierto correctamente."
+      );
+
+    };
+
+    /* -------------------------------------------------------
+       CERRAR MÓDULO
+       ------------------------------------------------------- */
+    if (closeBtn) {
+
+      closeBtn.onclick = function (event) {
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        module.classList.add("rtm-module-hidden");
+
+        module.style.removeProperty("display");
+
+        launcher.style.display = "";
+
+        const admin =
+          document.getElementById("rtm-admin");
+
+        if (admin) {
+          admin.classList.add("hidden");
+        }
+
+        const lightbox =
+          document.getElementById("rtm-lightbox");
+
+        if (lightbox) {
+          lightbox.classList.remove("open");
+        }
+
+        launcher.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+
+        console.log(
+          "RoXThal RTM: módulo cerrado correctamente."
+        );
+
+      };
+
+    }
+
+    /* -------------------------------------------------------
+       MARCA DE CONTROL
+       ------------------------------------------------------- */
+
+    document.documentElement.dataset.roxthalRtm =
+      "rescue-active";
+
+    console.log(
+      "✅ RoXThal RTM Rescue activo."
+    );
+  }
+
+  if (
+    document.readyState === "loading"
+  ) {
+    document.addEventListener(
+      "DOMContentLoaded",
+      rtmRescueInit,
+      { once: true }
+    );
+  } else {
+    rtmRescueInit();
+  }
+
+})();
+</script>
 </body>
 </html>
