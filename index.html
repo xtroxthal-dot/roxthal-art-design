@@ -8427,41 +8427,14 @@ document.addEventListener('DOMContentLoaded', function() {
      ======================================================= */
 
   function rtmStart() {
-
-    /*
-     * El módulo permanece oculto.
-     * La galería se prepara en segundo plano.
-     */
-
-    rtmLoadGallery();
-
-  }
-
-
-  if (
-    document.readyState ===
-    "loading"
-  ) {
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      rtmStart,
-      {
-        once: true
-      }
-    );
-
-  } else {
-
-    rtmStart();
-
-  }
-
-
-})();
-
-</script>
-
+  /*
+   * El módulo permanece cerrado al iniciar.
+   *
+   * No se consulta Supabase aquí.
+   * La galería se carga cuando el usuario
+   * abre realmente el módulo.
+   */
+}
 
 <!-- =========================================================
      FIN MÓDULO ROXTHAL FOTOS Y VIDEOS
