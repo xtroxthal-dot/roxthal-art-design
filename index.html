@@ -6748,102 +6748,28 @@ document.addEventListener('DOMContentLoaded', function() {
      ======================================================= */
 
   function rtmOpenModule() {
+  const module = $rtm("roxthal-talleres-media");
+  const launcher = $rtm("rtm-launcher");
 
-    const module =
-      $rtm(
-        "roxthal-talleres-media"
-      );
+  if (!module) return;
 
+  module.classList.remove("rtm-module-hidden");
 
-    const launcher =
-      $rtm(
-        "rtm-launcher"
-      );
-
-
-    if (!module) return;
-
-
-    module.classList.remove(
-      "rtm-module-hidden"
-    );
-
-
-    if (launcher) {
-      launcher.style.display = "none";
-    }
-
-
-    module.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-
+  if (launcher) {
+    launcher.style.display = "none";
   }
 
+  module.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
 
-  function rtmCloseModule() {
-
-    const module =
-      $rtm(
-        "roxthal-talleres-media"
-      );
-
-
-    const launcher =
-      $rtm(
-        "rtm-launcher"
-      );
-
-
-    if (!module) return;
-
-
-    /* Cerramos también el administrador */
-
-    $rtm("rtm-admin")
-      ?.classList.add("hidden");
-
-
-    rtmCloseLightbox();
-
-
-    module.classList.add(
-      "rtm-module-hidden"
-    );
-
-
-    if (launcher) {
-      launcher.style.display = "";
-    }
-
-
-    if (launcher) {
-
-      launcher.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
-
-    }
-
-  }
-
-
-  $rtm(
-    "rtm-open-module"
-  )?.addEventListener(
-    "click",
-    rtmOpenModule
-  );
-
-
-  $rtm(
-    "rtm-close-module"
-  )?.addEventListener(
-    "click",
-    rtmCloseModule
-  );
+  /*
+   * La galería se carga solamente cuando
+   * el usuario abre realmente el módulo.
+   */
+  rtmLoadGallery();
+}
 
 
   /* =======================================================
