@@ -43123,36 +43123,92 @@ select:focus{
 })();
 </script>
     <script>
+<script>
 /* ============================================================
-   RoXThal RTM — RESCUE V2
-   Reparación integral de controles de Fotos y Videos
-   No modifica Supabase ni elimina datos.
+   RoXThal RTM — RESCUE V3
+   Control autónomo del módulo Fotos y Videos
+   No modifica ni elimina datos de Supabase.
    ============================================================ */
 (function () {
   "use strict";
 
-  function el(id) {
-    return document.getElementById(id);
+  const URL =
+    window.SUPABASE_URL ||
+    "https://lvvhpuedktdmfehvhcwk.supabase.co";
+
+  const KEY =
+    window.SUPABASE_KEY ||
+    "sb_publishable_KE2IFCCi17b-Cpf2X-vsyw__4NrShZp";
+
+  const TABLE = "roxthal_talleres_media";
+  const BUCKET = "roxthal-talleres";
+  const ADMIN = "xtroxthal@gmail.com";
+
+  let client = null;
+  let items = [];
+  let category = "todos";
+
+  const $ = id => document.getElementById(id);
+
+  function getClient() {
+    if (client) return client;
+
+    if (
+      !window.supabase ||
+      typeof window.supabase.createClient !== "function"
+    ) {
+      throw new Error("Supabase no está disponible.");
+    }
+
+    client = window.supabase.createClient(URL, KEY, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      }
+    });
+
+    return client;
   }
 
-  function show(node) {
-    if (!node) return;
-    node.classList.remove("hidden");
-    node.classList.remove("rtm-module-hidden");
-    node.style.removeProperty("display");
+  function show(id) {
+    const el = $(id);
+    if (!el) return;
+
+    el.classList.remove("hidden");
+    el.classList.remove("rtm-module-hidden");
+    el.style.removeProperty("display");
   }
 
-  function hide(node) {
-    if (!node) return;
-    node.classList.add("hidden");
+  function hide(id) {
+    const el = $(id);
+    if (!el) return;
+
+    el.classList.add("hidden");
   }
 
-  function openRTM() {
-    const launcher = el("rtm-launcher");
-    const module = el("roxthal-talleres-media");
+  function status(id, message, type) {
+    const el = $(id);
+    if (!el) return;
+
+    el.textContent = message;
+    el.classList.remove("show", "info", "ok", "err");
+
+    if (type) el.classList.add(type);
+
+    el.classList.add("show");
+  }
+
+  /* ==========================================================
+     ABRIR / CERRAR MÓDULO
+     ========================================================== */
+
+  function openModule() {
+    const module = $("roxthal-talleres-media");
+    const launcher = $("rtm-launcher");
 
     if (!module) {
-      console.error("RoXThal RTM: módulo no encontrado.");
+      console.error("RTM: no existe #roxthal-talleres-media");
       return;
     }
 
@@ -43164,35 +43220,24 @@ select:focus{
       launcher.style.display = "none";
     }
 
-    try {
+    setTimeout(function () {
       module.scrollIntoView({
         behavior: "smooth",
         block: "start"
       });
-    } catch (_) {}
+    }, 30);
 
-    /*
-     * Utilizamos la función original si existe.
-     * Así no duplicamos la lógica de Supabase.
-     */
-    try {
-      if (typeof window.rtmLoadGallery === "function") {
-        window.rtmLoadGallery();
-      }
-    } catch (error) {
-      console.warn("RoXThal RTM: no se pudo recargar la galería.", error);
-    }
-
-    console.log("RoXThal RTM: módulo abierto.");
+    loadGallery();
   }
 
-  function closeRTM() {
-    const launcher = el("rtm-launcher");
-    const module = el("roxthal-talleres-media");
-    const admin = el("rtm-admin");
-    const lightbox = el("rtm-lightbox");
+  function closeModule() {
+    const module = $("roxthal-talleres-media");
+    const launcher = $("rtm-launcher");
 
     if (!module) return;
+
+    hide("rtm-admin");
+    closeLightbox();
 
     module.classList.add("rtm-module-hidden");
     module.classList.remove("hidden");
@@ -43201,252 +43246,1058 @@ select:focus{
       launcher.style.display = "";
     }
 
-    if (admin) {
-      admin.classList.add("hidden");
-    }
-
-    if (lightbox) {
-      lightbox.classList.remove("open");
-    }
-
     if (launcher) {
-      try {
+      setTimeout(function () {
         launcher.scrollIntoView({
           behavior: "smooth",
           block: "center"
         });
-      } catch (_) {}
+      }, 30);
     }
-
-    console.log("RoXThal RTM: módulo cerrado.");
   }
 
-  function openAdmin() {
-    const admin = el("rtm-admin");
-    if (!admin) {
-      console.error("RoXThal RTM: administrador no encontrado.");
+  /* ==========================================================
+     GALERÍA
+     ========================================================== */
+
+  async function loadGallery() {
+    const gallery = $("rtm-gallery");
+
+    if (!gallery) return;
+
+    gallery.innerHTML =
+      '<div class="muted" style="padding:20px;text-align:center;">⏳ Cargando fotos y videos...</div>';
+
+    try {
+      const db = getClient();
+
+      const result = await db
+        .from(TABLE)
+        .select(
+          "id,titulo,descripcion,categoria,tipo,storage_path,url,created_at"
+        )
+        .order("created_at", {
+          ascending: false
+        });
+
+      if (result.error) {
+        throw result.error;
+      }
+
+      items = Array.isArray(result.data)
+        ? result.data
+        : [];
+
+      renderGallery();
+
+      try {
+        localStorage.setItem(
+          "roxthal_rtm_gallery_cache",
+          JSON.stringify(items)
+        );
+      } catch (_) {}
+
+    } catch (error) {
+      console.error("RTM gallery:", error);
+
+      /* Intentamos recuperar la última galería conocida */
+      try {
+        const cached =
+          JSON.parse(
+            localStorage.getItem(
+              "roxthal_rtm_gallery_cache"
+            ) || "[]"
+          );
+
+        if (Array.isArray(cached) && cached.length) {
+          items = cached;
+          renderGallery();
+
+          status(
+            "rtm-upload-status",
+            "⚠️ Supabase está temporalmente restringido. Mostrando la última galería disponible.",
+            "info"
+          );
+
+          return;
+        }
+      } catch (_) {}
+
+      gallery.innerHTML =
+        '<div class="status-box show err">' +
+        "❌ No se pudo cargar la galería.<br><br>" +
+        escapeHtml(
+          error.message ||
+          "Supabase está temporalmente restringido."
+        ) +
+        "</div>";
+    }
+  }
+
+  function renderGallery() {
+    const gallery = $("rtm-gallery");
+
+    if (!gallery) return;
+
+    let visible = items.slice();
+
+    if (category !== "todos") {
+      visible = visible.filter(function (item) {
+        return String(item.categoria || "").toLowerCase() ===
+          category.toLowerCase();
+      });
+    }
+
+    if (!visible.length) {
+      gallery.innerHTML =
+        '<div class="muted" style="padding:30px;text-align:center;">' +
+        "📭 No hay publicaciones en esta categoría." +
+        "</div>";
       return;
     }
 
-    show(admin);
+    gallery.innerHTML = visible.map(function (item) {
+      const title =
+        escapeHtml(item.titulo || "Sin título");
 
-    /*
-     * Dejamos que el sistema original compruebe la sesión.
-     * Si no consigue hacerlo, mostramos igualmente el formulario
-     * para que el usuario pueda intentar iniciar sesión.
-     */
-    const login = el("rtm-login");
-    const panel = el("rtm-panel");
+      const description =
+        escapeHtml(item.descripcion || "");
 
-    if (login && panel) {
-      const email = el("rtm-email");
-      const password = el("rtm-password");
+      const cat =
+        escapeHtml(item.categoria || "");
 
-      if (!email || !password) {
-        show(login);
-        hide(panel);
-      }
-    }
+      const url =
+        escapeAttr(item.url || "");
 
-    try {
-      if (typeof window.rtmCheckSession === "function") {
-        window.rtmCheckSession();
-      }
-    } catch (error) {
-      console.warn(
-        "RoXThal RTM: comprobación de sesión no disponible.",
-        error
+      const isVideo =
+        String(item.tipo || "").toLowerCase() ===
+        "video";
+
+      return (
+        '<article class="card rtm-card">' +
+
+          (
+            isVideo
+              ? '<video src="' + url + '"' +
+                ' muted playsinline preload="metadata"' +
+                ' style="width:100%;height:240px;object-fit:cover;background:#000;"></video>'
+              : '<img src="' + url + '"' +
+                ' alt="' + title + '"' +
+                ' loading="lazy"' +
+                ' style="width:100%;height:240px;object-fit:cover;background:#111;">'
+          ) +
+
+          '<div class="card-body">' +
+            '<span class="badge">' +
+              (cat || (isVideo ? "video" : "foto")) +
+            '</span>' +
+
+            '<h3 style="margin-top:10px;">' +
+              title +
+            '</h3>' +
+
+            (
+              description
+                ? '<p class="muted" style="margin-top:8px;">' +
+                    description +
+                  '</p>'
+                : ""
+            ) +
+
+            '<button type="button"' +
+              ' class="btn btn-gold rtm-view"' +
+              ' data-id="' + escapeAttr(String(item.id)) + '">' +
+              "👁️ Ver" +
+            "</button>" +
+
+          "</div>" +
+
+        "</article>"
       );
-      show(login);
-      hide(panel);
+    }).join("");
+
+    gallery
+      .querySelectorAll(".rtm-view")
+      .forEach(function (button) {
+        button.addEventListener("click", function () {
+          const id = button.dataset.id;
+
+          const item = items.find(function (entry) {
+            return String(entry.id) === String(id);
+          });
+
+          if (item) {
+            openLightbox(item);
+          }
+        });
+      });
+  }
+
+  /* ==========================================================
+     FILTROS
+     ========================================================== */
+
+  function setupFilters() {
+    const filters = $("rtm-filters");
+
+    if (!filters) return;
+
+    filters.addEventListener("click", function (event) {
+      const button =
+        event.target.closest(".rtm-filter");
+
+      if (!button) return;
+
+      category =
+        button.dataset.category || "todos";
+
+      filters
+        .querySelectorAll(".rtm-filter")
+        .forEach(function (item) {
+          item.classList.remove("active");
+        });
+
+      button.classList.add("active");
+
+      renderGallery();
+    });
+  }
+
+  /* ==========================================================
+     LIGHTBOX
+     ========================================================== */
+
+  function openLightbox(item) {
+    const box = $("rtm-lightbox");
+
+    if (!box) return;
+
+    const media = $("rtm-lightbox-media");
+    const title = $("rtm-lightbox-title");
+
+    if (!media) return;
+
+    const url = item.url || "";
+
+    if (
+      String(item.tipo || "").toLowerCase() ===
+      "video"
+    ) {
+      media.innerHTML =
+        '<video controls autoplay playsinline ' +
+        'style="max-width:95vw;max-height:80vh;border-radius:12px;background:#000;">' +
+        '<source src="' +
+        escapeAttr(url) +
+        '">' +
+        "</video>";
+    } else {
+      media.innerHTML =
+        '<img src="' +
+        escapeAttr(url) +
+        '" alt="' +
+        escapeAttr(item.titulo || "") +
+        '" style="max-width:95vw;max-height:80vh;border-radius:12px;object-fit:contain;">';
     }
 
+    if (title) {
+      title.textContent =
+        item.titulo || "";
+    }
+
+    box.classList.add("open");
+    box.classList.remove("hidden");
+    box.style.removeProperty("display");
+  }
+
+  function closeLightbox() {
+    const box = $("rtm-lightbox");
+
+    if (!box) return;
+
+    box.classList.remove("open");
+
+    setTimeout(function () {
+      box.classList.add("hidden");
+
+      const media =
+        $("rtm-lightbox-media");
+
+      if (media) {
+        media.innerHTML = "";
+      }
+    }, 200);
+  }
+
+  /* ==========================================================
+     ADMINISTRADOR
+     ========================================================== */
+
+  async function checkSession() {
     try {
+      const db = getClient();
+
+      const result =
+        await db.auth.getSession();
+
+      const session =
+        result.data?.session || null;
+
+      const email =
+        String(
+          session?.user?.email || ""
+        ).toLowerCase();
+
+      if (email === ADMIN) {
+        showAdminPanel(email);
+        return;
+      }
+
+      showAdminLogin();
+
+    } catch (error) {
+      console.error("RTM session:", error);
+      showAdminLogin();
+
+      status(
+        "rtm-login-status",
+        "⚠️ No se pudo comprobar la sesión.",
+        "err"
+      );
+    }
+  }
+
+  function showAdminLogin() {
+    show("rtm-login");
+    hide("rtm-panel");
+  }
+
+  function showAdminPanel(email) {
+    hide("rtm-login");
+    show("rtm-panel");
+
+    const user =
+      $("rtm-user-email");
+
+    if (user) {
+      user.textContent = email || ADMIN;
+    }
+
+    loadAdminList();
+  }
+
+  function openAdmin() {
+    const admin = $("rtm-admin");
+
+    if (!admin) return;
+
+    show("rtm-admin");
+
+    setTimeout(function () {
       admin.scrollIntoView({
         behavior: "smooth",
         block: "start"
       });
-    } catch (_) {}
+    }, 30);
 
-    console.log("RoXThal RTM: administrador abierto.");
+    checkSession();
   }
 
   function closeAdmin() {
-    const admin = el("rtm-admin");
-    if (admin) {
-      admin.classList.add("hidden");
-    }
-
-    console.log("RoXThal RTM: administrador cerrado.");
+    hide("rtm-admin");
   }
 
-  function activateFilter(button) {
-    if (!button) return;
+  /* ==========================================================
+     LOGIN
+     ========================================================== */
 
-    const filters = el("rtm-filters");
-    if (!filters) return;
+  async function login() {
+    const emailInput =
+      $("rtm-email");
 
-    filters.querySelectorAll(".rtm-filter").forEach(function (item) {
-      item.classList.remove("active");
-    });
+    const passwordInput =
+      $("rtm-password");
 
-    button.classList.add("active");
+    if (!emailInput || !passwordInput) {
+      return;
+    }
 
-    /*
-     * El listener original se ocupa de actualizar rtmCategory
-     * y volver a pintar la galería.
-     *
-     * Si está disponible, generamos el click normal.
-     */
-    try {
-      button.dispatchEvent(
-        new MouseEvent("click", {
-          bubbles: true,
-          cancelable: true,
-          view: window
-        })
+    const email =
+      String(emailInput.value || "")
+        .trim()
+        .toLowerCase();
+
+    const password =
+      String(passwordInput.value || "");
+
+    if (email !== ADMIN) {
+      status(
+        "rtm-login-status",
+        "❌ Usuario administrador no autorizado.",
+        "err"
       );
-    } catch (_) {}
+      return;
+    }
 
-    console.log(
-      "RoXThal RTM: filtro:",
-      button.dataset.category || "todos"
+    if (!password) {
+      status(
+        "rtm-login-status",
+        "❌ Introducí la contraseña.",
+        "err"
+      );
+      return;
+    }
+
+    status(
+      "rtm-login-status",
+      "⏳ Iniciando sesión...",
+      "info"
     );
-  }
 
-  function openLightboxFromButton(button) {
-    if (!button) return;
-
-    const id = button.dataset.id;
-    if (!id) return;
-
-    /*
-     * El render original ya registra .rtm-view.
-     * Provocamos su click para conservar exactamente
-     * la lógica existente.
-     */
     try {
-      button.click();
-    } catch (_) {}
+      const db = getClient();
+
+      const result =
+        await db.auth.signInWithPassword({
+          email: ADMIN,
+          password: password
+        });
+
+      if (result.error) {
+        throw result.error;
+      }
+
+      const loggedEmail =
+        String(
+          result.data?.user?.email || ""
+        ).toLowerCase();
+
+      if (loggedEmail !== ADMIN) {
+        await db.auth.signOut();
+        throw new Error(
+          "La cuenta no corresponde al administrador."
+        );
+      }
+
+      status(
+        "rtm-login-status",
+        "✅ Sesión iniciada correctamente.",
+        "ok"
+      );
+
+      showAdminPanel(loggedEmail);
+
+    } catch (error) {
+      console.error("RTM login:", error);
+
+      status(
+        "rtm-login-status",
+        "❌ No se pudo iniciar sesión: " +
+        (
+          error.message ||
+          "Supabase está restringido."
+        ),
+        "err"
+      );
+    }
   }
 
-  function closeLightbox() {
-    const box = el("rtm-lightbox");
-    const content = el("rtm-lightbox-content");
+  /* ==========================================================
+     LOGOUT
+     ========================================================== */
 
-    if (box) {
-      box.classList.remove("open");
+  async function logout() {
+    try {
+      const db = getClient();
+      await db.auth.signOut();
+    } catch (error) {
+      console.warn("RTM logout:", error);
     }
 
-    if (content) {
-      content.innerHTML = "";
+    showAdminLogin();
+  }
+
+  /* ==========================================================
+     PREVISUALIZACIÓN
+     ========================================================== */
+
+  function previewFile() {
+    const input =
+      $("rtm-file");
+
+    const preview =
+      $("rtm-preview");
+
+    if (!input || !preview) return;
+
+    preview.innerHTML = "";
+
+    const file =
+      input.files?.[0];
+
+    if (!file) return;
+
+    const url =
+      URL.createObjectURL(file);
+
+    if (file.type.startsWith("video/")) {
+      preview.innerHTML =
+        '<video controls playsinline ' +
+        'style="max-width:100%;max-height:300px;border-radius:12px;">' +
+        '<source src="' +
+        escapeAttr(url) +
+        '">' +
+        "</video>";
+    } else {
+      preview.innerHTML =
+        '<img src="' +
+        escapeAttr(url) +
+        '" alt="Vista previa"' +
+        ' style="max-width:100%;max-height:300px;border-radius:12px;object-fit:contain;">';
     }
   }
 
-  function initialise() {
-    const openButton = el("rtm-open-module");
-    const closeButton = el("rtm-close-module");
-    const adminButton = el("rtm-admin-open");
-    const adminCloseButton = el("rtm-admin-close");
-    const filters = el("rtm-filters");
-    const gallery = el("rtm-gallery");
-    const lightboxClose = el("rtm-lightbox-close");
-    const lightbox = el("rtm-lightbox");
+  /* ==========================================================
+     SUBIR
+     ========================================================== */
 
-    /*
-     * IMPORTANTE:
-     * usamos onclick para que esta capa tenga prioridad sobre
-     * listeners antiguos que puedan haber quedado registrados.
-     */
+  async function upload() {
+    const titleInput =
+      $("rtm-title");
 
-    if (openButton) {
-      openButton.onclick = function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        openRTM();
-      };
+    const categoryInput =
+      $("rtm-category");
+
+    const descriptionInput =
+      $("rtm-description");
+
+    const fileInput =
+      $("rtm-file");
+
+    if (
+      !titleInput ||
+      !categoryInput ||
+      !fileInput
+    ) {
+      return;
     }
 
-    if (closeButton) {
-      closeButton.onclick = function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        closeRTM();
-      };
+    const title =
+      String(titleInput.value || "").trim();
+
+    const categoryValue =
+      String(categoryInput.value || "")
+        .trim()
+        .toLowerCase();
+
+    const description =
+      String(
+        descriptionInput?.value || ""
+      ).trim();
+
+    const file =
+      fileInput.files?.[0];
+
+    if (!title) {
+      status(
+        "rtm-upload-status",
+        "❌ Escribí un título.",
+        "err"
+      );
+      return;
     }
 
-    if (adminButton) {
-      adminButton.onclick = function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        openAdmin();
-      };
+    if (!file) {
+      status(
+        "rtm-upload-status",
+        "❌ Seleccioná una foto o video.",
+        "err"
+      );
+      return;
     }
 
-    if (adminCloseButton) {
-      adminCloseButton.onclick = function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        closeAdmin();
-      };
+    const allowed = [
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+      "image/gif",
+      "video/mp4",
+      "video/webm",
+      "video/quicktime"
+    ];
+
+    if (!allowed.includes(file.type)) {
+      status(
+        "rtm-upload-status",
+        "❌ Formato no permitido.",
+        "err"
+      );
+      return;
     }
 
-    if (filters) {
-      filters.addEventListener(
-        "click",
-        function (event) {
-          const button = event.target.closest(".rtm-filter");
-          if (!button) return;
+    const max =
+      file.type.startsWith("video/")
+        ? 100 * 1024 * 1024
+        : 15 * 1024 * 1024;
 
-          /*
-           * No bloqueamos el listener original.
-           * Solamente garantizamos el estado visual.
-           */
-          filters.querySelectorAll(".rtm-filter").forEach(function (item) {
-            item.classList.remove("active");
+    if (file.size > max) {
+      status(
+        "rtm-upload-status",
+        file.type.startsWith("video/")
+          ? "❌ El video supera 100 MB."
+          : "❌ La imagen supera 15 MB.",
+        "err"
+      );
+      return;
+    }
+
+    status(
+      "rtm-upload-status",
+      "⏳ Comprobando administrador...",
+      "info"
+    );
+
+    try {
+      const db = getClient();
+
+      const sessionResult =
+        await db.auth.getSession();
+
+      const session =
+        sessionResult.data?.session;
+
+      const email =
+        String(
+          session?.user?.email || ""
+        ).toLowerCase();
+
+      if (!session || email !== ADMIN) {
+        throw new Error(
+          "Sesión de administrador no válida."
+        );
+      }
+
+      const extension =
+        (
+          file.name.split(".").pop() ||
+          "bin"
+        )
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, "");
+
+      const type =
+        file.type.startsWith("video/")
+          ? "video"
+          : "foto";
+
+      const safeCategory =
+        categoryValue || "trabajos";
+
+      const filename =
+        Date.now() +
+        "_" +
+        Math.random()
+          .toString(36)
+          .slice(2, 10) +
+        "." +
+        extension;
+
+      const path =
+        "media/" +
+        safeCategory +
+        "/" +
+        filename;
+
+      status(
+        "rtm-upload-status",
+        "⏳ Subiendo archivo...",
+        "info"
+      );
+
+      const storageResult =
+        await db.storage
+          .from(BUCKET)
+          .upload(path, file, {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: file.type
           });
 
-          button.classList.add("active");
-        },
-        true
+      if (storageResult.error) {
+        throw storageResult.error;
+      }
+
+      const publicResult =
+        db.storage
+          .from(BUCKET)
+          .getPublicUrl(path);
+
+      const publicUrl =
+        publicResult.data?.publicUrl || "";
+
+      if (!publicUrl) {
+        throw new Error(
+          "No se pudo obtener la URL pública."
+        );
+      }
+
+      status(
+        "rtm-upload-status",
+        "⏳ Guardando publicación...",
+        "info"
+      );
+
+      const insertResult =
+        await db
+          .from(TABLE)
+          .insert({
+            titulo: title,
+            descripcion: description,
+            categoria: safeCategory,
+            tipo: type,
+            storage_path: path,
+            url: publicUrl
+          });
+
+      if (insertResult.error) {
+        /* Si el registro falla intentamos retirar
+           solamente el archivo recién subido. */
+        await db.storage
+          .from(BUCKET)
+          .remove([path]);
+
+        throw insertResult.error;
+      }
+
+      titleInput.value = "";
+
+      if (descriptionInput) {
+        descriptionInput.value = "";
+      }
+
+      fileInput.value = "";
+
+      const preview =
+        $("rtm-preview");
+
+      if (preview) {
+        preview.innerHTML = "";
+      }
+
+      status(
+        "rtm-upload-status",
+        "✅ Publicación subida correctamente.",
+        "ok"
+      );
+
+      await loadGallery();
+      await loadAdminList();
+
+    } catch (error) {
+      console.error("RTM upload:", error);
+
+      status(
+        "rtm-upload-status",
+        "❌ No se pudo publicar: " +
+        (
+          error.message ||
+          "Error desconocido."
+        ),
+        "err"
       );
     }
+  }
 
-    if (gallery) {
-      gallery.addEventListener(
-        "click",
-        function (event) {
-          const button = event.target.closest(".rtm-view");
-          if (!button) return;
+  /* ==========================================================
+     LISTA ADMIN
+     ========================================================== */
 
-          /*
-           * El listener original del botón permanece encargado
-           * de abrir el contenido correcto.
-           */
-          console.log(
-            "RoXThal RTM: publicación seleccionada:",
-            button.dataset.id
+  async function loadAdminList() {
+    const list =
+      $("rtm-admin-list");
+
+    if (!list) return;
+
+    list.innerHTML =
+      '<div class="muted">⏳ Cargando publicaciones...</div>';
+
+    try {
+      const db = getClient();
+
+      const result =
+        await db
+          .from(TABLE)
+          .select(
+            "id,titulo,descripcion,categoria,tipo,storage_path,url,created_at"
+          )
+          .order("created_at", {
+            ascending: false
+          });
+
+      if (result.error) {
+        throw result.error;
+      }
+
+      const data =
+        Array.isArray(result.data)
+          ? result.data
+          : [];
+
+      if (!data.length) {
+        list.innerHTML =
+          '<div class="muted">📭 No hay publicaciones.</div>';
+        return;
+      }
+
+      list.innerHTML =
+        data.map(function (item) {
+          return (
+            '<div class="card" style="padding:16px;margin-bottom:12px;">' +
+
+              '<strong>' +
+                escapeHtml(
+                  item.titulo || "Sin título"
+                ) +
+              "</strong>" +
+
+              '<div class="muted" style="margin:5px 0;">' +
+                escapeHtml(
+                  item.categoria || ""
+                ) +
+                " · " +
+                escapeHtml(
+                  item.tipo || ""
+                ) +
+              "</div>" +
+
+              '<button type="button"' +
+                ' class="btn btn-danger rtm-delete"' +
+                ' data-id="' +
+                  escapeAttr(String(item.id)) +
+                '"' +
+                ' data-path="' +
+                  escapeAttr(
+                    item.storage_path || ""
+                  ) +
+                '">' +
+                "🗑️ Eliminar" +
+              "</button>" +
+
+            "</div>"
           );
-        },
-        true
+        })
+        .join("");
+
+      list
+        .querySelectorAll(".rtm-delete")
+        .forEach(function (button) {
+          button.addEventListener(
+            "click",
+            function () {
+              deleteItem(
+                button.dataset.id,
+                button.dataset.path
+              );
+            }
+          );
+        });
+
+    } catch (error) {
+      console.error(
+        "RTM admin list:",
+        error
+      );
+
+      list.innerHTML =
+        '<div class="status-box show err">' +
+        "❌ No se pudo cargar el administrador.<br>" +
+        escapeHtml(
+          error.message ||
+          "Supabase está restringido."
+        ) +
+        "</div>";
+    }
+  }
+
+  /* ==========================================================
+     ELIMINAR
+     ========================================================== */
+
+  async function deleteItem(id, path) {
+    if (
+      !confirm(
+        "¿Querés eliminar esta publicación definitivamente?"
+      )
+    ) {
+      return;
+    }
+
+    try {
+      const db = getClient();
+
+      const sessionResult =
+        await db.auth.getSession();
+
+      const session =
+        sessionResult.data?.session;
+
+      const email =
+        String(
+          session?.user?.email || ""
+        ).toLowerCase();
+
+      if (!session || email !== ADMIN) {
+        throw new Error(
+          "Sesión no autorizada."
+        );
+      }
+
+      if (path) {
+        const storageResult =
+          await db.storage
+            .from(BUCKET)
+            .remove([path]);
+
+        if (storageResult.error) {
+          console.warn(
+            "RTM storage delete:",
+            storageResult.error
+          );
+        }
+      }
+
+      const result =
+        await db
+          .from(TABLE)
+          .delete()
+          .eq("id", id);
+
+      if (result.error) {
+        throw result.error;
+      }
+
+      status(
+        "rtm-upload-status",
+        "✅ Publicación eliminada.",
+        "ok"
+      );
+
+      await loadGallery();
+      await loadAdminList();
+
+    } catch (error) {
+      console.error(
+        "RTM delete:",
+        error
+      );
+
+      status(
+        "rtm-upload-status",
+        "❌ No se pudo eliminar: " +
+        (
+          error.message ||
+          "Error desconocido."
+        ),
+        "err"
       );
     }
+  }
 
-    if (lightboxClose) {
-      lightboxClose.onclick = function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        closeLightbox();
-      };
-    }
+  /* ==========================================================
+     UTILIDADES
+     ========================================================== */
 
-    if (lightbox) {
-      lightbox.onclick = function (event) {
-        if (event.target === lightbox) {
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  function escapeAttr(value) {
+    return escapeHtml(value);
+  }
+
+  /* ==========================================================
+     EVENTOS — UNA SOLA CAPA DE CONTROL
+     ========================================================== */
+
+  function bind(id, event, handler) {
+    const el = $(id);
+
+    if (!el) return;
+
+    el.addEventListener(event, handler);
+  }
+
+  function init() {
+
+    bind(
+      "rtm-open-module",
+      "click",
+      openModule
+    );
+
+    bind(
+      "rtm-close-module",
+      "click",
+      closeModule
+    );
+
+    bind(
+      "rtm-admin-open",
+      "click",
+      openAdmin
+    );
+
+    bind(
+      "rtm-admin-close",
+      "click",
+      closeAdmin
+    );
+
+    bind(
+      "rtm-login-btn",
+      "click",
+      login
+    );
+
+    bind(
+      "rtm-logout",
+      "click",
+      logout
+    );
+
+    bind(
+      "rtm-upload",
+      "click",
+      upload
+    );
+
+    bind(
+      "rtm-file",
+      "change",
+      previewFile
+    );
+
+    bind(
+      "rtm-lightbox-close",
+      "click",
+      closeLightbox
+    );
+
+    bind(
+      "rtm-lightbox",
+      "click",
+      function (event) {
+        if (event.target === this) {
           closeLightbox();
         }
-      };
-    }
+      }
+    );
+
+    setupFilters();
 
     document.addEventListener(
       "keydown",
@@ -43454,53 +44305,30 @@ select:focus{
         if (event.key === "Escape") {
           closeLightbox();
         }
-      },
-      true
+      }
     );
 
-    /*
-     * Garantizamos el estado inicial:
-     * módulo cerrado y administrador cerrado.
-     */
-    const module = el("roxthal-talleres-media");
-    const admin = el("rtm-admin");
-
-    if (module) {
-      module.classList.add("rtm-module-hidden");
-    }
-
-    if (admin) {
-      admin.classList.add("hidden");
-    }
-
-    /*
-     * Si existen filtros, Todos queda activo inicialmente.
-     */
-    const defaultFilter =
-      filters && filters.querySelector('[data-category="todos"]');
-
-    if (defaultFilter) {
-      filters.querySelectorAll(".rtm-filter").forEach(function (item) {
-        item.classList.remove("active");
-      });
-
-      defaultFilter.classList.add("active");
-    }
-
-    document.documentElement.dataset.roxthalRtm = "rescue-v2";
-
-    console.log("✅ RoXThal RTM Rescue V2 activo.");
+    console.log(
+      "RoXThal RTM Rescue V3 activo."
+    );
   }
 
-  if (document.readyState === "loading") {
+  /* ==========================================================
+     INICIO SEGURO
+     ========================================================== */
+
+  if (
+    document.readyState === "loading"
+  ) {
     document.addEventListener(
       "DOMContentLoaded",
-      initialise,
+      init,
       { once: true }
     );
   } else {
-    initialise();
+    init();
   }
+
 })();
 </script>
 </body>
